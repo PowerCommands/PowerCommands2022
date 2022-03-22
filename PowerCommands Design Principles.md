@@ -15,7 +15,7 @@
  ### Keep the Console appliakation as clean as possible
  The console application should be used as is so that the look and feel of Power Commands is consistent, it is nicer when using a combination of PowerCommands grouped togher in one directory sharing the same configuration where you could change font color and background color and other core behaivours.
  ## Bootstrap component
- The bootstrap component is the glue between the Console and the other modules, it has a Startup class whos purpose is to initialize the application, in the bootstrap component you could choose a your prefered logging library, you could overide default settings and do other customization setup.
+ The bootstrap component is the glue between the Console and the other modules, it has a Startup class whos purpose is to initialize the application, in the bootstrap component you could choose your prefered logging library, you could overide default settings and do other customization setup.
 
 ## Extend PowerCommand
 ### Avoid changes in the PowerCommand Core, extend instead
