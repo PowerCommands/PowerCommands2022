@@ -1,0 +1,8 @@
+﻿version: "1.0"
+configuration: 
+  metadata: 
+    name: "Test"
+    description: "En exempelbeskrigning"
+  commands:
+    - "EncryptionCommand"  
+    - "HelpCommand"

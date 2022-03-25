@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PainKiller.PowerCommands.Configuration\PainKiller.PowerCommands.Configuration.csproj" />
+    <ProjectReference Include="..\PainKiller.PowerCommands.Core\PainKiller.PowerCommands.Core.csproj" />
+    <ProjectReference Include="..\PainKiller.PowerCommands.Security\PainKiller.PowerCommands.Security.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="PowerCommandsConfiguration.yaml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>
