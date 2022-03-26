@@ -1,5 +1,5 @@
 ﻿using PainKiller.PowerCommands.Configuration;
-using PainKiller.PowerCommands.Configuration.DomainObjects;
+using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
 
 namespace PainKiller.PowerCommands.Bootstrap
 {

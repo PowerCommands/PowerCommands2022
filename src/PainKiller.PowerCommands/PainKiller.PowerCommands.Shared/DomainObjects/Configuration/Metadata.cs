@@ -1,4 +1,4 @@
-﻿namespace PainKiller.PowerCommands.Configuration.DomainObjects;
+﻿namespace PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
 
 public class Metadata
 {

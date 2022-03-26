@@ -10,6 +10,7 @@
     <ProjectReference Include="..\PainKiller.PowerCommands.Configuration\PainKiller.PowerCommands.Configuration.csproj" />
     <ProjectReference Include="..\PainKiller.PowerCommands.Core\PainKiller.PowerCommands.Core.csproj" />
     <ProjectReference Include="..\PainKiller.PowerCommands.Security\PainKiller.PowerCommands.Security.csproj" />
+    <ProjectReference Include="..\PainKiller.PowerCommands.Shared\PainKiller.PowerCommands.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>
