@@ -14,9 +14,9 @@
  ## PowerCommand Console
  ### Keep the Console appliakation as clean as possible
  The console application should be used as is so that the look and feel of Power Commands is consistent, it is nicer when using a combination of PowerCommands grouped togher in one directory sharing the same configuration where you could change font color and background color and other core behaivours. Be restrictive in implementing your own custom code here, use the Bootstrap project instead.
- ### Bootstrap component
+ ## Bootstrap component
  The bootstrap component is the glue between the Console and the other modules, it has a Startup class whos purpose is to initialize the application, in the bootstrap component you could choose your prefered logging library, you could overide default settings and do other customization setup. In the Bootstrap project the main class for configuration is open for you to extend so that all configuration (except sensitive information) is placed in one single configuration file. It is intended to use for customization to create your PowerCommands project exactly as you want.
-
+ 
 ## Extend PowerCommand
 ### Avoid changes in the PowerCommand Core, extend instead
  PowerCommand Framework is distributed as a Nuget Package and as open source code at Github, if you use the source code, avoid to change anything extend the functionallity instead if you feel that you need to do that. That way it is easier for you when something has changed in the Core.

@@ -7,11 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Managers\" />
     <Folder Include="Extensions\" />
+    <Folder Include="Managers\" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PainKiller.PowerCommands.Security\PainKiller.PowerCommands.Security.csproj" />
     <ProjectReference Include="..\PainKiller.PowerCommands.Shared\PainKiller.PowerCommands.Shared.csproj" />
   </ItemGroup>
 

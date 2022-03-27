@@ -1,7 +1,7 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿using PainKiller.PowerCommands.Bootstrap;
 
-using PainKiller.PowerCommands.Bootstrap;
-var configuration = Startup.Initialize();
-
-Console.ReadLine();
-
+try
+{
+    Startup.Initialize();
+}
+catch { Console.WriteLine("Critical error, program could not start, check the log for more details"); }
