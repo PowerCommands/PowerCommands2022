@@ -10,6 +10,7 @@
     <ProjectReference Include="..\PainKiller.AzureKeyVault\PainKiller.AzureKeyVault.csproj" />
     <ProjectReference Include="..\PainKiller.PowerCommands.Configuration\PainKiller.PowerCommands.Configuration.csproj" />
     <ProjectReference Include="..\PainKiller.PowerCommands.Core\PainKiller.PowerCommands.Core.csproj" />
+    <ProjectReference Include="..\PainKiller.PowerCommands.MyExampleCommands\PainKiller.PowerCommands.MyExampleCommands.csproj" />
     <ProjectReference Include="..\PainKiller.PowerCommands.Security\PainKiller.PowerCommands.Security.csproj" />
     <ProjectReference Include="..\PainKiller.PowerCommands.Shared\PainKiller.PowerCommands.Shared.csproj" />
     <ProjectReference Include="..\PainKiller.SerilogExtensions\PainKiller.SerilogExtensions.csproj" />
@@ -19,6 +20,10 @@
     <None Update="PowerCommandsConfiguration.yaml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Configuration\" />
   </ItemGroup>
 
 </Project>

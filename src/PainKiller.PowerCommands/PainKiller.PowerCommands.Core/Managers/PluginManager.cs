@@ -1,5 +1,4 @@
-﻿using System.Security;
-using PainKiller.PowerCommands.Core.Extensions;
+﻿using PainKiller.PowerCommands.Core.Extensions;
 using PainKiller.PowerCommands.Security.DomainObjects;
 using PainKiller.PowerCommands.Security.Extensions;
 using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
@@ -28,7 +27,7 @@ public class PluginManager<TConfiguration> where TConfiguration : BaseCommandsCo
 
     public bool ValidateConfigurationWithPlugins()
     {
-        var retVal = false;
+        var retVal = true;
         var components = typeof(TConfiguration).GetPropertiesOfT<BaseComponentConfiguration>();
         
         foreach (var propertyInfo in components)
@@ -36,8 +35,8 @@ public class PluginManager<TConfiguration> where TConfiguration : BaseCommandsCo
             if (propertyInfo.GetValue(_configuration) is not BaseComponentConfiguration instance) continue;
             var fileCheckSum = new FileChecksum(instance.Component);
             var validateCheckSum = fileCheckSum.CompareFileChecksum(instance.Checksum);
+            if(!validateCheckSum) retVal = false;
             if(_configuration.ShowDiagnosticInformation) Console.WriteLine($"{instance?.Name ?? "null"} Checksum {fileCheckSum.Mde5Hash} {validateCheckSum}");
-            retVal = true;
         }
         return retVal;
     }

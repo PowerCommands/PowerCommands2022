@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Commands\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PainKiller.AzureKeyVault\PainKiller.AzureKeyVault.csproj" />
+    <ProjectReference Include="..\PainKiller.PowerCommands.Configuration\PainKiller.PowerCommands.Configuration.csproj" />
+    <ProjectReference Include="..\PainKiller.PowerCommands.Shared\PainKiller.PowerCommands.Shared.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -29,6 +29,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Custom Components", "Custom
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PainKiller.AzureKeyVault", "PainKiller.AzureKeyVault\PainKiller.AzureKeyVault.csproj", "{13CC0652-52C9-4675-8E45-0BAEC32D9431}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PainKiller.PowerCommands.MyExampleCommands", "PainKiller.PowerCommands.MyExampleCommands\PainKiller.PowerCommands.MyExampleCommands.csproj", "{C53C0EBD-1FEF-43F3-8AF9-285A4AB2A524}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +73,10 @@ Global
 		{13CC0652-52C9-4675-8E45-0BAEC32D9431}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{13CC0652-52C9-4675-8E45-0BAEC32D9431}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{13CC0652-52C9-4675-8E45-0BAEC32D9431}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C53C0EBD-1FEF-43F3-8AF9-285A4AB2A524}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C53C0EBD-1FEF-43F3-8AF9-285A4AB2A524}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C53C0EBD-1FEF-43F3-8AF9-285A4AB2A524}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C53C0EBD-1FEF-43F3-8AF9-285A4AB2A524}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
