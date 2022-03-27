@@ -1,8 +1,22 @@
 ﻿version: "1.0"
 configuration: 
+  showDiagnosticInformation:
+    true
   metadata: 
     name: "Test"
-    description: "En exempelbeskrigning"
+    description: "En exempelbeskrivning"
   commands:
     - "EncryptionCommand"  
     - "HelpCommand"
+  log:
+    name: "Serialog"
+    component: "PainKiller.SerilogExtensions.dll"
+    checksum: "173831af7e77b8bd33e32fce0b4e646d"
+    fileName: "powercommands-log.txt"
+    rollingIntervall: "Day"
+    restrictedToMinimumLevel: "Information"
+    outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj}{NewLine}{Exception}"
+  keyVault:
+    name: "Azure Key Vault"
+    component: "PainKiller.AzureKeyVault.dll"
+    checksum: "de8c4a3c64b0e1dd6486b696634c92c3"
