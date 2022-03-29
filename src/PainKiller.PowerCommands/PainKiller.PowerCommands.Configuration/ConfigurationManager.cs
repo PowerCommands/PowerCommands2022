@@ -17,4 +17,48 @@ public static class ConfigurationManager
             .Build();
         return deserializer.Deserialize<YamlContainer<T>>(yamlContent) ?? new YamlContainer<T>();
     }
+
+    public static void Update<T>(T configuration, string inputFileName = "") where T : new()
+    {
+        var fileName = string.IsNullOrEmpty(inputFileName) ? $"{typeof(T).Name}.yaml".GetSafePathRegardlessHowApplicationStarted() : inputFileName;
+
+        var yamlContainer = new YamlContainer<T> { Configuration = configuration, Version = "1.0" };
+        var serializer = new SerializerBuilder()
+            .WithNamingConvention(CamelCaseNamingConvention.Instance)
+            .Build();
+        var yamlData = serializer.Serialize(yamlContainer);
+        File.WriteAllText(fileName, yamlData);
+    }
+
+    public static string CreateConfiguration<T>(T item, string fileName = "") where T : new()
+    {
+        if (item is not null)
+        {
+            var yamlContainer = new YamlContainer<T> {Configuration = item, Version = "1.0"};
+            var serializer = new SerializerBuilder()
+                .WithNamingConvention(CamelCaseNamingConvention.Instance)
+                .Build();
+            var yamlData = serializer.Serialize(yamlContainer);
+            return yamlData;
+        }
+        return "--- item is null and can not be serialized ---";
+    }
+
+    public static YamlContainer<T> GetAppDataConfiguration<T>(T defaultIfMissing, string inputFileName = "") where T : new()
+    {
+        var directory = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\{nameof(PowerCommands)}";
+        if (!Directory.Exists(directory)) Directory.CreateDirectory(directory);
+        var fileName = Path.Combine(directory, inputFileName);
+        if (!File.Exists(fileName))
+        {
+            var yaml = CreateConfiguration(defaultIfMissing, fileName);
+            File.WriteAllText(fileName, yaml);
+        }
+        
+        var yamlContent = File.ReadAllText(fileName);
+        var deserializer = new DeserializerBuilder()
+            .WithNamingConvention(CamelCaseNamingConvention.Instance)
+            .Build();
+        return deserializer.Deserialize<YamlContainer<T>>(yamlContent) ?? new YamlContainer<T>();
+    }
 }

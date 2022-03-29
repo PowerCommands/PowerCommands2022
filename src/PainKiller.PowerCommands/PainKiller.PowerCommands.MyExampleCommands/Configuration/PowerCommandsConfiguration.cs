@@ -4,7 +4,7 @@ using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
 
 namespace PainKiller.PowerCommands.MyExampleCommands.Configuration;
 
-public class PowerCommandsConfiguration : BaseCommandsConfiguration
+public class PowerCommandsConfiguration : BasicCommandsConfiguration
 {
     private static PowerCommandsConfiguration? _instance;
     public static PowerCommandsConfiguration? Instance
@@ -18,5 +18,6 @@ public class PowerCommandsConfiguration : BaseCommandsConfiguration
         }
     }
     public KeyVaultConfig KeyVault { get; set; } = new();
+    public BaseComponentConfiguration MyExampleCommand { get; set; } = new();
 
 }

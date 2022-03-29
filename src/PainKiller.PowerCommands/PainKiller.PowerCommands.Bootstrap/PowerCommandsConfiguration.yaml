@@ -20,3 +20,7 @@ configuration:
     name: "Azure Key Vault"
     component: "PainKiller.AzureKeyVault.dll"
     checksum: "e6d2d6cb64863e9dc68a9602f83bcfde"
+  myExampleCommand:
+    name: "My Example Command"
+    component: "PainKiller.PowerCommands.MyExampleCommands.dll"
+    checksum: "e6d2d6cb64863e9dc68a9602f83bcfde"
