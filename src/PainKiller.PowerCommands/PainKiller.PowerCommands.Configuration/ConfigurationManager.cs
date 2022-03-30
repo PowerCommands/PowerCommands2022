@@ -7,7 +7,7 @@ namespace PainKiller.PowerCommands.Configuration;
 
 public static class ConfigurationManager
 {
-    public static YamlContainer<T> GetConfiguration<T>(string inputFileName = "") where T : new()
+    public static YamlContainer<T> Get<T>(string inputFileName = "") where T : new()
     {
         var fileName = string.IsNullOrEmpty(inputFileName) ? $"{typeof(T).Name}.yaml".GetSafePathRegardlessHowApplicationStarted() : inputFileName;
         var yamlContent = File.ReadAllText(fileName);
@@ -15,7 +15,7 @@ public static class ConfigurationManager
         var deserializer = new DeserializerBuilder()
             .WithNamingConvention(CamelCaseNamingConvention.Instance)
             .Build();
-        return deserializer.Deserialize<YamlContainer<T>>(yamlContent) ?? new YamlContainer<T>();
+        return deserializer.Deserialize<YamlContainer<T>>(yamlContent);
     }
 
     public static void Update<T>(T configuration, string inputFileName = "") where T : new()
@@ -30,7 +30,7 @@ public static class ConfigurationManager
         File.WriteAllText(fileName, yamlData);
     }
 
-    public static string CreateConfiguration<T>(T item, string fileName = "") where T : new()
+    public static string CreateContent<T>(T item) where T : new()
     {
         if (item is not null)
         {
@@ -51,7 +51,7 @@ public static class ConfigurationManager
         var fileName = Path.Combine(directory, inputFileName);
         if (!File.Exists(fileName))
         {
-            var yaml = CreateConfiguration(defaultIfMissing, fileName);
+            var yaml = CreateContent(defaultIfMissing);
             File.WriteAllText(fileName, yaml);
         }
         
@@ -59,6 +59,6 @@ public static class ConfigurationManager
         var deserializer = new DeserializerBuilder()
             .WithNamingConvention(CamelCaseNamingConvention.Instance)
             .Build();
-        return deserializer.Deserialize<YamlContainer<T>>(yamlContent) ?? new YamlContainer<T>();
+        return deserializer.Deserialize<YamlContainer<T>>(yamlContent);
     }
 }

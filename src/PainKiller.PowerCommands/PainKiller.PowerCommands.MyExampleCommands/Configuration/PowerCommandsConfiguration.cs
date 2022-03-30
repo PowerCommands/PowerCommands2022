@@ -12,7 +12,7 @@ public class PowerCommandsConfiguration : BasicCommandsConfiguration
         get
         {
             if(_instance != null) return _instance;
-            _instance = ConfigurationManager.GetConfiguration<PowerCommandsConfiguration>().Configuration;
+            _instance = ConfigurationManager.Get<PowerCommandsConfiguration>().Configuration;
             return _instance;
 
         }
