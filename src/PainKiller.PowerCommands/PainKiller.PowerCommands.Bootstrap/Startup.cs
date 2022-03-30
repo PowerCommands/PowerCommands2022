@@ -10,7 +10,7 @@ namespace PainKiller.PowerCommands.Bootstrap
     {
         private static PluginManager<PowerCommandsConfiguration>? _pluginManager;
 
-        public static void Initialize()
+        public static PowerCommandsConfiguration Initialize()
         {
             var configuration = PowerCommandsConfiguration.Instance ?? new PowerCommandsConfiguration();
             var logger = GetLoggerManager.GetFileLogger(configuration.Log.FileName.GetSafePathRegardlessHowApplicationStarted("logs"));
@@ -28,6 +28,7 @@ namespace PainKiller.PowerCommands.Bootstrap
                 logger.LogCritical(ex,"Critical error, program could not start");
                 throw;
             }
+            return configuration;
         }
     }
 }
