@@ -3,8 +3,8 @@
     public class BasicCommandsConfiguration
     {
         public bool ShowDiagnosticInformation { get; set; }
-        public Metadata Metadata { get; set; } = new Metadata();
-        public string[] Commands { get; set; } = new[]{""};
-        public LogComponentConfiguration Log { get; set; } = new LogComponentConfiguration();
+        public Metadata Metadata { get; set; } = new();
+        public LogComponentConfiguration Log { get; set; } = new();
+        public List<BaseComponentConfiguration> Components { get; set; } = new();
     }
 }

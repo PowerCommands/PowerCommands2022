@@ -17,10 +17,12 @@ public class ReflectionManager
         var retVal = new List<IConsoleCommand>();
 
         var types = assembly.GetTypes().Where(t => t.IsClass && t.Name.EndsWith("Command") && !t.IsAbstract).ToList();
+        if (types.Count == 0) return retVal;
 
         foreach (var commandType in types)
         {
-            Object[] args = { commandType.Name, configuration };
+            var constructorInfo = commandType.GetConstructors()[0];
+            Object[] args = { commandType.Name, (constructorInfo.GetParameters()[1].ParameterType == typeof(BasicCommandsConfiguration) ? configuration as BasicCommandsConfiguration : configuration)! };
             var command = (IConsoleCommand)Activator.CreateInstance(commandType, args)!;
             retVal.Add(command);
         }

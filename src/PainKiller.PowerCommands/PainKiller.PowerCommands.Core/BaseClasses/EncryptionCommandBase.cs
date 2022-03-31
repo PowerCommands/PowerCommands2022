@@ -3,12 +3,13 @@ using PainKiller.PowerCommands.Configuration.DomainObjects;
 using PainKiller.PowerCommands.Configuration.Enums;
 using PainKiller.PowerCommands.Security.Contracts;
 using PainKiller.PowerCommands.Security.Managers;
+using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
 
 namespace PainKiller.PowerCommands.Core.BaseClasses;
 
-public class EncryptionCommandBase : CommandBase
+public class EncryptionCommandBase : CommandBase<BasicCommandsConfiguration>
 {
-    public EncryptionCommandBase(string identifier) : base(identifier)
+    public EncryptionCommandBase(string identifier, BasicCommandsConfiguration configuration) : base(identifier, configuration)
     {
         SecurityConfiguration1 = ConfigurationManager.GetAppDataConfiguration(new SecurityConfiguration { Encryption = new EncryptionConfiguration { ShareSecretEnvironmentKey = nameof(IEncryptionManager), ShareSecretSalt = "-- salt --" } }, $"{ConfigurationFiles.Security}.yaml").Configuration;
         Salt = SecurityConfiguration1.Encryption.ShareSecretSalt;

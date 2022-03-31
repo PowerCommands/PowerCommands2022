@@ -4,10 +4,7 @@ configuration:
     true
   metadata: 
     name: "Test"
-    description: "En exempelbeskrivning"
-  commands:
-    - "EncryptionCommand"  
-    - "HelpCommand"
+    description: "En exempelbeskrivning"  
   log:
     name: "Serialog"
     component: "PainKiller.SerilogExtensions.dll"
@@ -16,11 +13,13 @@ configuration:
     rollingIntervall: "Day" # Infinite,Year,Month,Day,Hour,Minute
     restrictedToMinimumLevel: "Information" # Verbose, Debug,Information,Warning,Error,Fatal
     outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj}{NewLine}{Exception}"
-  keyVault:
+  components:
+  - component: "PainKiller.PowerCommands.Core.dll"    
+    checksum: "e6d2d6cb64863e9dc68a9602f83bcfde"
+    name: "PainKiller Core"
+  - component: "PainKiller.AzureKeyVault.dll"
+    checksum: "e6d2d6cb64863e9dc68a9602f83bcfde"
     name: "Azure Key Vault"
-    component: "PainKiller.AzureKeyVault.dll"
+  - component: "PainKiller.PowerCommands.MyExampleCommands.dll"
     checksum: "e6d2d6cb64863e9dc68a9602f83bcfde"
-  myExampleCommand:
     name: "My Example Command"
-    component: "PainKiller.PowerCommands.MyExampleCommands.dll"
-    checksum: "e6d2d6cb64863e9dc68a9602f83bcfde"

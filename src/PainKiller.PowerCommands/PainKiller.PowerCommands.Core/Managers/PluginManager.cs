@@ -42,23 +42,19 @@ public class PluginManager<TConfiguration> where TConfiguration : BasicCommandsC
         }
         return retVal;
     }
-
-    protected string AutofixConfigurationPlugins<T>(T configuration) where T : BasicCommandsConfiguration, new()
+    public string AutofixConfigurationPlugins<T>(T configuration) where T : BasicCommandsConfiguration, new()
     {
         var retVal = new StringBuilder();
-        var components = typeof(TConfiguration).GetPropertiesOfT<BaseComponentConfiguration>();
-
-        foreach (var propertyInfo in components)
+        foreach (var component in configuration.Components)
         {
-            if (propertyInfo.GetValue(_configuration) is not BaseComponentConfiguration instance) continue;
-            var fileCheckSum = new FileChecksum(instance.Component);
-            var validateCheckSum = fileCheckSum.CompareFileChecksum(instance.Checksum);
-            if (_configuration.ShowDiagnosticInformation) Console.WriteLine($"{instance.Name ?? "null"} Checksum {fileCheckSum.Mde5Hash} {validateCheckSum}");
+            var fileCheckSum = new FileChecksum(component.Component);
+            var validateCheckSum = fileCheckSum.CompareFileChecksum(component.Checksum);
+            if (_configuration.ShowDiagnosticInformation) Console.WriteLine($"{component.Name ?? "null"} Checksum {fileCheckSum.Mde5Hash} {validateCheckSum}");
             if (!validateCheckSum)
             {
-                propertyInfo.SetValue(instance, fileCheckSum.Mde5Hash);
+                component.Checksum = fileCheckSum.Mde5Hash;
                 ConfigurationManager.Update(configuration);
-                retVal.AppendLine($"{instance.Name ?? "null"} Checksum {fileCheckSum.Mde5Hash} {validateCheckSum} FIXED");
+                retVal.AppendLine($"{component.Name ?? "null"} Checksum {fileCheckSum.Mde5Hash} {validateCheckSum} FIXED");
             }
         }
         return retVal.ToString();
