@@ -7,27 +7,15 @@ using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
 
 namespace PainKiller.PowerCommands.Core.Managers;
 
-public class PluginManager<TConfiguration> where TConfiguration : BasicCommandsConfiguration
+public class ComponentManager<TConfiguration> where TConfiguration : BasicCommandsConfiguration
 {
     private readonly TConfiguration _configuration;
 
-    public PluginManager(TConfiguration configuration)
+    public ComponentManager(TConfiguration configuration)
     {
         _configuration = configuration;
     }
-    //public List<IConsoleCommand> GetCommands()
-    //{
-    //    var retVal = new List<IConsoleCommand>();
-    //    //Run through all plugin dll files that are included in the configuration
-    //    foreach (var pluginInfo in _configuration.PowerCommandPluginInfos.Where(p => !p.Disabled))
-    //    {
-    //        var commands = ReflectionManager.GetCommands(pluginInfo);
-    //        retVal.AddRange(commands);
-    //    }
-    //    return retVal;
-    //}
-
-    public bool ValidateConfigurationWithPlugins()
+    public bool ValidateConfigurationWithComponents()
     {
         var retVal = true;
         var components = typeof(TConfiguration).GetPropertiesOfT<BaseComponentConfiguration>();
@@ -42,7 +30,7 @@ public class PluginManager<TConfiguration> where TConfiguration : BasicCommandsC
         }
         return retVal;
     }
-    public string AutofixConfigurationPlugins<T>(T configuration) where T : BasicCommandsConfiguration, new()
+    public string AutofixConfigurationComponents<T>(T configuration) where T : BasicCommandsConfiguration, new()
     {
         var retVal = new StringBuilder();
         foreach (var component in configuration.Components)

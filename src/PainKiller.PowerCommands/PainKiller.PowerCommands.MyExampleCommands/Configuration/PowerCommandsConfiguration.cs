@@ -5,14 +5,5 @@ namespace PainKiller.PowerCommands.MyExampleCommands.Configuration;
 
 public class PowerCommandsConfiguration : BasicCommandsConfiguration
 {
-    private static PowerCommandsConfiguration? _instance;
-    public static PowerCommandsConfiguration? Instance
-    {
-        get
-        {
-            if(_instance != null) return _instance;
-            _instance = ConfigurationManager.Get<PowerCommandsConfiguration>().Configuration;
-            return _instance;
-        }
-    }
+    //Here is the placeholder for your custom configuration, you need to add the change to the PowerCommandsConfiguration.yaml file as well
 }

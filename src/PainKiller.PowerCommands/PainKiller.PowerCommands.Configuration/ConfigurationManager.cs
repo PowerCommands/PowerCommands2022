@@ -18,7 +18,7 @@ public static class ConfigurationManager
         return deserializer.Deserialize<YamlContainer<T>>(yamlContent);
     }
 
-    public static void Update<T>(T configuration, string inputFileName = "") where T : new()
+    public static string Update<T>(T configuration, string inputFileName = "default") where T : new()
     {
         var fileName = string.IsNullOrEmpty(inputFileName) ? $"{typeof(T).Name}.yaml".GetSafePathRegardlessHowApplicationStarted() : inputFileName;
 
@@ -28,6 +28,7 @@ public static class ConfigurationManager
             .Build();
         var yamlData = serializer.Serialize(yamlContainer);
         File.WriteAllText(fileName, yamlData);
+        return fileName;
     }
 
     public static string CreateContent<T>(T item) where T : new()

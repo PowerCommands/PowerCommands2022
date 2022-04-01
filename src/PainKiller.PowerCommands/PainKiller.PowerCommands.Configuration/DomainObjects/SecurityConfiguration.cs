@@ -2,5 +2,5 @@
 
 public class SecurityConfiguration
 {
-    public EncryptionConfiguration Encryption { get; set; }
+    public EncryptionConfiguration Encryption { get; set; } = new();
 }

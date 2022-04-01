@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using PainKiller.PowerCommands.Configuration;
 using PainKiller.PowerCommands.Configuration.Extensions;
 using PainKiller.PowerCommands.Core.Managers;
 using PainKiller.PowerCommands.MyExampleCommands.Configuration;
@@ -8,19 +9,18 @@ namespace PainKiller.PowerCommands.Bootstrap
 {
     public static class Startup
     {
-        private static PluginManager<PowerCommandsConfiguration>? _pluginManager;
-
-        public static PowerCommandsConfiguration Initialize()
+        public static PowerCommandsApplication Initialize()
         {
-            var configuration = PowerCommandsConfiguration.Instance ?? new PowerCommandsConfiguration();
+            var configuration = ConfigurationManager.Get<PowerCommandsConfiguration>().Configuration;
             var logger = GetLoggerManager.GetFileLogger(configuration.Log.FileName.GetSafePathRegardlessHowApplicationStarted("logs"));
+            var pcm = new PowerCommandsManager<PowerCommandsConfiguration>(configuration);
 
             logger.LogInformation("Program started, configuration read");
             
-            _pluginManager = new PluginManager<PowerCommandsConfiguration>(configuration);
+            var componentManager = new ComponentManager<PowerCommandsConfiguration>(configuration);
             try
             {
-                var validatePlugins = _pluginManager.ValidateConfigurationWithPlugins();
+                var validatePlugins = componentManager.ValidateConfigurationWithComponents();
                 if(!validatePlugins) Console.WriteLine("Some of the components did not pass security check...");
             }
             catch (Exception ex)
@@ -28,7 +28,7 @@ namespace PainKiller.PowerCommands.Bootstrap
                 logger.LogCritical(ex,"Critical error, program could not start");
                 throw;
             }
-            return configuration;
+            return new PowerCommandsApplication(pcm, configuration, logger);
         }
     }
 }

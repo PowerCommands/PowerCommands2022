@@ -2,6 +2,6 @@
 
 public class EncryptionConfiguration
 {
-    public string ShareSecretEnvironmentKey { get; set; }
-    public string ShareSecretSalt { get; set; }
+    public string SharedSecretEnvironmentKey { get; set; } = "";
+    public string SharedSecretSalt { get; set; } = "";
 }

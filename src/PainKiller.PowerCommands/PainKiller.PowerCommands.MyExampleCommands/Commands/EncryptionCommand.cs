@@ -9,11 +9,11 @@ public class EncryptionCommand : EncryptionCommandBase
 {
     public EncryptionCommand(string identifier, BasicCommandsConfiguration configuration) : base(identifier, configuration) { }
 
-    public override RunResult Run(string input)
+    public override RunResult Run(CommandLineInput input)
     {
-        var encrypt = EncryptString(input);
+        var encrypt = EncryptString(input.Arguments.First());
         Console.WriteLine(encrypt);
-        return new RunResult { Status = RunResultStatus.Ok };
+        return new(this, input, $"Input encrypted: {encrypt}", RunResultStatus.Ok);
     }
 
 

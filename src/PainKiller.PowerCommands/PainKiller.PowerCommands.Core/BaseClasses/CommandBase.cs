@@ -14,11 +14,11 @@ public abstract class CommandBase<TConfig> : IConsoleCommand where TConfig : new
     }
     public string Identifier { get; }
     protected TConfig Configuration { get; set; }
-    public virtual RunResult Run(string input)
+    public virtual RunResult Run(CommandLineInput input)
     {
         throw new NotImplementedException();
     }
-    public virtual Task<RunResult> RunAsync(string input)
+    public virtual Task<RunResult> RunAsync(CommandLineInput input)
     {
         throw new NotImplementedException();
     }

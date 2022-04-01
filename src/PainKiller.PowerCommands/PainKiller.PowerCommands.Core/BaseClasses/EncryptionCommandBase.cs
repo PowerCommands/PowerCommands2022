@@ -11,9 +11,9 @@ public class EncryptionCommandBase : CommandBase<BasicCommandsConfiguration>
 {
     public EncryptionCommandBase(string identifier, BasicCommandsConfiguration configuration) : base(identifier, configuration)
     {
-        SecurityConfiguration1 = ConfigurationManager.GetAppDataConfiguration(new SecurityConfiguration { Encryption = new EncryptionConfiguration { ShareSecretEnvironmentKey = nameof(IEncryptionManager), ShareSecretSalt = "-- salt --" } }, $"{ConfigurationFiles.Security}.yaml").Configuration;
-        Salt = SecurityConfiguration1.Encryption.ShareSecretSalt;
-        SharedSecret = Environment.GetEnvironmentVariable(SecurityConfiguration1.Encryption.ShareSecretEnvironmentKey, EnvironmentVariableTarget.User) ?? string.Empty;
+        SecurityConfiguration1 = ConfigurationManager.GetAppDataConfiguration(new SecurityConfiguration { Encryption = new EncryptionConfiguration { SharedSecretEnvironmentKey = nameof(IEncryptionManager), SharedSecretSalt = "-- salt --" } }, $"{ConfigurationFiles.Security}.yaml").Configuration;
+        Salt = SecurityConfiguration1.Encryption.SharedSecretSalt;
+        SharedSecret = Environment.GetEnvironmentVariable(SecurityConfiguration1.Encryption.SharedSecretEnvironmentKey, EnvironmentVariableTarget.User) ?? string.Empty;
     }
     protected SecurityConfiguration SecurityConfiguration1 { get; }
     protected string SharedSecret { get; }
