@@ -9,7 +9,7 @@
  - Reusable Commands
  - PowerCommands
 
- ![Alt text](PowerCommand_component_diagram.png?raw=true "Title")
+ ![Alt text](PowerCommand_component_diagram.png?raw=true "Component Diagram")
 
  ## PowerCommand Console
  ### Keep the Console appliakation as clean as possible
@@ -40,6 +40,12 @@ As the name of the PowerCommand class is used as an identifier, their name must 
 ### Store secrets outside the application path
  PowerCommands handles export and imports of environment variables using YAML files it is the preferred way to store secrets. Dont store sensitive information inside the application path as it will be to easy to steal with a simple copy and paste operation.
 
+# EXCEPTIONS HANDLING AND LOGGING
+## Reduce coad bloat by avoiding try and catch
+No need for try catch in PowerCommands Run method as the call already is encapsulated in a try catch block, to reduce coad bload let custom code just crasch and handle that by the PowerCommands runtime, it will be logged, it will be presented for the user in a generic way that not reveal sensitive informaiton that could be the case if you just use Console.WriteLine(ex.Message).
+## Reduce coad bloat by avoiding logging
+The runtime always logg information about the input and output from a PowerCommand execution, if you want to pass information from the PowerCommand to the log, you could use Output to to that.
+
 # CONFIGURATION
 ## Use YAML
  The PowerCommands.Configuration component has generic support for reading and writing object as YAML and that format should always be used for configuration files. 
@@ -53,4 +59,4 @@ The core configuration file PowerCommandsConfiguration.yaml should be located in
  The format of dokumentation in text should use the markdown format.
 ## Always describe your PowerCommands
  Be kind to your consumer as it often turn out to be you that are the consumer, fill in a shourt description of what the PowerCommand is doing and how to use it.
-## Use [Desription] attribute
+## Use Desription attribute

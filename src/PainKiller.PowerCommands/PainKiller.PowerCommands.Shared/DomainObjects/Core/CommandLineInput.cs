@@ -6,4 +6,6 @@ public class CommandLineInput
     public string Identifier { get; init; } = "";
     public string[] Quotes { get; init; } = null!;
     public string[] Arguments { get; init; } = null!;
+    public string SingleArgument => Arguments.Length > 0 ? Arguments[0] : "";
+    public string SingleQuote => Quotes.Length > 0 ? Quotes[0] : "";
 }

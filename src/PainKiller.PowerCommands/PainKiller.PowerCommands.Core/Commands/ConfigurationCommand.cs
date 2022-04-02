@@ -12,10 +12,11 @@ public class ConfigurationCommand : CommandBase<BasicCommandsConfiguration>
 
     public override RunResult Run(CommandLineInput input)
     {
-        if (input?.Arguments.First() == "create")
+        if (input?.SingleArgument == "create")
         {
             var fileName = ConfigurationManager.Update(new BasicCommandsConfiguration());
-            return new(this, input, $"A new default file named {fileName} has been created in the root directory", RunResultStatus.Ok);
+            AddOutput($"A new default file named {fileName} has been created in the root directory",true);
+            return CreateRunResult(this, input, RunResultStatus.Ok);
         }
         return new(this, input!, $"", RunResultStatus.Ok);
     }

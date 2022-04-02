@@ -12,9 +12,7 @@ public class EncryptionCommand : EncryptionCommandBase
     public override RunResult Run(CommandLineInput input)
     {
         var encrypt = EncryptString(input.Arguments.First());
-        Console.WriteLine(encrypt);
-        return new(this, input, $"Input encrypted: {encrypt}", RunResultStatus.Ok);
+        AddOutput($"Input encrypted: {encrypt}",true);
+        return CreateRunResult(this, input, RunResultStatus.Ok);
     }
-
-
 }
