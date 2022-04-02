@@ -6,7 +6,6 @@ namespace PainKiller.PowerCommands.Core.BaseClasses;
 
 public abstract class CommandBase<TConfig> : IConsoleCommand where TConfig : new()
 {
-    
     protected CommandBase(string identifier, TConfig configuration)
     {
         Identifier = identifier;

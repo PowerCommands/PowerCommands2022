@@ -5,8 +5,6 @@ VisualStudioVersion = 17.1.32228.430
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PainKiller.PowerCommands.Bootstrap", "PainKiller.PowerCommands.Bootstrap\PainKiller.PowerCommands.Bootstrap.csproj", "{0902370A-5117-4599-87D7-7A117E36E41E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PainKiller.PowerCommands.Tests", "PainKiller.PowerCommands.Tests\PainKiller.PowerCommands.Tests.csproj", "{AA86EB3F-3297-45AD-BC88-78CE90EC6AB4}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PainKiller.PowerCommands.PowerCommandsConsole", "PainKiller.PowerCommands.PowerCommandsConsole\PainKiller.PowerCommands.PowerCommandsConsole.csproj", "{A69842F5-5CB9-48EA-B8FE-98CED6446221}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PainKiller.PowerCommands.Configuration", "PainKiller.PowerCommands.Configuration\PainKiller.PowerCommands.Configuration.csproj", "{067D3840-C1F4-466C-9AFD-F510D0E6FE26}"
@@ -15,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PainKiller.PowerCommands.Co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PainKiller.PowerCommands.Security", "PainKiller.PowerCommands.Security\PainKiller.PowerCommands.Security.csproj", "{B6AC8E8B-A6D1-4071-95BF-C3BD435CBE94}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PainKiller.PowerCommands.Shared", "PainKiller.PowerCommands.Shared\PainKiller.PowerCommands.Shared.csproj", "{2584CDD8-9855-4CEE-9140-010E9AE63EB4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PainKiller.PowerCommands.Shared", "PainKiller.PowerCommands.Shared\PainKiller.PowerCommands.Shared.csproj", "{2584CDD8-9855-4CEE-9140-010E9AE63EB4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{4F52B8D3-D980-4D53-A2DF-1A80C35DE99E}"
 EndProject
@@ -27,9 +25,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PainKiller.SerilogExtension
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Custom Components", "Custom Components", "{7715E76B-D673-476C-A4EF-4AB31A8E3CD8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PainKiller.AzureKeyVault", "PainKiller.AzureKeyVault\PainKiller.AzureKeyVault.csproj", "{13CC0652-52C9-4675-8E45-0BAEC32D9431}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PainKiller.AzureKeyVault", "PainKiller.AzureKeyVault\PainKiller.AzureKeyVault.csproj", "{13CC0652-52C9-4675-8E45-0BAEC32D9431}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PainKiller.PowerCommands.MyExampleCommands", "PainKiller.PowerCommands.MyExampleCommands\PainKiller.PowerCommands.MyExampleCommands.csproj", "{C53C0EBD-1FEF-43F3-8AF9-285A4AB2A524}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PainKiller.PowerCommands.MyExampleCommands", "PainKiller.PowerCommands.MyExampleCommands\PainKiller.PowerCommands.MyExampleCommands.csproj", "{C53C0EBD-1FEF-43F3-8AF9-285A4AB2A524}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,10 +39,6 @@ Global
 		{0902370A-5117-4599-87D7-7A117E36E41E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0902370A-5117-4599-87D7-7A117E36E41E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0902370A-5117-4599-87D7-7A117E36E41E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AA86EB3F-3297-45AD-BC88-78CE90EC6AB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AA86EB3F-3297-45AD-BC88-78CE90EC6AB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AA86EB3F-3297-45AD-BC88-78CE90EC6AB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AA86EB3F-3297-45AD-BC88-78CE90EC6AB4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A69842F5-5CB9-48EA-B8FE-98CED6446221}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A69842F5-5CB9-48EA-B8FE-98CED6446221}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A69842F5-5CB9-48EA-B8FE-98CED6446221}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -82,7 +76,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{AA86EB3F-3297-45AD-BC88-78CE90EC6AB4} = {2FA267F2-8ED5-49F6-B718-C42A5DD6E9DD}
 		{067D3840-C1F4-466C-9AFD-F510D0E6FE26} = {4F52B8D3-D980-4D53-A2DF-1A80C35DE99E}
 		{946A896C-7251-40F2-A0D3-A2FD9E92632F} = {4F52B8D3-D980-4D53-A2DF-1A80C35DE99E}
 		{B6AC8E8B-A6D1-4071-95BF-C3BD435CBE94} = {4F52B8D3-D980-4D53-A2DF-1A80C35DE99E}

@@ -21,6 +21,18 @@
 ### Avoid changes in the PowerCommand Core, extend instead
  PowerCommand Framework is distributed as a Nuget Package and as open source code at Github, if you use the source code, avoid to change anything extend the functionallity instead if you feel that you need to do that. That way it is easier for you when something has changed in the Core.
 
+# REFLECTION
+## Naming conventions
+PowerCommands rely on reflection to find all existing PowerCommands that are valid runnable commands, to make this work some naming convention rules are used:
+ - A valid PowerCommand class name should end with "Command", for example RenameCommand or SendMailCommand otherwise they will be ignored by the runtime and could not be used.
+ - Some base PowerCommands exists in Core, their name ends with "Base" and are defined as abstract and intended to be inherited by other PowerCommands classes.
+### Reserved Command names
+As the name of the PowerCommand class is used as an identifier, their name must be uniquee, this are the core Commands that you should not use in your custom PowerCommands project
+ - ConfigurationCommand
+ - ExitCommand
+
+ If you have ShowDiagnostic enabled all defined PowerCommands will be shown on program start.
+
 # SECURITY
 ## Always encrypt secrets 
 ### Use EncryptManager
