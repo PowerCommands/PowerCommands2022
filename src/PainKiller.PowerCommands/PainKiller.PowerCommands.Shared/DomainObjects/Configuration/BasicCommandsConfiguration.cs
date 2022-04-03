@@ -1,6 +1,8 @@
-﻿namespace PainKiller.PowerCommands.Shared.DomainObjects.Configuration
+﻿using PainKiller.PowerCommands.Shared.Contracts;
+
+namespace PainKiller.PowerCommands.Shared.DomainObjects.Configuration
 {
-    public class BasicCommandsConfiguration
+    public class BasicCommandsConfiguration : IBasicCommandsConfiguration
     {
         public bool ShowDiagnosticInformation { get; set; } = true;
         public Metadata Metadata { get; set; } = new();

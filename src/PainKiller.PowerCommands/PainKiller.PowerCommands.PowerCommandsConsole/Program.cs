@@ -1,1 +1,1 @@
-﻿PainKiller.PowerCommands.Bootstrap.Startup.Initialize().Run();
+﻿PainKiller.PowerCommands.Bootstrap.Startup.ConfigureServices().Run();

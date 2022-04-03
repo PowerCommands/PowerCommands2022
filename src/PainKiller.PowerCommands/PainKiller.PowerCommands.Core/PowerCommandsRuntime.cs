@@ -1,17 +1,18 @@
 ﻿using PainKiller.PowerCommands.Core.Extensions;
+using PainKiller.PowerCommands.Core.Managers;
 using PainKiller.PowerCommands.Shared.Contracts;
 using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
 using PainKiller.PowerCommands.Shared.DomainObjects.Core;
 using PainKiller.PowerCommands.Shared.Enums;
 
-namespace PainKiller.PowerCommands.Core.Managers;
+namespace PainKiller.PowerCommands.Core;
 
-public class PowerCommandsManager<TConfig> : IPowerCommandsManager where TConfig : BasicCommandsConfiguration
+public class PowerCommandsRuntime<TConfig> : IPowerCommandsRuntime where TConfig : BasicCommandsConfiguration
 {
     private readonly TConfig _configuration;
     private readonly List<IConsoleCommand> _commands = new();
 
-    public PowerCommandsManager(TConfig configuration)
+    public PowerCommandsRuntime(TConfig configuration)
     {
         _configuration = configuration;
         Initialize();

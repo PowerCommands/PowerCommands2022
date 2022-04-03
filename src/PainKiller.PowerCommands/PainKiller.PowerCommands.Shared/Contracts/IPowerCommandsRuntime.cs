@@ -2,8 +2,7 @@
 
 namespace PainKiller.PowerCommands.Shared.Contracts;
 
-public interface IConsoleCommand
+public interface IPowerCommandsRuntime
 {
-    string Identifier { get; }
-    RunResult Run(CommandLineInput input);
+    RunResult ExecuteCommand(string rawInput);
 }

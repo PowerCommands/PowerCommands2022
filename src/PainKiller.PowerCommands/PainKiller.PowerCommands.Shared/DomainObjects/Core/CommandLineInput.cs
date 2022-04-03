@@ -1,6 +1,7 @@
-﻿namespace PainKiller.PowerCommands.Shared.DomainObjects.Core;
+﻿using PainKiller.PowerCommands.Shared.Contracts;
 
-public class CommandLineInput
+namespace PainKiller.PowerCommands.Shared.DomainObjects.Core;
+public class CommandLineInput : ICommandLineInput
 {
     public string Raw { get; init; } = "";
     public string Identifier { get; init; } = "";
