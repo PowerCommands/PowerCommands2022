@@ -2,6 +2,7 @@
 
 public interface IDiagnosticManager
 {
+    bool ShowDiagnostic { get; set; }
     void Message(string diagnostic);
     void Start();
     void Stop();

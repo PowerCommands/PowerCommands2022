@@ -47,7 +47,7 @@ public class ComponentManager<TConfiguration> where TConfiguration : CommandsCon
             if (!validateCheckSum)
             {
                 component.Checksum = fileCheckSum.Mde5Hash;
-                ConfigurationManager.Update(configuration);
+                ConfigurationManager.SaveChanges(configuration);
                 retVal.AppendLine($"{component.Name} Checksum {fileCheckSum.Mde5Hash} {validateCheckSum} FIXED");
             }
         }

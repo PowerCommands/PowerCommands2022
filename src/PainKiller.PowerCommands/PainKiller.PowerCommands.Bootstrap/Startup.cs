@@ -11,9 +11,10 @@ namespace PainKiller.PowerCommands.Bootstrap
         public static PowerCommandsManager ConfigureServices()
         {
             var services = PowerCommandServices.Service
-                .ShowDiagnostic(false)
-                .AddComponent("blabla","kjsdfakdf");
-                
+                .ShowDiagnostic(true)
+                .SetLogMinimumLevel(LogLevel.Information)
+                .PersistChanges();
+
 
             services.Logger.LogInformation("Program started, configuration read");
             
@@ -21,7 +22,8 @@ namespace PainKiller.PowerCommands.Bootstrap
             try
             {
                 var validatePlugins = componentManager.ValidateConfigurationWithComponents();
-                if(!validatePlugins) Console.WriteLine("Some of the components did not pass security check...");
+                if(!validatePlugins) services.Diagnostic.Message("Some of the components did not pass security check...");
+                services.Runtime.Initialize();
             }
             catch (Exception ex)
             {

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using PainKiller.PowerCommands.Configuration;
 using PainKiller.PowerCommands.MyExampleCommands;
 using PainKiller.PowerCommands.Security.DomainObjects;
 using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
@@ -10,6 +11,7 @@ public static class ServiceConfigurationExtensions
     public static PowerCommandServices ShowDiagnostic(this PowerCommandServices services, bool showDiagnostic)
     {
         services.Configuration.ShowDiagnosticInformation = showDiagnostic;
+        services.Diagnostic.ShowDiagnostic = showDiagnostic;
         return services;
     }
     public static PowerCommandServices SetMetadata(this PowerCommandServices services, Metadata metadata)
@@ -17,6 +19,7 @@ public static class ServiceConfigurationExtensions
         services.Configuration.Metadata = metadata;
         return services;
     }
+    /// <summary>Change must be persisted, restart needed</summary>
     public static PowerCommandServices SetLogMinimumLevel(this PowerCommandServices services, LogLevel logLevel)
     {
         services.Configuration.Log.RestrictedToMinimumLevel = logLevel.ToString();
@@ -28,10 +31,9 @@ public static class ServiceConfigurationExtensions
         services.Configuration.Components.Add(new BaseComponentConfiguration{Checksum = fileCheckSum,Component = assemblyName,Name = name});
         return services;
     }
-
-    public static PowerCommandServices SaveConfiguration(this PowerCommandServices services)
+    public static PowerCommandServices PersistChanges(this PowerCommandServices services)
     {
-        // TODO: Implement save configuration
+        ConfigurationManager.SaveChanges(services.Configuration, "");
         return services;
     }
 }

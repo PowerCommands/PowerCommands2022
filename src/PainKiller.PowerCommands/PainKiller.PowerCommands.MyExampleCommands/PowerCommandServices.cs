@@ -16,10 +16,11 @@ public class PowerCommandServices : IPowerCommandsService<PowerCommandsConfigura
         Configuration = ConfigurationManager.Get<PowerCommandsConfiguration>().Configuration; 
         Diagnostic = new DiagnosticManager(Configuration.ShowDiagnosticInformation);
         Runtime = new PowerCommandsRuntime<PowerCommandsConfiguration>(Configuration, Diagnostic); 
-        Logger = GetLoggerManager.GetFileLogger(Configuration.Log.FileName.GetSafePathRegardlessHowApplicationStarted(Configuration.Log.FilePath));
+        Logger = GetLoggerManager.GetFileLogger(Configuration.Log.FileName.GetSafePathRegardlessHowApplicationStarted(Configuration.Log.FilePath),Configuration.Log.RollingIntervall,Configuration.Log.RestrictedToMinimumLevel);
     }
 
     private static readonly Lazy<PowerCommandServices> Lazy = new(() => new PowerCommandServices());
+    
     // TODO:Could I use interface here? Problem with extension in Bootstrap
     public static PowerCommandServices Service => Lazy.Value;
     

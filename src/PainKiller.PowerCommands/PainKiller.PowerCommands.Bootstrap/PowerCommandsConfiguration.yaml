@@ -1,7 +1,6 @@
 ﻿version: "1.0"
 configuration: 
-  showDiagnosticInformation:
-    true
+  showDiagnosticInformation: true
   metadata: 
     name: "Test"
     description: "En exempelbeskrivning"  
@@ -12,8 +11,7 @@ configuration:
     fileName: "powercommands.log"   
     filePath: "logs"
     rollingIntervall: "Day" # Infinite,Year,Month,Day,Hour,Minute
-    restrictedToMinimumLevel: "Information" # Verbose, Debug,Information,Warning,Error,Critical
-    outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj}{NewLine}{Exception}"
+    restrictedToMinimumLevel: "Information" # Verbose, Debug,Information, Warning,Error,Critical    
   components:
   - component: "PainKiller.PowerCommands.Core.dll"    
     checksum: "e6d2d6cb64863e9dc68a9602f83bcfde"

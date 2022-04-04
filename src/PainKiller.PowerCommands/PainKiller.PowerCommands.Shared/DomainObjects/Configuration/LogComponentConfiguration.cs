@@ -12,5 +12,4 @@ public class LogComponentConfiguration : BaseComponentConfiguration
     public string FilePath { get; set; } = "logs";
     public string RollingIntervall { get; set; } = "Day";
     public string RestrictedToMinimumLevel { get; set; } = "Information";
-    public string OutputTemplate { get; set; } = "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj}{NewLine}{Exception}";
 }

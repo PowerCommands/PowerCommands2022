@@ -14,7 +14,7 @@ public class DecryptCommand : EncryptionCommandBase
     public override RunResult Run(CommandLineInput input)
     {
         var decrypt = DecryptString(input.Arguments.First());
-        AddOutput($"Input decryptet: {decrypt}", true);
+        WriteLine($"Input decryptet: {decrypt}", false);
         return CreateRunResult(this, input, RunResultStatus.Ok);
     }
 }

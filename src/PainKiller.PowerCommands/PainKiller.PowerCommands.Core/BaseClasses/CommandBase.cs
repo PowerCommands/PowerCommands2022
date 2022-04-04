@@ -31,9 +31,9 @@ public abstract class CommandBase<TConfig> : IConsoleCommand where TConfig : new
     {
         return new RunResult(executingCommand, input, _ouput.ToString(), status);
     }
-    protected void AddOutput(string output, bool writeToConsol = false)
+    protected void WriteLine(string output, bool addToOutput = true)
     {
-        _ouput.AppendLine(output);
-        if(writeToConsol) Console.WriteLine(output);
+        _ouput.AppendLine(addToOutput ? output : "*****");
+        Console.WriteLine(output);
     }
 }

@@ -22,11 +22,11 @@ public class PowerCommandsManager : IPowerCommandsManager
                 Console.Write("\npcm>");
                 var input = Console.ReadLine();
                 var interpretedInput = $"{input}".Interpret();
-                _services.Logger.LogInformation($"Console input Identifier:{interpretedInput.Identifier} raw {interpretedInput.Raw}");
+                _services.Logger.LogInformation($"Console input Identifier:{interpretedInput.Identifier} raw:{interpretedInput.Raw}");
                 _services.Diagnostic.Start();
                 runResult = _services.Runtime.ExecuteCommand($"{input}");
                 _services.Diagnostic.Stop();
-                _services.Logger.LogInformation($"Command {runResult.ExecutingCommand?.Identifier} run with input: [{runResult.Input.Raw}] output: [{runResult.Output}] status: [{runResult.Status}]");
+                _services.Logger.LogInformation($"Command {runResult.ExecutingCommand?.Identifier} run with input: [{runResult.Input.Raw}] output: [{runResult.Output.Trim()}] status: [{runResult.Status}]");
             }
             catch (ArgumentOutOfRangeException ex)
             {

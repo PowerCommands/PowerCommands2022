@@ -14,8 +14,8 @@ public class ConfigurationCommand : CommandBase<CommandsConfiguration>
     {
         if (input?.SingleArgument == "create")
         {
-            var fileName = ConfigurationManager.Update(new CommandsConfiguration());
-            AddOutput($"A new default file named {fileName} has been created in the root directory",true);
+            var fileName = ConfigurationManager.SaveChanges(new CommandsConfiguration());
+            WriteLine($"A new default file named {fileName} has been created in the root directory");
             return CreateRunResult(this, input, RunResultStatus.Ok);
         }
         return new(this, input!, $"", RunResultStatus.Ok);
