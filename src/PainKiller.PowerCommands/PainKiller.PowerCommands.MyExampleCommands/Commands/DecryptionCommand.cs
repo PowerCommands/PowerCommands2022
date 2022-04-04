@@ -5,9 +5,9 @@ using PainKiller.PowerCommands.Shared.Enums;
 
 namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
-public class DecryptionCommand : EncryptionCommandBase
+public class DecryptCommand : EncryptionCommandBase
 {
-    public DecryptionCommand(string identifier, BasicCommandsConfiguration configuration) : base(identifier, configuration)
+    public DecryptCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration)
     {
     }
 

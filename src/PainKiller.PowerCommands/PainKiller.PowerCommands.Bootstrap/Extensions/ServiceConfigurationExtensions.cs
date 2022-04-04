@@ -1,4 +1,5 @@
-﻿using PainKiller.PowerCommands.MyExampleCommands;
+﻿using Microsoft.Extensions.Logging;
+using PainKiller.PowerCommands.MyExampleCommands;
 using PainKiller.PowerCommands.Security.DomainObjects;
 using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
 
@@ -11,10 +12,26 @@ public static class ServiceConfigurationExtensions
         services.Configuration.ShowDiagnosticInformation = showDiagnostic;
         return services;
     }
+    public static PowerCommandServices SetMetadata(this PowerCommandServices services, Metadata metadata)
+    {
+        services.Configuration.Metadata = metadata;
+        return services;
+    }
+    public static PowerCommandServices SetLogMinimumLevel(this PowerCommandServices services, LogLevel logLevel)
+    {
+        services.Configuration.Log.RestrictedToMinimumLevel = logLevel.ToString();
+        return services;
+    }
     public static PowerCommandServices AddComponent(this PowerCommandServices services, string name, string assemblyName)
     {
         var fileCheckSum = new FileChecksum(assemblyName).Mde5Hash;
         services.Configuration.Components.Add(new BaseComponentConfiguration{Checksum = fileCheckSum,Component = assemblyName,Name = name});
+        return services;
+    }
+
+    public static PowerCommandServices SaveConfiguration(this PowerCommandServices services)
+    {
+        // TODO: Implement save configuration
         return services;
     }
 }

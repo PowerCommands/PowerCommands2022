@@ -10,8 +10,9 @@ configuration:
     component: "PainKiller.SerilogExtensions.dll"
     checksum: "173831af7e77b8bd33e32fce0b4e646d"
     fileName: "powercommands.log"   
+    filePath: "logs"
     rollingIntervall: "Day" # Infinite,Year,Month,Day,Hour,Minute
-    restrictedToMinimumLevel: "Information" # Verbose, Debug,Information,Warning,Error,Fatal
+    restrictedToMinimumLevel: "Information" # Verbose, Debug,Information,Warning,Error,Critical
     outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj}{NewLine}{Exception}"
   components:
   - component: "PainKiller.PowerCommands.Core.dll"    

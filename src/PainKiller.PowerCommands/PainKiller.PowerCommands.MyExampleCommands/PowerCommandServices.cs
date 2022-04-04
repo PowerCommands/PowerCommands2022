@@ -2,6 +2,7 @@
 using PainKiller.PowerCommands.Configuration;
 using PainKiller.PowerCommands.Configuration.Extensions;
 using PainKiller.PowerCommands.Core;
+using PainKiller.PowerCommands.Core.Managers;
 using PainKiller.PowerCommands.MyExampleCommands.Configuration;
 using PainKiller.PowerCommands.Shared.Contracts;
 using PainKiller.SerilogExtensions.Managers;
@@ -12,19 +13,18 @@ public class PowerCommandServices : IPowerCommandsService<PowerCommandsConfigura
 {
     private PowerCommandServices()
     {
-        var configuration = ConfigurationManager.Get<PowerCommandsConfiguration>().Configuration;
-        var logger = GetLoggerManager.GetFileLogger(configuration.Log.FileName.GetSafePathRegardlessHowApplicationStarted("logs"));
-        var pcr = new PowerCommandsRuntime<PowerCommandsConfiguration>(configuration);
-
-        Runtime = pcr;
-        Configuration = configuration;
-        Logger = logger;
+        Configuration = ConfigurationManager.Get<PowerCommandsConfiguration>().Configuration; 
+        Diagnostic = new DiagnosticManager(Configuration.ShowDiagnosticInformation);
+        Runtime = new PowerCommandsRuntime<PowerCommandsConfiguration>(Configuration, Diagnostic); 
+        Logger = GetLoggerManager.GetFileLogger(Configuration.Log.FileName.GetSafePathRegardlessHowApplicationStarted(Configuration.Log.FilePath));
     }
+
+    private static readonly Lazy<PowerCommandServices> Lazy = new(() => new PowerCommandServices());
+    // TODO:Could I use interface here? Problem with extension in Bootstrap
+    public static PowerCommandServices Service => Lazy.Value;
     
-    
-    private static readonly Lazy<PowerCommandServices> _service = new(() => new PowerCommandServices());
-    public static PowerCommandServices Service => _service.Value;
     public IPowerCommandsRuntime Runtime { get; }
     public PowerCommandsConfiguration Configuration { get; }
     public ILogger Logger { get; }
+    public IDiagnosticManager Diagnostic { get; }
 }

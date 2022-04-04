@@ -5,9 +5,9 @@ using PainKiller.PowerCommands.Shared.Enums;
 
 namespace PainKiller.PowerCommands.Core.Commands;
 
-public class ExitCommand : CommandBase<BasicCommandsConfiguration>
+public class ExitCommand : CommandBase<CommandsConfiguration>
 {
-    public ExitCommand(string identifier, BasicCommandsConfiguration configuration) : base(identifier, configuration) { }
+    public ExitCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
 
     public override RunResult Run(CommandLineInput input)
     {

@@ -40,11 +40,13 @@ As the name of the PowerCommand class is used as an identifier, their name must 
 ### Store secrets outside the application path
  PowerCommands handles export and imports of environment variables using YAML files it is the preferred way to store secrets. Dont store sensitive information inside the application path as it will be to easy to steal with a simple copy and paste operation.
 
-# EXCEPTIONS HANDLING AND LOGGING
+# EXCEPTIONS HANDLING, DIAGNOSTIC AND LOGGING
 ## Reduce coad bloat by avoiding try and catch
 No need for try catch in PowerCommands Run method as the call already is encapsulated in a try catch block, to reduce coad bload let custom code just crasch and handle that by the PowerCommands runtime, it will be logged, it will be presented for the user in a generic way that not reveal sensitive informaiton that could be the case if you just use Console.WriteLine(ex.Message).
 ## Reduce coad bloat by avoiding logging
 The runtime always logg information about the input and output from a PowerCommand execution, if you want to pass information from the PowerCommand to the log, you could use Output to to that.
+## Use Diagnostic to display information to user
+The Diagnostic service has the purpose to print out messages so use that rather then use Console.WriteLine, that way you can controll just how this messages should be handled. You could easaly swap or extend the standard Diagnostic service component. The Diagnostic service also has the funtionallity to time a method call and display it to the user.
 
 # CONFIGURATION
 ## Use YAML

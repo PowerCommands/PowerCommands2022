@@ -6,9 +6,9 @@ using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
 
 namespace PainKiller.PowerCommands.Core.BaseClasses;
 
-public abstract class EncryptionCommandBase : CommandBase<BasicCommandsConfiguration>
+public abstract class EncryptionCommandBase : CommandBase<CommandsConfiguration>
 {
-    public EncryptionCommandBase(string identifier, BasicCommandsConfiguration configuration) : base(identifier, configuration)
+    public EncryptionCommandBase(string identifier, CommandsConfiguration configuration) : base(identifier, configuration)
     {
         SecurityConfiguration1 = ConfigurationManager.GetAppDataConfiguration(new SecurityConfiguration { Encryption = new EncryptionConfiguration { SharedSecretEnvironmentKey = nameof(IEncryptionManager), SharedSecretSalt = "-- salt --" } }, ConfigurationConstants.SecurityFileName).Configuration;
         Salt = SecurityConfiguration1.Encryption.SharedSecretSalt;

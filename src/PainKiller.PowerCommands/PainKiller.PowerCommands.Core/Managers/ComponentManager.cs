@@ -3,17 +3,20 @@ using PainKiller.PowerCommands.Configuration;
 using PainKiller.PowerCommands.Core.Extensions;
 using PainKiller.PowerCommands.Security.DomainObjects;
 using PainKiller.PowerCommands.Security.Extensions;
+using PainKiller.PowerCommands.Shared.Contracts;
 using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
 
 namespace PainKiller.PowerCommands.Core.Managers;
 
-public class ComponentManager<TConfiguration> where TConfiguration : BasicCommandsConfiguration
+public class ComponentManager<TConfiguration> where TConfiguration : CommandsConfiguration
 {
     private readonly TConfiguration _configuration;
+    private readonly IDiagnosticManager _diagnostic;
 
-    public ComponentManager(TConfiguration configuration)
+    public ComponentManager(TConfiguration configuration, IDiagnosticManager diagnostic)
     {
         _configuration = configuration;
+        _diagnostic = diagnostic;
     }
     public bool ValidateConfigurationWithComponents()
     {
@@ -27,20 +30,20 @@ public class ComponentManager<TConfiguration> where TConfiguration : BasicComman
             var fileCheckSum = new FileChecksum(component.Component);
             var validateCheckSum = fileCheckSum.CompareFileChecksum(component.Checksum);
             if(!validateCheckSum) retVal = false;
-            if(_configuration.ShowDiagnosticInformation) Console.WriteLine($"{component.Name} Checksum {fileCheckSum.Mde5Hash} {validateCheckSum}");
+            _diagnostic.Message($"{component.Name} Checksum {fileCheckSum.Mde5Hash} {validateCheckSum}");
         }
         return retVal;
     }
     
     //TODO: Create a util application that uses this
-    public string AutofixConfigurationComponents<T>(T configuration) where T : BasicCommandsConfiguration, new()
+    public string AutofixConfigurationComponents<T>(T configuration) where T : CommandsConfiguration, new()
     {
         var retVal = new StringBuilder();
         foreach (var component in configuration.Components)
         {
             var fileCheckSum = new FileChecksum(component.Component);
             var validateCheckSum = fileCheckSum.CompareFileChecksum(component.Checksum);
-            if (_configuration.ShowDiagnosticInformation) Console.WriteLine($"{component.Name} Checksum {fileCheckSum.Mde5Hash} {validateCheckSum}");
+            _diagnostic.Message($"{component.Name} Checksum {fileCheckSum.Mde5Hash} {validateCheckSum}");
             if (!validateCheckSum)
             {
                 component.Checksum = fileCheckSum.Mde5Hash;

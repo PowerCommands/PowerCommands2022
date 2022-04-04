@@ -7,21 +7,23 @@ using PainKiller.PowerCommands.Shared.Enums;
 
 namespace PainKiller.PowerCommands.Core;
 
-public class PowerCommandsRuntime<TConfig> : IPowerCommandsRuntime where TConfig : BasicCommandsConfiguration
+public class PowerCommandsRuntime<TConfig> : IPowerCommandsRuntime where TConfig : CommandsConfiguration
 {
     private readonly TConfig _configuration;
+    private readonly IDiagnosticManager _diagnostic;
     private readonly List<IConsoleCommand> _commands = new();
 
-    public PowerCommandsRuntime(TConfig configuration)
+    public PowerCommandsRuntime(TConfig configuration, IDiagnosticManager diagnosticManager)
     {
         _configuration = configuration;
+        _diagnostic = diagnosticManager;
         Initialize();
     }
     private void Initialize()
     {
         var reflectionManager = new ReflectionManager();
         foreach (var component in _configuration.Components) _commands.AddRange(reflectionManager.GetCommands(component, _configuration));
-        if(_configuration.ShowDiagnosticInformation) foreach (var consoleCommand in _commands) Console.WriteLine(consoleCommand.Identifier);
+        if(_configuration.ShowDiagnosticInformation) foreach (var consoleCommand in _commands) _diagnostic.Message(consoleCommand.Identifier);
     }
     public RunResult ExecuteCommand(string rawInput)
     {

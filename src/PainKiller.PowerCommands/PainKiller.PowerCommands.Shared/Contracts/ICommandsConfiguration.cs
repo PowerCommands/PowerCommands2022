@@ -2,7 +2,7 @@
 
 namespace PainKiller.PowerCommands.Shared.Contracts;
 
-public interface IBasicCommandsConfiguration
+public interface ICommandsConfiguration
 {
     bool ShowDiagnosticInformation { get; set; }
     Metadata Metadata { get; set; }
