@@ -1,7 +1,7 @@
 ﻿namespace PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
 
-public class Metadata
+public record Metadata
 {
-    public string Name { get; set; } = nameof(Name);
-    public string Description { get; set; } = nameof(Description);
+    public string Name { get; init; } = nameof(Name);
+    public string Description { get; init; } = nameof(Description);
 }

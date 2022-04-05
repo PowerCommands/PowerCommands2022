@@ -33,6 +33,20 @@ As the name of the PowerCommand class is used as an identifier, their name must 
 
  If you have ShowDiagnostic enabled all defined PowerCommands will be shown on program start.
 
+ # NAMING CONVENTIONS
+ ## Directories
+ Directories should always be named in a plural form, like Managers, Enums, Services, Contracts and so on...
+ - **Contracts** contains interfaces
+ - **Managers** contains business logic classes with the postfix Manager, for exemple DiagnosticManager, ReflectionManager
+ - **Services** contains static och or Singleton classes acting as services to Managers or Commands
+ - **Enums** contain Enums
+ - **BaseClasses** contains base classes
+ - **Commands** contain valid PowerCommand classes
+ - **DomainObjects** contain simple classes for data transfer (POCO, DTO, Record)
+ - **Extensions** contains extensions classes
+ - **Events** contain custom events
+ - **Exceptions** contais custom exceptions 
+
 # SECURITY
 ## Always encrypt secrets 
 ### Use EncryptManager

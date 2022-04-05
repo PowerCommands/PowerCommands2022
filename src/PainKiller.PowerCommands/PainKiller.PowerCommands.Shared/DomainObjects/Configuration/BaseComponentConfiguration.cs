@@ -2,7 +2,7 @@
 
 public class BaseComponentConfiguration
 {
-    public string Component { get; set; } = "";
+    public string Component { get; init; } = "";
     public string Checksum { get; set; } = "";
-    public string Name { get; set; } = "";
+    public string Name { get; init; } = "";
 }

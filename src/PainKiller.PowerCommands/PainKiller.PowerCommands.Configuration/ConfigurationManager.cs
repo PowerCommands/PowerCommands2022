@@ -17,7 +17,6 @@ public static class ConfigurationManager
             .Build();
         return deserializer.Deserialize<YamlContainer<T>>(yamlContent);
     }
-
     public static string SaveChanges<T>(T configuration, string inputFileName = "default") where T : new()
     {
         var fileName = string.IsNullOrEmpty(inputFileName) ? $"{typeof(T).Name}.yaml".GetSafePathRegardlessHowApplicationStarted() : inputFileName;
@@ -43,7 +42,6 @@ public static class ConfigurationManager
         }
         return "--- item is null and can not be serialized ---";
     }
-
     public static YamlContainer<T> GetAppDataConfiguration<T>(T defaultIfMissing, string inputFileName = "") where T : new()
     {
         var directory = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\{nameof(PowerCommands)}";
