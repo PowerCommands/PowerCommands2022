@@ -6,10 +6,10 @@ namespace PainKiller.AzureKeyVault.DomainObjects
     {
         public KeyVaultEnvironmentVariableConfig()
         {
-            KeyVaultName = Environment.GetEnvironmentVariable("KEY_VAULT_NAME", EnvironmentVariableTarget.User) ?? "";
-            ClientId = Environment.GetEnvironmentVariable("AZURE_CLIENT_ID", EnvironmentVariableTarget.User) ?? "";
-            ClientSecret = Environment.GetEnvironmentVariable("AZURE_CLIENT_SECRET", EnvironmentVariableTarget.User) ?? "";
-            TenantId = Environment.GetEnvironmentVariable("AZURE_TENANT_ID", EnvironmentVariableTarget.User) ?? "";
+            KeyVaultName = Environment.GetEnvironmentVariable(EnvironmentVariableNames.KeyVaultName, EnvironmentVariableTarget.User) ?? "";
+            ClientId = Environment.GetEnvironmentVariable(EnvironmentVariableNames.ClientId, EnvironmentVariableTarget.User) ?? "";
+            ClientSecret = Environment.GetEnvironmentVariable(EnvironmentVariableNames.ClientSecret, EnvironmentVariableTarget.User) ?? "";
+            TenantId = Environment.GetEnvironmentVariable(EnvironmentVariableNames.TenantId, EnvironmentVariableTarget.User) ?? "";
             KvUri = "https://" + KeyVaultName + ".vault.azure.net";
         }
 

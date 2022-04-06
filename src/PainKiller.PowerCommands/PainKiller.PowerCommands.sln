@@ -29,6 +29,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PainKiller.AzureKeyVault", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PainKiller.PowerCommands.MyExampleCommands", "PainKiller.PowerCommands.MyExampleCommands\PainKiller.PowerCommands.MyExampleCommands.csproj", "{C53C0EBD-1FEF-43F3-8AF9-285A4AB2A524}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PainKiller.PowerCommands.ReadLine", "PainKiller.PowerCommands.ReadLine\PainKiller.PowerCommands.ReadLine.csproj", "{D388463E-847D-4FE0-939C-9DAE54F2B830}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +73,10 @@ Global
 		{C53C0EBD-1FEF-43F3-8AF9-285A4AB2A524}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C53C0EBD-1FEF-43F3-8AF9-285A4AB2A524}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C53C0EBD-1FEF-43F3-8AF9-285A4AB2A524}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D388463E-847D-4FE0-939C-9DAE54F2B830}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D388463E-847D-4FE0-939C-9DAE54F2B830}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D388463E-847D-4FE0-939C-9DAE54F2B830}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D388463E-847D-4FE0-939C-9DAE54F2B830}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -82,6 +88,7 @@ Global
 		{2584CDD8-9855-4CEE-9140-010E9AE63EB4} = {4F52B8D3-D980-4D53-A2DF-1A80C35DE99E}
 		{83CF467B-7C83-4855-A0BF-4F0BE8828BF1} = {40C31577-61E6-4337-8CB7-68D7B0FD5B08}
 		{13CC0652-52C9-4675-8E45-0BAEC32D9431} = {7715E76B-D673-476C-A4EF-4AB31A8E3CD8}
+		{D388463E-847D-4FE0-939C-9DAE54F2B830} = {4F52B8D3-D980-4D53-A2DF-1A80C35DE99E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CEFD0AAC-83D9-4B30-ABFA-67E1784F85B9}

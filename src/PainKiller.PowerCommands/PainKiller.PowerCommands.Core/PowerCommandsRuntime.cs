@@ -24,6 +24,7 @@ public class PowerCommandsRuntime<TConfig> : IPowerCommandsRuntime where TConfig
         foreach (var component in _configuration.Components) _commands.AddRange(reflectionManager.GetCommands(component, _configuration));
         if(_configuration.ShowDiagnosticInformation) foreach (var consoleCommand in _commands) _diagnostic.Message(consoleCommand.Identifier);
     }
+    public string[] CommandIDs => _commands.Select(c => c.Identifier).ToArray();
     public RunResult ExecuteCommand(string rawInput)
     {
         var input = rawInput.Interpret();

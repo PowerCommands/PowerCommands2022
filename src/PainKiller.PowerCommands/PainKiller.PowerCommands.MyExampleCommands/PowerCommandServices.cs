@@ -4,6 +4,7 @@ using PainKiller.PowerCommands.Configuration.Extensions;
 using PainKiller.PowerCommands.Core;
 using PainKiller.PowerCommands.Core.Managers;
 using PainKiller.PowerCommands.MyExampleCommands.Configuration;
+using PainKiller.PowerCommands.ReadLine;
 using PainKiller.PowerCommands.Shared.Contracts;
 using PainKiller.SerilogExtensions.Managers;
 
@@ -17,6 +18,7 @@ public class PowerCommandServices : IPowerCommandsService<PowerCommandsConfigura
         Diagnostic = new DiagnosticManager(Configuration.ShowDiagnosticInformation);
         Runtime = new PowerCommandsRuntime<PowerCommandsConfiguration>(Configuration, Diagnostic); 
         Logger = GetLoggerManager.GetFileLogger(Configuration.Log.FileName.GetSafePathRegardlessHowApplicationStarted(Configuration.Log.FilePath),Configuration.Log.RollingIntervall,Configuration.Log.RestrictedToMinimumLevel);
+        ReadLineService.InitializeAutoComplete(Runtime.CommandIDs, Runtime.CommandIDs);
     }
 
     private static readonly Lazy<PowerCommandServices> Lazy = new(() => new PowerCommandServices());

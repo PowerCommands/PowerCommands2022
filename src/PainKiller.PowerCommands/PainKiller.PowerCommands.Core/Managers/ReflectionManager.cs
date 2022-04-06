@@ -22,7 +22,7 @@ public class ReflectionManager
         foreach (var commandType in types)
         {
             var constructorInfo = commandType.GetConstructors()[0];
-            Object[] args = { commandType.Name.ToLower(), (constructorInfo.GetParameters()[1].ParameterType == typeof(CommandsConfiguration) ? configuration as CommandsConfiguration : configuration)! };
+            Object[] args = { commandType.Name.ToLower().Replace("command",""), (constructorInfo.GetParameters()[1].ParameterType == typeof(CommandsConfiguration) ? configuration as CommandsConfiguration : configuration)! };
             var command = (IConsoleCommand)Activator.CreateInstance(commandType, args)!;
             retVal.Add(command);
         }
