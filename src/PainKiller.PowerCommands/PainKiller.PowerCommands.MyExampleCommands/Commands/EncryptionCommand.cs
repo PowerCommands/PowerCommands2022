@@ -13,6 +13,7 @@ public class EncryptCommand : CommandBase<CommandsConfiguration>
     {
         var encrypt = EncryptionService.Service.EncryptString(input.SingleArgument);
         WriteLine($"Input encrypted: {encrypt}",false);
+
         return CreateRunResult(this, input, RunResultStatus.Ok);
     }
 }

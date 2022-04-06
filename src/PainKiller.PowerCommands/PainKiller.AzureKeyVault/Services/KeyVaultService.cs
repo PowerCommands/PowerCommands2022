@@ -1,17 +1,23 @@
 ﻿using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
 using PainKiller.AzureKeyVault.Contracts;
+using PainKiller.AzureKeyVault.DomainObjects;
 
 namespace PainKiller.AzureKeyVault.Managers
 {
     //https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-configure-app-access-web-apis#add-credentials-to-your-web-application
-    public class KeyVaultManager : IKeyVaultManager
+    public class KeyVaultService : IKeyVaultService
     {
         private readonly SecretClient _client;
-        public KeyVaultManager(IKeyVaultConfig config)
+        private KeyVaultService()
         {
+            var config = new KeyVaultEnvironmentVariableConfig();
             _client = new SecretClient(new Uri(config.KvUri), new ClientSecretCredential(config.TenantId, config.ClientId, config.ClientSecret));
         }
+
+        private static readonly Lazy<KeyVaultService> Lazy = new(() => new KeyVaultService());
+        public static KeyVaultService Service => Lazy.Value;
+
         public bool SetSecret(string secretName, string secretValue)
         {
             try

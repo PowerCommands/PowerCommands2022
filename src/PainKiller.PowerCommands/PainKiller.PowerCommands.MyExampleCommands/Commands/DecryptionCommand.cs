@@ -13,6 +13,7 @@ public class DecryptCommand : CommandBase<CommandsConfiguration>
     {
         var decrypt = EncryptionService.Service.DecryptString(input.SingleArgument);
         WriteLine($"Input decryptet: {decrypt}", false);
+
         return CreateRunResult(this, input, RunResultStatus.Ok);
     }
 }
