@@ -23,7 +23,6 @@ namespace PainKiller.PowerCommands.Bootstrap
             {
                 var validatePlugins = componentManager.ValidateConfigurationWithComponents();
                 if(!validatePlugins) services.Diagnostic.Message("Some of the components did not pass security check...");
-                services.Runtime.Initialize();
             }
             catch (Exception ex)
             {

@@ -17,8 +17,9 @@ public class PowerCommandsRuntime<TConfig> : IPowerCommandsRuntime where TConfig
     {
         _configuration = configuration;
         _diagnostic = diagnosticManager;
+        Initialize();
     }
-    public void Initialize()
+    private void Initialize()
     {
         var reflectionManager = new ReflectionManager();
         foreach (var component in _configuration.Components) _commands.AddRange(reflectionManager.GetCommands(component, _configuration));

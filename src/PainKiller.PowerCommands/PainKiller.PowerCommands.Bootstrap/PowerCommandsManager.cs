@@ -20,7 +20,7 @@ public class PowerCommandsManager : IPowerCommandsManager
             try
             {
                 Console.Write("\npcm>");
-                var input = Console.ReadLine();
+                var input = ReadLine.ReadLineService.Service.Read();
                 var interpretedInput = $"{input}".Interpret();
                 _services.Logger.LogInformation($"Console input Identifier:{interpretedInput.Identifier} raw:{interpretedInput.Raw}");
                 _services.Diagnostic.Start();

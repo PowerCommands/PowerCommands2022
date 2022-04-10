@@ -12,7 +12,7 @@ public static class CommandLineInputInterpreterExtension
         var raw = commandLineInput;
         var quotes = Regex.Matches(raw, "\\\"(.*?)\\\"").ToStringArray();
         var arguments = raw.RemoveQuotes(quotes).Split(' ').ToList();
-        var identifier = $"{arguments[0].ToLower()}command";
+        var identifier = $"{arguments[0].ToLower()}";
         arguments.RemoveAt(0);  //Remove identifier from arguments
 
         var retVal = new CommandLineInput {Arguments = arguments.ToArray(), Identifier = identifier, Quotes = quotes, Raw = raw};
