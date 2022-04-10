@@ -11,8 +11,7 @@ public class PowerCommandsRuntime<TConfig> : IPowerCommandsRuntime where TConfig
 {
     private readonly TConfig _configuration;
     private readonly IDiagnosticManager _diagnostic;
-    private readonly List<IConsoleCommand> _commands = new();
-
+    public List<IConsoleCommand> Commands { get; } = new();
     public PowerCommandsRuntime(TConfig configuration, IDiagnosticManager diagnosticManager)
     {
         _configuration = configuration;
@@ -22,14 +21,15 @@ public class PowerCommandsRuntime<TConfig> : IPowerCommandsRuntime where TConfig
     private void Initialize()
     {
         var reflectionManager = new ReflectionManager();
-        foreach (var component in _configuration.Components) _commands.AddRange(reflectionManager.GetCommands(component, _configuration));
-        if(_configuration.ShowDiagnosticInformation) foreach (var consoleCommand in _commands) _diagnostic.Message(consoleCommand.Identifier);
+        foreach (var component in _configuration.Components) Commands.AddRange(reflectionManager.GetCommands(component, _configuration));
+        if(_configuration.ShowDiagnosticInformation) foreach (var consoleCommand in Commands) _diagnostic.Message(consoleCommand.Identifier);
+        IPowerCommandsRuntime.DefaultInstance = this;
     }
-    public string[] CommandIDs => _commands.Select(c => c.Identifier).ToArray();
+    public string[] CommandIDs => Commands.Select(c => c.Identifier).ToArray();
     public RunResult ExecuteCommand(string rawInput)
     {
         var input = rawInput.Interpret();
-        var command = _commands.FirstOrDefault(c => c.Identifier.ToLower() == input.Identifier);
+        var command = Commands.FirstOrDefault(c => c.Identifier.ToLower() == input.Identifier);
         if (command == null) throw new ArgumentOutOfRangeException($"Could not identify any Commmand with identy {input.Identifier}");
         try { Latest = command.Run(input); }
         catch (Exception e) { Latest = new RunResult(command, input, e.Message, RunResultStatus.ExceptionThrown); }

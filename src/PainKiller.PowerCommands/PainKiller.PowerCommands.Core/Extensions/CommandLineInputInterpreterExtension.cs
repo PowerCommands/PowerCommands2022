@@ -15,8 +15,14 @@ public static class CommandLineInputInterpreterExtension
         var identifier = $"{arguments[0].ToLower()}";
         arguments.RemoveAt(0);  //Remove identifier from arguments
 
-        var retVal = new CommandLineInput {Arguments = arguments.ToArray(), Identifier = identifier, Quotes = quotes, Raw = raw};
+        var retVal = new CommandLineInput {Arguments = arguments.ToArray(), Identifier = identifier, Quotes = quotes, Raw = raw, Path = arguments.ToArray().ToPath()};
         return retVal;
+    }
+    public static string ToPath(this string[] inputArray)
+    {
+        if (inputArray == null || inputArray.Length > 1) return "";
+        var path = string.Join(' ', inputArray);
+        return path;
     }
     private static string RemoveQuotes(this string source, IEnumerable<string> matches)
     {

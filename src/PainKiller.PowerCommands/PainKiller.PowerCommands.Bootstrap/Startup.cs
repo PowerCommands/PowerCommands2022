@@ -15,7 +15,6 @@ namespace PainKiller.PowerCommands.Bootstrap
                 .SetLogMinimumLevel(LogLevel.Information)
                 .PersistChanges();
 
-
             services.Logger.LogInformation("Program started, configuration read");
             
             var componentManager = new ComponentManager<PowerCommandsConfiguration>(services.Configuration, services.Diagnostic);

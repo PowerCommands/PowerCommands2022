@@ -11,11 +11,14 @@ public class SuggestionProviderManager
     {
         try
         {
-            var inputArray = input.Split(" ");
+            var inputs = input.Split(" ").ToList();
+            if (inputs.Count < 2) return null;
+
+            inputs.RemoveAt(0);
 
             var buildPath = new List<string>();
             var startOfPathNotFound = true;
-            foreach (var inputFragment in inputArray)
+            foreach (var inputFragment in inputs)
             {
                 if (inputFragment.Contains(":\\")) startOfPathNotFound = false;
                 if (!startOfPathNotFound) buildPath.Add(inputFragment);

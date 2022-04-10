@@ -6,4 +6,6 @@ public interface IPowerCommandsRuntime
 {
     string[] CommandIDs { get; }
     RunResult ExecuteCommand(string rawInput);
+    List<IConsoleCommand> Commands { get; }
+    public static IPowerCommandsRuntime? DefaultInstance { get; protected set; }
 }

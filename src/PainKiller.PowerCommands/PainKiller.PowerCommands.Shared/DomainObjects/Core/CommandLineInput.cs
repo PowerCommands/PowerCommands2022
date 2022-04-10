@@ -9,4 +9,5 @@ public class CommandLineInput : ICommandLineInput
     public string[] Arguments { get; init; } = null!;
     public string SingleArgument => Arguments.Length > 0 ? Arguments[0] : "";
     public string SingleQuote => Quotes.Length > 0 ? Quotes[0] : "";
+    public string? Path { get; init; }
 }
