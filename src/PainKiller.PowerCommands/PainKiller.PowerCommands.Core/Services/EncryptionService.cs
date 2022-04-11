@@ -8,7 +8,7 @@ namespace PainKiller.PowerCommands.Core.Services;
 
 public class EncryptionService : IEncryptionService
 {
-    public EncryptionService() 
+    private EncryptionService() 
     {
         var securityConfiguration = ConfigurationManager.GetAppDataConfiguration(new SecurityConfiguration { Encryption = new EncryptionConfiguration { SharedSecretEnvironmentKey = nameof(_encryptionManager), SharedSecretSalt = "-- salt --" } }, ConfigurationConstants.SecurityFileName).Configuration;
         _salt = securityConfiguration.Encryption.SharedSecretSalt;
@@ -16,8 +16,8 @@ public class EncryptionService : IEncryptionService
         _encryptionManager = new AESEncryptionManager(_salt);
     }
 
-    private static readonly Lazy<EncryptionService> Lazy = new(() => new EncryptionService());
-    public static EncryptionService Service => Lazy.Value;
+    private static readonly Lazy<IEncryptionService> Lazy = new(() => new EncryptionService());
+    public static IEncryptionService Service => Lazy.Value;
 
     private readonly string _sharedSecret;
     private readonly string _salt;

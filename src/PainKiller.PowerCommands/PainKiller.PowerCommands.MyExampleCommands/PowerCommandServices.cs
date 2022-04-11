@@ -2,6 +2,7 @@
 using PainKiller.PowerCommands.Configuration;
 using PainKiller.PowerCommands.Configuration.Extensions;
 using PainKiller.PowerCommands.Core;
+using PainKiller.PowerCommands.Core.Extensions;
 using PainKiller.PowerCommands.Core.Managers;
 using PainKiller.PowerCommands.MyExampleCommands.Configuration;
 using PainKiller.PowerCommands.ReadLine;
@@ -18,7 +19,12 @@ public class PowerCommandServices : IExtendedPowerCommandServices<PowerCommandsC
         Diagnostic = new DiagnosticManager(ExtendedConfiguration.ShowDiagnosticInformation);
         Runtime = new PowerCommandsRuntime<PowerCommandsConfiguration>(ExtendedConfiguration, Diagnostic); 
         Logger = GetLoggerManager.GetFileLogger(ExtendedConfiguration.Log.FileName.GetSafePathRegardlessHowApplicationStarted(ExtendedConfiguration.Log.FilePath),ExtendedConfiguration.Log.RollingIntervall,ExtendedConfiguration.Log.RestrictedToMinimumLevel);
-        ReadLineService.InitializeAutoComplete(history: new string[]{},suggestions: Runtime.CommandIDs);
+        
+        var suggestions = new List<string>(Runtime.CommandIDs);
+        suggestions.AddRange(Runtime.CommandIDs.Select(s => $"describe {s}").ToList());
+        suggestions.AddRange(Runtime.Commands.Where(c => !string.IsNullOrEmpty(c.GetDefaultParameter())).Select(c => $"{c.Identifier} {c.GetDefaultParameter()}").ToList());
+
+        ReadLineService.InitializeAutoComplete(history: new string[]{},suggestions: suggestions.ToArray());
     }
 
     private static readonly Lazy<IExtendedPowerCommandServices<PowerCommandsConfiguration>> Lazy = new(() => new PowerCommandServices());

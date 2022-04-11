@@ -7,7 +7,11 @@ using PainKiller.PowerCommands.Shared.DomainObjects.Core;
 
 namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
-[PowerCommand(description: "Download a file that is provides as an argument", arguments: "url: Single argument must be a valid URL to something do download",qutes: "Single qute is the filename to be created, a full path could be provided but is not necessary", useAsync: true)]
+[PowerCommand(description: "Download a file that is provides as an argument",
+              arguments: "url: Single argument must be a valid URL to something do download",
+              qutes: "Single qute is the filename to be created, a full path could be provided but is not necessary", 
+              defaultParameter:"https://downloadurl.com \"filename.txt\"",
+              useAsync: true)]
 public class DownloadCommand : CommandBase<CommandsConfiguration>
 {
     private ProgressBar? progressbar = null;

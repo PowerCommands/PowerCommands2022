@@ -7,12 +7,15 @@ public class PowerCommandAttribute : Attribute
     public string Arguments { get; }
     public string Qutes { get; }
     public bool UseAsync { get; }
-
-    public PowerCommandAttribute(string description, string arguments = "", string qutes = "", bool useAsync = false)
+    public string Examples { get; }
+    public string DefaultParameter { get; }
+    public PowerCommandAttribute(string description, string arguments = "", string qutes = "", string example = "", string defaultParameter = "", bool useAsync = false)
     {
         Description = description;
         Arguments = arguments;
         Qutes = qutes;
         UseAsync = useAsync;
+        Examples = example;
+        DefaultParameter = defaultParameter;
     }
 }

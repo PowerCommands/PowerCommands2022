@@ -27,7 +27,15 @@ public static class ReflectionExtensions
 
     public static PowerCommandAttribute GetPowerCommandAttribute(this IConsoleCommand command)
     {
+        if (command == null) return new PowerCommandAttribute(description: "No command found...");
         var attributes = command.GetType().GetCustomAttributes(typeof(PowerCommandAttribute), inherit: false);
-        return attributes.Length == 0 ? new PowerCommandAttribute(description:"Command have no description") : (PowerCommandAttribute)attributes.First();
+        return attributes.Length == 0 ? new PowerCommandAttribute(description:"Command have no description attribute") : (PowerCommandAttribute)attributes.First();
+    }
+
+    public static string GetDefaultParameter(this IConsoleCommand command)
+    {
+        if (command == null) return "";
+        var attribute = command.GetType().GetCustomAttributes(typeof(PowerCommandAttribute), inherit: false).FirstOrDefault() as PowerCommandAttribute;
+        return attribute is null ? "" : attribute.DefaultParameter;
     }
 }

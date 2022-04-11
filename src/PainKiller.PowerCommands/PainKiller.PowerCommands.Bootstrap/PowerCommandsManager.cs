@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using PainKiller.PowerCommands.Core.Extensions;
+using PainKiller.PowerCommands.Core.Services;
 using PainKiller.PowerCommands.MyExampleCommands.Configuration;
 using PainKiller.PowerCommands.Shared.Contracts;
 using PainKiller.PowerCommands.Shared.DomainObjects.Core;
@@ -28,7 +29,7 @@ public class PowerCommandsManager : IPowerCommandsManager
             }
             catch (ArgumentOutOfRangeException ex)
             {
-                Console.WriteLine("Could not found any commands with a matching Id, please try again...");
+                Console.WriteLine("Could not found any commands with a matching Id, please try again, try help command to see wich commands are availible.");
                 Services.Logger.LogError(ex, "Could not found any commands with a matching Id");
             }
             catch (Exception e)
@@ -53,6 +54,7 @@ public class PowerCommandsManager : IPowerCommandsManager
                 Services.Logger.LogError(message);
                 Console.WriteLine(message);
                 Console.WriteLine(runResult.Output);
+                HelpService.Service.ShowHelp(runResult.ExecutingCommand!);
                 break;
             case RunResultStatus.RunExternalPowerCommand:
             case RunResultStatus.Initializing:

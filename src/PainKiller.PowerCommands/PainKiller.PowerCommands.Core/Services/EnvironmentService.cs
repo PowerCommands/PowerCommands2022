@@ -3,8 +3,10 @@ namespace PainKiller.PowerCommands.Core.Services;
 
 public class EnvironmentService : IEnvironmentService
 {
-    private static readonly Lazy<EnvironmentService> Lazy = new(() => new EnvironmentService());
-    public static EnvironmentService Service => Lazy.Value;
+    private EnvironmentService(){}
+
+    private static readonly Lazy<IEnvironmentService> Lazy = new(() => new EnvironmentService());
+    public static IEnvironmentService Service => Lazy.Value;
     public string GetEnvironmentVariable(string variableName, bool decrypt = false)
     {
         var retVal = Environment.GetEnvironmentVariable(variableName, EnvironmentVariableTarget.User) ?? "";

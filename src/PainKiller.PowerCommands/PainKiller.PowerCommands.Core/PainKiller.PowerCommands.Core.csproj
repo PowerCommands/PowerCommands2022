@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Commands\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\PainKiller.PowerCommands.Configuration\PainKiller.PowerCommands.Configuration.csproj" />
     <ProjectReference Include="..\PainKiller.PowerCommands.Security\PainKiller.PowerCommands.Security.csproj" />
     <ProjectReference Include="..\PainKiller.PowerCommands.Shared\PainKiller.PowerCommands.Shared.csproj" />
