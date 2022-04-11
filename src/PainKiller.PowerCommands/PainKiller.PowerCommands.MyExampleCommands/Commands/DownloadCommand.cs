@@ -33,6 +33,7 @@ public class DownloadCommand : CommandBase<CommandsConfiguration>
         {
             WriteLine($"Download content from {_downloadUrl} to file {_fileName} completed.");
             Console.Write("pcm>");
+            progressbar = null;
         }
         return false;
     }

@@ -2,10 +2,10 @@
 
 namespace PainKiller.PowerCommands.Shared.Contracts;
 
-public interface IPowerCommandsService<out TConfiguration> where TConfiguration : ICommandsConfiguration
+public interface IPowerCommandServices
 {
     IPowerCommandsRuntime Runtime { get; }
-    TConfiguration Configuration { get; }
+    ICommandsConfiguration Configuration { get; }
     ILogger Logger { get; }
     IDiagnosticManager Diagnostic { get; }
 }

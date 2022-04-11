@@ -19,7 +19,8 @@ public static class ConfigurationManager
     }
     public static string SaveChanges<T>(T configuration, string inputFileName = "default") where T : new()
     {
-        var fileName = string.IsNullOrEmpty(inputFileName) ? $"{typeof(T).Name}.yaml".GetSafePathRegardlessHowApplicationStarted() : inputFileName;
+        if (configuration is null) return "";
+        var fileName = string.IsNullOrEmpty(inputFileName) ? $"{configuration.GetType().Name}.yaml".GetSafePathRegardlessHowApplicationStarted() : inputFileName;
 
         var yamlContainer = new YamlContainer<T> { Configuration = configuration, Version = "1.0" };
         var serializer = new SerializerBuilder()

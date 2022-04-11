@@ -10,24 +10,25 @@ using PainKiller.SerilogExtensions.Managers;
 
 namespace PainKiller.PowerCommands.MyExampleCommands;
 
-public class PowerCommandServices : IPowerCommandsService<PowerCommandsConfiguration>
+public class PowerCommandServices : IExtendedPowerCommandServices<PowerCommandsConfiguration>
 {
     private PowerCommandServices()
     {
-        Configuration = ConfigurationManager.Get<PowerCommandsConfiguration>().Configuration; 
-        Diagnostic = new DiagnosticManager(Configuration.ShowDiagnosticInformation);
-        Runtime = new PowerCommandsRuntime<PowerCommandsConfiguration>(Configuration, Diagnostic); 
-        Logger = GetLoggerManager.GetFileLogger(Configuration.Log.FileName.GetSafePathRegardlessHowApplicationStarted(Configuration.Log.FilePath),Configuration.Log.RollingIntervall,Configuration.Log.RestrictedToMinimumLevel);
+        ExtendedConfiguration = ConfigurationManager.Get<PowerCommandsConfiguration>().Configuration;
+        Diagnostic = new DiagnosticManager(ExtendedConfiguration.ShowDiagnosticInformation);
+        Runtime = new PowerCommandsRuntime<PowerCommandsConfiguration>(ExtendedConfiguration, Diagnostic); 
+        Logger = GetLoggerManager.GetFileLogger(ExtendedConfiguration.Log.FileName.GetSafePathRegardlessHowApplicationStarted(ExtendedConfiguration.Log.FilePath),ExtendedConfiguration.Log.RollingIntervall,ExtendedConfiguration.Log.RestrictedToMinimumLevel);
         ReadLineService.InitializeAutoComplete(history: new string[]{},suggestions: Runtime.CommandIDs);
     }
 
-    private static readonly Lazy<PowerCommandServices> Lazy = new(() => new PowerCommandServices());
+    private static readonly Lazy<IExtendedPowerCommandServices<PowerCommandsConfiguration>> Lazy = new(() => new PowerCommandServices());
     
     // TODO:Could I use interface here? Problem with extension in Bootstrap
-    public static PowerCommandServices Service => Lazy.Value;
+    public static IExtendedPowerCommandServices<PowerCommandsConfiguration> Service => Lazy.Value;
     
     public IPowerCommandsRuntime Runtime { get; }
-    public PowerCommandsConfiguration Configuration { get; }
+    public ICommandsConfiguration Configuration => ExtendedConfiguration as ICommandsConfiguration;
+    public PowerCommandsConfiguration ExtendedConfiguration { get; }
     public ILogger Logger { get; }
     public IDiagnosticManager Diagnostic { get; }
 }

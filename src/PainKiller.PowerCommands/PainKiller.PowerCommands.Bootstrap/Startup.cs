@@ -17,7 +17,7 @@ namespace PainKiller.PowerCommands.Bootstrap
 
             services.Logger.LogInformation("Program started, configuration read");
             
-            var componentManager = new ComponentManager<PowerCommandsConfiguration>(services.Configuration, services.Diagnostic);
+            var componentManager = new ComponentManager<PowerCommandsConfiguration>(services.ExtendedConfiguration, services.Diagnostic);
             try
             {
                 var validatePlugins = componentManager.ValidateConfigurationWithComponents();

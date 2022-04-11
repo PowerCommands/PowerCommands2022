@@ -15,18 +15,25 @@ public class HelpCommand : CommandBase<CommandsConfiguration>
 
     public override RunResult Run(CommandLineInput input)
     {
-        var command = IPowerCommandsRuntime.DefaultInstance.Commands.FirstOrDefault(c => c.Identifier == input.SingleArgument);
+        var command = IPowerCommandsRuntime.DefaultInstance?.Commands.FirstOrDefault(c => c.Identifier == input.SingleArgument);
         if (command == null)
         {
             WriteLine($"Command with identifier:{input.Identifier} not found");
             WriteLine("Found commands are:", addToOutput: false);
-            foreach (var consoleCommand in IPowerCommandsRuntime.DefaultInstance.Commands) WriteLine(consoleCommand.Identifier, addToOutput: false);
+            foreach (var consoleCommand in IPowerCommandsRuntime.DefaultInstance?.Commands) WriteLine(consoleCommand.Identifier, addToOutput: false);
             return CreateRunResult(this, input, RunResultStatus.SyntaxError);
         }
-        var descriptionAttribute = command.GetPowerCommandAttribute();
-        WriteLine(descriptionAttribute.Description, addToOutput: false);
-        WriteLine($"{nameof(descriptionAttribute.Arguments)}: {descriptionAttribute.Arguments}", addToOutput: false);
-        WriteLine($"{nameof(descriptionAttribute.Qutes)}: {descriptionAttribute.Qutes}", addToOutput: false);
+        
+        var da = command.GetPowerCommandAttribute();
+        WriteLine(da.Description, addToOutput: false);
+        var args = da.Arguments.Split('|');
+        var qutes = da.Qutes.Split('|');
+        
+        WriteLine($"{nameof(da.Arguments)}:", addToOutput: false);
+        foreach (var a in args) WriteLine(a, addToOutput: false);
+
+        WriteLine($"{nameof(da.Qutes)}:", addToOutput: false);
+        foreach (var q in qutes) WriteLine(q, addToOutput: false);
 
         return CreateRunResult(this, input, RunResultStatus.Ok);
     }
