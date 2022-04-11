@@ -34,7 +34,7 @@ public static class ServiceConfigurationExtensions
     }
     public static TPowerCommandServices PersistChanges<TPowerCommandServices>(this TPowerCommandServices services) where TPowerCommandServices : IPowerCommandServices
     {
-        ConfigurationManager.SaveChanges((object) services.Configuration, "");
+        ConfigurationService.Service.SaveChanges((object) services.Configuration, "");
         return services;
     }
 }

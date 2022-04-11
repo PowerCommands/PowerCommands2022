@@ -15,7 +15,7 @@ public class PowerCommandServices : IExtendedPowerCommandServices<PowerCommandsC
 {
     private PowerCommandServices()
     {
-        ExtendedConfiguration = ConfigurationManager.Get<PowerCommandsConfiguration>().Configuration;
+        ExtendedConfiguration = ConfigurationService.Service.Get<PowerCommandsConfiguration>().Configuration;
         Diagnostic = new DiagnosticManager(ExtendedConfiguration.ShowDiagnosticInformation);
         Runtime = new PowerCommandsRuntime<PowerCommandsConfiguration>(ExtendedConfiguration, Diagnostic); 
         Logger = GetLoggerManager.GetFileLogger(ExtendedConfiguration.Log.FileName.GetSafePathRegardlessHowApplicationStarted(ExtendedConfiguration.Log.FilePath),ExtendedConfiguration.Log.RollingIntervall,ExtendedConfiguration.Log.RestrictedToMinimumLevel);

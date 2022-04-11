@@ -5,7 +5,6 @@ using PainKiller.PowerCommands.Shared.DomainObjects.Core;
 using PainKiller.PowerCommands.Shared.Enums;
 
 namespace PainKiller.PowerCommands.Core.BaseClasses;
-
 public abstract class CommandBase<TConfig> : IConsoleCommand where TConfig : new()
 {
     private readonly StringBuilder _ouput = new();
@@ -16,30 +15,18 @@ public abstract class CommandBase<TConfig> : IConsoleCommand where TConfig : new
     }
     public string Identifier { get; }
     protected TConfig Configuration { get; set; }
-    public virtual RunResult Run(CommandLineInput input)
-    {
-        throw new NotImplementedException();
-    }
-
-    public virtual async Task RunAsync(CommandLineInput input)
-    {
-        throw new NotImplementedException();
-    }
-
+    public virtual RunResult Run(CommandLineInput input) => throw new NotImplementedException();
+    public virtual async Task RunAsync(CommandLineInput input) => await Task.FromResult(true);
     protected string RootPath()
     {
         var retVal = Assembly.GetEntryAssembly()?.Location ?? "";
         retVal = retVal.Replace($"{Assembly.GetEntryAssembly()?.GetName(false).Name}.dll", "");
         return retVal;
     }
-
-    protected RunResult CreateRunResult(IConsoleCommand executingCommand, CommandLineInput input, RunResultStatus status)
-    {
-        return new RunResult(executingCommand, input, _ouput.ToString(), status);
-    }
+    protected RunResult CreateRunResult(IConsoleCommand executingCommand, CommandLineInput input, RunResultStatus status) => new(executingCommand, input, _ouput.ToString(), status);
     protected void WriteLine(string output, bool addToOutput = true)
     {
-        _ouput.AppendLine(addToOutput ? output : "*****");
+        if(addToOutput) _ouput.AppendLine(output);
         Console.WriteLine(output);
     }
 }

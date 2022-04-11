@@ -20,8 +20,8 @@ public static class CommandLineInputInterpreterExtension
     }
     public static string ToPath(this string[] inputArray)
     {
-        if (inputArray == null || inputArray.Length > 1) return "";
-        var path = string.Join(' ', inputArray);
+        if (inputArray.Length > 1) return "";
+        var path = Join(' ', inputArray);
         return path;
     }
     private static string RemoveQuotes(this string source, IEnumerable<string> matches)

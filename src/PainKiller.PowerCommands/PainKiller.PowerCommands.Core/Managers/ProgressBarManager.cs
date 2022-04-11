@@ -29,15 +29,28 @@ using System;
 /// </example>
 public class ProgressBar
 {
+    // A flag used for preventing multiple initialization.
+    private bool _enabled;
+    // The row index of the progress bar.
+    private int _cursorTop;
+    // The column index of the progress bar.
+    private int _cursorLeft;
+    // The percentage of the progress.
+    private int _percentage;
+    // The current count of the progress.
+    private long _count;
+    // Total item number that to be processed.
+    private readonly long _total;
+    // The text width on the left side of the progress bar.
+    private const int TextWidth = 6;
+
     /// <summary>
     /// Create a default progress bar.
     /// </summary>
     /// <remarks>
     /// The progress bar created this way can only updated by percent.
     /// </remarks>
-    public ProgressBar()
-    {
-    }
+    public ProgressBar() { }
 
     /// <summary>
     /// Create a progress bar with specified total number.
@@ -45,7 +58,7 @@ public class ProgressBar
     /// <param name="total">Total number which indicates the 100% progress.</param>
     public ProgressBar(long total)
     {
-        this.total = total;
+        this._total = total;
     }
 
     /// <summary>
@@ -53,10 +66,10 @@ public class ProgressBar
     /// </summary>
     public void Show()
     {
-        if (enabled == false)
+        if (_enabled == false)
         {
-            enabled = true;
-            cursorTop = Console.CursorTop;
+            _enabled = true;
+            _cursorTop = Console.CursorTop;
             Console.WriteLine("0%");
         }
     }
@@ -66,7 +79,7 @@ public class ProgressBar
     /// </summary>
     public void UpdateOnce()
     {
-        Update(++count * 1.0 / total);
+        Update(++_count * 1.0 / _total);
     }
 
     /// <summary>
@@ -75,8 +88,8 @@ public class ProgressBar
     /// <param name="count">The processed item count.</param>
     public void Update(long count)
     {
-        this.count = count;
-        Update(count * 1.0 / total);
+        this._count = count;
+        Update(count * 1.0 / _total);
     }
 
     /// <summary>
@@ -85,12 +98,12 @@ public class ProgressBar
     /// <param name="percent">The processed percentage.</param>
     public void Update(double percent)
     {
-        if (enabled == false)
+        if (_enabled == false)
         {
             return;
         }
         // Update only when percentage reaches a higher integer.
-        if (Math.Round(percent * 100) <= this.percentage)
+        if (Math.Round(percent * 100) <= this._percentage)
         {
             return;
         }
@@ -99,21 +112,21 @@ public class ProgressBar
         ConsoleColor originBackgroundColor = Console.BackgroundColor;
         ConsoleColor originForegroundColor = Console.ForegroundColor;
 
-        int width = Console.WindowWidth - textWidth;
-        percentage = (int)Math.Round(percent * 100);
+        int width = Console.WindowWidth - TextWidth;
+        _percentage = (int)Math.Round(percent * 100);
 
         // Write percentage text.
-        Console.SetCursorPosition(0, cursorTop);
-        Console.Write(new string(' ', textWidth));
-        Console.SetCursorPosition(0, cursorTop);
-        Console.Write($"{percentage}%");
+        Console.SetCursorPosition(0, _cursorTop);
+        Console.Write(new string(' ', TextWidth));
+        Console.SetCursorPosition(0, _cursorTop);
+        Console.Write($"{_percentage}%");
 
         // Print progress bar.
         Console.BackgroundColor = originForegroundColor;
         int newCursorLeft = (int)Math.Round(percent * width);
-        for (int cursor = cursorLeft; cursor < newCursorLeft; cursor++)
+        for (int cursor = _cursorLeft; cursor < newCursorLeft; cursor++)
         {
-            Console.SetCursorPosition(textWidth + cursor, cursorTop);
+            Console.SetCursorPosition(TextWidth + cursor, _cursorTop);
             Console.Write(' ');
         }
 
@@ -124,21 +137,6 @@ public class ProgressBar
         Console.CursorLeft = originCursorLeft;
 
         // Record the drawn position.
-        cursorLeft = newCursorLeft;
+        _cursorLeft = newCursorLeft;
     }
-
-    // A flag used for preventing multiple initialization.
-    private bool enabled = false;
-    // The row index of the progress bar.
-    private int cursorTop = 0;
-    // The column index of the progress bar.
-    private int cursorLeft = 0;
-    // The percentage of the progress.
-    private int percentage = 0;
-    // The current count of the progress.
-    private long count = 0;
-    // Total item number that to be processed.
-    private long total = 0;
-    // The text width on the left side of the progress bar.
-    private const int textWidth = 6;
 }

@@ -22,7 +22,8 @@ public class ReflectionManager
         foreach (var commandType in types)
         {
             var constructorInfo = commandType.GetConstructors()[0];
-            Object[] args = { commandType.Name.ToLower().Replace("command",""), (constructorInfo.GetParameters()[1].ParameterType == typeof(CommandsConfiguration) ? configuration as CommandsConfiguration : configuration)! };
+            var name = commandType.Name.ToLower();
+            Object[] args = { name.Substring(0, name.Length - 7), (constructorInfo.GetParameters()[1].ParameterType == typeof(CommandsConfiguration) ? configuration as CommandsConfiguration : configuration)};
             var command = (IConsoleCommand)Activator.CreateInstance(commandType, args)!;
             retVal.Add(command);
         }

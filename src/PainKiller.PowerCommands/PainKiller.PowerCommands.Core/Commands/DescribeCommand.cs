@@ -18,7 +18,7 @@ public class DescribeCommand : CommandBase<CommandsConfiguration>
         var command = IPowerCommandsRuntime.DefaultInstance?.Commands.FirstOrDefault(c => c.Identifier == input.SingleArgument);
         if (command == null)
         {
-            WriteLine($"Command with identifier:{input.Identifier} not found");
+            if(input.Identifier != nameof(DescribeCommand).ToLower().Replace("command","")) WriteLine($"Command with identifier:{input.Identifier} not found");
             WriteLine("Found commands are:", addToOutput: false);
             foreach (var consoleCommand in IPowerCommandsRuntime.DefaultInstance?.Commands!) WriteLine(consoleCommand.Identifier, addToOutput: false);
             return CreateRunResult(this, input, RunResultStatus.Ok);

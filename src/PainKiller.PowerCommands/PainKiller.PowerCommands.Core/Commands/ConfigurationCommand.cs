@@ -14,9 +14,9 @@ public class ConfigurationCommand : CommandBase<CommandsConfiguration>
 
     public override RunResult Run(CommandLineInput input)
     {
-        if (input?.SingleArgument == "create")
+        if (input.SingleArgument == "create")
         {
-            var fileName = ConfigurationManager.SaveChanges(new CommandsConfiguration());
+            var fileName = ConfigurationService.Service.SaveChanges(new CommandsConfiguration());
             WriteLine($"A new default file named {fileName} has been created in the root directory");
             return CreateRunResult(this, input, RunResultStatus.Ok);
         }

@@ -10,7 +10,7 @@ public class EncryptionService : IEncryptionService
 {
     private EncryptionService() 
     {
-        var securityConfiguration = ConfigurationManager.GetAppDataConfiguration(new SecurityConfiguration { Encryption = new EncryptionConfiguration { SharedSecretEnvironmentKey = nameof(_encryptionManager), SharedSecretSalt = "-- salt --" } }, ConfigurationConstants.SecurityFileName).Configuration;
+        var securityConfiguration = ConfigurationService.Service.GetAppDataConfiguration(new SecurityConfiguration { Encryption = new EncryptionConfiguration { SharedSecretEnvironmentKey = nameof(_encryptionManager), SharedSecretSalt = "-- salt --" } }, ConfigurationConstants.SecurityFileName).Configuration;
         _salt = securityConfiguration.Encryption.SharedSecretSalt;
         _sharedSecret = Environment.GetEnvironmentVariable(securityConfiguration.Encryption.SharedSecretEnvironmentKey, EnvironmentVariableTarget.User) ?? string.Empty;
         _encryptionManager = new AESEncryptionManager(_salt);
