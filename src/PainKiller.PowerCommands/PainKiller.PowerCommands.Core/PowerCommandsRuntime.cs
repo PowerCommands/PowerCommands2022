@@ -31,8 +31,23 @@ public class PowerCommandsRuntime<TConfig> : IPowerCommandsRuntime where TConfig
         var input = rawInput.Interpret();
         var command = Commands.FirstOrDefault(c => c.Identifier.ToLower() == input.Identifier);
         if (command == null) throw new ArgumentOutOfRangeException($"Could not identify any Commmand with identy {input.Identifier}");
+        if (command.GetPowerCommandAttribute().UseAsync) return ExecuteAsyncCommand(command, input);
         try { Latest = command.Run(input); }
         catch (Exception e) { Latest = new RunResult(command, input, e.Message, RunResultStatus.ExceptionThrown); }
+        return Latest;
+    }
+
+    public RunResult ExecuteAsyncCommand(IConsoleCommand command, CommandLineInput input)
+    {
+        try
+        {
+            command.RunAsync(input);
+        }
+        catch (Exception e)
+        {
+            Latest = new RunResult(command, input, e.Message, RunResultStatus.ExceptionThrown);
+        }
+        Latest = new RunResult(command, input, "Command running async operation", RunResultStatus.Ok);
         return Latest;
     }
     public RunResult? Latest { get; private set; }

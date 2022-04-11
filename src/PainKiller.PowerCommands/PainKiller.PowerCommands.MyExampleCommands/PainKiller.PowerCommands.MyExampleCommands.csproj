@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PainKiller.AzureKeyVault\PainKiller.AzureKeyVault.csproj" />
+    <ProjectReference Include="..\PainKiller.HttpClientUtils\PainKiller.HttpClientUtils.csproj" />
     <ProjectReference Include="..\PainKiller.PowerCommands.Configuration\PainKiller.PowerCommands.Configuration.csproj" />
     <ProjectReference Include="..\PainKiller.PowerCommands.Core\PainKiller.PowerCommands.Core.csproj" />
     <ProjectReference Include="..\PainKiller.PowerCommands.ReadLine\PainKiller.PowerCommands.ReadLine.csproj" />

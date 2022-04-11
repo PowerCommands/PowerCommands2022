@@ -15,13 +15,14 @@ public class ProgressbarCommand : CommandBase<CommandsConfiguration>
     public override RunResult Run(CommandLineInput input)
     {
         var itemCount = 100;
-        var progessbar = new ProgressBar(itemCount);
+        var progressbar = new ProgressBar(itemCount);
         for (int i = 0; i < itemCount; i++)
         {
-            progessbar.Update(i);
+            progressbar.Update(i);
             Thread.Sleep(1);
-            progessbar.Show();
+            progressbar.Show();
         }
+
         return CreateRunResult(this, input, RunResultStatus.Ok);
     }
 }

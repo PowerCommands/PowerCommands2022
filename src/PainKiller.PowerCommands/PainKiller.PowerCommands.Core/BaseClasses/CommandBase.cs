@@ -20,6 +20,12 @@ public abstract class CommandBase<TConfig> : IConsoleCommand where TConfig : new
     {
         throw new NotImplementedException();
     }
+
+    public virtual async Task RunAsync(CommandLineInput input)
+    {
+        throw new NotImplementedException();
+    }
+
     protected string RootPath()
     {
         var retVal = Assembly.GetEntryAssembly()?.Location ?? "";

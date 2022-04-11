@@ -43,7 +43,7 @@ public class ProgressBar
     /// Create a progress bar with specified total number.
     /// </summary>
     /// <param name="total">Total number which indicates the 100% progress.</param>
-    public ProgressBar(int total)
+    public ProgressBar(long total)
     {
         this.total = total;
     }
@@ -73,7 +73,7 @@ public class ProgressBar
     /// Update the progress bar by count.
     /// </summary>
     /// <param name="count">The processed item count.</param>
-    public void Update(int count)
+    public void Update(long count)
     {
         this.count = count;
         Update(count * 1.0 / total);
@@ -136,9 +136,9 @@ public class ProgressBar
     // The percentage of the progress.
     private int percentage = 0;
     // The current count of the progress.
-    private int count = 0;
+    private long count = 0;
     // Total item number that to be processed.
-    private int total = 0;
+    private long total = 0;
     // The text width on the left side of the progress bar.
     private const int textWidth = 6;
 }

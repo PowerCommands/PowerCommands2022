@@ -11,7 +11,7 @@ namespace PainKiller.PowerCommands.Bootstrap
         public static PowerCommandsManager ConfigureServices()
         {
             var services = PowerCommandServices.Service
-                .ShowDiagnostic(true)
+                .ShowDiagnostic(false)
                 .SetLogMinimumLevel(LogLevel.Information)
                 .PersistChanges();
 
