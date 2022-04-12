@@ -22,6 +22,7 @@ public class CommandsCommand : CommandBase<CommandsConfiguration>
     {
         if (string.IsNullOrEmpty(input.SingleQuote))
         {
+            WriteLine("All commands (No filter quote parameter provided)", false);
             foreach (var consoleCommand in IPowerCommandsRuntime.DefaultInstance?.Commands!) WriteLine(consoleCommand.Identifier, addToOutput: false);
             return CreateRunResult(this, input, RunResultStatus.Ok);
         }

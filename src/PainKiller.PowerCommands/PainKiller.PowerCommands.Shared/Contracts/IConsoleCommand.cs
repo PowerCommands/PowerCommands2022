@@ -6,5 +6,5 @@ public interface IConsoleCommand
 {
     string Identifier { get; }
     RunResult Run(CommandLineInput input);
-    Task RunAsync(CommandLineInput input);
+    Task<RunResult> RunAsync(CommandLineInput input);
 }

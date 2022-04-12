@@ -14,16 +14,18 @@ public class PowerCommandsManager : IPowerCommandsManager
     public PowerCommandsManager(IExtendedPowerCommandServices<PowerCommandsConfiguration> services) { Services = services; }
     public void Run()
     {
-        RunResult runResult = null!;
-        while (runResult is not {Status: RunResultStatus.Quit})
+        var runResultStatus = RunResultStatus.Initializing;
+        while (runResultStatus is not RunResultStatus.Quit)
         {
             try
             {
-                var input = ReadLine.ReadLineService.Service.Read(prompt:"\npcm>");
+                var promptText = runResultStatus == RunResultStatus.Async ? "" : "\npcm>";
+                var input = ReadLine.ReadLineService.Service.Read(prompt:promptText);
                 var interpretedInput = $"{input}".Interpret();
                 Services.Logger.LogInformation($"Console input Identifier:{interpretedInput.Identifier} raw:{interpretedInput.Raw}");
                 Services.Diagnostic.Start();
-                runResult = Services.Runtime.ExecuteCommand($"{input}");
+                var runResult = Services.Runtime.ExecuteCommand($"{input}");
+                runResultStatus = runResult.Status;
                 RunResultHandler(runResult);
                 Services.Diagnostic.Stop();
             }

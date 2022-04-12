@@ -12,6 +12,7 @@ namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
                 qutes:           "Only use qute with encryption if your value to encrypt contains whitespaces",
                 example:         "secrets enrypt televinken44|secrets decrypt \"EAAAADehRmgu1XZNN+AA1/vSqITeUUFV07Sxd3vhbtkJQWwD\"",
                 defaultParameter:"encrypt televinken44")]
+[Tags("encryption|secret|example")]
 public class SecretsCommand : CommandBase<CommandsConfiguration>
 {
     public SecretsCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }

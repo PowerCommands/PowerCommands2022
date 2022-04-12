@@ -16,7 +16,7 @@ public abstract class CommandBase<TConfig> : IConsoleCommand where TConfig : new
     public string Identifier { get; }
     protected TConfig Configuration { get; set; }
     public virtual RunResult Run(CommandLineInput input) => throw new NotImplementedException();
-    public virtual async Task RunAsync(CommandLineInput input) => await Task.FromResult(true);
+    public virtual async Task<RunResult> RunAsync(CommandLineInput input) => await Task.FromResult(new RunResult(this, input,"",RunResultStatus.Initializing));
     protected string RootPath()
     {
         var retVal = Assembly.GetEntryAssembly()?.Location ?? "";

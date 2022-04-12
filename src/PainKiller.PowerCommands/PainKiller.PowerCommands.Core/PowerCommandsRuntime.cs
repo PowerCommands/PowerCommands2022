@@ -41,13 +41,13 @@ public class PowerCommandsRuntime<TConfig> : IPowerCommandsRuntime where TConfig
     {
         try
         {
-            command.RunAsync(input);
+            command.RunAsync(input).ConfigureAwait(continueOnCapturedContext:false);
         }
         catch (Exception e)
         {
             Latest = new RunResult(command, input, e.Message, RunResultStatus.ExceptionThrown);
         }
-        Latest = new RunResult(command, input, "Command running async operation", RunResultStatus.Ok);
+        Latest = new RunResult(command, input, "Command running async operation", RunResultStatus.Async);
         return Latest;
     }
     public RunResult? Latest { get; private set; }
