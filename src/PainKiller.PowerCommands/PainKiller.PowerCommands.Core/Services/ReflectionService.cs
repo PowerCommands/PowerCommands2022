@@ -2,10 +2,13 @@
 using PainKiller.PowerCommands.Shared.Contracts;
 using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
 
-namespace PainKiller.PowerCommands.Core.Managers;
+namespace PainKiller.PowerCommands.Core.Services;
 
-public class ReflectionManager
+public class ReflectionService : IReflectionService
 {
+    private ReflectionService() { }
+    private static readonly Lazy<IReflectionService> Lazy = new(() => new ReflectionService());
+    public static IReflectionService Service => Lazy.Value;
     public List<IConsoleCommand> GetCommands<TConfiguration>(BaseComponentConfiguration pluginInfo, TConfiguration configuration) where TConfiguration : CommandsConfiguration
     {
         var currentAssembly = Assembly.Load($"{pluginInfo.Component}".Replace(".dll",""));

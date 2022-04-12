@@ -1,17 +1,19 @@
 ﻿using PainKiller.HttpClientUtils;
 using PainKiller.PowerCommands.Core.BaseClasses;
 using PainKiller.PowerCommands.Core.Managers;
+using PainKiller.PowerCommands.Security.DomainObjects;
 using PainKiller.PowerCommands.Shared.Attributes;
 using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
 using PainKiller.PowerCommands.Shared.DomainObjects.Core;
 
 namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
-[PowerCommand(description: "Download a file that is provides as an argument",
+[PowerCommand(description: "Download a file that is provides as an argument, after download you get a checksum of the downloaded file",
               arguments: "url: Single argument must be a valid URL to something do download",
               qutes: "Single qute is the filename to be created, a full path could be provided but is not necessary", 
               defaultParameter:"https://downloadurl.com \"filename.txt\"",
               useAsync: true)]
+[Tags("download|checksum")]
 public class DownloadCommand : CommandBase<CommandsConfiguration>
 {
     private ProgressBar? progressbar = null;
@@ -35,7 +37,8 @@ public class DownloadCommand : CommandBase<CommandsConfiguration>
         progressbar.Show();
         if (totalBytes == totalBytesRead)
         {
-            WriteLine($"Download content from {_downloadUrl} to file {_fileName} completed.");
+            var fileCheckSum = new FileChecksum(_fileName);
+            WriteLine($"Download content from {_downloadUrl} to file {_fileName} completed. Checksum: {fileCheckSum.Mde5Hash}");
             Console.Write("pcm>");
             progressbar = null;
         }

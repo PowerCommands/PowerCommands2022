@@ -12,7 +12,7 @@ internal class KeyHandler
     private int _historyIndex;
     private ConsoleKeyInfo _keyInfo;
     private Dictionary<string, Action> _keyActions;
-    private string[] _completions;
+    private string[] _completions = null!;
     private int _completionStart;
     private int _completionsIndex;
     private IConsole Console2;
@@ -203,7 +203,7 @@ internal class KeyHandler
 
     private void ResetAutoComplete()
     {
-        _completions = null;
+        _completions = null!;
         _completionsIndex = 0;
     }
 
@@ -269,7 +269,7 @@ internal class KeyHandler
                 _completionStart = _completionStart == -1 ? 0 : _completionStart + 1;
 
                 _completions = autoCompleteHandler.GetSuggestions(text, _completionStart);
-                _completions = _completions?.Length == 0 ? null : _completions;
+                _completions = (_completions?.Length == 0 ? null : _completions)!;
 
                 if (_completions == null)
                     return;
@@ -292,7 +292,7 @@ internal class KeyHandler
         if (IsInAutoCompleteMode() && _keyInfo.Key != ConsoleKey.Tab) ResetAutoComplete();
 
         Action action;
-        _keyActions.TryGetValue(BuildKeyInput(), out action);
+        _keyActions.TryGetValue(BuildKeyInput(), out action!);
         action = action ?? WriteChar;
         action.Invoke();
     }

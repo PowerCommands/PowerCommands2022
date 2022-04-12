@@ -14,8 +14,8 @@ public class PowerCommandAttribute : Attribute
         Description = description;
         Arguments = arguments;
         Qutes = qutes;
-        UseAsync = useAsync;
         Examples = example;
         DefaultParameter = defaultParameter;
+        UseAsync = useAsync;
     }
 }

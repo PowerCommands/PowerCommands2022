@@ -12,7 +12,7 @@ public class SuggestionProviderManager
         try
         {
             var inputs = input.Split(" ").ToList();
-            if (inputs.Count < 2) return null;
+            if (inputs.Count < 2) return null!;
 
             inputs.RemoveAt(0);
 
@@ -24,7 +24,7 @@ public class SuggestionProviderManager
                 if (!startOfPathNotFound) buildPath.Add(inputFragment);
             }
             var filePath = string.Join(" ", buildPath).Replace("\"", "");
-            if (!Directory.Exists(filePath)) return null;
+            if (!Directory.Exists(filePath)) return null!;
 
             var directoryInfo = new DirectoryInfo(filePath);
             var filter = directoryInfo.GetDirectories().Select(f => f.Name.Substring(0, f.Name.Length)).ToList();

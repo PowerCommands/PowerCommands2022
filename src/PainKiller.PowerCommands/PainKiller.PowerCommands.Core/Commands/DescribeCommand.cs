@@ -9,6 +9,7 @@ using PainKiller.PowerCommands.Shared.Enums;
 namespace PainKiller.PowerCommands.Core.Commands;
 
 [PowerCommand(description: "With help command you will be shown the provided description of the command, argument and quotes input parameters", arguments: "name: Uses one argument, wich is the name of the command you want do display help for")]
+[Tags("core|help")]
 public class DescribeCommand : CommandBase<CommandsConfiguration>
 {
     public DescribeCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }

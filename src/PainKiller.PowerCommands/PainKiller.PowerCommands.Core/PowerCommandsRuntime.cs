@@ -1,5 +1,6 @@
 ﻿using PainKiller.PowerCommands.Core.Extensions;
 using PainKiller.PowerCommands.Core.Managers;
+using PainKiller.PowerCommands.Core.Services;
 using PainKiller.PowerCommands.Shared.Contracts;
 using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
 using PainKiller.PowerCommands.Shared.DomainObjects.Core;
@@ -20,8 +21,7 @@ public class PowerCommandsRuntime<TConfig> : IPowerCommandsRuntime where TConfig
     }
     private void Initialize()
     {
-        var reflectionManager = new ReflectionManager();
-        foreach (var component in _configuration.Components) Commands.AddRange(reflectionManager.GetCommands(component, _configuration));
+        foreach (var component in _configuration.Components) Commands.AddRange(ReflectionService.Service.GetCommands(component, _configuration));
         if(_configuration.ShowDiagnosticInformation) foreach (var consoleCommand in Commands) _diagnostic.Message(consoleCommand.Identifier);
         IPowerCommandsRuntime.DefaultInstance = this;
     }

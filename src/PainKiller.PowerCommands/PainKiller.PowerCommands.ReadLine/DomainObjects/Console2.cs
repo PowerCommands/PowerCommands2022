@@ -1,4 +1,5 @@
-﻿using PainKiller.PowerCommands.ReadLine.Contracts;
+﻿using System.Runtime.Versioning;
+using PainKiller.PowerCommands.ReadLine.Contracts;
 namespace PainKiller.PowerCommands.ReadLine.DomainObjects;
 internal class Console2 : IConsole
 {
@@ -7,7 +8,11 @@ internal class Console2 : IConsole
     public int BufferWidth => Console.BufferWidth;
     public int BufferHeight => Console.BufferHeight;
     public bool PasswordMode { get; set; }
-    public void SetBufferSize(int width, int height) => Console.SetBufferSize(width, height);
+    [SupportedOSPlatformGuard("windows")]
+    public void SetBufferSize(int width, int height)
+    {
+        if(OperatingSystem.IsWindows()) Console.SetBufferSize(width, height);
+    }
     public void SetCursorPosition(int left, int top)
     {
         if (!PasswordMode)
