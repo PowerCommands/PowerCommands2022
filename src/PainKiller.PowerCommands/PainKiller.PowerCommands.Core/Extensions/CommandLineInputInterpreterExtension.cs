@@ -9,7 +9,7 @@ public static class CommandLineInputInterpreterExtension
     public static CommandLineInput Interpret(this string commandLineInput)
     {
         if(IsNullOrEmpty(commandLineInput)) throw new ArgumentNullException(nameof(commandLineInput));
-        var raw = commandLineInput;
+        var raw = commandLineInput.Trim();
         var quotes = Regex.Matches(raw, "\\\"(.*?)\\\"").ToStringArray();
         var arguments = raw.RemoveQuotes(quotes).Split(' ').ToList();
         var identifier = $"{arguments[0].ToLower()}";

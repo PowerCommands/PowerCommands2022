@@ -6,4 +6,5 @@ public interface IDiagnosticManager
     void Message(string diagnostic);
     void Start();
     void Stop();
+    string RootPath();
 }

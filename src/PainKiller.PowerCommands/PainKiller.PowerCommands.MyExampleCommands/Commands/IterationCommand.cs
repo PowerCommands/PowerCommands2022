@@ -8,7 +8,7 @@ using PainKiller.PowerCommands.Shared.Enums;
 namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
 [PowerCommand("A dummie iteration is running in async mode", example:"iteration", useAsync: true)]
-[Tags("example|iteration")]
+[Tags("example|iteration|async")]
 public class IterationCommand : CommandBase<CommandsConfiguration>
 {
     public IterationCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
