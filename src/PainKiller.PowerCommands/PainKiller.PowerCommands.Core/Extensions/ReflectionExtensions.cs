@@ -38,6 +38,6 @@ public static class ReflectionExtensions
     {
         var attribute = command.GetType().GetCustomAttributes(typeof(TagsAttribute), inherit: false).FirstOrDefault() as TagsAttribute;
         if (attribute is null || string.IsNullOrEmpty(tag)) return false;
-        return attribute.Tags.ToLower().Contains(tag.ToLower().Replace("\"",""));
+        return attribute.Tags.ToLower().Contains(tag.ToLower());
     }
 }

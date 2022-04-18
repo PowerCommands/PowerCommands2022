@@ -26,7 +26,7 @@ public class DownloadCommand : CommandBase<CommandsConfiguration>
     public override async Task<RunResult> RunAsync(CommandLineInput input)
     {
         _downloadUrl = input.SingleArgument;
-        _fileName = input.SingleQuote.Replace("\"","");
+        _fileName = input.SingleQuote;
         
         var retVal =  DownloadWithProgressService.Service.Download(_downloadUrl, _fileName, ProgressChanged);
         await retVal;

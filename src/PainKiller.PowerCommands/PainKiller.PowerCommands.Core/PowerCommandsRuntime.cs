@@ -46,6 +46,7 @@ public class PowerCommandsRuntime<TConfig> : IPowerCommandsRuntime where TConfig
         catch (Exception e)
         {
             Latest = new RunResult(command, input, e.Message, RunResultStatus.ExceptionThrown);
+            return Latest;
         }
         Latest = new RunResult(command, input, "Command running async operation", RunResultStatus.Async);
         return Latest;
