@@ -1,5 +1,6 @@
 ﻿using System.IO.Compression;
 using PainKiller.PowerCommands.Core.BaseClasses;
+using PainKiller.PowerCommands.Core.Extensions;
 using PainKiller.PowerCommands.Shared.Attributes;
 using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
 using PainKiller.PowerCommands.Shared.DomainObjects.Core;
@@ -16,7 +17,9 @@ public class LogCommand : CommandBase<CommandsConfiguration>
     public override RunResult Run(CommandLineInput input)
     {
         if (input.SingleArgument == "list") List();
-        if (input.SingleArgument == "archive") Archive();
+        if (input.SingleArgument == "archive") Archive(Configuration.Log.FilePath);
+        if (input.SingleArgument == "view") View();
+        
         return CreateRunResult(this, input, RunResultStatus.Ok);
     }
 
@@ -26,11 +29,10 @@ public class LogCommand : CommandBase<CommandsConfiguration>
         foreach (var file in dir.GetFiles("*.log").OrderByDescending(f => f.LastWriteTime)) WriteLine($"{file.Name} {file.LastWriteTime}");
     }
 
-    private void Archive()
+    private void Archive(string directoryName)
     {
-        var d = DateTime.Now;
-        var fileStamp = $"archive{d.Year}{d.Month}{d.Day}{d.Hour}{d.Minute}";
-        var tempDirectory = $"{Configuration.Log.FilePath}\\{fileStamp}";
+        var fileStamp = "archive".FormatFileTimestamp();
+        var tempDirectory = $"{directoryName}\\{fileStamp}";
         var zipFileName = $"{Configuration.Log.FilePath}\\{fileStamp}.zip";
 
         var fileNames = Directory.GetFiles(Configuration.Log.FilePath, "*.log");
@@ -41,8 +43,23 @@ public class LogCommand : CommandBase<CommandsConfiguration>
         {
             var file = new FileInfo(fileName);
             File.Copy(fileName, $"{tempDirectory}\\{file.Name}");
+            try { File.Delete(fileName); }
+            catch (IOException e) { WriteLine($"The file {fileName} is the current logfile and could not be deleted."); }
             WriteLine($"{fileName} moved to archive directory {tempDirectory}");
         }
         ZipFile.CreateFromDirectory(tempDirectory, zipFileName);
+        Directory.Delete(tempDirectory, recursive: true);
+    }
+
+    private void View()
+    {
+        var dir = new DirectoryInfo(Configuration.Log.FilePath);
+        var currentFile = dir.GetFiles("*.log").OrderByDescending(f => f.LastWriteTime).First();
+        var tempFileName = $"{currentFile.Name}".FormatFileTimestamp();
+        File.Copy(currentFile.FullName, tempFileName);
+        
+        var lines = File.ReadAllLines(tempFileName);
+        foreach (var line in lines) Console.WriteLine(line);
+        File.Delete(tempFileName);
     }
 }
