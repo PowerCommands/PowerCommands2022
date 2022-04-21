@@ -11,13 +11,14 @@ public class GitCommand : CommandBase<PowerCommandsConfiguration>
 
     public override RunResult Run(CommandLineInput input)
     {
-        if(input.SingleArgument == "commit") Commit(input.SingleArgument);
+        if(input.SingleArgument == "commit") Commit(input.SingleQuote);
         if(input.SingleArgument == "push") Push();
         return CreateRunResult(this, input, RunResultStatus.Ok);
     }
 
     public void Commit(string comment)
     {
+        if (string.IsNullOrEmpty(comment)) comment = "refactoring";
         var startInfo = new System.Diagnostics.ProcessStartInfo
         {
             UseShellExecute = false,
