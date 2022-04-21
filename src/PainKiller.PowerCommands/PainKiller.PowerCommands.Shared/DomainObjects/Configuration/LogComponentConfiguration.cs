@@ -1,6 +1,8 @@
-﻿namespace PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
+﻿using PainKiller.PowerCommands.Shared.Contracts;
 
-public class LogComponentConfiguration : BaseComponentConfiguration
+namespace PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
+
+public class LogComponentConfiguration : BaseComponentConfiguration, ILogComponentConfiguration
 {
     public LogComponentConfiguration()
     {

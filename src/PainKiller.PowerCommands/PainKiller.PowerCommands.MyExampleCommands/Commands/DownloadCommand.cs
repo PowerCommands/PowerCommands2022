@@ -25,6 +25,7 @@ public class DownloadCommand : CommandBase<CommandsConfiguration>
 
     public override async Task<RunResult> RunAsync(CommandLineInput input)
     {
+        WriteLine("Command executes in async mode, if any error occures you will not see them, a argument must be provided and it must be a valid url to something that could be downloaded.");
         _downloadUrl = input.SingleArgument;
         _fileName = input.SingleQuote;
         

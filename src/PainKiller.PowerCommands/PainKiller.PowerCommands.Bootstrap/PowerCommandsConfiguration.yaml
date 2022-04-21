@@ -1,5 +1,6 @@
 ﻿version: "1.0"
 configuration: 
+  defaultGitRepositoryPath: "C:\\Repos\\PowerCommands2022"
   showDiagnosticInformation: true
   metadata: 
     name: "Test"
