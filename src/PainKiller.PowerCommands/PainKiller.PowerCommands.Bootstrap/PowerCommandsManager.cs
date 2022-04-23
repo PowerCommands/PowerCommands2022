@@ -17,14 +17,15 @@ public class PowerCommandsManager : IPowerCommandsManager
     public void Run()
     {
         var runResultStatus = RunResultStatus.Initializing;
+        var input = "";
         while (runResultStatus is not RunResultStatus.Quit)
         {
             try
             {
                 var promptText = runResultStatus == RunResultStatus.Async ? "" : "\npcm>";
-                var input = ReadLine.ReadLineService.Service.Read(prompt: promptText);
+                input = ReadLine.ReadLineService.Service.Read(prompt: promptText);
                 if(string.IsNullOrEmpty(input)) continue;
-                var interpretedInput = $"{input}".Interpret();
+                var interpretedInput = input.Interpret();
                 Services.Logger.LogInformation($"Console input Identifier:{interpretedInput.Identifier} raw:{interpretedInput.Raw}");
                 Services.Diagnostic.Start();
                 var runResult = Services.Runtime.ExecuteCommand($"{input}");
@@ -34,9 +35,10 @@ public class PowerCommandsManager : IPowerCommandsManager
             }
             catch (ArgumentOutOfRangeException ex)
             {
-                Console.WriteLine("Could not found any commands with a matching Id");
                 var commandsCommand = new CommandsCommand("commands", (Services.Configuration as CommandsConfiguration)!);
-                commandsCommand.Run(new CommandLineInput {Arguments = new[]{""},Quotes = new[] { "" } });
+                var interpretedInput = input.Interpret();
+                Console.WriteLine($"Could not found any commands with a matching Id: {interpretedInput.Raw}");
+                commandsCommand.Run(interpretedInput);
                 Services.Logger.LogError(ex, "Could not found any commands with a matching Id");
             }
             catch (Exception e)
@@ -48,7 +50,7 @@ public class PowerCommandsManager : IPowerCommandsManager
     }
     private void RunResultHandler(RunResult runResult)
     {
-        Services.Logger.LogInformation($"Command {runResult.ExecutingCommand?.Identifier} run with input: [{runResult.Input.Raw}] output: [{runResult.Output.Trim()}] status: [{runResult.Status}]");
+        Services.Logger.LogInformation($"Command {runResult.ExecutingCommand.Identifier} run with input: [{runResult.Input.Raw}] output: [{runResult.Output.Trim()}] status: [{runResult.Status}]");
         switch (runResult.Status)
         {
             case RunResultStatus.Quit:
@@ -61,7 +63,7 @@ public class PowerCommandsManager : IPowerCommandsManager
                 Services.Logger.LogError(message);
                 Console.WriteLine(message);
                 Console.WriteLine(runResult.Output);
-                HelpService.Service.ShowHelp(runResult.ExecutingCommand!);
+                HelpService.Service.ShowHelp(runResult.ExecutingCommand);
                 break;
             case RunResultStatus.RunExternalPowerCommand:
             case RunResultStatus.Initializing:

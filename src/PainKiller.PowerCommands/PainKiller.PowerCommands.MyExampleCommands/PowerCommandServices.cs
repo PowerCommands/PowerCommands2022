@@ -28,12 +28,9 @@ public class PowerCommandServices : IExtendedPowerCommandServices<PowerCommandsC
     }
 
     private static readonly Lazy<IExtendedPowerCommandServices<PowerCommandsConfiguration>> Lazy = new(() => new PowerCommandServices());
-    
-    // TODO:Could I use interface here? Problem with extension in Bootstrap
     public static IExtendedPowerCommandServices<PowerCommandsConfiguration> Service => Lazy.Value;
-    
     public IPowerCommandsRuntime Runtime { get; }
-    public ICommandsConfiguration Configuration => ExtendedConfiguration as ICommandsConfiguration;
+    public ICommandsConfiguration Configuration => ExtendedConfiguration;
     public PowerCommandsConfiguration ExtendedConfiguration { get; }
     public ILogger Logger { get; }
     public IDiagnosticManager Diagnostic { get; }
