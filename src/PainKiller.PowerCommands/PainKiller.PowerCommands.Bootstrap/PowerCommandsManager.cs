@@ -1,8 +1,10 @@
 ﻿using Microsoft.Extensions.Logging;
+using PainKiller.PowerCommands.Core.Commands;
 using PainKiller.PowerCommands.Core.Extensions;
 using PainKiller.PowerCommands.Core.Services;
 using PainKiller.PowerCommands.MyExampleCommands.Configuration;
 using PainKiller.PowerCommands.Shared.Contracts;
+using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
 using PainKiller.PowerCommands.Shared.DomainObjects.Core;
 using PainKiller.PowerCommands.Shared.Enums;
 
@@ -20,7 +22,8 @@ public class PowerCommandsManager : IPowerCommandsManager
             try
             {
                 var promptText = runResultStatus == RunResultStatus.Async ? "" : "\npcm>";
-                var input = ReadLine.ReadLineService.Service.Read(prompt:promptText);
+                var input = ReadLine.ReadLineService.Service.Read(prompt: promptText);
+                if(string.IsNullOrEmpty(input)) continue;
                 var interpretedInput = $"{input}".Interpret();
                 Services.Logger.LogInformation($"Console input Identifier:{interpretedInput.Identifier} raw:{interpretedInput.Raw}");
                 Services.Diagnostic.Start();
@@ -31,7 +34,9 @@ public class PowerCommandsManager : IPowerCommandsManager
             }
             catch (ArgumentOutOfRangeException ex)
             {
-                Console.WriteLine("Could not found any commands with a matching Id, please try again, try help command to see wich commands are availible.");
+                Console.WriteLine("Could not found any commands with a matching Id");
+                var commandsCommand = new CommandsCommand("commands", (Services.Configuration as CommandsConfiguration)!);
+                commandsCommand.Run(new CommandLineInput {Arguments = new[]{""},Quotes = new[] { "" } });
                 Services.Logger.LogError(ex, "Could not found any commands with a matching Id");
             }
             catch (Exception e)

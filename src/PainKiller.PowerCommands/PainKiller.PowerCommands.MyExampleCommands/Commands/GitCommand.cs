@@ -1,11 +1,17 @@
 ﻿using PainKiller.PowerCommands.Core.BaseClasses;
 using PainKiller.PowerCommands.Core.Services;
 using PainKiller.PowerCommands.MyExampleCommands.Configuration;
+using PainKiller.PowerCommands.Shared.Attributes;
 using PainKiller.PowerCommands.Shared.DomainObjects.Core;
 using PainKiller.PowerCommands.Shared.Enums;
 
 namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
+[PowerCommand(description: "Example shows how to execute a external program, in this case git, commmit and push your repository, path to repository is in the configuratin file",
+                arguments: "operation type: commit or push",
+                    qutes: "comment: on commit a comment should be provided, not used when pushing, comment defaults to \"refatoring\" if omitted.",
+                  example: "git commit \"Bugfix\"\ngit push")]
+[Tags("example|shell|git|execute|program")]
 public class GitCommand : CommandBase<PowerCommandsConfiguration>
 {
     public GitCommand(string identifier, PowerCommandsConfiguration configuration) : base(identifier, configuration) { }

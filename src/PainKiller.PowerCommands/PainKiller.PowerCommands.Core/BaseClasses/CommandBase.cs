@@ -24,6 +24,14 @@ public abstract class CommandBase<TConfig> : IConsoleCommand where TConfig : new
         if(addToOutput) _ouput.AppendLine(output);
         Console.WriteLine(output);
     }
+    protected void WriteHeadLine(string output, bool addToOutput = true)
+    {
+        if (addToOutput) _ouput.AppendLine(output);
+        var color = Console.ForegroundColor;
+        Console.ForegroundColor = ConsoleColor.Green;
+        Console.WriteLine(output);
+        Console.ForegroundColor = color;
+    }
     protected void OverwritePreviousLine(string output)
     {
         Console.SetCursorPosition(Console.CursorLeft, Console.CursorTop - 1);

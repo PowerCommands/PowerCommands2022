@@ -11,25 +11,30 @@ public class HelpService : IHelpService
     public void ShowHelp(IConsoleCommand command)
     {
         var da = command.GetPowerCommandAttribute();
-        Console.WriteLine($"{nameof(da.Description)}:");
-        Console.WriteLine(da.Description);
+        Console.Clear();
+        command.WriteObjectDescription("PowerCommand", command.Identifier);
         Console.WriteLine();
-
-        Console.WriteLine($"{nameof(da.DefaultParameter)}:");
-        Console.WriteLine(da.DefaultParameter);
+        command.WriteObjectDescription("Type        ", $"{command.GetType().FullName}");
         Console.WriteLine();
+        Console.WriteLine($"{da.Description}");
 
         var args = da.Arguments.Split('|');
         var qutes = da.Qutes.Split('|');
         var examples = da.Examples.Split('|');
 
-        Console.WriteLine($"{nameof(da.Arguments)}:");
+        command.WriteHeaderLine($"{nameof(da.Arguments)}:");
         foreach (var a in args) Console.WriteLine(a);
         Console.WriteLine();
-        Console.WriteLine($"{nameof(da.Qutes)}:");
+        command.WriteHeaderLine($"{nameof(da.Qutes)}:");
         foreach (var q in qutes) Console.WriteLine(q);
         Console.WriteLine();
-        Console.WriteLine($"{nameof(da.Examples)}:");
+        if (!string.IsNullOrEmpty(da.DefaultParameter))
+        {
+            command.WriteHeaderLine($"{nameof(da.DefaultParameter)}:");
+            Console.WriteLine(da.DefaultParameter);
+            Console.WriteLine();
+        }
+        command.WriteHeaderLine($"{nameof(da.Examples)}:");
         foreach (var e in examples) Console.WriteLine(e);
     }
 }

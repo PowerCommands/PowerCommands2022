@@ -7,7 +7,10 @@ using PainKiller.PowerCommands.Shared.Enums;
 
 namespace PainKiller.PowerCommands.Core.Commands;
 
-[PowerCommand(description:"Configuration command is a util to help you build a default yaml configuration file", arguments:"create: To create a new yaml file in the rood directory", defaultParameter:"create")]
+[PowerCommand(       description: "Configuration command is a util to help you build a default yaml configuration file",
+                       arguments: "create: To create a new yaml file in the rood directory",
+                defaultParameter: "create",
+                         example: "configuration|configuration create")]
 [Tags("core|help|configuration")]
 public class ConfigurationCommand : CommandBase<CommandsConfiguration>
 {
