@@ -1,4 +1,5 @@
 ﻿using PainKiller.PowerCommands.Core.BaseClasses;
+using PainKiller.PowerCommands.Core.Services;
 using PainKiller.PowerCommands.MyExampleCommands.Configuration;
 using PainKiller.PowerCommands.Shared.DomainObjects.Core;
 using PainKiller.PowerCommands.Shared.Enums;
@@ -18,44 +19,13 @@ public class GitCommand : CommandBase<PowerCommandsConfiguration>
 
     public void Commit(string comment)
     {
-        if (string.IsNullOrEmpty(comment)) comment = "refactoring";
-        var startInfo = new System.Diagnostics.ProcessStartInfo
-        {
-            UseShellExecute = false,
-            RedirectStandardOutput = true,
-            FileName = "git.exe",
-            Arguments = $"add .",
-            WorkingDirectory = Configuration.DefaultGitRepositoryPath
-        };
-
-        var processAdd = System.Diagnostics.Process.Start(startInfo);
-        var outputAdd = processAdd!.StandardOutput.ReadToEnd();
-        WriteLine(outputAdd);
-        processAdd.WaitForExit();
-
-
-        startInfo.Arguments = $"commit -m {comment}";
-
-        var processCommit = System.Diagnostics.Process.Start(startInfo);
-        var outputCommit = processCommit!.StandardOutput.ReadToEnd();
-        WriteLine(outputCommit);
-        processCommit.WaitForExit();
+        if (string.IsNullOrEmpty(comment)) comment = "\"refactoring\"";
+        ShellService.Service.Execute("git", "add .", Configuration.DefaultGitRepositoryPath, WriteLine);
+        ShellService.Service.Execute("git", $"commit -m \"{comment}\"", Configuration.DefaultGitRepositoryPath, WriteLine);
     }
 
     public void Push()
     {
-        var startInfo = new System.Diagnostics.ProcessStartInfo
-        {
-            UseShellExecute = false,
-            RedirectStandardOutput = true,
-            FileName = "git.exe",
-            Arguments = "push",
-            WorkingDirectory = Configuration.DefaultGitRepositoryPath
-        };
-
-        var processAdd = System.Diagnostics.Process.Start(startInfo);
-        var outputAdd = processAdd!.StandardOutput.ReadToEnd();
-        WriteLine(outputAdd);
-        processAdd.WaitForExit();
+        ShellService.Service.Execute("git", "push", Configuration.DefaultGitRepositoryPath, WriteLine);
     }
 }
