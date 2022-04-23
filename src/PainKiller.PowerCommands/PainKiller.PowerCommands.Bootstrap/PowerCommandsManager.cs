@@ -24,7 +24,7 @@ public class PowerCommandsManager : IPowerCommandsManager
             {
                 var promptText = runResultStatus == RunResultStatus.Async ? "" : "\npcm>";
                 input = ReadLine.ReadLineService.Service.Read(prompt: promptText);
-                if(string.IsNullOrEmpty(input)) continue;
+                if(string.IsNullOrEmpty(input.Trim())) continue;
                 var interpretedInput = input.Interpret();
                 Services.Logger.LogInformation($"Console input Identifier:{interpretedInput.Identifier} raw:{interpretedInput.Raw}");
                 Services.Diagnostic.Start();
@@ -37,14 +37,14 @@ public class PowerCommandsManager : IPowerCommandsManager
             {
                 var commandsCommand = new CommandsCommand("commands", (Services.Configuration as CommandsConfiguration)!);
                 var interpretedInput = input.Interpret();
-                Console.WriteLine($"Could not found any commands with a matching Id: {interpretedInput.Raw}");
+                DisplayErrorMessage($"Could not found any commands with a matching Id: {interpretedInput.Raw}");
                 commandsCommand.Run(interpretedInput);
                 Services.Logger.LogError(ex, "Could not found any commands with a matching Id");
             }
             catch (Exception e)
             {
                 Services.Logger.LogError(e,"Unkown error");
-                Console.WriteLine("Unknown error occured, please try again");
+                DisplayErrorMessage("Unknown error occured, please try again");
             }
         }
     }
@@ -61,8 +61,7 @@ public class PowerCommandsManager : IPowerCommandsManager
             case RunResultStatus.SyntaxError:
                 var message = $"Error occured of type {runResult.Status}";
                 Services.Logger.LogError(message);
-                Console.WriteLine(message);
-                Console.WriteLine(runResult.Output);
+                DisplayErrorMessage($"{message} {runResult.Output}");
                 HelpService.Service.ShowHelp(runResult.ExecutingCommand);
                 break;
             case RunResultStatus.RunExternalPowerCommand:
@@ -71,5 +70,13 @@ public class PowerCommandsManager : IPowerCommandsManager
             default:
                 break;
         }
+    }
+    private void DisplayErrorMessage(string message)
+    {
+        var currentColor = Console.ForegroundColor;
+        Console.ForegroundColor = ConsoleColor.DarkRed;
+        Console.WriteLine(message);
+        Console.WriteLine();
+        Console.ForegroundColor = currentColor;
     }
 }

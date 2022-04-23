@@ -11,7 +11,7 @@ namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
                     qutes: "size: Let the iteratin sort out big files and display them, size is in megabytes and defaults to 10 (MB) if omitted",
                   example: "directory C:\\Repos|directory C:\\Repos \"1024\"",
                  useAsync: true)]
-[Tags("example|iteration|async|line|display|inline")]
+[Tags("example|iteration|async|inline")]
 public class DirectoryCommand : CommandBase<CommandsConfiguration>
 {
     private readonly List<string> _bigFiles = new();
