@@ -24,7 +24,7 @@ public class IterationCommand : CommandBase<CommandsConfiguration>
         foreach (var command in runtimeCommands)
         {
             Console.WriteLine(command.Identifier);
-            Thread.Sleep(1000);
+            Thread.Sleep(100);
         }
         Console.Write("\nDone!\npcm>");
     }

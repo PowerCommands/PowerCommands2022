@@ -9,15 +9,16 @@ using PainKiller.PowerCommands.Shared.Enums;
 
 namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
-[PowerCommand(description: "Download a file that is provides as an argument, after download you get a checksum of the downloaded file",
-              arguments: "url: Single argument must be a valid URL to something do download",
-              qutes: "Single qute is the filename to be created, a full path could be provided but is not necessary", 
-              defaultParameter:"https://downloadurl.com \"filename.txt\"",
-              useAsync: true)]
+[PowerCommand(     description: "Download a file that is provides as an argument, after download you get a checksum of the downloaded file",
+                     arguments: "url: Single argument must be a valid URL to something do download",
+                         qutes: "Single qute is the filename to be created, a full path could be provided but is not necessary", 
+              defaultParameter: "https://downloadurl.com \"filename.txt\"",
+                       example: "download https://downloadurl.com \"filename.txt\"",
+                      useAsync: true)]
 [Tags("download|checksum|example")]
 public class DownloadCommand : CommandBase<CommandsConfiguration>
 {
-    private ProgressBar? progressbar = null;
+    private ProgressBar? _progressbar;
     private string _downloadUrl = "";
     private string _fileName = "";
     
@@ -35,16 +36,15 @@ public class DownloadCommand : CommandBase<CommandsConfiguration>
     }
     private bool ProgressChanged(long? totalBytes, long totalBytesRead, double? percentage)
     {
-        if (progressbar == null) progressbar = new ProgressBar(totalBytes ?? 0);
-        progressbar.Update(totalBytesRead);
-        progressbar.Show();
-        if (totalBytes == totalBytesRead)
-        {
-            var fileCheckSum = new FileChecksum(_fileName);
-            WriteLine($"Download content from {_downloadUrl} to file {_fileName} completed. Checksum: {fileCheckSum.Mde5Hash}");
-            Console.Write("\npcm>");
-            progressbar = null;
-        }
+        _progressbar ??= new ProgressBar(totalBytes ?? 0);
+        _progressbar.Update(totalBytesRead);
+        _progressbar.Show();
+        if (totalBytes != totalBytesRead) return false;
+        
+        var fileCheckSum = new FileChecksum(_fileName);
+        WriteLine($"Download content from {_downloadUrl} to file {_fileName} completed. Checksum: {fileCheckSum.Mde5Hash}");
+        Console.Write("\npcm>");
+        _progressbar = null;
         return false;
     }
 }

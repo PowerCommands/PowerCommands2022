@@ -14,7 +14,10 @@ public class HelpService : IHelpService
         Console.Clear();
         command.WriteObjectDescription("PowerCommand", command.Identifier);
         Console.WriteLine();
-        command.WriteObjectDescription("Type        ", $"{command.GetType().FullName}");
+        var typeDescription = command.GetType().FullName!.StartsWith("PainKiller.PowerCommands.Core.Commands") ? "Core command (reserved name, not for use as custom command name)" : "Custom command";
+        command.WriteObjectDescription("Type        ", $"{ typeDescription }");
+        Console.WriteLine();
+        command.WriteObjectDescription("Full name   ", $"{command.GetType().FullName}");
         Console.WriteLine();
         Console.WriteLine($"{da.Description}");
 

@@ -7,10 +7,11 @@ using PainKiller.PowerCommands.Shared.Enums;
 
 namespace PainKiller.PowerCommands.Core.Commands;
 
-[PowerCommand(description: "View and manage the log",
-                arguments: "action: view, archive, list (default if omitted)",
-                    qutes: "filename: name of the file to be viewed",
-                  example: "log list\nlog archive\nlog view")]
+[PowerCommand(       description: "View and manage the log",
+                       arguments: "action: view, archive, list (default if omitted)",
+                           qutes: "filename: name of the file to be viewed",
+                defaultParameter: "view",
+                         example: "log list\nlog archive\nlog view")]
 [Tags("core|diagnostic|log|debug|zip|compression|temp")]
 public class LogCommand : CommandBase<CommandsConfiguration>
 {
@@ -29,6 +30,15 @@ public class LogCommand : CommandBase<CommandsConfiguration>
     {
         var dir = new DirectoryInfo(Configuration.Log.FilePath);
         foreach (var file in dir.GetFiles("*.log").OrderByDescending(f => f.LastWriteTime)) WriteLine($"{file.Name} {file.LastWriteTime}");
+        Console.WriteLine();
+        WriteHeadLine("To view current logfile type log view");
+        WriteHeadLine("Example");
+        Console.WriteLine("log view");
+
+        Console.WriteLine();
+        WriteHeadLine("To archive the logs into a zipfile type log archive");
+        WriteHeadLine("Example");
+        Console.WriteLine("log archive");
     }
 
     private void Archive()

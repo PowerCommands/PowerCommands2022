@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
 using PainKiller.PowerCommands.Configuration;
-using PainKiller.PowerCommands.MyExampleCommands;
 using PainKiller.PowerCommands.Security.DomainObjects;
 using PainKiller.PowerCommands.Shared.Contracts;
 using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;

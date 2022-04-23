@@ -7,7 +7,7 @@ using PainKiller.PowerCommands.Shared.Enums;
 
 namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
-[PowerCommand(description: "Sample command just to show how ProgressBar looks")]
+[PowerCommand(description: "Sample command just to show how ProgressBar looks", example:"progressbar")]
 [Tags("progressbar|example")]
 public class ProgressbarCommand : CommandBase<CommandsConfiguration>
 {

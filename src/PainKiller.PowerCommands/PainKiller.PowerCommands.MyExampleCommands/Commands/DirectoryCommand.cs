@@ -9,12 +9,12 @@ namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 [PowerCommand(description: "Input a valid path to a directory and the commmand will analyse the directory and its subdirectories, this command showing the use of Path property on the input and how you could display a progress with overwriting one line in the iteration",
                 arguments: "path: a valid dirctory path, spaces in the path are allowed en will be merged to the Path property on the Input instance",
                     qutes: "size: Let the iteratin sort out big files and display them, size is in megabytes and defaults to 10 (MB) if omitted",
-                  example: "dirctory C:\\Program Files\nC:\\Program Files \"1024\"",
+                  example: "directory C:\\Repos|directory C:\\Repos \"1024\"",
                  useAsync: true)]
 [Tags("example|iteration|async|line|display|inline")]
 public class DirectoryCommand : CommandBase<CommandsConfiguration>
 {
-    private List<string> _bigFiles = new();
+    private readonly List<string> _bigFiles = new();
     private long _minFileSize = 10;
     const int OneMegabyte = 1048576;
     public DirectoryCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }

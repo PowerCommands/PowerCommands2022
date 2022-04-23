@@ -1,5 +1,4 @@
 ﻿using PainKiller.PowerCommands.Core.Extensions;
-using PainKiller.PowerCommands.Core.Managers;
 using PainKiller.PowerCommands.Core.Services;
 using PainKiller.PowerCommands.Shared.Contracts;
 using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;

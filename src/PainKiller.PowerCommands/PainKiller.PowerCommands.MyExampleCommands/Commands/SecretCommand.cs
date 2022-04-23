@@ -7,11 +7,11 @@ using PainKiller.PowerCommands.Shared.Enums;
 
 namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
-[PowerCommand(description:       "Secret command can encrypt or decrypt a string", 
-                arguments:       "Method: should be encrypt or decrypt|Value: value to enrypt or decrypt, if value cointans whitespace use quote parameter instead",
-                qutes:           "Only use qute with encryption if your value to encrypt contains whitespaces",
-                example:         "secrets enrypt televinken44|secrets decrypt \"EAAAADehRmgu1XZNN+AA1/vSqITeUUFV07Sxd3vhbtkJQWwD\"",
-                defaultParameter:"encrypt televinken44")]
+[PowerCommand(description:        "Secret command can encrypt or decrypt a string", 
+                arguments:        "Method: should be encrypt or decrypt|Value: value to enrypt or decrypt, if value cointans whitespace use quote parameter instead",
+                qutes:            "Only use qute with encryption if your value to encrypt contains whitespaces",
+                example:          "secrets enrypt televinken44|secrets decrypt \"EAAAADehRmgu1XZNN+AA1/vSqITeUUFV07Sxd3vhbtkJQWwD\"",
+                defaultParameter: "encrypt televinken44")]
 [Tags("encryption|secret|example")]
 public class SecretsCommand : CommandBase<CommandsConfiguration>
 {

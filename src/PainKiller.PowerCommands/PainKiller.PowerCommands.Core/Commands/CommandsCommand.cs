@@ -20,6 +20,7 @@ public class CommandsCommand : CommandBase<CommandsConfiguration>
 
     public override RunResult Run(CommandLineInput input)
     {
+        Console.Clear();
         if (input.SingleArgument == "?") return Custom(input);
         if (input.SingleArgument == "!") return Reserved(input);
         if (string.IsNullOrEmpty(input.SingleQuote)) return NoFilter(input);
