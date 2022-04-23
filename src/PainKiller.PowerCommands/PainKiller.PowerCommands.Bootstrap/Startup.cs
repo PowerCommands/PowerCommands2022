@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Logging;
-using PainKiller.PowerCommands.Bootstrap.Extensions;
 using PainKiller.PowerCommands.Core.Managers;
 using PainKiller.PowerCommands.MyExampleCommands;
 using PainKiller.PowerCommands.MyExampleCommands.Configuration;
@@ -10,10 +9,7 @@ namespace PainKiller.PowerCommands.Bootstrap
     {
         public static PowerCommandsManager ConfigureServices()
         {
-            var services = PowerCommandServices.Service
-                .ShowDiagnostic(false)
-                .SetLogMinimumLevel(LogLevel.Information)
-                .PersistChanges();
+            var services = PowerCommandServices.Service;
 
             services.Logger.LogInformation("Program started, configuration read");
             

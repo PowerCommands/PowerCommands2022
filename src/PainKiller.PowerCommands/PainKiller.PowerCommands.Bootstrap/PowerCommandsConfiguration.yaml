@@ -1,7 +1,14 @@
 ﻿version: "1.0"
 configuration: 
   defaultGitRepositoryPath: "C:\\Repos\\PowerCommands2022"
-  showDiagnosticInformation: true
+  favorites:
+  - name: Music
+    nameOfExecutable: spotify
+    fileExtension: exe
+  - name: Games
+    nameOfExecutable: steam
+    fileExtension: exe  
+  showDiagnosticInformation: false
   metadata: 
     name: "Test"
     description: "En exempelbeskrivning"  

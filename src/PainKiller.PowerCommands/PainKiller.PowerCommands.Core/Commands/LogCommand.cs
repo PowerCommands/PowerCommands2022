@@ -28,7 +28,7 @@ public class LogCommand : CommandBase<CommandsConfiguration>
 
     private void List()
     {
-        var dir = new DirectoryInfo(Configuration.Log.FilePath);
+        var dir = new DirectoryInfo(Path.Combine(AppContext.BaseDirectory, Configuration.Log.FilePath));
         foreach (var file in dir.GetFiles("*.log").OrderByDescending(f => f.LastWriteTime)) WriteLine($"{file.Name} {file.LastWriteTime}");
         Console.WriteLine();
         WriteHeadLine("To view current logfile type log view");

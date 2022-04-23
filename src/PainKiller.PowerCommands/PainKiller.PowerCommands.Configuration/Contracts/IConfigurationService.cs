@@ -5,6 +5,6 @@ namespace PainKiller.PowerCommands.Configuration.Contracts;
 public interface IConfigurationService
 {
     YamlContainer<T> Get<T>(string inputFileName = "") where T : new();
-    string SaveChanges<T>(T configuration, string inputFileName = "default") where T : new();
+    string SaveChanges<T>(T configuration, string inputFileName = "default.yaml") where T : new();
     YamlContainer<T> GetAppDataConfiguration<T>(T defaultIfMissing, string inputFileName = "") where T : new();
 }

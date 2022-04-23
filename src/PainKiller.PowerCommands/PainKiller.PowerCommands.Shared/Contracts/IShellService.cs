@@ -2,6 +2,6 @@
 
 public interface IShellService
 {
-    void Execute(string programName, string arguments, string workingDirectory);
-    void Execute(string programName, string arguments, string workingDirectory, Action<string, bool> writeFunction);
+    void Execute(string programName, string arguments, string workingDirectory, string fileExtension = "exe");
+    void Execute(string programName, string arguments, string workingDirectory, Action<string, bool> writeFunction, string fileExtension = "exe");
 }

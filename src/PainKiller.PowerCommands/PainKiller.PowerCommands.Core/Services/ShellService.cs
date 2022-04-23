@@ -7,13 +7,13 @@ public class ShellService : IShellService
     private ShellService() { }
     private static readonly Lazy<IShellService> Lazy = new(() => new ShellService());
     public static IShellService Service => Lazy.Value;
-    public void Execute(string programName, string arguments, string workingDirectory, Action<string,bool> writeFunction)
+    public void Execute(string programName, string arguments, string workingDirectory, Action<string,bool> writeFunction, string fileExtension = "exe")
     {
         var startInfo = new System.Diagnostics.ProcessStartInfo
         {
             UseShellExecute = false,
             RedirectStandardOutput = true,
-            FileName = $"{programName}.exe",
+            FileName = $"{programName}.{fileExtension}",
             Arguments = arguments,
             WorkingDirectory = workingDirectory
         };
@@ -24,13 +24,13 @@ public class ShellService : IShellService
         processAdd.WaitForExit();
     }
 
-    public void Execute(string programName, string arguments, string workingDirectory)
+    public void Execute(string programName, string arguments, string workingDirectory, string fileExtension = "exe")
     {
         var startInfo = new System.Diagnostics.ProcessStartInfo
         {
             UseShellExecute = false,
             RedirectStandardOutput = true,
-            FileName = $"{programName}.exe",
+            FileName = $"{programName}.{fileExtension}",
             Arguments = arguments,
             WorkingDirectory = workingDirectory
         };

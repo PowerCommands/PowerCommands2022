@@ -37,7 +37,7 @@ public static class LogExtensions
 
     public static IEnumerable<string> ToLines(this ILogComponentConfiguration configuration)
     {
-        var dir = new DirectoryInfo(configuration.FilePath);
+        var dir = new DirectoryInfo(Path.Combine(AppContext.BaseDirectory, configuration.FilePath));
         var currentFile = dir.GetFiles("*.log").OrderByDescending(f => f.LastWriteTime).First();
         var tempFileName = $"{Path.GetTempPath()}\\{currentFile.Name}".FormatFileTimestamp();
         File.Copy(currentFile.FullName, tempFileName);

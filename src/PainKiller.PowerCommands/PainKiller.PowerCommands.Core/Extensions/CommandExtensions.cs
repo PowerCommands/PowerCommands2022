@@ -9,7 +9,7 @@ public static class CommandExtensions
         var currentColor = Console.ForegroundColor;
         Console.ForegroundColor = ConsoleColor.DarkYellow;
         Console.Write($"{name}: ");
-        Console.ForegroundColor = ConsoleColor.DarkRed;
+        Console.ForegroundColor = ConsoleColor.Blue;
         Console.Write($"{description}");
         Console.ForegroundColor = currentColor;
     }
