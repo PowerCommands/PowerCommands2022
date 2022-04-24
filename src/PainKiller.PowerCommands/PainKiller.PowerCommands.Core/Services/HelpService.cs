@@ -24,10 +24,9 @@ public class HelpService : IHelpService
 
         command.WriteHeaderLine($"{nameof(da.Arguments)}:");
         foreach (var a in args) Console.WriteLine(a);
-        Console.WriteLine();
         command.WriteHeaderLine($"{nameof(da.Qutes)}:");
         foreach (var q in qutes) Console.WriteLine(q);
-        Console.WriteLine();
+        
         if (!string.IsNullOrEmpty(da.DefaultParameter))
         {
             command.WriteHeaderLine($"{nameof(da.DefaultParameter)}:");

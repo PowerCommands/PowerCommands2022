@@ -1,29 +1,22 @@
 ﻿using PainKiller.HttpClientUtils;
-using PainKiller.PowerCommands.Core.BaseClasses;
 using PainKiller.PowerCommands.Core.Managers;
 using PainKiller.PowerCommands.Security.DomainObjects;
-using PainKiller.PowerCommands.Shared.Attributes;
 using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
-using PainKiller.PowerCommands.Shared.DomainObjects.Core;
-using PainKiller.PowerCommands.Shared.Enums;
-
 namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
+[Tags("download|checksum|example")]
 [PowerCommand(     description: "Download a file that is provides as an argument, after download you get a checksum of the downloaded file",
                      arguments: "url: Single argument must be a valid URL to something do download",
                          qutes: "Single qute is the filename to be created, a full path could be provided but is not necessary", 
               defaultParameter: "https://downloadurl.com \"filename.txt\"",
                        example: "download https://downloadurl.com \"filename.txt\"",
                       useAsync: true)]
-[Tags("download|checksum|example")]
 public class DownloadCommand : CommandBase<CommandsConfiguration>
 {
     private ProgressBar? _progressbar;
     private string _downloadUrl = "";
     private string _fileName = "";
-    
     public DownloadCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
-
     public override async Task<RunResult> RunAsync(CommandLineInput input)
     {
         WriteLine("Command executes in async mode, if any error occures you will not see them, a argument must be provided and it must be a valid url to something that could be downloaded.");
@@ -32,7 +25,7 @@ public class DownloadCommand : CommandBase<CommandsConfiguration>
         
         var retVal =  DownloadWithProgressService.Service.Download(_downloadUrl, _fileName, ProgressChanged);
         await retVal;
-        return CreateRunResult(this, input, RunResultStatus.Ok);
+        return CreateRunResult(input);
     }
     private bool ProgressChanged(long? totalBytes, long totalBytesRead, double? percentage)
     {

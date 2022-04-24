@@ -1,14 +1,9 @@
-﻿using PainKiller.PowerCommands.Core.BaseClasses;
-using PainKiller.PowerCommands.Core.Managers;
-using PainKiller.PowerCommands.Shared.Attributes;
+﻿using PainKiller.PowerCommands.Core.Managers;
 using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
-using PainKiller.PowerCommands.Shared.DomainObjects.Core;
-using PainKiller.PowerCommands.Shared.Enums;
-
 namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
-[PowerCommand(description: "Sample command just to show how ProgressBar looks", example:"progressbar")]
 [Tags("progressbar|example")]
+[PowerCommand(description: "Sample command just to show how ProgressBar looks", example:"progressbar")]
 public class ProgressbarCommand : CommandBase<CommandsConfiguration>
 {
     public ProgressbarCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
@@ -23,7 +18,6 @@ public class ProgressbarCommand : CommandBase<CommandsConfiguration>
             Thread.Sleep(1);
             progressbar.Show();
         }
-
-        return CreateRunResult(this, input, RunResultStatus.Ok);
+        return CreateRunResult(input);
     }
 }

@@ -1,16 +1,11 @@
-﻿using PainKiller.PowerCommands.Core.BaseClasses;
-using PainKiller.PowerCommands.Core.Services;
+﻿using PainKiller.PowerCommands.Core.Services;
 using PainKiller.PowerCommands.Security.Services;
-using PainKiller.PowerCommands.Shared.Attributes;
 using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
-using PainKiller.PowerCommands.Shared.DomainObjects.Core;
-using PainKiller.PowerCommands.Shared.Enums;
-
 namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
+[Tags("encryption|secret|example|security|password")]
 [PowerCommand(description: "Password example, prompts you for a password an masks the input, displays it encrypted and gives you the option to show it in clear text",
                   example: "password")]
-[Tags("encryption|secret|example|security|password")]
 public class PasswordCommand : CommandBase<CommandsConfiguration>
 {
     public PasswordCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
@@ -28,6 +23,6 @@ public class PasswordCommand : CommandBase<CommandsConfiguration>
         var response = Console.ReadLine();
         if (response != null && response.StartsWith('y')) Console.WriteLine(password);
 
-        return CreateRunResult(this, input, RunResultStatus.Ok);
+        return CreateRunResult(input);
     }
 }

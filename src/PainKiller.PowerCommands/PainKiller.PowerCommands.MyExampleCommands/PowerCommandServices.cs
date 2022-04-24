@@ -1,4 +1,8 @@
-﻿using Microsoft.Extensions.Logging;
+﻿global using PainKiller.PowerCommands.Core.BaseClasses;
+global using PainKiller.PowerCommands.Shared.Attributes;
+global using PainKiller.PowerCommands.Shared.DomainObjects.Core;
+
+using Microsoft.Extensions.Logging;
 using PainKiller.PowerCommands.Configuration;
 using PainKiller.PowerCommands.Configuration.Extensions;
 using PainKiller.PowerCommands.Core;

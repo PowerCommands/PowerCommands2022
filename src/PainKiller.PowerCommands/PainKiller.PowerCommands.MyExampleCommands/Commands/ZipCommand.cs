@@ -1,25 +1,19 @@
-﻿using PainKiller.PowerCommands.Core.BaseClasses;
-using PainKiller.PowerCommands.Core.Extensions;
+﻿using PainKiller.PowerCommands.Core.Extensions;
 using PainKiller.PowerCommands.Core.Services;
-using PainKiller.PowerCommands.Shared.Attributes;
 using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
-using PainKiller.PowerCommands.Shared.DomainObjects.Core;
-using PainKiller.PowerCommands.Shared.Enums;
-
 namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
+[Tags("zip|compression|temp|path")]
 [PowerCommand(description: "Zip files of a given path using filter, filter is optional",
     arguments: "path: A valid path to a directory",
     qutes: "filter: optional, what kind of files to be zipped from the given directory.",
     example: "zip c:\\temp|zip c:\\temp \"*.txt\"")]
-[Tags("zip|compression|temp|path")]
 public class ZipCommand : CommandBase<CommandsConfiguration>
 {
     public ZipCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
-
     public override RunResult Run(CommandLineInput input)
     {
-        if (string.IsNullOrEmpty(input.Path)) return CreateBadParameterRunResult(this, input, "A valid path must be provided as argument");
+        if (string.IsNullOrEmpty(input.Path)) return CreateBadParameterRunResult(input, "A valid path must be provided as argument");
         WriteHeadLine($"Zipping files in directory: {input.Path}...");
         var zipResult = ZipService.Service.ArchiveFilesInDirectory(input.Path, "example", useTimestampSuffix: true, filter: string.IsNullOrEmpty(input.SingleQuote) ? "*" : input.SingleQuote);
         Console.WriteLine();
@@ -29,8 +23,8 @@ public class ZipCommand : CommandBase<CommandsConfiguration>
         this.WriteObjectDescription(nameof(zipResult.FileSizeUncompressedInKb),zipResult.FileSizeUncompressedInKb.ToString());
         this.WriteObjectDescription(nameof(zipResult.FileSizeCompressedInKb),zipResult.FileSizeCompressedInKb.ToString());
         this.WriteObjectDescription(nameof(zipResult.Checksum),zipResult.Checksum!);
-        if(zipResult.HasException) this.WriteObjectDescription(nameof(zipResult.ExceptionMessage),zipResult.ExceptionMessage!);
+        if(zipResult.HasException) this.WriteObjectDescription(nameof(zipResult.ExceptionMessage),zipResult.ExceptionMessage);
         
-        return CreateRunResult(this, input, RunResultStatus.Ok);
+        return CreateRunResult(input);
     }
 }
