@@ -1,7 +1,6 @@
-﻿using GlitchFinder.Managers;
-using GlitchFinder.Matrix;
+﻿using GlitchFinder.Matrix;
 using GlitchFinder.Matrix.Contracts;
-using PainKiller.PowerCommands.Configuration;
+using PainKiller.PowerCommands.Core.Extensions;
 using PainKiller.PowerCommands.GlitchFinderCommands.BaseClasses;
 using PainKiller.PowerCommands.GlitchFinderCommands.Configuration;
 
@@ -9,9 +8,9 @@ namespace PainKiller.PowerCommands.GlitchFinderCommands.Commands;
 
 [Tags("comparsion|regression")]
 [PowerCommand(description: " This is for tracking a single dataset/source over time. You create a baseline, which is stored on file, and then later compare data towards this baseline.",
-                arguments: "filename: A valid filename where configuration about the regression test or information about the baseline is stored",
+                arguments: "project name: Existing regression test project with configuration information about the regression test",
                     qutes: "baseline: if omitted a regression test will be performed, if parameter is baseline a file with baseline data will be created for regression test later",
-                  example: "regression \"regressiontest-template.yaml\"|regression baseline \"baseline-data.csv\"")]
+                  example: "regression \"regression sample project\"|regression baseline \"regression sample project\"")]
 public class RegressionCommand : GlitchFinderBaseCommand
 {
     public RegressionCommand(string identifier, PowerCommandsConfiguration configuration) : base(identifier, configuration) { }
@@ -19,21 +18,27 @@ public class RegressionCommand : GlitchFinderBaseCommand
     public override RunResult Run(CommandLineInput input)
     {
         if (string.IsNullOrEmpty(input.SingleQuote)) return CreateBadParameterRunResult(input, "A valid file name to existing configuration file must be provided");
+        var projectName = input.SingleQuote;
+        var project = Configuration.RegressionProjects.FirstOrDefault(s => s.Name.ToLower() == projectName.ToLower());
+        
+        if (project == null) return CreateBadParameterRunResult(input, $"No project with name {projectName} of the regression project type found, check that the project exist in {nameof(PowerCommandsConfiguration)}.yaml file.");
+        
         if (input.SingleArgument == "baseline")
         {
-            SetBaseline(input.SingleQuote);
+            SetBaseline(project);
             return CreateRunResult(input);
         }
-        var isEqual = RegressionTest(input.SingleQuote);
+        var isEqual = RegressionTest(project);
         if (isEqual) WriteHeadLine("No glitches");
 
         return CreateRunResult(input);
     }
-    public bool SetBaseline(string settingsFile)
+    public bool SetBaseline(RegressionProject project)
     {
         try
         {
-            var regressionTestSetting = ConfigurationService.Service.Get<RegressionTestSetting>(settingsFile).Configuration;
+            var regressionTestSetting = project.Settings;
+
             GetMatrix(regressionTestSetting.SourceSetting, out IMatrix baselineMatrix);
 
             var serialized = ((GlitchFinder.Matrix.DomainObjects.Matrix)baselineMatrix).Serialize();
@@ -47,9 +52,9 @@ public class RegressionCommand : GlitchFinderBaseCommand
             return false;
         }
     }
-    public bool RegressionTest(string settingsFile)
+    public bool RegressionTest(RegressionProject project)
     {
-        var regressionTestSetting = ConfigurationService.Service.Get<RegressionTestSetting>(settingsFile).Configuration;
+        var regressionTestSetting = project.Settings;
         try
         {
             var serializedData = File.ReadAllText(regressionTestSetting.BaselineFilePath);
@@ -58,7 +63,7 @@ public class RegressionCommand : GlitchFinderBaseCommand
             var isMatrixOk = GetMatrix(regressionTestSetting.SourceSetting, out IMatrix newMatrix);
 
             var reporter = GetReporter(regressionTestSetting.ReportType);
-            var reportFileName = regressionTestSetting.ReportFilePath;
+            var reportFileName = Path.Combine(AppContext.BaseDirectory, Configuration.ProjectsRelativePath, project.Name, regressionTestSetting.ReportFilePath.PrefixFileTimestamp());
 
             if (isMatrixOk)
             {

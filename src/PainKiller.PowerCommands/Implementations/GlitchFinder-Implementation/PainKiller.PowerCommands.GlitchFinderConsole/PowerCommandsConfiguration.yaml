@@ -1,21 +1,24 @@
-﻿version: "1.0"
-configuration: 
-  showDiagnosticInformation: false      
-  metadata: 
-    name: "Test"
-    description: "En exempelbeskrivning"  
+﻿version: 1.0
+configuration:
+  projectsRelativePath: Projects
+  comparisonProjects: []  
+  regressionProjects: []
+  showDiagnosticInformation: false
+  metadata:
+    name: Test
+    description: En exempelbeskrivning
   log:
-    name: "Serialog"
-    component: "PainKiller.SerilogExtensions.dll"
-    checksum: "173831af7e77b8bd33e32fce0b4e646d"
-    fileName: "powercommands.log"   
-    filePath: "logs"
-    rollingIntervall: "Day" # Infinite,Year,Month,Day,Hour,Minute
-    restrictedToMinimumLevel: "Information" # Verbose, Debug,Information, Warning,Error,Critical      
+    fileName: powercommands.log
+    filePath: logs
+    rollingIntervall: Day
+    restrictedToMinimumLevel: Information
+    component: PainKiller.SerilogExtensions.dll
+    checksum: 173831af7e77b8bd33e32fce0b4e646d
+    name: Serialog
   components:
   - component: PainKiller.PowerCommands.Core.dll
     checksum: 30cc55b7c6f29f951be3df97f634fb71
-    name: PainKiller Core  
+    name: PainKiller Core
   - component: PainKiller.PowerCommands.GlitchFinderCommands.dll
     checksum: c8d128cde99a5ee06b56e8337c10b1e2
     name: My Example Command

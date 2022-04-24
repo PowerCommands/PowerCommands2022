@@ -22,7 +22,7 @@ public class ConfigurationService : IConfigurationService
             .Build();
         return deserializer.Deserialize<YamlContainer<T>>(yamlContent);
     }
-    public string SaveChanges<T>(T configuration, string inputFileName = "default") where T : new()
+    public string SaveChanges<T>(T configuration, string inputFileName = "") where T : new()
     {
         if (configuration is null) return "";
         var fileName = string.IsNullOrEmpty(inputFileName) ? $"{configuration.GetType().Name}.yaml".GetSafePathRegardlessHowApplicationStarted() : inputFileName.GetSafePathRegardlessHowApplicationStarted();

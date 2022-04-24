@@ -8,6 +8,7 @@ namespace PainKiller.PowerCommands.Core.Extensions;
 public static class LogExtensions
 {
     public static string FormatFileTimestamp(this string prefix) => $"{prefix}{Now.Year}{Now.Month}{Now.Day}{Now.Hour}{Now.Minute}";
+    public static string PrefixFileTimestamp(this string fileName) => $"{Now.Year}{Now.Month}{Now.Day}{Now.Hour}{Now.Minute}{fileName}";
 
     public static string ArchiveLogFiles(this ILogComponentConfiguration configuration)
     {
