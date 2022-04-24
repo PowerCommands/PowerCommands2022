@@ -1,5 +1,6 @@
 ﻿version: "1.0"
 configuration: 
+  showDiagnosticInformation: false
   defaultGitRepositoryPath: "C:\\Repos\\PowerCommands2022"
   favorites:
   - name: Music
@@ -7,8 +8,7 @@ configuration:
     fileExtension: exe
   - name: Games
     nameOfExecutable: steam
-    fileExtension: exe  
-  showDiagnosticInformation: false
+    fileExtension: exe    
   metadata: 
     name: "Test"
     description: "En exempelbeskrivning"  
@@ -19,14 +19,14 @@ configuration:
     fileName: "powercommands.log"   
     filePath: "logs"
     rollingIntervall: "Day" # Infinite,Year,Month,Day,Hour,Minute
-    restrictedToMinimumLevel: "Information" # Verbose, Debug,Information, Warning,Error,Critical    
+    restrictedToMinimumLevel: "Information" # Verbose, Debug,Information, Warning,Error,Critical      
   components:
-  - component: "PainKiller.PowerCommands.Core.dll"    
-    checksum: "e6d2d6cb64863e9dc68a9602f83bcfde"
-    name: "PainKiller Core"
-  - component: "PainKiller.AzureKeyVault.dll"
-    checksum: "e6d2d6cb64863e9dc68a9602f83bcfde"
-    name: "Azure Key Vault"
-  - component: "PainKiller.PowerCommands.MyExampleCommands.dll"
-    checksum: "e6d2d6cb64863e9dc68a9602f83bcfde"
-    name: "My Example Command"
+  - component: PainKiller.PowerCommands.Core.dll
+    checksum: 30cc55b7c6f29f951be3df97f634fb71
+    name: PainKiller Core
+  - component: PainKiller.AzureKeyVault.dll
+    checksum: 916d3e63a3e06014b3b7858ec8038776
+    name: Azure Key Vault
+  - component: PainKiller.PowerCommands.MyExampleCommands.dll
+    checksum: c8d128cde99a5ee06b56e8337c10b1e2
+    name: My Example Command

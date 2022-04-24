@@ -1,5 +1,4 @@
 ﻿using System.Text.RegularExpressions;
-using PainKiller.PowerCommands.Shared.DomainObjects.Core;
 using static System.String;
 
 namespace PainKiller.PowerCommands.Core.Extensions;

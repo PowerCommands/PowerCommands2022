@@ -31,14 +31,6 @@ public class ReadLineService
         _history.Add(text.Trim());
         return text;
     }
-
-    //Keeping this in case I want to use it later on...
-    //public string ReadPassword(string prompt = "")
-    //{
-    //    Console.Write(prompt);
-    //    KeyHandler keyHandler = new KeyHandler(new Console2() { PasswordMode = true }, new List<string>(), null!);
-    //    return GetText(keyHandler);
-    //}
     private string GetText(KeyHandler keyHandler)
     {
         ConsoleKeyInfo keyInfo = default;

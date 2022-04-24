@@ -26,7 +26,7 @@ public static class LogExtensions
             var file = new FileInfo(fileName);
             File.Copy(fileName, $"{tempDirectory}\\{file.Name}");
             try { File.Delete(fileName); }
-            catch (IOException e) { retVal.AppendLine($"The file {fileName} is the current logfile and could not be deleted."); }
+            catch (IOException) { retVal.AppendLine($"The file {fileName} is the current logfile and could not be deleted."); }
             retVal.AppendLine($"{fileName} moved to archive directory {tempDirectory}");
         }
         ZipFile.CreateFromDirectory(tempDirectory, zipFileName);
@@ -34,7 +34,6 @@ public static class LogExtensions
         
         return retVal.ToString();
     }
-
     public static IEnumerable<string> ToLines(this ILogComponentConfiguration configuration)
     {
         var dir = new DirectoryInfo(Path.Combine(AppContext.BaseDirectory, configuration.FilePath));

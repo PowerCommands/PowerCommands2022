@@ -1,10 +1,7 @@
-﻿using System.Text;
-using PainKiller.PowerCommands.Configuration;
-using PainKiller.PowerCommands.Core.Extensions;
+﻿using PainKiller.PowerCommands.Core.Extensions;
 using PainKiller.PowerCommands.Security.DomainObjects;
 using PainKiller.PowerCommands.Security.Extensions;
 using PainKiller.PowerCommands.Shared.Contracts;
-using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
 
 namespace PainKiller.PowerCommands.Core.Managers;
 
@@ -12,7 +9,6 @@ public class ComponentManager<TConfiguration> where TConfiguration : CommandsCon
 {
     private readonly TConfiguration _configuration;
     private readonly IDiagnosticManager _diagnostic;
-
     public ComponentManager(TConfiguration configuration, IDiagnosticManager diagnostic)
     {
         _configuration = configuration;
@@ -34,23 +30,14 @@ public class ComponentManager<TConfiguration> where TConfiguration : CommandsCon
         }
         return retVal;
     }
-    
-    //TODO: Create a util application that uses this
-    public string AutofixConfigurationComponents<T>(T configuration) where T : CommandsConfiguration, new()
+    public List<BaseComponentConfiguration> AutofixConfigurationComponents<T>(T configuration) where T : CommandsConfiguration, new()
     {
-        var retVal = new StringBuilder();
+        var retVal = new List<BaseComponentConfiguration>();
         foreach (var component in configuration.Components)
         {
-            var fileCheckSum = new FileChecksum(component.Component);
-            var validateCheckSum = fileCheckSum.CompareFileChecksum(component.Checksum);
-            _diagnostic.Message($"{component.Name} Checksum {fileCheckSum.Mde5Hash} {validateCheckSum}");
-            if (!validateCheckSum)
-            {
-                component.Checksum = fileCheckSum.Mde5Hash;
-                ConfigurationService.Service.SaveChanges(configuration);
-                retVal.AppendLine($"{component.Name} Checksum {fileCheckSum.Mde5Hash} {validateCheckSum} FIXED");
-            }
+            component.Checksum = new FileChecksum(component.Component).Mde5Hash;
+            retVal.Add(component);
         }
-        return retVal.ToString();
+        return retVal;
     }
 }
