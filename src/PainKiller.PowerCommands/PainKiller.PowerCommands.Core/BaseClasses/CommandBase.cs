@@ -21,12 +21,12 @@ public abstract class CommandBase<TConfig> : IConsoleCommand where TConfig : new
     protected RunResult CreateBadParameterRunResult(IConsoleCommand executingCommand, CommandLineInput input, string output) => new(executingCommand, input, output, RunResultStatus.ArgumentError);
     protected void WriteLine(string output, bool addToOutput = true)
     {
-        if(addToOutput) _ouput.AppendLine(output);
+        if(addToOutput && !string.IsNullOrEmpty(output.Trim())) _ouput.AppendLine(output);
         Console.WriteLine(output);
     }
     protected void WriteHeadLine(string output, bool addToOutput = true)
     {
-        if (addToOutput) _ouput.AppendLine(output);
+        if (addToOutput && string.IsNullOrEmpty(output.Trim())) _ouput.AppendLine(output);
         var color = Console.ForegroundColor;
         Console.ForegroundColor = ConsoleColor.Green;
         Console.WriteLine(output);

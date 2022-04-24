@@ -10,6 +10,7 @@
     <Folder Include="Managers\" />
     <Folder Include="DomainObjects\" />
     <Folder Include="Extensions\" />
+    <Folder Include="Services\" />
   </ItemGroup>
 
 </Project>

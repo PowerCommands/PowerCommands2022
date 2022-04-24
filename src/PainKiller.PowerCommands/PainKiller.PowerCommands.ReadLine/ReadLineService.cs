@@ -46,15 +46,14 @@ public class ReadLineService
         {
             keyInfo = Console.ReadKey(true);
             keyHandler.Handle(keyInfo);
-            HighlightText(keyHandler, keyInfo);
+            HighlightText(keyHandler);
         }
         Console.WriteLine();
         return keyHandler.Text;
     }
-
-    private void HighlightText(KeyHandler keyHandler, ConsoleKeyInfo keyInfo)
+    private void HighlightText(KeyHandler keyHandler)
     {
-        if(string.IsNullOrEmpty(keyHandler.Text) || keyHandler.Text.Split(' ').Length > 1) return;
+        if(IsNullOrEmpty(keyHandler.Text) || keyHandler.Text.Split(' ').Length > 1) return;
         
         if (_suggestions.Any(s => s == keyHandler.Text))
         {
@@ -63,7 +62,6 @@ public class ReadLineService
             Console.SetCursorPosition(Console.GetCursorPosition().Left - keyHandler.Text.Length, Console.GetCursorPosition().Top);
             Console.Write(keyHandler.Text);
             Console.ForegroundColor = currentColor;
-            return;
         }
     }
 }
