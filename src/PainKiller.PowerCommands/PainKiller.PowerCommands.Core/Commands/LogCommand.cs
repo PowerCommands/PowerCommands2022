@@ -11,7 +11,7 @@ namespace PainKiller.PowerCommands.Core.Commands;
                        arguments: "action: view, archive, list (default if omitted)",
                            qutes: "filename: name of the file to be viewed",
                 defaultParameter: "view",
-                         example: "log list\nlog archive\nlog view")]
+                         example: "log list|log archive|log view")]
 [Tags("core|diagnostic|log|debug|zip|compression|temp")]
 public class LogCommand : CommandBase<CommandsConfiguration>
 {

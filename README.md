@@ -21,8 +21,11 @@ PowerCommands is a concept for creating your own customized command prompt to pe
  - Configuration with YAML (very easy to extend)
  - Diagnostic 
  - Secret handling with Encryption and environment variable
- - Command completion, with history, suggestions and support for Path/File navigation
+ - Command completion, with history, suggestions and support for Path/File navigation and color highlightning when typing a valid command
  - Progressbar
+ - Download files
+ - Password prompt
+ - Zip with attributes like checksum, filecount and file size (before and after compression) 
  
  Some the core components is separated and are stand-alone components, they could be reused else where, like security and configuration.
  

@@ -10,7 +10,7 @@ public static class CommandExtensions
         Console.ForegroundColor = ConsoleColor.DarkYellow;
         Console.Write($"{name}: ");
         Console.ForegroundColor = ConsoleColor.Blue;
-        Console.Write($"{description}");
+        Console.WriteLine($"{description}");
         Console.ForegroundColor = currentColor;
     }
     public static void Write(this IConsoleCommand command, string text, ConsoleColor color)
