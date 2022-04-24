@@ -28,7 +28,7 @@ public class ReadLineService
         var text = GetText(keyHandler);
 
         if (IsNullOrWhiteSpace(text) && !IsNullOrWhiteSpace(@default)) text = @default;
-        _history.Add(text);
+        _history.Add(text.Trim());
         return text;
     }
 
@@ -48,7 +48,6 @@ public class ReadLineService
             keyHandler.Handle(keyInfo);
             HighlightText(keyHandler, keyInfo);
         }
-
         Console.WriteLine();
         return keyHandler.Text;
     }

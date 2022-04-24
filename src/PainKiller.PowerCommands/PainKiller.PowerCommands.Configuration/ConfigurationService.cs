@@ -25,7 +25,7 @@ public class ConfigurationService : IConfigurationService
     public string SaveChanges<T>(T configuration, string inputFileName = "default") where T : new()
     {
         if (configuration is null) return "";
-        var fileName = string.IsNullOrEmpty(inputFileName) ? $"{configuration.GetType().Name}.yaml".GetSafePathRegardlessHowApplicationStarted() : inputFileName;
+        var fileName = string.IsNullOrEmpty(inputFileName) ? $"{configuration.GetType().Name}.yaml".GetSafePathRegardlessHowApplicationStarted() : inputFileName.GetSafePathRegardlessHowApplicationStarted();
 
         var yamlContainer = new YamlContainer<T> { Configuration = configuration, Version = "1.0" };
         var serializer = new SerializerBuilder()

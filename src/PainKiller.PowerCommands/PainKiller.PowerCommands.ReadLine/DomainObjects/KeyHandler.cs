@@ -21,6 +21,82 @@ internal class KeyHandler
     private bool IsStartOfBuffer() => Console2.CursorLeft == 0;
     private bool IsEndOfBuffer() => Console2.CursorLeft == Console2.BufferWidth - 1;
     private bool IsInAutoCompleteMode() => _completions != null;
+
+    public KeyHandler(IConsole console, List<string> history, IAutoCompleteHandler autoCompleteHandler)
+    {
+        Console2 = console;
+
+        _history = history ?? new List<string>();
+        _historyIndex = _history.Count;
+        _text = new StringBuilder();
+        _keyActions = new Dictionary<string, Action>();
+
+        _keyActions["LeftArrow"] = MoveCursorLeft;
+        _keyActions["Home"] = MoveCursorHome;
+        _keyActions["End"] = MoveCursorEnd;
+        _keyActions["ControlA"] = MoveCursorHome;
+        _keyActions["ControlB"] = MoveCursorLeft;
+        _keyActions["RightArrow"] = MoveCursorRight;
+        _keyActions["ControlF"] = MoveCursorRight;
+        _keyActions["ControlE"] = MoveCursorEnd;
+        _keyActions["Backspace"] = Backspace;
+        _keyActions["Delete"] = Delete;
+        _keyActions["ControlD"] = Delete;
+        _keyActions["ControlH"] = Backspace;
+        _keyActions["ControlL"] = ClearLine;
+        _keyActions["Escape"] = ClearLine;
+        _keyActions["UpArrow"] = PrevHistory;
+        _keyActions["ControlP"] = PrevHistory;
+        _keyActions["DownArrow"] = NextHistory;
+        _keyActions["ControlN"] = NextHistory;
+        _keyActions["ControlU"] = () =>
+        {
+            while (!IsStartOfLine()) Backspace();
+        };
+        _keyActions["ControlK"] = () =>
+        {
+            int pos = _cursorPos;
+            MoveCursorEnd();
+            while (_cursorPos > pos) Backspace();
+        };
+        _keyActions["ControlW"] = () =>
+        {
+            while (!IsStartOfLine() && _text[_cursorPos - 1] != ' ') Backspace();
+        };
+        _keyActions["ControlT"] = TransposeChars;
+
+        _keyActions["Tab"] = () =>
+        {
+            if (IsInAutoCompleteMode())
+            {
+                NextAutoComplete();
+            }
+            else
+            {
+                if (autoCompleteHandler == null || !IsEndOfLine())
+                    return;
+
+                string text = _text.ToString();
+
+                _completionStart = text.LastIndexOfAny(autoCompleteHandler.Separators);
+                _completionStart = _completionStart == -1 ? 0 : _completionStart + 1;
+
+                _completions = autoCompleteHandler.GetSuggestions(text, _completionStart);
+                _completions = (_completions?.Length == 0 ? null : _completions)!;
+
+                if (_completions == null)
+                    return;
+
+                StartAutoComplete();
+            }
+        };
+
+        _keyActions["ShiftTab"] = () =>
+        {
+            if (IsInAutoCompleteMode()) PreviousAutoComplete();
+        };
+    }
+
     private void MoveCursorLeft()
     {
         if (IsStartOfLine()) return;
@@ -208,81 +284,6 @@ internal class KeyHandler
     }
 
     public string Text => _text.ToString();
-
-    public KeyHandler(IConsole console, List<string> history, IAutoCompleteHandler autoCompleteHandler)
-    {
-        Console2 = console;
-
-        _history = history ?? new List<string>();
-        _historyIndex = _history.Count;
-        _text = new StringBuilder();
-        _keyActions = new Dictionary<string, Action>();
-
-        _keyActions["LeftArrow"] = MoveCursorLeft;
-        _keyActions["Home"] = MoveCursorHome;
-        _keyActions["End"] = MoveCursorEnd;
-        _keyActions["ControlA"] = MoveCursorHome;
-        _keyActions["ControlB"] = MoveCursorLeft;
-        _keyActions["RightArrow"] = MoveCursorRight;
-        _keyActions["ControlF"] = MoveCursorRight;
-        _keyActions["ControlE"] = MoveCursorEnd;
-        _keyActions["Backspace"] = Backspace;
-        _keyActions["Delete"] = Delete;
-        _keyActions["ControlD"] = Delete;
-        _keyActions["ControlH"] = Backspace;
-        _keyActions["ControlL"] = ClearLine;
-        _keyActions["Escape"] = ClearLine;
-        _keyActions["UpArrow"] = PrevHistory;
-        _keyActions["ControlP"] = PrevHistory;
-        _keyActions["DownArrow"] = NextHistory;
-        _keyActions["ControlN"] = NextHistory;
-        _keyActions["ControlU"] = () =>
-        {
-            while (!IsStartOfLine()) Backspace();
-        };
-        _keyActions["ControlK"] = () =>
-        {
-            int pos = _cursorPos;
-            MoveCursorEnd();
-            while (_cursorPos > pos) Backspace();
-        };
-        _keyActions["ControlW"] = () =>
-        {
-            while (!IsStartOfLine() && _text[_cursorPos - 1] != ' ') Backspace();
-        };
-        _keyActions["ControlT"] = TransposeChars;
-
-        _keyActions["Tab"] = () =>
-        {
-            if (IsInAutoCompleteMode())
-            {
-                NextAutoComplete();
-            }
-            else
-            {
-                if (autoCompleteHandler == null || !IsEndOfLine())
-                    return;
-
-                string text = _text.ToString();
-
-                _completionStart = text.LastIndexOfAny(autoCompleteHandler.Separators);
-                _completionStart = _completionStart == -1 ? 0 : _completionStart + 1;
-
-                _completions = autoCompleteHandler.GetSuggestions(text, _completionStart);
-                _completions = (_completions?.Length == 0 ? null : _completions)!;
-
-                if (_completions == null)
-                    return;
-
-                StartAutoComplete();
-            }
-        };
-
-        _keyActions["ShiftTab"] = () =>
-        {
-            if (IsInAutoCompleteMode()) PreviousAutoComplete();
-        };
-    }
 
     public void Handle(ConsoleKeyInfo keyInfo)
     {
