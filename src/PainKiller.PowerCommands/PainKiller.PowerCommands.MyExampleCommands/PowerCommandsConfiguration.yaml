@@ -23,10 +23,7 @@ configuration:
   components:
   - component: PainKiller.PowerCommands.Core.dll
     checksum: 30cc55b7c6f29f951be3df97f634fb71
-    name: PainKiller Core
-  - component: PainKiller.AzureKeyVault.dll
-    checksum: 916d3e63a3e06014b3b7858ec8038776
-    name: Azure Key Vault
+    name: PainKiller Core  
   - component: PainKiller.PowerCommands.MyExampleCommands.dll
     checksum: c8d128cde99a5ee06b56e8337c10b1e2
     name: My Example Command

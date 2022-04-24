@@ -8,10 +8,10 @@ public class HelpService : IHelpService
     private HelpService(){}
     private static readonly Lazy<IHelpService> Lazy = new(() => new HelpService());
     public static IHelpService Service => Lazy.Value;
-    public void ShowHelp(IConsoleCommand command)
+    public void ShowHelp(IConsoleCommand command, bool clearConsole = true)
     {
         var da = command.GetPowerCommandAttribute();
-        Console.Clear();
+        if(clearConsole) Console.Clear();
         command.WriteObjectDescription("PowerCommand", command.Identifier);
         var typeDescription = command.GetType().FullName!.StartsWith("PainKiller.PowerCommands.Core.Commands") ? "Core command (reserved name, not for use as custom command name)" : "Custom command";
         command.WriteObjectDescription("Type        ", $"{ typeDescription }");

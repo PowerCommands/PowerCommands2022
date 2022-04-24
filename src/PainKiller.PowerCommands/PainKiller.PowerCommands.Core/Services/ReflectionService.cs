@@ -1,6 +1,5 @@
 ﻿using System.Reflection;
 using PainKiller.PowerCommands.Shared.Contracts;
-using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
 
 namespace PainKiller.PowerCommands.Core.Services;
 

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -7,13 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PainKiller.AzureKeyVault\PainKiller.AzureKeyVault.csproj" />
     <ProjectReference Include="..\PainKiller.HttpClientUtils\PainKiller.HttpClientUtils.csproj" />
     <ProjectReference Include="..\PainKiller.PowerCommands.Configuration\PainKiller.PowerCommands.Configuration.csproj" />
     <ProjectReference Include="..\PainKiller.PowerCommands.Core\PainKiller.PowerCommands.Core.csproj" />
     <ProjectReference Include="..\PainKiller.PowerCommands.ReadLine\PainKiller.PowerCommands.ReadLine.csproj" />
     <ProjectReference Include="..\PainKiller.PowerCommands.Shared\PainKiller.PowerCommands.Shared.csproj" />
     <ProjectReference Include="..\PainKiller.SerilogExtensions\PainKiller.SerilogExtensions.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="PowerCommandsConfiguration.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

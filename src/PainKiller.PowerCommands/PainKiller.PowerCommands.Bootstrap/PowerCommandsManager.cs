@@ -2,7 +2,7 @@
 using PainKiller.PowerCommands.Core.Commands;
 using PainKiller.PowerCommands.Core.Extensions;
 using PainKiller.PowerCommands.Core.Services;
-using PainKiller.PowerCommands.MyExampleCommands.Configuration;
+using PainKiller.PowerCommands.GlitchFinderCommands.Configuration;
 using PainKiller.PowerCommands.Shared.Contracts;
 using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
 using PainKiller.PowerCommands.Shared.DomainObjects.Core;
@@ -62,7 +62,7 @@ public class PowerCommandsManager : IPowerCommandsManager
                 var message = $"Error occured of type {runResult.Status}";
                 Services.Logger.LogError(message);
                 DisplayErrorMessage($"{message} {runResult.Output}");
-                HelpService.Service.ShowHelp(runResult.ExecutingCommand);
+                HelpService.Service.ShowHelp(runResult.ExecutingCommand, clearConsole: false);
                 break;
             case RunResultStatus.RunExternalPowerCommand:
             case RunResultStatus.Initializing:
