@@ -3,6 +3,8 @@ using PainKiller.PowerCommands.GlitchFinderCommands.Configuration;
 
 namespace PainKiller.PowerCommands.GlitchFinderCommands.Commands;
 
+[Tags("project|help")]
+[PowerCommand(description: "List all projects", example: "projects")]
 public class ProjectsCommand : CommandBase<PowerCommandsConfiguration>
 {
     public ProjectsCommand(string identifier, PowerCommandsConfiguration configuration) : base(identifier, configuration) { }

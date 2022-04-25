@@ -6,7 +6,7 @@ namespace PainKiller.PowerCommands.GlitchFinderCommands.Commands;
 [Tags("core|shell|folder|open|util")]
 [PowerCommand(description: "Open a given directory or current working folder if argument is omitted",
     arguments: "Directory name: Argument is optional and could be omitted, if provided it must be a valid path do a directory",
-    example: "directory|directory C:\\repos")]
+    example: "dir|dir C:\\repos")]
 public class DirCommand : CommandBase<CommandsConfiguration>
 {
     public DirCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
