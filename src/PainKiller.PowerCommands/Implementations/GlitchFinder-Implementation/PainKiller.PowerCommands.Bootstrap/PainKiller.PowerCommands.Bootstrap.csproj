@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Extensions\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\PainKiller.PowerCommands.Configuration\PainKiller.PowerCommands.Configuration.csproj" />
+    <ProjectReference Include="..\..\..\PainKiller.PowerCommands.Core\PainKiller.PowerCommands.Core.csproj" />
+    <ProjectReference Include="..\..\..\PainKiller.PowerCommands.Security\PainKiller.PowerCommands.Security.csproj" />
+    <ProjectReference Include="..\..\..\PainKiller.PowerCommands.Shared\PainKiller.PowerCommands.Shared.csproj" />
+    <ProjectReference Include="..\PainKiller.PowerCommands.GlitchFinderCommands\PainKiller.PowerCommands.GlitchFinderCommands.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,6 +1,5 @@
 ﻿using PainKiller.PowerCommands.Configuration;
 using PainKiller.PowerCommands.GlitchFinderCommands.Configuration;
-
 namespace PainKiller.PowerCommands.GlitchFinderCommands.Commands;
 
 [Tags("configuration|help")]
@@ -25,14 +24,12 @@ public class CreateCommand : CommandBase<PowerCommandsConfiguration>
         
         return CreateRunResult(input);
     }
-
     public void NewComparison(string projectName)
     {
         Configuration.ComparisonProjects.Add(new(){Name = projectName});
         ConfigurationService.Service.SaveChanges(Configuration);
         WriteLine($"A new comparison project \"{projectName}\" has been created");
     }
-
     public void NewRegressionTest(string projectName)
     {
         Configuration.RegressionProjects.Add(new(){Name = projectName});

@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using PainKiller.PowerCommands.Core.Managers;
-using PainKiller.PowerCommands.MyExampleCommands;
-using PainKiller.PowerCommands.MyExampleCommands.Configuration;
+using PainKiller.PowerCommands.GlitchFinderCommands;
+using PainKiller.PowerCommands.GlitchFinderCommands.Configuration;
 
 namespace PainKiller.PowerCommands.Bootstrap
 {

@@ -2,7 +2,7 @@
 using PainKiller.PowerCommands.Core.Commands;
 using PainKiller.PowerCommands.Core.Extensions;
 using PainKiller.PowerCommands.Core.Services;
-using PainKiller.PowerCommands.MyExampleCommands.Configuration;
+using PainKiller.PowerCommands.GlitchFinderCommands.Configuration;
 using PainKiller.PowerCommands.Shared.Contracts;
 using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
 using PainKiller.PowerCommands.Shared.DomainObjects.Core;

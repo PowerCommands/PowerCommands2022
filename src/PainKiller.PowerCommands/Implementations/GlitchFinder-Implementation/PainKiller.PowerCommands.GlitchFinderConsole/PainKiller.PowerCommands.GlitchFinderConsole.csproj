@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\PainKiller.PowerCommands.Bootstrap\PainKiller.PowerCommands.Bootstrap.csproj" />
+    <ProjectReference Include="..\PainKiller.PowerCommands.Bootstrap\PainKiller.PowerCommands.Bootstrap.csproj" />
   </ItemGroup>
 
   <ItemGroup>

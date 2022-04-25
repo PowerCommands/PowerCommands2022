@@ -47,6 +47,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PainKiller.PowerCommands.Gl
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PainKiller.PowerCommands.GlitchFinderConsole", "Implementations\GlitchFinder-Implementation\PainKiller.PowerCommands.GlitchFinderConsole\PainKiller.PowerCommands.GlitchFinderConsole.csproj", "{3DA1A2BF-6C11-4BCA-B8B6-FF1301EBB16A}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PainKiller.PowerCommands.Bootstrap", "Implementations\GlitchFinder-Implementation\PainKiller.PowerCommands.Bootstrap\PainKiller.PowerCommands.Bootstrap.csproj", "{F70F8062-1E3E-4CB2-A10D-0EA5C2DD0262}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -113,6 +115,10 @@ Global
 		{3DA1A2BF-6C11-4BCA-B8B6-FF1301EBB16A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3DA1A2BF-6C11-4BCA-B8B6-FF1301EBB16A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3DA1A2BF-6C11-4BCA-B8B6-FF1301EBB16A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F70F8062-1E3E-4CB2-A10D-0EA5C2DD0262}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F70F8062-1E3E-4CB2-A10D-0EA5C2DD0262}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F70F8062-1E3E-4CB2-A10D-0EA5C2DD0262}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F70F8062-1E3E-4CB2-A10D-0EA5C2DD0262}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -132,6 +138,7 @@ Global
 		{2A0A2BAC-896D-4A9B-AA4B-EDA3F6B49210} = {55339C65-F169-4077-AFA4-E8EDE7C2C803}
 		{A6652F0B-DDA7-4B7D-85DA-8669E88724A4} = {2A0A2BAC-896D-4A9B-AA4B-EDA3F6B49210}
 		{3DA1A2BF-6C11-4BCA-B8B6-FF1301EBB16A} = {2A0A2BAC-896D-4A9B-AA4B-EDA3F6B49210}
+		{F70F8062-1E3E-4CB2-A10D-0EA5C2DD0262} = {2A0A2BAC-896D-4A9B-AA4B-EDA3F6B49210}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CEFD0AAC-83D9-4B30-ABFA-67E1784F85B9}
