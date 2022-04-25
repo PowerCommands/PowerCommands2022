@@ -20,7 +20,17 @@ public class ConfigurationService : IConfigurationService
         var deserializer = new DeserializerBuilder()
             .WithNamingConvention(CamelCaseNamingConvention.Instance)
             .Build();
-        return deserializer.Deserialize<YamlContainer<T>>(yamlContent);
+        try
+        {
+            return deserializer.Deserialize<YamlContainer<T>>(yamlContent);
+        }
+        catch (Exception)
+        {
+            Console.WriteLine("Could not deserialize the configuration file, default configuration will be loaded instead\nA template configuration file named default.yaml will be created in applicatin root.");
+            var defaultConfig = new T();
+            SaveChanges(defaultConfig, "default.yaml");
+            return new YamlContainer<T>();
+        }
     }
     public string SaveChanges<T>(T configuration, string inputFileName = "") where T : new()
     {
