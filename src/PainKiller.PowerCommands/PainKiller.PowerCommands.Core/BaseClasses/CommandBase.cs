@@ -15,6 +15,7 @@ public abstract class CommandBase<TConfig> : IConsoleCommand where TConfig : new
     public virtual RunResult Run(CommandLineInput input) => throw new NotImplementedException();
     public virtual async Task<RunResult> RunAsync(CommandLineInput input) => await Task.FromResult(new RunResult(this, input,"",RunResultStatus.Initializing));
     protected RunResult CreateRunResult(CommandLineInput input) => new(this, input, _ouput.ToString(), RunResultStatus.Ok);
+    protected RunResult CreateQuitResult(CommandLineInput input) => new(this, input, _ouput.ToString(), RunResultStatus.Quit);
     protected RunResult CreateBadParameterRunResult(CommandLineInput input, string output) => new(this, input, output, RunResultStatus.ArgumentError);
     protected void WriteLine(string output, bool addToOutput = true)
     {

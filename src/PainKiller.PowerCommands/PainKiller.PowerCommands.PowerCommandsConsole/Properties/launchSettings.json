@@ -1,8 +1,7 @@
 {
   "profiles": {
     "PainKiller.PowerCommands.PowerCommandsConsole": {
-      "commandName": "Project",
-      "commandLineArgs": "progressbar"
+      "commandName": "Project"
     }
   }
 }
