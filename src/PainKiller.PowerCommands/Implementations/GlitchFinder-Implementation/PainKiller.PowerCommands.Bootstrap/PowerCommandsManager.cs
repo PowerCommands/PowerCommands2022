@@ -14,8 +14,9 @@ public class PowerCommandsManager : IPowerCommandsManager
 {
     public readonly IExtendedPowerCommandServices<PowerCommandsConfiguration> Services;
     public PowerCommandsManager(IExtendedPowerCommandServices<PowerCommandsConfiguration> services) { Services = services; }
-    public void Run()
+    public void Run(string[] args)
     {
+        var runAutomatedAtStartup = args.Length > 0;
         var runResultStatus = RunResultStatus.Initializing;
         var input = "";
         while (runResultStatus is not RunResultStatus.Quit)
@@ -23,8 +24,9 @@ public class PowerCommandsManager : IPowerCommandsManager
             try
             {
                 var promptText = runResultStatus == RunResultStatus.Async ? "" : "\npcm>";
-                input = ReadLine.ReadLineService.Service.Read(prompt: promptText);
-                if(string.IsNullOrEmpty(input.Trim())) continue;
+                input = runAutomatedAtStartup ? string.Join(' ', args) : ReadLine.ReadLineService.Service.Read(prompt: promptText);
+                runAutomatedAtStartup = false;
+                if (string.IsNullOrEmpty(input.Trim())) continue;
                 var interpretedInput = input.Interpret();
                 Services.Logger.LogInformation($"Console input Identifier:{interpretedInput.Identifier} raw:{interpretedInput.Raw}");
                 Services.Diagnostic.Start();
