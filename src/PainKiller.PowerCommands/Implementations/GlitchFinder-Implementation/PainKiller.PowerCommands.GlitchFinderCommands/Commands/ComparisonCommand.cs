@@ -32,6 +32,9 @@ public class ComparisonCommand : GlitchFinderBaseCommand
         }
         try
         {
+            comparisonSetting.Settings.LeftDataSource.ConnectionString = Configuration.Secret.DecryptSecret(comparisonSetting.Settings.LeftDataSource.ConnectionString); 
+            comparisonSetting.Settings.RightDataSource.ConnectionString = Configuration.Secret.DecryptSecret(comparisonSetting.Settings.RightDataSource.ConnectionString);
+
             var isLeftOk = GetMatrix(comparisonSetting.Settings.LeftDataSource, out IMatrix leftMatrix);
             var isRightOk = GetMatrix(comparisonSetting.Settings.RightDataSource, out IMatrix rightMatrix);
 

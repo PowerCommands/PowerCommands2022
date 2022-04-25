@@ -1,5 +1,7 @@
 ﻿using System.IO.Compression;
 using System.Text;
+using PainKiller.PowerCommands.Core.Services;
+using PainKiller.PowerCommands.Security.Services;
 using PainKiller.PowerCommands.Shared.Contracts;
 using static System.DateTime;
 namespace PainKiller.PowerCommands.Core.Extensions;
@@ -45,5 +47,11 @@ public static class LogExtensions
         var lines = File.ReadAllLines(tempFileName).ToList();
         File.Delete(tempFileName);
         return lines;
+    }
+    public static string DecryptSecret(this SecretConfiguration secretConfiguration, string content)
+    {
+        var result = content;
+        foreach (var secret in secretConfiguration.Secrets) result = SecretService.Service.ExtractSecret(result, secret.Name, secret.Options, EncryptionService.Service.DecryptString);
+        return result;
     }
 }

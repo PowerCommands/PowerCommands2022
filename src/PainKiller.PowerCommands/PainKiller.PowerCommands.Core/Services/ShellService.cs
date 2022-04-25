@@ -16,11 +16,12 @@ public class ShellService : IShellService
 
     public void Execute(string programName, string arguments, string workingDirectory, Action<string,bool> writeFunction, string fileExtension = "exe")
     {
+        var extension = string.IsNullOrEmpty(fileExtension) ? "" : $".{fileExtension}";
         var startInfo = new ProcessStartInfo
         {
             UseShellExecute = false,
             RedirectStandardOutput = true,
-            FileName = $"{programName}.{fileExtension}",
+            FileName = $"{programName}{extension}",
             Arguments = arguments,
             WorkingDirectory = workingDirectory
         };
@@ -33,11 +34,12 @@ public class ShellService : IShellService
 
     public void Execute(string programName, string arguments, string workingDirectory, string fileExtension = "exe")
     {
+        var extension = string.IsNullOrEmpty(fileExtension) ? "" : $".{fileExtension}";
         var startInfo = new ProcessStartInfo
         {
             UseShellExecute = false,
             RedirectStandardOutput = true,
-            FileName = $"{programName}.{fileExtension}",
+            FileName = $"{programName}{extension}",
             Arguments = arguments,
             WorkingDirectory = workingDirectory
         };

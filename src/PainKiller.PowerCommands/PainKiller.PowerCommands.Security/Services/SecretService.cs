@@ -22,4 +22,15 @@ public class SecretService : ISecretService
         Environment.SetEnvironmentVariable(name, decryptedVal, target);
         return decryptedVal;
     }
+    public string ExtractSecret(string content, string name, Dictionary<string, string> options, Func<string, string> decryptFunction)
+    {
+        if (string.IsNullOrEmpty(content) || string.IsNullOrEmpty(name)) return content;
+        var hasPlaceHolder = content.ToLower().Contains($"##{name.ToLower()}##");
+        if (!hasPlaceHolder) return content;
+
+        Enum.TryParse<EnvironmentVariableTarget>(options["target"], out var target);
+        var val = Environment.GetEnvironmentVariable(name, target) ?? "";
+        var decryptedVal = decryptFunction(val);
+        return content.Replace($"##{name}##", decryptedVal);
+    }
 }

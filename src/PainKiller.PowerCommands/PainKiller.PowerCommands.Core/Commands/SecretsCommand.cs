@@ -8,7 +8,7 @@ namespace PainKiller.PowerCommands.Core.Commands;
 [PowerCommand(description: "Get, creates, removes or view secrets",
     arguments: "method: methods are (create,get,remove) or leave empty, set will create a new variabel by the secret provicer service (default is Environment Variable) if omitted, method is view",
     qutes: "name: name of the secret if get or set is used as method, if method is view, name is ignored",
-    example: "secret|secret get \"mycommand-pass\"|secret set \"mycommand-pass\"")]
+    example: "secret|secret get \"mycommand-pass\"|secret create \"mycommand-pass\"")]
 public class SecretsCommand : CommandBase<CommandsConfiguration>
 {
     public SecretsCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
@@ -53,7 +53,7 @@ public class SecretsCommand : CommandBase<CommandsConfiguration>
 
         Configuration.Secret.Secrets.Add(secret);
         ConfigurationService.Service.SaveChanges(Configuration);
-
+        Console.WriteLine();
         WriteHeadLine("New secret created and stored in configuration file");
         this.WriteObjectDescription(name, val);
 

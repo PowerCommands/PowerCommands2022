@@ -3,7 +3,7 @@ using PainKiller.PowerCommands.GlitchFinderCommands.Configuration;
 
 namespace PainKiller.PowerCommands.GlitchFinderCommands.Commands;
 
-[Tags("example|shell|git|execute|program")]
+[Tags("example|shell|git|execute|program|util")]
 [PowerCommand(description: "Example shows how to execute a external program, in this case git, commmit and push your repository, path to repository is in the configuratin file",
                 arguments: "operation type: commit or push",
                     qutes: "comment: on commit a comment should be provided, not used when pushing, comment defaults to \"refactoring\" if omitted.",
