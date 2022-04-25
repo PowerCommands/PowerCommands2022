@@ -20,4 +20,10 @@
     <ProjectReference Include="..\..\..\PainKiller.SerilogExtensions\PainKiller.SerilogExtensions.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="PowerCommandsConfiguration.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

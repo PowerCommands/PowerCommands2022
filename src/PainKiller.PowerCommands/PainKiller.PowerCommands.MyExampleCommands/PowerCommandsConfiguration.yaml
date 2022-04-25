@@ -1,29 +1,35 @@
-﻿version: "1.0"
-configuration: 
-  showDiagnosticInformation: false
-  defaultGitRepositoryPath: "C:\\Repos\\PowerCommands2022"
+﻿version: 1.0
+configuration:
+  defaultGitRepositoryPath: C:\Repos\PowerCommands2022
+  codeEditor: C:\Users\harri\AppData\Local\Programs\Microsoft VS Code\Code.exe
   favorites:
   - name: Music
     nameOfExecutable: spotify
     fileExtension: exe
   - name: Games
     nameOfExecutable: steam
-    fileExtension: exe    
-  metadata: 
-    name: "Test"
-    description: "En exempelbeskrivning"  
+    fileExtension: exe
+  showDiagnosticInformation: false
+  metadata:
+    name: Test
+    description: En exempelbeskrivning
   log:
-    name: "Serialog"
-    component: "PainKiller.SerilogExtensions.dll"
-    checksum: "173831af7e77b8bd33e32fce0b4e646d"
-    fileName: "powercommands.log"   
-    filePath: "logs"
-    rollingIntervall: "Day" # Infinite,Year,Month,Day,Hour,Minute
-    restrictedToMinimumLevel: "Information" # Verbose, Debug,Information, Warning,Error,Critical      
+    fileName: powercommands.log
+    filePath: logs
+    rollingIntervall: Day
+    restrictedToMinimumLevel: Information
+    component: PainKiller.SerilogExtensions.dll
+    checksum: 173831af7e77b8bd33e32fce0b4e646d
+    name: Serialog
   components:
   - component: PainKiller.PowerCommands.Core.dll
     checksum: 30cc55b7c6f29f951be3df97f634fb71
-    name: PainKiller Core  
+    name: PainKiller Core
   - component: PainKiller.PowerCommands.MyExampleCommands.dll
     checksum: c8d128cde99a5ee06b56e8337c10b1e2
     name: My Example Command
+  secret:
+    secrets:
+    - name: localDB
+      options:
+        target: User
