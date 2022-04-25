@@ -1,47 +1,21 @@
-﻿using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
+﻿using PainKiller.PowerCommands.Core.Services;
+using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
+
 namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
-[Tags("example|iteration|async|inline")]
-[PowerCommand(description: "Input a valid path to a directory and the commmand will analyse the directory and its subdirectories, this command showing the use of Path property on the input and how you could display a progress with overwriting one line in the iteration",
-                arguments: "path: a valid dirctory path, spaces in the path are allowed en will be merged to the Path property on the Input instance",
-                    qutes: "size: Let the iteratin sort out big files and display them, size is in megabytes and defaults to 10 (MB) if omitted",
-                  example: "directory C:\\Repos|directory C:\\Repos \"1024\"",
-                 useAsync: true)]
+[Tags("example|shell|folder|open")]
+[PowerCommand(description: "Open a given directory or current working folder if argument is omitted",
+    arguments: "Directory name: Argument is optional and could be omitted, if provided it must be a valid path do a directory",
+    example: "shell music|shell games")]
 public class DirectoryCommand : CommandBase<CommandsConfiguration>
 {
-    private readonly List<string> _bigFiles = new();
-    private long _minFileSize = 10;
-    const int OneMegabyte = 1048576;
     public DirectoryCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
-    public override async Task<RunResult> RunAsync(CommandLineInput input)
-    {
-        if (string.IsNullOrEmpty(input.SingleArgument) || !Directory.Exists(input.Path)) return CreateBadParameterRunResult(input, $"{input.SingleQuote} must be a valid directory path");
-        if (int.TryParse(input.SingleQuote, out var number)) _minFileSize = number;
-        var rootDirectory = new DirectoryInfo(input.Path);
 
-        await RunIterations(rootDirectory);
+    public override RunResult Run(CommandLineInput input)
+    {
+        var directory = string.IsNullOrEmpty(input.Path) ? AppContext.BaseDirectory : input.Path;
+        if (!Directory.Exists(directory)) return CreateBadParameterRunResult(input, $"Could not find directory \"{directory}\"");
+        ShellService.Service.OpenDirectory(directory);
         return CreateRunResult(input);
-    }
-    private async Task RunIterations(DirectoryInfo rootDirectory)
-    {
-        await Task.Yield();
-        TraverseDirectory(rootDirectory);
-        OverwritePreviousLine("Big files found:");
-        foreach (var bigFile in _bigFiles) WriteLine(bigFile);
-        Console.Write("\nDone!\npcm>");
-    }
-    private void TraverseDirectory(DirectoryInfo startDirectory)
-    {
-        foreach (var subDirectory in startDirectory.GetDirectories())
-        {
-            OverwritePreviousLine(subDirectory.Name);
-            TraverseDirectory(subDirectory);
-        }
-        foreach (var fileInfo in startDirectory.GetFiles())
-        {
-            OverwritePreviousLine(fileInfo.Name);
-            var fileSizeInMegaBytes = fileInfo.Length > OneMegabyte ? fileInfo.Length/OneMegabyte : 0;
-            if (fileSizeInMegaBytes > _minFileSize) _bigFiles.Add($"{startDirectory.FullName}\\{fileInfo.Name} {fileSizeInMegaBytes} Megabytes");
-        }
     }
 }

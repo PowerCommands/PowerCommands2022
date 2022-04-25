@@ -1,6 +1,8 @@
 ﻿using PainKiller.PowerCommands.Configuration;
 using PainKiller.PowerCommands.Core.Managers;
 using PainKiller.PowerCommands.MyExampleCommands.Configuration;
+using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
+
 namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
 [Tags("help|configuration")]
@@ -16,8 +18,8 @@ public class ConfigurationCommand : CommandBase<PowerCommandsConfiguration>
         if (input.SingleArgument == "create")
         {
             var componentManager = new ComponentManager<PowerCommandsConfiguration>(Configuration, PowerCommandServices.Service.Diagnostic);
-            var configuration = new PowerCommandsConfiguration {Components = componentManager.AutofixConfigurationComponents(Configuration), Log = Configuration.Log, Metadata = Configuration.Metadata, ShowDiagnosticInformation = Configuration.ShowDiagnosticInformation};
-            var fileName = ConfigurationService.Service.SaveChanges(configuration);
+            var configuration = new PowerCommandsConfiguration {Components = componentManager.AutofixConfigurationComponents(Configuration), Log = Configuration.Log, Metadata = Configuration.Metadata, ShowDiagnosticInformation = Configuration.ShowDiagnosticInformation,Secret = new() {Secrets = new List<SecretItemConfiguration>{new()}}};
+            var fileName = ConfigurationService.Service.SaveChanges(configuration, inputFileName:"default.yaml");
 
             WriteLine($"A new default file named {fileName} has been created in the root directory");
             return CreateRunResult(input);

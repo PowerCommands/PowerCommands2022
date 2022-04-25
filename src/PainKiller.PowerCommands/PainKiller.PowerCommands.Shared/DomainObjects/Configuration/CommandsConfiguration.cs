@@ -8,5 +8,6 @@ namespace PainKiller.PowerCommands.Shared.DomainObjects.Configuration
         public Metadata Metadata { get; set; } = new();
         public LogComponentConfiguration Log { get; set; } = new();
         public List<BaseComponentConfiguration> Components { get; set; } = new() {new BaseComponentConfiguration {Name = "PainKiller Core", Component = "PainKiller Core", Checksum = "e6d2d6cb64863e9dc68a9602f83bcfde"}};
+        public SecretConfiguration Secret { get; set; } = new();
     }
 }
