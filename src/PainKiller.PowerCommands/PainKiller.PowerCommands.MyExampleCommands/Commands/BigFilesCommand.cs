@@ -1,4 +1,5 @@
-﻿using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
+﻿using PainKiller.PowerCommands.Configuration.DomainObjects;
+using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
 namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
 [Tags("example|iteration|async|inline")]
@@ -29,7 +30,7 @@ public class BigFilesCommand : CommandBase<CommandsConfiguration>
         TraverseDirectory(rootDirectory);
         OverwritePreviousLine("Big files found:");
         foreach (var bigFile in _bigFiles) WriteLine(bigFile);
-        Console.Write("\nDone!\npcm>");
+        Console.Write($"\nDone!\n{ConfigurationConstants.Prompt}");
     }
     private void TraverseDirectory(DirectoryInfo startDirectory)
     {

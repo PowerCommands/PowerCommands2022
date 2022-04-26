@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using PainKiller.PowerCommands.Configuration.DomainObjects;
 using PainKiller.PowerCommands.Core.Commands;
 using PainKiller.PowerCommands.Core.Extensions;
 using PainKiller.PowerCommands.Core.Services;
@@ -23,7 +24,7 @@ public class PowerCommandsManager : IPowerCommandsManager
         {
             try
             {
-                var promptText = runResultStatus == RunResultStatus.Async ? "" : "\npcm>";
+                var promptText = runResultStatus == RunResultStatus.Async ? "" : $"\n{ConfigurationConstants.Prompt}";
                 input = runAutomatedAtStartup ? string.Join(' ', args) : ReadLine.ReadLineService.Service.Read(prompt: promptText);
                 runAutomatedAtStartup = false;
                 if (string.IsNullOrEmpty(input.Trim())) continue;

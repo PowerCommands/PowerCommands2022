@@ -38,7 +38,7 @@ public class DownloadCommand : CommandBase<CommandsConfiguration>
         
         var fileCheckSum = new FileChecksum(_fileName);
         WriteLine($"Download content from {_downloadUrl} to file {_fileName} completed. Checksum: {fileCheckSum.Mde5Hash}");
-        Console.Write("\npcm>");
+        Console.Write($"\n{{ConfigurationConstants.Prompt}}");
         _progressbar = null;
         return false;
     }
