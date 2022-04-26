@@ -1,15 +1,16 @@
 ﻿using GlitchFinder.Matrix;
 using GlitchFinder.Matrix.Contracts;
 using PainKiller.PowerCommands.Core.Extensions;
+using PainKiller.PowerCommands.Core.Services;
 using PainKiller.PowerCommands.GlitchFinderCommands.BaseClasses;
 using PainKiller.PowerCommands.GlitchFinderCommands.Configuration;
 
 namespace PainKiller.PowerCommands.GlitchFinderCommands.Commands;
 
 [Tags("comparsion|regression")]
-[PowerCommand(description: " This is for tracking a single dataset/source over time. You create a baseline, which is stored on file, and then later compare data towards this baseline.",
-                arguments: "project name: Existing regression test project with configuration information about the regression test",
-                    qutes: "baseline: if omitted a regression test will be performed, if parameter is baseline a file with baseline data will be created for regression test later",
+[PowerCommand(description: "This is for tracking a single dataset/source over time. You create a baseline, which is stored on file, and then later compare data towards this baseline.",
+                arguments: "action:baseline",
+                    qutes: "project:<name>",
                   example: "regression \"regression sample project\"|regression baseline \"regression sample project\"")]
 public class RegressionCommand : GlitchFinderBaseCommand
 {
@@ -38,12 +39,14 @@ public class RegressionCommand : GlitchFinderBaseCommand
         try
         {
             var regressionTestSetting = project.Settings;
+            regressionTestSetting.SourceSetting.ConnectionString = Configuration.Secret.DecryptSecret(regressionTestSetting.SourceSetting.ConnectionString);
 
             GetMatrix(regressionTestSetting.SourceSetting, out IMatrix baselineMatrix);
 
             var serialized = ((GlitchFinder.Matrix.DomainObjects.Matrix)baselineMatrix).Serialize();
-            File.WriteAllText(regressionTestSetting.BaselineFilePath, serialized);
+            File.WriteAllText(GetFileName(project.Name, regressionTestSetting.BaselineFilePath), serialized);
             WriteLine($"Baseline file \"{regressionTestSetting.BaselineFilePath}\" created.");
+            WriteProcessLog(project.Name, $"{nameof(SetBaseline)} {regressionTestSetting.BaselineFilePath}");
             return true;
         }
         catch (Exception e)
@@ -55,9 +58,11 @@ public class RegressionCommand : GlitchFinderBaseCommand
     public bool RegressionTest(RegressionProject project)
     {
         var regressionTestSetting = project.Settings;
+        regressionTestSetting.SourceSetting.ConnectionString = Configuration.Secret.DecryptSecret(regressionTestSetting.SourceSetting.ConnectionString);
+
         try
         {
-            var serializedData = File.ReadAllText(regressionTestSetting.BaselineFilePath);
+            var serializedData = File.ReadAllText(GetFileName(project.Name, regressionTestSetting.BaselineFilePath));
 
             var baselineMatrix = new GlitchFinder.Matrix.DomainObjects.Matrix(serializedData);
             var isMatrixOk = GetMatrix(regressionTestSetting.SourceSetting, out IMatrix newMatrix);
@@ -72,7 +77,11 @@ public class RegressionCommand : GlitchFinderBaseCommand
 
                 reporter.CreateReport(reportFileName, comparedMatrixes, isEqual);
                 if (!isEqual)
+                {
                     WriteLine($"Differences written to {reportFileName}");
+                    ShellService.Service.OpenDirectory(Path.Combine(AppContext.BaseDirectory, Configuration.ProjectsRelativePath, project.Name));
+                }
+                WriteProcessLog(project.Name, $"{nameof(RegressionTest)} {nameof(isEqual)}: {isEqual}");
                 return isEqual;
             }
             reporter.NonUniqueKeys(reportFileName, baselineMatrix, newMatrix, false);
@@ -84,4 +93,5 @@ public class RegressionCommand : GlitchFinderBaseCommand
             return false;
         }
     }
+    private string GetFileName(string projectName, string fileName) => Path.Combine(AppContext.BaseDirectory, Configuration.ProjectsRelativePath, projectName, fileName);
 }

@@ -97,11 +97,4 @@ public class AESEncryptionManager : IEncryptionManager
 
         return buffer;
     }
-    public string GetRandomSalt()
-    {
-        var data = new byte[32];
-        for (var i = 0; i < 10; i++) RandomNumberGenerator.Fill(data);
-        var retVal = Convert.ToBase64String(data);
-        return retVal;
-    }
 }

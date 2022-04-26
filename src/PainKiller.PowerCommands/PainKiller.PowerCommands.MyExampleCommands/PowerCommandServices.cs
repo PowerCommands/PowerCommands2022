@@ -29,6 +29,7 @@ public class PowerCommandServices : IExtendedPowerCommandServices<PowerCommandsC
         suggestions.AddRange(Runtime.Commands.Where(c => !string.IsNullOrEmpty(c.GetDefaultParameter())).Select(c => $"{c.Identifier} {c.GetDefaultParameter()}").ToList());
 
         ReadLineService.InitializeAutoComplete(history: new string[]{},suggestions: suggestions.ToArray());
+        IPowerCommandServices.DefaultInstance = this;
     }
 
     private static readonly Lazy<IExtendedPowerCommandServices<PowerCommandsConfiguration>> Lazy = new(() => new PowerCommandServices());

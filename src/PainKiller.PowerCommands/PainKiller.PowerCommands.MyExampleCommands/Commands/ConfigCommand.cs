@@ -7,10 +7,10 @@ using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
 namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
 [Tags("help|configuration|util")]
-[PowerCommand(description: "Config command is a util to help you build a default yaml configuration file, practical when you adding new configuration elements to the PowerCommandsConfiguration class",
-    arguments: "argument:create or edit, if no argument is provided, the current configuration will be loaded in the Console",
-    defaultParameter: "edit",
-    example: "config|config create|config edit")]
+[PowerCommand( description: "Config command is a util to help you build a default yaml configuration file, practical when you adding new configuration elements to the PowerCommandsConfiguration class",
+                 arguments: "action:create|edit",
+                suggestion: "edit",
+                   example: "config|config create|config edit")]
 public class ConfigCommand : CommandBase<PowerCommandsConfiguration>
 {
     public ConfigCommand(string identifier, PowerCommandsConfiguration configuration) : base(identifier, configuration) { }

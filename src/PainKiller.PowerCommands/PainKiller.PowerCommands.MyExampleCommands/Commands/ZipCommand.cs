@@ -4,10 +4,11 @@ using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
 namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
 [Tags("zip|compression|temp|path")]
-[PowerCommand(description: "Zip files of a given path using filter, filter is optional",
-    arguments: "path: A valid path to a directory",
-    qutes: "filter: optional, what kind of files to be zipped from the given directory.",
-    example: "zip c:\\temp|zip c:\\temp \"*.txt\"")]
+[PowerCommand(description: "Zip files of a given path, filter could be use to select only certain files that matches the filter",
+                arguments: "path:<directory>",
+        argumentMandatory: true,
+                    qutes: "filter:<filter>",
+                  example: "zip c:\\temp|zip c:\\temp \"*.txt\"")]
 public class ZipCommand : CommandBase<CommandsConfiguration>
 {
     public ZipCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }

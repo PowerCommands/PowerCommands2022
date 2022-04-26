@@ -48,6 +48,19 @@ public static class LogExtensions
         File.Delete(tempFileName);
         return lines;
     }
+
+    public static IEnumerable<string> GetProcessLog(this ILogComponentConfiguration configuration, string processTag)
+    {
+        var dir = new DirectoryInfo(Path.Combine(AppContext.BaseDirectory, configuration.FilePath));
+        var currentFile = dir.GetFiles("*.log").OrderByDescending(f => f.LastWriteTime).First();
+        var tempFileName = $"{Path.GetTempPath()}\\{currentFile.Name}".FormatFileTimestamp();
+        File.Copy(currentFile.FullName, tempFileName);
+
+        var lines = File.ReadAllLines(tempFileName).Where(l => l.Contains($"#{processTag}#")).ToList();
+        File.Delete(tempFileName);
+        return lines;
+    }
+
     public static string DecryptSecret(this SecretConfiguration secretConfiguration, string content)
     {
         var result = content;

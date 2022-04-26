@@ -3,9 +3,10 @@ using PainKiller.PowerCommands.MyExampleCommands.Configuration;
 namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
 [Tags("example|shell|execute|program")]
-[PowerCommand(description: "Shows how to execute a external program in combination with some custom configuration",
-    arguments: "Program name: must be defined in the favorites section in the PowerCommandsConfiguration.yaml file",
-    example: "start music|start games")]
+[PowerCommand(description: "Shows how to execute a external program in combination with some custom configuration.\nFavorite must be defined in the favorites section in the PowerCommandsConfiguration.yaml file",
+                arguments: "Favorite name:<name>",
+        argumentMandatory: true,
+                  example: "start music|start games")]
 public class StartCommand : CommandBase<PowerCommandsConfiguration>
 {
     public StartCommand(string identifier, PowerCommandsConfiguration configuration) : base(identifier, configuration) { }

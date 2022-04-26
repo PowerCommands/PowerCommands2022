@@ -2,9 +2,10 @@
 namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
 [Tags("example|iteration|async|inline")]
-[PowerCommand(description: "Input a valid path to a directory and the commmand will analyse the directory and its subdirectories, this command showing the use of Path property on the input and how you could display a progress with overwriting one line in the iteration",
-                arguments: "path: a valid dirctory path, spaces in the path are allowed en will be merged to the Path property on the Input instance",
-                    qutes: "size: Let the iteratin sort out big files and display them, size is in megabytes and defaults to 10 (MB) if omitted",
+[PowerCommand(description: "Input a valid path to a directory and the commmand will analyse the directory and its subdirectories\nThis command showing the use of Path property on the input and how you could display a progress with overwriting one line in the iteration.\nSpaces in the path are allowed en will be merged to the Path property on the Input instance",
+                arguments: "path:<path to directory>",
+        argumentMandatory: true,
+                    qutes: "size in MB:<size (numeric)",
                   example: "directory C:\\Repos|directory C:\\Repos \"1024\"",
                  useAsync: true)]
 public class BigFilesCommand : CommandBase<CommandsConfiguration>

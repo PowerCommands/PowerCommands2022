@@ -31,7 +31,7 @@ public static class ReflectionExtensions
     public static string GetDefaultParameter(this IConsoleCommand command)
     {
         var attribute = command.GetType().GetCustomAttributes(typeof(PowerCommandAttribute), inherit: false).FirstOrDefault() as PowerCommandAttribute;
-        return attribute is null ? "" : attribute.DefaultParameter;
+        return attribute is null ? "" : attribute.Suggestion;
     }
     public static bool HasTag(this IConsoleCommand command, string tag)
     {

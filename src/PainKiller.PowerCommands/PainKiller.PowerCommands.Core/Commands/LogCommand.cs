@@ -3,10 +3,10 @@ namespace PainKiller.PowerCommands.Core.Commands;
 
 [Tags("core|diagnostic|log|debug|zip|compression|temp")]
 [PowerCommand(       description: "View and manage the log",
-                       arguments: "action: view, archive, list (default if omitted)",
-                           qutes: "filename: name of the file to be viewed",
-                defaultParameter: "view",
-                         example: "log list|log archive|log view")]
+                       arguments: "view|archive|list (default)",
+                           qutes: "process name:<name>",
+                      suggestion: "view",
+                         example: "log list|log archive|log view|process created")]
 public class LogCommand : CommandBase<CommandsConfiguration>
 {
     public LogCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
@@ -16,6 +16,7 @@ public class LogCommand : CommandBase<CommandsConfiguration>
         if (string.IsNullOrEmpty(input.SingleArgument) || input.SingleArgument == "list") List();
         if (input.SingleArgument == "archive") Archive();
         if (input.SingleArgument == "view") View();
+        if (input.SingleArgument == "process") ProcessLog($"{input.Quotes}");
         
         return CreateRunResult(input);
     }
@@ -37,5 +38,10 @@ public class LogCommand : CommandBase<CommandsConfiguration>
     private void View()
     {
         foreach (var line in Configuration.Log.ToLines()) Console.WriteLine(line);
+    }
+
+    private void ProcessLog(string processTag)
+    {
+        foreach (var line in Configuration.Log.GetProcessLog(processTag)) Console.WriteLine(line);
     }
 }

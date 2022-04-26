@@ -6,17 +6,17 @@ using PainKiller.PowerCommands.Security.Services;
 namespace PainKiller.PowerCommands.Core.Commands;
 [Tags("core|encryption|secret|security")]
 [PowerCommand(description: "Get, creates, removes or view secrets",
-    arguments: "method: methods are (create,get,remove) or leave empty, set will create a new variabel by the secret provicer service (default is Environment Variable) if omitted, method is view",
-    qutes: "name: name of the secret if get or set is used as method, if method is view, name is ignored",
-    example: "secret|secret get \"mycommand-pass\"|secret create \"mycommand-pass\"")]
-public class SecretsCommand : CommandBase<CommandsConfiguration>
+                arguments: "method:create|get|remove|view (default)",
+                    qutes: "name:<name>",
+                  example: "secret|secret get \"mycommand-pass\"|secret create \"mycommand-pass\"")]
+public class SecretCommand : CommandBase<CommandsConfiguration>
 {
-    public SecretsCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
+    public SecretCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
 
     public override RunResult Run(CommandLineInput input)
     {
         if ((input.Arguments.Length + input.Quotes.Length < 2) && input.Arguments.Length > 0) throw new MissingFieldException("Two parameters must be provided");
-        if (input.Arguments.Length == 0) return List(input);
+        if (input.Arguments.Length == 0 || input.Arguments[0] == "view") return List(input);
 
         var method = input.Arguments[0];
         if (method == "get") return Get(input);

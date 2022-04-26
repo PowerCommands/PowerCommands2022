@@ -1,6 +1,7 @@
 ﻿using GlitchFinder.Matrix;
 using GlitchFinder.Matrix.Contracts;
 using PainKiller.PowerCommands.Core.Extensions;
+using PainKiller.PowerCommands.Core.Services;
 using PainKiller.PowerCommands.GlitchFinderCommands.BaseClasses;
 using PainKiller.PowerCommands.GlitchFinderCommands.Configuration;
 
@@ -8,8 +9,9 @@ namespace PainKiller.PowerCommands.GlitchFinderCommands.Commands;
 
 [Tags("comparsion")]
 [PowerCommand(description: "Compare to datasources with each other, find glitches, if any...",
-    arguments: "project name: Existing comparison project with configuration information about the comparison",
-    example: "comparison \"My sample project\"")]
+                arguments: "project:<name>",
+        argumentMandatory: true,
+                  example: "comparison \"My sample project\"")]
 public class ComparisonCommand : GlitchFinderBaseCommand
 {
     public ComparisonCommand(string identifier, PowerCommandsConfiguration configuration) : base(identifier, configuration) { }
@@ -46,11 +48,16 @@ public class ComparisonCommand : GlitchFinderBaseCommand
                 var isEqual = MatrixComparer.IsEqual(comparisonSetting.Settings.ComparisonFields, leftMatrix, rightMatrix, out IMatrix comparedMatrixes);
 
                 reporter.CreateReport(reportFileName, comparedMatrixes, isEqual);
-                if (!isEqual) WriteLine($"Differences written to {reportFileName}");
-
+                if (!isEqual)
+                {
+                    WriteLine($"Differences written to {comparisonSetting.Settings.ReportFilePath.PrefixFileTimestamp()}");
+                    ShellService.Service.OpenDirectory(Path.Combine(AppContext.BaseDirectory, Configuration.ProjectsRelativePath, projectName));
+                }
+                WriteProcessLog(projectName, $"{nameof(Compare)} {nameof(isEqual)} : {isEqual}");
                 return isEqual;
             }
             reporter.NonUniqueKeys(reportFileName, leftMatrix, rightMatrix, false);
+            ShellService.Service.OpenDirectory(Path.Combine(AppContext.BaseDirectory, Configuration.ProjectsRelativePath, projectName));
             return false;
         }
         catch (Exception e)

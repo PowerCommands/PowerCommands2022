@@ -55,7 +55,6 @@ public class ConfigurationService : IConfigurationService
             var yaml = CreateContent(defaultIfMissing);
             File.WriteAllText(fileName, yaml);
         }
-        
         var yamlContent = File.ReadAllText(fileName);
         var deserializer = new DeserializerBuilder()
             .WithNamingConvention(CamelCaseNamingConvention.Instance)

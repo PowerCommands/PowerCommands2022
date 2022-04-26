@@ -4,8 +4,8 @@ namespace PainKiller.PowerCommands.Core.Commands;
 
 [Tags("core|help")]
 [PowerCommand(       description: "With help command you will be shown the provided description of the command, argument and quotes input parameters",
-                       arguments: "name: Uses one argument, wich is the name of the command you want do display help for",
-                defaultParameter: "exit",
+                       arguments: "name:<command name>",
+                      suggestion: "cls",
                          example: "describe exit|describe cls|describe log")]
 public class DescribeCommand : CommandBase<CommandsConfiguration>
 {

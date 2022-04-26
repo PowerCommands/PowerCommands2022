@@ -2,8 +2,8 @@
 
 [Tags("core")]
 [PowerCommand(       description: "Exit command exits the program",
-                       arguments: "answer: If the first argument starts with y the program exits without prompting if you really want to close the program",
-                defaultParameter: "y",
+                       arguments: "answer:y",
+                      suggestion: "y",
                          example: "exit|exit y|exit Yes")]
 public class ExitCommand : CommandBase<CommandsConfiguration>
 {

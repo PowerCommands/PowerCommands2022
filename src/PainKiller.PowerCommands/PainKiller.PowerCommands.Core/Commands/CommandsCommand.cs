@@ -4,9 +4,9 @@ namespace PainKiller.PowerCommands.Core.Commands;
 
 [Tags("core|help")]
 [PowerCommand( description:      "Shows commands, or filter commands by name or by tag, a tag is something that the command support",
-               arguments:        "type: Tag, type or name filtering, default is tag if no type is given\nIf ? is used your custom commands will be shown.\nIf ! is used, only the core commands will be shown, this names are reserved and should not be used for custom commands.",
-               qutes:            "filter: The search parameter",
-               defaultParameter: "tag",
+               arguments:        "type:tag (default)|type|<name>|?|!",
+               qutes:            "filter:<filter>",
+               suggestion:       "tag",
                example:          "commands|commands *|commands !|commands name \"encrypt\"|commands tag \"checksum\"")]
 public class CommandsCommand : CommandBase<CommandsConfiguration>
 {

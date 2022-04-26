@@ -27,10 +27,10 @@ public class HelpService : IHelpService
         command.WriteHeaderLine($"{nameof(da.Qutes)}:");
         foreach (var q in qutes) Console.WriteLine(q);
         
-        if (!string.IsNullOrEmpty(da.DefaultParameter))
+        if (!string.IsNullOrEmpty(da.Suggestion))
         {
-            command.WriteHeaderLine($"{nameof(da.DefaultParameter)}:");
-            Console.WriteLine(da.DefaultParameter);
+            command.WriteHeaderLine($"{nameof(da.Suggestion)}:");
+            Console.WriteLine(da.Suggestion);
             Console.WriteLine();
         }
         command.WriteHeaderLine($"{nameof(da.Examples)}:");

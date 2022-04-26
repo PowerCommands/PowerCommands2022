@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using Microsoft.Extensions.Logging;
 using PainKiller.PowerCommands.Shared.Contracts;
 
 namespace PainKiller.PowerCommands.Core.BaseClasses;
@@ -36,4 +37,5 @@ public abstract class CommandBase<TConfig> : IConsoleCommand where TConfig : new
         var padRight = Console.BufferWidth - output.Length;
         WriteLine(output.PadRight(padRight > 0 ? padRight : 0), false);
     }
+    protected void WriteProcessLog(string processTag, string processDescription) => IPowerCommandServices.DefaultInstance?.Logger.LogInformation($"#{processTag}# {processDescription}");
 }
