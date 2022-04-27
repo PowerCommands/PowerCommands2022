@@ -7,8 +7,7 @@ PowerCommands is a concept for creating your own customized command prompt to pe
  - Third party components
  - Core componentss
  - Custom components
- - Reusable Commands
- - PowerCommands
+  - PowerCommands
 
  ## Design principles
  The design principles for this project is to keep the Core lightweight and simple. The Core components is components that you probably or very often will use, while Custom Components do not have that characteristic feature. Another restriction for the Core components is that they should avoid to add any third party dependancies, that way you know exactly what code you are running. 

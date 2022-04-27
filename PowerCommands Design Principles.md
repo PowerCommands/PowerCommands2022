@@ -5,17 +5,74 @@
  - Bootstrap component 
  - Third party component
  - Core component
- - Custom components
- - Reusable Commands
+ - Custom components 
  - PowerCommands
 
- ![Alt text](PowerCommand_component_diagram.png?raw=true "Component Diagram")
+ ![Alt text](PowerCommands-Overview.png?raw=true "Component Diagram")
+
+ # CREATE YOUR OWN POWER COMMANDS IMPLEMENTATION
 
  ## PowerCommand Console
  ### Keep the Console appliakation as clean as possible
  The console application should be used as is so that the look and feel of Power Commands is consistent, it is nicer when using a combination of PowerCommands grouped togher in one directory sharing the same configuration where you could change font color and background color and other core behaivours. Be restrictive in implementing your own custom code here, use the Bootstrap project instead.
- ## Bootstrap component
- The bootstrap component is the glue between the Console and the other modules, it has a Startup class whos purpose is to initialize the application, in the bootstrap component you could choose your prefered logging library, you could overide default settings and do other customization setup. In the Bootstrap project the main class for configuration is open for you to extend so that all configuration (except sensitive information) is placed in one single configuration file. It is intended to use for customization to create your PowerCommands project exactly as you want.
+
+ The default PowerCommand Console contains two lines only.
+ 
+ ```
+ Console.WriteLine("Power Commands 1.0");
+ PainKiller.PowerCommands.Bootstrap.Startup.ConfigureServices().Run(args);
+ ```
+ 
+ Simple guidline is, don´t do anything except maybe change the title, it could be practical, over time you could have many different implementations.
+
+## Bootstrap component
+The bootstrap component is the glue between the Console and the other modules, it has a Startup class whos purpose is to initialize the application and customize its behavoiur if you want to. The main class to edit is in that case the PowerCommandsManager class.
+
+## Your custom commands project(s)
+The whole purpose of PowerCommands framework is so that you can write your own commands, and every implementation must therefore have at least one project containing this commands. This project also needs a couple of mandatory classes, simply copy the classes from the "MyExampleCommands" project in this github repository.
+[My Example Commands](tree/main/src/PainKiller.PowerCommands/PainKiller.PowerCommands.MyExampleCommands)
+The files needed is:
+ - PowerCommandServices   
+ - PowerCommandsConfiguration
+
+ Not needed but needed at runtime is the configuration file PowerCommandsConfiguration.yaml, and your custom commands project is the most suitable project for this file.
+
+ Each file explained:
+ ### PowerCommandServices
+ The main service class that contains all the main services for the framework, this services are.
+ - ExtendedConfiguration
+ - Diagnostic
+ - Runtime
+ - Logger
+ - ReadLineService
+
+ So if you want to swap a service for something else, for example the Logger component, here is the place to do that.
+
+### PowerCommandsConfiguration
+This class purpose is to maket it easy for you to extend the configuration with your own elements, if you do not need that, just leave the class empty.
+
+```
+public class PowerCommandsConfiguration : CommandsConfiguration
+{
+    //Here is the placeholder for your custom configuration, you need to add the change to the PowerCommandsConfiguration.yaml file as well
+}
+```
+If you want to extend the configuration, it could look something like this: (code from the Example project)
+```
+public class PowerCommandsConfiguration : CommandsConfiguration
+{
+    //Here is the placeholder for your custom configuration, you need to add the change to the PowerCommandsConfiguration.yaml file as well
+    public string DefaultGitRepositoryPath { get; set; } = "C:\\repos";
+    public FavoriteConfiguration[] Favorites { get; set; } = new[] {new FavoriteConfiguration {Name = "Music", NameOfExecutable = "spotify"}, new FavoriteConfiguration { Name = "Games", NameOfExecutable = "steam" } };
+}
+```
+The configuration element class FavoriteConfiguration  must of course be added, place the file in a directory named Configuration. (just a naming convetion guidline)
+
+## PowerCommandsConfiguration.yaml
+You should have this file in one of the projects and this project is most suitable for that, the configuration file is needed at runtime by the Console application. If you customize the PowerCommandsConfiguration class you also need to add this in the yaml configuration file so that the application can use it. If something is wrong in the file a default instanse will be used and a default.yaml file will be created in the application root directory. You could use that to correct the problem of the yaml structure.
+
+### More then one PowerCommand project in the same implemantation? (no problem but...)
+If your PowerCommand implementation contains more then one PowerCommands project only one of them should contain this classes, it dosent matter wich one.
  
 ## Extend PowerCommand
 ### Avoid changes in the PowerCommand Core, extend instead
@@ -35,17 +92,17 @@ As the name of the PowerCommand class is used as an identifier, their name must 
 
  # NAMING CONVENTIONS
  ## Directories
- Directories should always be named in a plural form, like Managers, Enums, Services, Contracts and so on...
- - **Contracts** contains interfaces
+ Guidlines for naming directories
+ - **Contracts** contains interfaces 
  - **Managers** contains business logic classes with the postfix Manager, for exemple DiagnosticManager, ReflectionManager
  - **Services** contains static och or Singleton classes acting as services to Managers or Commands
  - **Enums** contain Enums
  - **BaseClasses** contains base classes
  - **Commands** contain valid PowerCommand classes
- - **DomainObjects** contain simple classes for data transfer (POCO, DTO, Record)
+ - **DomainObjects** contain simple classes for data transfer (POCO, DTO, Record), could contain subdirectories for different domains
  - **Extensions** contains extensions classes
  - **Events** contain custom events
- - **Exceptions** contais custom exceptions 
+ - **Exceptions** contais custom exceptions  
 
 # SECURITY
 ## Always encrypt secrets 
