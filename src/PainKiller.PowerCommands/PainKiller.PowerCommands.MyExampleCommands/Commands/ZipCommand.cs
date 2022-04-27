@@ -5,9 +5,9 @@ namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
 [Tags("zip|compression|temp|path")]
 [PowerCommand(description: "Zip files of a given path, filter could be use to select only certain files that matches the filter",
-                arguments: "path:<directory>",
+                arguments: "<directory>",
         argumentMandatory: true,
-                    qutes: "filter:<filter>",
+                    qutes: "<filter>",
                   example: "zip c:\\temp|zip c:\\temp \"*.txt\"")]
 public class ZipCommand : CommandBase<CommandsConfiguration>
 {

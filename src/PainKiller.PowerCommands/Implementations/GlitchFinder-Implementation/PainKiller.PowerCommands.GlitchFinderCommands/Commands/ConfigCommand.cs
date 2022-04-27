@@ -8,7 +8,7 @@ namespace PainKiller.PowerCommands.GlitchFinderCommands.Commands;
 
 [Tags("help|configuration|util")]
 [PowerCommand(description: "Config command is a util to help you build a default yaml configuration file, practical when you adding new configuration elements to the PowerCommandsConfiguration class",
-                 arguments: "action:create|edit",
+                 arguments: "create|edit",
                 suggestion: "edit",
                    example: "config|config create|config edit")]
 public class ConfigCommand : CommandBase<PowerCommandsConfiguration>

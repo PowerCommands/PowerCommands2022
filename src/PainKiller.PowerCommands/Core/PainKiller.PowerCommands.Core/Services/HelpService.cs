@@ -24,15 +24,18 @@ public class HelpService : IHelpService
 
         command.WriteHeaderLine($"{nameof(da.Arguments)}:");
         foreach (var a in args) Console.WriteLine(a);
+        command.WriteObjectDescription("Mandatory", da.ArgumentMandatory ? "Yes" : "No");
         command.WriteHeaderLine($"{nameof(da.Qutes)}:");
         foreach (var q in qutes) Console.WriteLine(q);
-        
+        command.WriteObjectDescription("Mandatory", da.QutesMandatory ? "Yes" : "No");
+
         if (!string.IsNullOrEmpty(da.Suggestion))
         {
             command.WriteHeaderLine($"{nameof(da.Suggestion)}:");
             Console.WriteLine(da.Suggestion);
             Console.WriteLine();
         }
+        Console.WriteLine();
         command.WriteHeaderLine($"{nameof(da.Examples)}:");
         foreach (var e in examples) Console.WriteLine(e);
     }

@@ -4,7 +4,7 @@ namespace PainKiller.PowerCommands.Core.Commands;
 
 [Tags("core|help")]
 [PowerCommand( description:      "Shows commands, or filter commands by name or by tag, a tag is something that the command support",
-               arguments:        "type:tag (default)|type|<name>|?|!",
+               arguments:        "tag (default)|type|<name>|?|!",
                qutes:            "filter:<filter>",
                suggestion:       "tag",
                example:          "commands|commands *|commands !|commands name \"encrypt\"|commands tag \"checksum\"")]

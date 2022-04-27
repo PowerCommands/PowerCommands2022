@@ -8,9 +8,10 @@ using PainKiller.PowerCommands.GlitchFinderCommands.Configuration;
 namespace PainKiller.PowerCommands.GlitchFinderCommands.Commands;
 
 [Tags("comparsion|regression")]
-[PowerCommand(description: "This is for tracking a single dataset/source over time. You create a baseline, which is stored on file, and then later compare data towards this baseline.",
-                arguments: "action:baseline",
+[PowerCommand(description: "This is for tracking a single dataset/source over time.\nYou create a baseline, which is stored on file, and then later compare data towards this baseline.",
+                arguments: "baseline",
                     qutes: "project:<name>",
+           qutesMandatory: true,
                   example: "regression \"regression sample project\"|regression baseline \"regression sample project\"")]
 public class RegressionCommand : GlitchFinderBaseCommand
 {
@@ -18,7 +19,7 @@ public class RegressionCommand : GlitchFinderBaseCommand
 
     public override RunResult Run(CommandLineInput input)
     {
-        if (string.IsNullOrEmpty(input.SingleQuote)) return CreateBadParameterRunResult(input, "A valid file name to existing configuration file must be provided");
+        if (string.IsNullOrEmpty(input.SingleQuote)) return CreateBadParameterRunResult(input, "A valid project name to existing configuration file must be provided");
         var projectName = input.SingleQuote;
         var project = Configuration.RegressionProjects.FirstOrDefault(s => s.Name.ToLower() == projectName.ToLower());
         

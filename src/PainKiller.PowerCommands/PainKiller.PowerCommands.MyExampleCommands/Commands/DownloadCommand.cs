@@ -6,9 +6,9 @@ namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
 [Tags("download|checksum|example")]
 [PowerCommand(     description: "Download a file that is provides as an argument, after download you get a checksum of the downloaded file",
-                     arguments: "url:<url>",
+                     arguments: "<url>",
              argumentMandatory: true,
-                         qutes: "path:<save file path>", 
+                         qutes: "<local file path>", 
                 qutesMandatory: true,
                     suggestion: "https://downloadurl.com \"filename.txt\"",
                        example: "download https://downloadurl.com \"filename.txt\"",

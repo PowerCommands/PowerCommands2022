@@ -4,7 +4,7 @@ namespace PainKiller.PowerCommands.GlitchFinderCommands.Commands;
 
 [Tags("configuration|help")]
 [PowerCommand(description: "Creates a new project in config file from a template.\nA folder with the given project name in the projects directory will be created.",
-                arguments: "type:comparsion|regression",
+                arguments: "comparsion|regression",
         argumentMandatory: true,
                     qutes: "project name:<name>",
            qutesMandatory: true,

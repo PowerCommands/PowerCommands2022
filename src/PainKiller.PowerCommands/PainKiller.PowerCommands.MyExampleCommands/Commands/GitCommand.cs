@@ -4,9 +4,9 @@ namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
 [Tags("example|shell|git|execute|program|util")]
 [PowerCommand(description: "Example shows how to execute a external program, in this case git, commmit and push your repository, path to repository is in the configuratin file",
-                arguments: "operation type:commit|push",
+                arguments: "commit|push",
         argumentMandatory: true,
-                    qutes: "comment: on commit a comment should be provided, not used when pushing, comment defaults to \"refactoring\" if omitted.",
+                    qutes: "\"<comment>\" defaults to \"refactoring\" if omitted, only used with commit.",
                   example: "git commit \"Bugfix\"|git push")]
 
 public class GitCommand : CommandBase<PowerCommandsConfiguration>

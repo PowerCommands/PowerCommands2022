@@ -6,7 +6,7 @@ using PainKiller.PowerCommands.Security.Services;
 namespace PainKiller.PowerCommands.Core.Commands;
 [Tags("core|encryption|secret|security")]
 [PowerCommand(description: "Get, creates, removes or view secrets",
-                arguments: "method:create|get|remove|view (default)",
+                arguments: "create|get|remove|view (default)",
                     qutes: "name:<name>",
                   example: "secret|secret get \"mycommand-pass\"|secret create \"mycommand-pass\"")]
 public class SecretCommand : CommandBase<CommandsConfiguration>

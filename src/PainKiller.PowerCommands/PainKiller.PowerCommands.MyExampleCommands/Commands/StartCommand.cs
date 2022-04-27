@@ -4,7 +4,7 @@ namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
 [Tags("example|shell|execute|program")]
 [PowerCommand(description: "Shows how to execute a external program in combination with some custom configuration.\nFavorite must be defined in the favorites section in the PowerCommandsConfiguration.yaml file",
-                arguments: "Favorite name:<name>",
+                arguments: "<favorite name>",
         argumentMandatory: true,
                   example: "start music|start games")]
 public class StartCommand : CommandBase<PowerCommandsConfiguration>
