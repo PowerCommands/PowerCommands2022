@@ -18,6 +18,7 @@
     - [Create a new solution and add this as existing projects, add a new .NET class project, name it to what you want.](#create-a-new-solution-and-add-this-as-existing-projects-add-a-new-net-class-project-name-it-to-what-you-want)
     - [Add this project references for the Bootstrap project file.](#add-this-project-references-for-the-bootstrap-project-file)
     - [Add a referance for the PowerCommandConsole project to the Bootstrap project](#add-a-referance-for-the-powercommandconsole-project-to-the-bootstrap-project)
+    - [Hello world example.](#hello-world-example)
   - [Extend PowerCommand](#extend-powercommand)
     - [Avoid changes in the PowerCommand Core, extend instead](#avoid-changes-in-the-powercommand-core-extend-instead)
 - [NAMING CONVENTIONS](#naming-conventions)
@@ -187,11 +188,11 @@ Adjust the paths if you are using at diffrent structure of your solution. (If so
 **Heads up!** A reference to your newly created class project is also needed in the Bootstrap project, it is not included above.
 ### Add a referance for the PowerCommandConsole project to the Bootstrap project
 
-This should be enough, I think you could solve any problem that I have missed here, it is all about setting the referenses correctly for the Bootstrap project, the newly created commands project and the Console project.
+This should be enough, I think you could solve any problem that I have missed here, it is all about setting the referenses correctly for the Bootstrap project, the newly created commands project and the Console project. 
 
-Now you are really to create your very first Command!
+Now you are ready to create your very first Command!
 
- This the typical hello world example.
+ ### Hello world example.
 ```
 using PainKiller.PowerCommands.MyExampleCommands.Configuration;
 namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
