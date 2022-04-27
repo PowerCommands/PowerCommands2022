@@ -21,6 +21,7 @@
     - [Hello world example.](#hello-world-example)
   - [Extend PowerCommand](#extend-powercommand)
     - [Avoid changes in the PowerCommand Core, extend instead](#avoid-changes-in-the-powercommand-core-extend-instead)
+    - [Write generic custom modules](#write-generic-custom-modules)
 - [NAMING CONVENTIONS](#naming-conventions)
   - [Reflection](#reflection)
   - [Reserved Command names](#reserved-command-names)
@@ -210,10 +211,13 @@ public class ExampleCommand : CommandBase<PowerCommandsConfiguration>
     }
 }
 ```
-This is the bare minimum that you need, to learn more about what you could to, look at sample commands in the Examaples project in this github repositorys.
+This is the bare minimum that you need, to learn more about what you could do, look at sample commands in the Examaples project in this github repositorys.
 ## Extend PowerCommand
+
 ### Avoid changes in the PowerCommand Core, extend instead
  PowerCommand Framework is distributed as open source code on Github, if you use the source code, avoid to change anything extend the functionallity instead if you feel that you need to do that. That way it is easier for you when something has changed in the Core.
+### Write generic custom modules
+Keep the Command classes and project lightweight, create custom modules if what you are about to solve means a lot of business and data logic, a good example is the custom command GlitchFinder in this repository. With Glitchfinder you could compare datasources with each other. The implementation is divided in two parts, in the custom module all the algoritms is placed that actually do the comparison and regression test, the Commands project is just a administrative "client" you could say, where you could organise the usage of this test and keep track of the results.
 
 # NAMING CONVENTIONS
 ## Reflection
