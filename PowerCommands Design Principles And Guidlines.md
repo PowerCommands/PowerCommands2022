@@ -124,7 +124,33 @@ public class PowerCommandsConfiguration : CommandsConfiguration
 The configuration element class FavoriteConfiguration  must of course be added, place the file in a directory named Configuration. (just a naming convetion guidline)
 
 ## PowerCommandsConfiguration.yaml
-You should have this file in one of the projects and the Commands or the Console project is suitable for that, the configuration file is needed at runtime by the Console application. If you customize the PowerCommandsConfiguration class you also need to add this in the yaml configuration file so that the application can use it, same is also true when removing stuff, they should be in sync with each other. 
+You should have this file in one of the projects and the Commands or the Console project is suitable for that, the configuration file is needed at runtime by the Console application. If you customize the PowerCommandsConfiguration class you also need to add this in the yaml configuration file so that the application can use it, same is also true when removing stuff, they should be in sync with each other.
+
+A default base configuration file looks like this, format is YAML:
+```
+version: 1.0
+configuration:  
+  codeEditor: C:\Users\guest\AppData\Local\Programs\Microsoft VS Code\Code.exe  
+  showDiagnosticInformation: false
+  metadata:
+    name: Example Commands
+    description: Example project
+  log:
+    fileName: powercommands.log
+    filePath: logs
+    rollingIntervall: Day
+    restrictedToMinimumLevel: Information
+    component: PainKiller.SerilogExtensions.dll
+    checksum: 173831af7e77b8bd33e32fce0b4e646d
+    name: Serialog
+  components:
+  - component: PainKiller.PowerCommands.Core.dll
+    checksum: 30cc55b7c6f29f951be3df97f634fb71
+    name: PainKiller Core
+  - component: PainKiller.PowerCommands.MyExampleCommands.dll
+    checksum: c8d128cde99a5ee06b56e8337c10b1e2
+    name: My Example Command  
+```
 
 ### More then one PowerCommand project in the same implemantation? (no problem but...)
 If your PowerCommand implementation contains more then one PowerCommands project only one of them should contain this classes, it dosent matter wich one.
