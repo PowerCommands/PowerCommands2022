@@ -1,5 +1,5 @@
-﻿using PainKiller.HttpClientUtils;
-using PainKiller.PowerCommands.Core.Managers;
+﻿using PainKiller.PowerCommands.Core.Managers;
+using PainKiller.PowerCommands.Core.Services;
 using PainKiller.PowerCommands.Security.DomainObjects;
 using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
 namespace PainKiller.PowerCommands.MyExampleCommands.Commands;

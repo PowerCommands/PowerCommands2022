@@ -1,7 +1,8 @@
 ﻿using System.Buffers;
 
-namespace PainKiller.HttpClientUtils.Managers;
+namespace PainKiller.PowerCommands.Core.Managers;
 
+public delegate void DownloadProgressHandler(long? totalFileSize, long totalBytesDownloaded, double? progressPercentage);
 public class HttpClientDownloadManager
 {
     private readonly HttpClient _httpClient;
@@ -67,7 +68,6 @@ public class HttpClientDownloadManager
 
         ArrayPool<byte>.Shared.Return(buffer);
     }
-
     private void ReportProgress(long? totalDownloadSize, long totalBytesRead)
     {
         double? progressPercentage = null;

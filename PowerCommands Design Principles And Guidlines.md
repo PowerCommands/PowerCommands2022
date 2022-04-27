@@ -39,6 +39,8 @@
   - [Use Markdown format](#use-markdown-format)
   - [Always describe your PowerCommands](#always-describe-your-powercommands)
   - [Use Tags and PowerCommand attributes](#use-tags-and-powercommand-attributes)
+- [ARCHITECTURE](#architecture)
+  - [Dependancy diagram](#dependancy-diagram)
 
 # Design principles
  The design principles for this project is to keep the Core lightweight and simple. The Core components is components that you probably or very often will use, while Custom Components do not have that characteristic feature. Another restriction for the Core components is that they should avoid to add any third party dependancies, that way you know exactly what code you are running.
@@ -292,3 +294,6 @@ commands tag "help"
 ```
 ![Alt text](tags.png?raw=true "Describe")
 
+# ARCHITECTURE
+## Dependancy diagram
+![Alt text](dependancies_example.png?raw=true "Describe")

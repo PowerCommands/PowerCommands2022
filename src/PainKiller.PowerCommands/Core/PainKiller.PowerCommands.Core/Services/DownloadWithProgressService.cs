@@ -1,9 +1,8 @@
-﻿using PainKiller.HttpClientUtils.Managers;
+﻿using PainKiller.PowerCommands.Shared.Contracts;
 
-namespace PainKiller.HttpClientUtils
+namespace PainKiller.PowerCommands.Core.Services
 {
-    public delegate void DownloadProgressHandler(long? totalFileSize, long totalBytesDownloaded, double? progressPercentage);
-    public class DownloadWithProgressService
+    public class DownloadWithProgressService : IDownloadWithProgressService
     {
         private static readonly Lazy<DownloadWithProgressService> Lazy = new(() => new DownloadWithProgressService());
         public static DownloadWithProgressService Service => Lazy.Value;
@@ -18,16 +17,15 @@ namespace PainKiller.HttpClientUtils
             response.EnsureSuccessStatusCode();
             var totalBytes = response.Content.Headers.ContentLength;
 
-            using var contentStream = await response.Content.ReadAsStreamAsync();
+            await using var contentStream = await response.Content.ReadAsStreamAsync();
             var totalBytesRead = 0L;
             var readCount = 0L;
             var buffer = new byte[8192];
             var isMoreToRead = true;
 
-            static double? calculatePercentage(long? totalDownloadSize, long totalBytesRead) => totalDownloadSize.HasValue ? Math.Round((double)totalBytesRead / totalDownloadSize.Value * 100, 2) : null;
+            static double? CalculatePercentage(long? totalDownloadSize, long totalBytesRead) => totalDownloadSize.HasValue ? Math.Round((double)totalBytesRead / totalDownloadSize.Value * 100, 2) : null;
 
-            using var fileStream = new FileStream(destinationFilePath, FileMode.Create, FileAccess.Write, FileShare.None, 8192, true);
-
+            await using var fileStream = new FileStream(destinationFilePath, FileMode.Create, FileAccess.Write, FileShare.None, 8192, true);
             do
             {
                 var bytesRead = await contentStream.ReadAsync(buffer);
@@ -35,7 +33,7 @@ namespace PainKiller.HttpClientUtils
                 {
                     isMoreToRead = false;
 
-                    if (progressChanged(totalBytes, totalBytesRead, calculatePercentage(totalBytes, totalBytesRead)))
+                    if (progressChanged(totalBytes, totalBytesRead, CalculatePercentage(totalBytes, totalBytesRead)))
                     {
                         throw new OperationCanceledException();
                     }
@@ -50,7 +48,7 @@ namespace PainKiller.HttpClientUtils
 
                 if (readCount % 100 == 0)
                 {
-                    if (progressChanged(totalBytes, totalBytesRead, calculatePercentage(totalBytes, totalBytesRead)))
+                    if (progressChanged(totalBytes, totalBytesRead, CalculatePercentage(totalBytes, totalBytesRead)))
                     {
                         throw new OperationCanceledException();
                     }

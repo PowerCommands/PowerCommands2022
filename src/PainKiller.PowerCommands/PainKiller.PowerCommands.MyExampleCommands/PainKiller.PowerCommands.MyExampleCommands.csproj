@@ -12,7 +12,6 @@
     <ProjectReference Include="..\Core\PainKiller.PowerCommands.ReadLine\PainKiller.PowerCommands.ReadLine.csproj" />
     <ProjectReference Include="..\Core\PainKiller.PowerCommands.Security\PainKiller.PowerCommands.Security.csproj" />
     <ProjectReference Include="..\Core\PainKiller.PowerCommands.Shared\PainKiller.PowerCommands.Shared.csproj" />
-    <ProjectReference Include="..\Custom Components\PainKiller.HttpClientUtils\PainKiller.HttpClientUtils.csproj" />
     <ProjectReference Include="..\Third party components\PainKiller.SerilogExtensions\PainKiller.SerilogExtensions.csproj" />
   </ItemGroup>
 
