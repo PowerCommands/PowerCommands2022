@@ -1,6 +1,7 @@
 # POWERCOMMANDS DESIGN PRINCIPLES AND GUIDLINES
 
 - [POWERCOMMANDS DESIGN PRINCIPLES AND GUIDLINES](#powercommands-design-principles-and-guidlines)
+- [Design principles](#design-principles)
 - [Components](#components)
   - [Main components](#main-components)
 - [CREATE YOUR OWN POWER COMMANDS IMPLEMENTATION](#create-your-own-power-commands-implementation)
@@ -13,7 +14,7 @@
   - [PowerCommandsConfiguration.yaml](#powercommandsconfigurationyaml)
     - [More then one PowerCommand project in the same implemantation? (no problem but...)](#more-then-one-powercommand-project-in-the-same-implemantation-no-problem-but)
   - [Create your first Hello World Command](#create-your-first-hello-world-command)
-    - [Clone the repo from this repo, copy this from the src folder](#clone-the-repo-from-this-repo-copy-this-from-the-src-folder)
+    - [Clone this repo and copy this from the src folder](#clone-this-repo-and-copy-this-from-the-src-folder)
     - [Create a new solution and add this as existing projects, add a new .NET class project, name it to what you want.](#create-a-new-solution-and-add-this-as-existing-projects-add-a-new-net-class-project-name-it-to-what-you-want)
     - [Add this project references for the Bootstrap project file.](#add-this-project-references-for-the-bootstrap-project-file)
     - [Add a referance for the PowerCommandConsole project to the Bootstrap project](#add-a-referance-for-the-powercommandconsole-project-to-the-bootstrap-project)
@@ -38,6 +39,13 @@
   - [Use Markdown format](#use-markdown-format)
   - [Always describe your PowerCommands](#always-describe-your-powercommands)
   - [Use Tags and PowerCommand attributes](#use-tags-and-powercommand-attributes)
+
+# Design principles
+ The design principles for this project is to keep the Core lightweight and simple. The Core components is components that you probably or very often will use, while Custom Components do not have that characteristic feature. Another restriction for the Core components is that they should avoid to add any third party dependancies, that way you know exactly what code you are running.
+
+The core components should be reliable and robust and do not change much over time. That statement applies from the day when the project has reached 1.0 status, the current staus I would say is 0.5, hopefully the core part of this project reach level 1.0 before the end of this year (2022). 
+ 
+ Custom component are aloud to break that rule, custom components should on the other hand avoid to have depandencies to the Core components, they should be design to work as stand-alone components.
 
 # Components
 ## Main components
@@ -120,7 +128,7 @@ You should have this file in one of the projects and the Commands or the Console
 If your PowerCommand implementation contains more then one PowerCommands project only one of them should contain this classes, it dosent matter wich one.
 
  ## Create your first Hello World Command
- ### Clone the repo from this repo, copy this from the src folder
+ ### Clone this repo and copy this from the src folder
  - PainKiller.PowerCommands.Bootstrap **project**
  - PainKiller.PowerCommands.PowerCommandsConsole **project**
  - Core **Directory**
