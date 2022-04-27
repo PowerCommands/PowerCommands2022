@@ -78,8 +78,9 @@ The whole purpose of PowerCommands framework is so that you can write your own c
 The files needed is:
  - PowerCommandServices   
  - PowerCommandsConfiguration
+ - PowerCommandsConfiguration.yaml*
 
- Not needed but needed at runtime is the configuration file PowerCommandsConfiguration.yaml, and your custom commands project is the most suitable project for this file.
+ *Needed at runtime is the configuration file PowerCommandsConfiguration.yaml, and your custom commands project is the most suitable project for this file.
 
  Each file explained:
  ### PowerCommandServices
@@ -113,12 +114,7 @@ public class PowerCommandsConfiguration : CommandsConfiguration
 The configuration element class FavoriteConfiguration  must of course be added, place the file in a directory named Configuration. (just a naming convetion guidline)
 
 ## PowerCommandsConfiguration.yaml
-You should have this file in one of the projects and this project is most suitable for that, the configuration file is needed at runtime by the Console application. If you customize the PowerCommandsConfiguration class you also need to add this in the yaml configuration file so that the application can use it. 
-
-**Heads up!** If something is wrong in the file a default instanse will be used and a default.yaml file will be created in the application root directory. You could use that to correct the problem of the yaml structure.
-The sample configuration file contains some custom items that must be removed from the yaml as well as from the **PowerCommandsConfiguration** class.
-
-You could of course just let it be and things will run smootly and when you are feeling brave, then you could start removing unnecessary things.
+You should have this file in one of the projects and the Commands or the Console project is suitable for that, the configuration file is needed at runtime by the Console application. If you customize the PowerCommandsConfiguration class you also need to add this in the yaml configuration file so that the application can use it, same is also true when removing stuff, they should be in sync with each other. 
 
 ### More then one PowerCommand project in the same implemantation? (no problem but...)
 If your PowerCommand implementation contains more then one PowerCommands project only one of them should contain this classes, it dosent matter wich one.
@@ -135,10 +131,14 @@ Add this files and directories (with content) from the **PainKiller.PowerCommand
 - PowerCommandsConfiguration.yaml **file**
 - Configuration **Directory**
 
-Take note that the PowerCommandsConfiguration.cs class contains some custom configuration belonging to an example, you could delete all that (leave the class empty) and the **FavoriteConfiguration.cs** class.
+Take note that the PowerCommandsConfiguration.cs class contains some custom configuration belonging to an example, you could delete all that (leave the class empty) and the **FavoriteConfiguration.cs** class, you should also remove the corresponding configuration in the yaml file.
+
+**Heads up!** If something is wrong in the file a default instanse will be used and a default.yaml file will be created in the application root directory. You could use that to correct the problem of the yaml structure.
+
+Safest in the beginning is to just let it be and things will run smootly, when you are feeling brave later on, then you could start removing unnecessary things.
 
 ### Add this project references for the Bootstrap project file.
-Adjust the paths if you are using at diffrent structure of your solution. (If so maybe mor practical to include them using the Visual Studio IDE)
+Adjust the paths if you are using at diffrent structure of your solution. (If so maybe more practical to include them using the Visual Studio IDE)
 ```
 <ItemGroup>
     <ProjectReference Include="..\Core\PainKiller.PowerCommands.Configuration\PainKiller.PowerCommands.Configuration.csproj" />
