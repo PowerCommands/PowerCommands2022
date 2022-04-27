@@ -14,7 +14,7 @@ PowerCommands is a concept for creating your own customized command prompt to pe
  
  Custom component are aloud to break that rule, custom components should on the other hand avoid to have depandencies to the Core components, they should be design to work as stand-alone components.
 
- Read more about design principles here: [Design principles](PowerCommands%20Design%20Principles.md)
+ Read more about design principles here: [Design principles](PowerCommands%20Design%20Principles%20And%20Guidlines.md)
 
  ## Core
  ### The core components offering this to your custom PowerCommands
