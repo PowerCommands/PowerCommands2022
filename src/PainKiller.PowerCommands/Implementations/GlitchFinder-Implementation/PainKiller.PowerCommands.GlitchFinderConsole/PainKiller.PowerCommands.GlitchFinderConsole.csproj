@@ -12,10 +12,4 @@
     <ProjectReference Include="..\PainKiller.PowerCommands.Bootstrap\PainKiller.PowerCommands.Bootstrap.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Update="PowerCommandsConfiguration.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
 </Project>
