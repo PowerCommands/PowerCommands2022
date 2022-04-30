@@ -30,6 +30,8 @@ public class ConfigCommand : CommandBase<PowerCommandsConfiguration>
             try { ShellService.Service.Execute(Configuration.CodeEditor, arguments: $"{Path.Combine(AppContext.BaseDirectory, $"{nameof(PowerCommandsConfiguration)}.yaml")}", workingDirectory: "", WriteLine, fileExtension: ""); }
             catch (Exception) { return CreateBadParameterRunResult(input, "Your editor must be included in Path environment variables"); }
         }
+
+        var file = Path.Combine(AppContext.BaseDirectory, $"{nameof(PowerCommandsConfiguration)}.yaml");
         var configurationRows = File.ReadAllText(Path.Combine(AppContext.BaseDirectory, $"{nameof(PowerCommandsConfiguration)}.yaml")).Split('\n');
         foreach (var configurationRow in configurationRows) Console.WriteLine(configurationRow);
         return CreateRunResult(input);

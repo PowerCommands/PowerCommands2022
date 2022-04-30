@@ -1,4 +1,5 @@
-﻿using GlitchFinder.Matrix;
+﻿using GlitchFinder.DataSources;
+using GlitchFinder.Matrix;
 using GlitchFinder.Matrix.Contracts;
 using PainKiller.PowerCommands.Core.Extensions;
 using PainKiller.PowerCommands.Core.Services;
@@ -41,8 +42,10 @@ public class RegressionCommand : GlitchFinderBaseCommand
         {
             var regressionTestSetting = project.Settings;
             regressionTestSetting.SourceSetting.ConnectionString = Configuration.Secret.DecryptSecret(regressionTestSetting.SourceSetting.ConnectionString);
+            var setting = new SourceSettingContainer(regressionTestSetting.SourceSetting);
+            setting.ConnectionString = Configuration.Secret.DecryptSecret(regressionTestSetting.SourceSetting.ConnectionString);
 
-            GetMatrix(regressionTestSetting.SourceSetting, out IMatrix baselineMatrix);
+            GetMatrix(setting, out IMatrix baselineMatrix);
 
             var serialized = ((GlitchFinder.Matrix.DomainObjects.Matrix)baselineMatrix).Serialize();
             File.WriteAllText(GetFileName(project.Name, regressionTestSetting.BaselineFilePath), serialized);

@@ -51,12 +51,13 @@ public static class LogExtensions
 
     public static IEnumerable<string> GetProcessLog(this ILogComponentConfiguration configuration, string processTag)
     {
+        if (string.IsNullOrEmpty(processTag)) return new[] {""};
         var dir = new DirectoryInfo(Path.Combine(AppContext.BaseDirectory, configuration.FilePath));
         var currentFile = dir.GetFiles("*.log").OrderByDescending(f => f.LastWriteTime).First();
         var tempFileName = $"{Path.GetTempPath()}\\{currentFile.Name}".FormatFileTimestamp();
         File.Copy(currentFile.FullName, tempFileName);
 
-        var lines = File.ReadAllLines(tempFileName).Where(l => l.Contains($"#{processTag}#")).ToList();
+        var lines = File.ReadAllLines(tempFileName).Where(l => l.ToLower().Contains($"#{processTag.ToLower()}#")).ToList();
         File.Delete(tempFileName);
         return lines;
     }
