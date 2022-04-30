@@ -45,6 +45,18 @@ public class ConfigurationService : IConfigurationService
         File.WriteAllText(fileName, yamlData);
         return fileName;
     }
+
+    public void Create<T>(T configuration, string fullFileName) where T : new()
+    {
+        if (configuration is null) return;
+        var yamlContainer = new YamlContainer<T> { Configuration = configuration, Version = "1.0" };
+        var serializer = new SerializerBuilder()
+            .WithNamingConvention(CamelCaseNamingConvention.Instance)
+            .Build();
+        var yamlData = serializer.Serialize(yamlContainer);
+        File.WriteAllText(fullFileName, yamlData);
+    }
+
     public YamlContainer<T> GetAppDataConfiguration<T>(T defaultIfMissing, string inputFileName = "") where T : new()
     {
         var directory = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\{nameof(PowerCommands)}";

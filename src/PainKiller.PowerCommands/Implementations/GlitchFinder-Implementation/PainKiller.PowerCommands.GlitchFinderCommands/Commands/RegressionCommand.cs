@@ -1,5 +1,7 @@
-﻿using GlitchFinder.Matrix;
+﻿using GlitchFinder.Managers;
+using GlitchFinder.Matrix;
 using GlitchFinder.Matrix.Contracts;
+using PainKiller.PowerCommands.Configuration;
 using PainKiller.PowerCommands.Core.Extensions;
 using PainKiller.PowerCommands.Core.Services;
 using PainKiller.PowerCommands.GlitchFinderCommands.BaseClasses;
@@ -21,32 +23,33 @@ public class RegressionCommand : GlitchFinderBaseCommand
     {
         if (string.IsNullOrEmpty(input.SingleQuote)) return CreateBadParameterRunResult(input, "A valid project name to existing configuration file must be provided");
         var projectName = input.SingleQuote;
-        var project = Configuration.RegressionProjects.FirstOrDefault(s => s.Name.ToLower() == projectName.ToLower());
         
-        if (project == null) return CreateBadParameterRunResult(input, $"No project with name {projectName} of the regression project type found, check that the project exist in {nameof(PowerCommandsConfiguration)}.yaml file.");
-        
+        if (Configuration.RegressionProjects.FirstOrDefault(s => s.Name.ToLower() == projectName.ToLower()) == null) return CreateBadParameterRunResult(input, $"No project with name {projectName} of the regression project type found, check that the project exist in {nameof(PowerCommandsConfiguration)}.yaml file.");
+
+        ProjectPath = Path.Combine(AppContext.BaseDirectory, Configuration.ProjectsRelativePath, projectName);
+        var config = ConfigurationService.Service.Get<RegressionTestSetting>(Path.Combine(ProjectPath, $"{RegressionTestConfigFileName}")).Configuration;
+        config.SourceSetting = Configuration.Secret.DecryptSecret(config.SourceSetting, nameof(config.SourceSetting.ConnectionString));
+
         if (input.SingleArgument == "baseline")
         {
-            SetBaseline(project);
+            SetBaseline(config, projectName);
             return CreateRunResult(input);
         }
-        var isEqual = RegressionTest(project);
+        var isEqual = RegressionTest(config, projectName);
         if (isEqual) WriteHeadLine("No glitches");
 
         return CreateRunResult(input);
     }
-    public bool SetBaseline(RegressionProject project)
+    public bool SetBaseline(RegressionTestSetting config, string projectName)
     {
         try
         {
-            var setting = Configuration.Secret.DecryptSecret(project.Settings.SourceSetting, nameof(project.Settings.SourceSetting.ConnectionString));
-
-            GetMatrix(setting, out IMatrix baselineMatrix);
+            GetMatrix(config.SourceSetting, out IMatrix baselineMatrix);
 
             var serialized = ((GlitchFinder.Matrix.DomainObjects.Matrix)baselineMatrix).Serialize();
-            File.WriteAllText(GetFileName(project.Name, project.Settings.BaselineFilePath), serialized);
-            WriteLine($"Baseline file \"{project.Settings.BaselineFilePath}\" created.");
-            WriteProcessLog(project.Name, $"{nameof(SetBaseline)} {project.Settings.BaselineFilePath}");
+            File.WriteAllText(GetFileName(projectName, config.BaselineFilePath), serialized);
+            WriteLine($"Baseline file \"{config.BaselineFilePath}\" created.");
+            WriteProcessLog(projectName, $"{nameof(SetBaseline)} {config.BaselineFilePath}");
             return true;
         }
         catch (Exception e)
@@ -55,31 +58,30 @@ public class RegressionCommand : GlitchFinderBaseCommand
             return false;
         }
     }
-    public bool RegressionTest(RegressionProject project)
+    public bool RegressionTest(RegressionTestSetting config, string projectName)
     {
-        var regressionTestSetting = Configuration.Secret.DecryptSecret(project.Settings.SourceSetting, nameof(project.Settings.SourceSetting.ConnectionString));
         try
         {
-            var serializedData = File.ReadAllText(GetFileName(project.Name, project.Settings.BaselineFilePath));
+            var serializedData = File.ReadAllText(GetFileName(projectName, config.BaselineFilePath));
 
             var baselineMatrix = new GlitchFinder.Matrix.DomainObjects.Matrix(serializedData);
-            var isMatrixOk = GetMatrix(regressionTestSetting, out IMatrix newMatrix);
+            var isMatrixOk = GetMatrix(config.SourceSetting, out IMatrix newMatrix);
 
-            var reporter = GetReporter(project.Settings.ReportType);
-            var reportFileName = Path.Combine(AppContext.BaseDirectory, Configuration.ProjectsRelativePath, project.Name, project.Settings.ReportFilePath.PrefixFileTimestamp());
+            var reporter = GetReporter(config.ReportType);
+            var reportFileName = Path.Combine(AppContext.BaseDirectory, Configuration.ProjectsRelativePath, projectName, config.ReportFilePath.PrefixFileTimestamp());
 
             if (isMatrixOk)
             {
-                var comparisonFields = project.Settings.ComparisonFields.Select(c => new ComparisonField { LeftFieldName = c, RightFieldName = c }).ToList();
+                var comparisonFields = config.ComparisonFields.Select(c => new ComparisonField { LeftFieldName = c, RightFieldName = c }).ToList();
                 var isEqual = MatrixComparer.IsEqual(comparisonFields, baselineMatrix, newMatrix, out IMatrix comparedMatrixes);
 
                 reporter.CreateReport(reportFileName, comparedMatrixes, isEqual);
                 if (!isEqual)
                 {
                     WriteLine($"Differences written to {reportFileName}");
-                    ShellService.Service.OpenDirectory(Path.Combine(AppContext.BaseDirectory, Configuration.ProjectsRelativePath, project.Name));
+                    ShellService.Service.OpenDirectory(Path.Combine(AppContext.BaseDirectory, Configuration.ProjectsRelativePath, projectName));
                 }
-                WriteProcessLog(project.Name, $"{nameof(RegressionTest)} {nameof(isEqual)}: {isEqual}");
+                WriteProcessLog(projectName, $"{nameof(RegressionTest)} {nameof(isEqual)}: {isEqual}");
                 return isEqual;
             }
             reporter.NonUniqueKeys(reportFileName, baselineMatrix, newMatrix, false);

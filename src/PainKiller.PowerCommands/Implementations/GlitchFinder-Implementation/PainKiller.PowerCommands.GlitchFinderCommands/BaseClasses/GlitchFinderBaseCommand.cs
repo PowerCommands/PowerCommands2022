@@ -2,15 +2,17 @@
 using GlitchFinder.DataSources;
 using GlitchFinder.Matrix.Contracts;
 using GlitchFinder.Reporters;
-using PainKiller.PowerCommands.Core.Extensions;
 using PainKiller.PowerCommands.GlitchFinderCommands.Configuration;
 
 namespace PainKiller.PowerCommands.GlitchFinderCommands.BaseClasses;
 
 public abstract class GlitchFinderBaseCommand : CommandBase<PowerCommandsConfiguration>
 {
-    protected GlitchFinderBaseCommand(string identifier, PowerCommandsConfiguration configuration) : base(identifier, configuration) { }
+    protected string ProjectPath = "";
+    protected string ComparisonConfigFileName = "comparison.yaml";
+    protected string RegressionTestConfigFileName = "regression-test.yaml";
 
+    protected GlitchFinderBaseCommand(string identifier, PowerCommandsConfiguration configuration) : base(identifier, configuration) { }
     protected bool GetMatrix(SourceSettingContainer setting, out IMatrix matrix)
     {
         switch (setting.DataSourceType)
@@ -23,7 +25,6 @@ public abstract class GlitchFinderBaseCommand : CommandBase<PowerCommandsConfigu
                 throw new NotImplementedException($"SourceType {setting.DataSourceType} is not implemented");
         }
     }
-
     protected IGlitchReport GetReporter(ReportType reportType)
     {
         switch (reportType)

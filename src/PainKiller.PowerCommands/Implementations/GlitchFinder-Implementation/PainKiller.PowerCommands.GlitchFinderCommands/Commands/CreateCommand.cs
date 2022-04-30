@@ -1,4 +1,9 @@
-﻿using PainKiller.PowerCommands.Configuration;
+﻿using GlitchFinder.DataSources;
+using GlitchFinder.Managers;
+using GlitchFinder.Matrix.Contracts;
+using GlitchFinder.Reporters;
+using PainKiller.PowerCommands.Configuration;
+using PainKiller.PowerCommands.GlitchFinderCommands.BaseClasses;
 using PainKiller.PowerCommands.GlitchFinderCommands.Configuration;
 namespace PainKiller.PowerCommands.GlitchFinderCommands.Commands;
 
@@ -9,7 +14,7 @@ namespace PainKiller.PowerCommands.GlitchFinderCommands.Commands;
                     qutes: "project name:<name>",
            qutesMandatory: true,
                   example: "create comparsion \"My comparison project\"|create regression \"My regression test project\"")]
-public class CreateCommand : CommandBase<PowerCommandsConfiguration>
+public class CreateCommand : GlitchFinderBaseCommand
 {
     public CreateCommand(string identifier, PowerCommandsConfiguration configuration) : base(identifier, configuration) { }
 
@@ -19,6 +24,8 @@ public class CreateCommand : CommandBase<PowerCommandsConfiguration>
         if (string.IsNullOrEmpty(input.SingleQuote)) return CreateBadParameterRunResult(input, "The project needs a name");
 
         var projectName = input.SingleQuote;
+        ProjectPath = Path.Combine(AppContext.BaseDirectory, Configuration.ProjectsRelativePath, projectName);
+
         CreateProjectDirectory(projectName);
 
         if(input.SingleArgument == "comparison") NewComparison(projectName);
@@ -30,12 +37,31 @@ public class CreateCommand : CommandBase<PowerCommandsConfiguration>
     {
         Configuration.ComparisonProjects.Add(new(){Name = projectName});
         ConfigurationService.Service.SaveChanges(Configuration);
+        
+        var settings = new ComparisonSetting
+        {
+            ComparisonFields = new List<ComparisonField>() { new() { LeftFieldName = "Column1", RightFieldName = "Column2" } },
+            LeftDataSource = new() { ConnectionString = "Server=serverName;Database=DbName;User Id=databaseUser;Password=#PASSWORD#;", DataSourceType = DataSourceType.MsSql, Query = "SELECT * FROM TABLE1", UniqueKeyFields = new[] { "Id" } },
+            RightDataSource = new() { DataSourceType = DataSourceType.CsvFile, FilePath = "data.csv", Separator = ";", UniqueKeyFields = new[] { "Id" } },
+            ReportFilePath = "Reports.html",
+            ReportType = ReportType.Html
+        };
+        ConfigurationService.Service.Create(settings, Path.Combine(ProjectPath, $"{ComparisonConfigFileName}"));
         WriteLine($"A new comparison project \"{projectName}\" has been created");
     }
     public void NewRegressionTest(string projectName)
     {
         Configuration.RegressionProjects.Add(new(){Name = projectName});
         ConfigurationService.Service.SaveChanges(Configuration);
+        var settings = new RegressionTestSetting
+        {
+            ComparisonFields = new[] { "Column1", "Column2" },
+            SourceSetting = new() { ConnectionString = "Server=serverName;Database=DbName;User Id=databaseUser;Password=#PASSWORD#;", DataSourceType = DataSourceType.MsSql, Query = "SELECT * FROM TABLE1", UniqueKeyFields = new[] { "Id" } },
+            BaselineFilePath = "baseline-data.json",
+            ReportFilePath = "Reports.html",
+            ReportType = ReportType.Html
+        };
+        ConfigurationService.Service.Create(settings, Path.Combine(ProjectPath, $"{RegressionTestConfigFileName}"));
         WriteLine($"A new configuration template \"{projectName}\" has been created");
     }
     private void CreateProjectDirectory(string projectName)
