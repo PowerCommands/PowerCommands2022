@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Reflection;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Text.Json;
 using PainKiller.PowerCommands.Shared.Contracts;
 
 namespace PainKiller.PowerCommands.Core.Extensions;
@@ -23,6 +25,22 @@ public static class ReflectionExtensions
         var propertyInfos = instanceType.GetProperties().Where(t => t.PropertyType.BaseType == typeof(T)).ToList();
         return propertyInfos;
     }
+
+    public static void SetPropertyValue<T>(this T instance, string propertyName, string propertyValue) where T : new()
+    {
+        if (instance == null) return;
+        var propertyInfo = instance.GetType().GetProperties().FirstOrDefault(t => t.Name == propertyName);
+        if (propertyInfo == null) return;
+        propertyInfo.SetValue(instance, propertyValue);
+    }
+
+    public static object GetPropertyValue<T>(this T instance, string propertyName) where T : new()
+    {
+        if (instance == null) return new object() ;
+        var propertyInfo = instance.GetType().GetProperties().FirstOrDefault(t => t.Name == propertyName);
+        return propertyInfo == null ? new object() : propertyInfo.GetValue(instance)!;
+    }
+
     public static PowerCommandAttribute GetPowerCommandAttribute(this IConsoleCommand command)
     {
         var attributes = command.GetType().GetCustomAttributes(typeof(PowerCommandAttribute), inherit: false);
@@ -39,4 +57,14 @@ public static class ReflectionExtensions
         if (attribute is null || string.IsNullOrEmpty(tag)) return false;
         return attribute.Tags.ToLower().Contains(tag.ToLower());
     }
+
+    public static T DeepClone<T>(this T objSource) where T : class => (T) CopyObject<T>(objSource);
+
+    public static T CopyObject<T>(object objSource)
+    {
+        using MemoryStream stream = new MemoryStream();
+        string jsonString = JsonSerializer.Serialize(objSource);
+        return JsonSerializer.Deserialize<T>(jsonString)!;
+    }
+
 }

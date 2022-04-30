@@ -6,7 +6,5 @@ namespace GlitchFinder.DataSources
     {
         DataSourceType DataSourceType { get; set; }
         IEnumerable<string> UniqueKeyFields { get; set; }
-
-        void SetExample();
     }
 }

@@ -2,6 +2,7 @@
 using GlitchFinder.DataSources;
 using GlitchFinder.Matrix.Contracts;
 using GlitchFinder.Reporters;
+using PainKiller.PowerCommands.Core.Extensions;
 using PainKiller.PowerCommands.GlitchFinderCommands.Configuration;
 
 namespace PainKiller.PowerCommands.GlitchFinderCommands.BaseClasses;

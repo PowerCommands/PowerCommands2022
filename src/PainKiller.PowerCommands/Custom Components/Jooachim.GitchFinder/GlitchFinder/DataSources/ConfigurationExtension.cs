@@ -24,8 +24,7 @@
             ConnectionString = source.ConnectionString, 
             Query = source.Query, 
             QueryFile = source.QueryFile, 
-            UniqueKeyFields = source.UniqueKeyFields, 
-            UseEncryption = source.UseEncryption };
+            UniqueKeyFields = source.UniqueKeyFields};
 
         public static SourceSettingContainer ToSourceSettingContainer(this SqlSourceSetting source) => new()
         {
@@ -33,8 +32,7 @@
             ConnectionString = source.ConnectionString,
             Query = source.Query,
             QueryFile = source.QueryFile,
-            UniqueKeyFields = source.UniqueKeyFields,
-            UseEncryption = source.UseEncryption
+            UniqueKeyFields = source.UniqueKeyFields
         };
     };
 }

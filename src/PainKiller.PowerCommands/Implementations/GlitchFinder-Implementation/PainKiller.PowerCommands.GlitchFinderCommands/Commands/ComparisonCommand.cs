@@ -1,5 +1,4 @@
-﻿using GlitchFinder.DataSources;
-using GlitchFinder.Matrix;
+﻿using GlitchFinder.Matrix;
 using GlitchFinder.Matrix.Contracts;
 using PainKiller.PowerCommands.Core.Extensions;
 using PainKiller.PowerCommands.Core.Services;
@@ -35,13 +34,11 @@ public class ComparisonCommand : GlitchFinderBaseCommand
         }
         try
         {
-            var left = new SourceSettingContainer(comparisonSetting.Settings.LeftDataSource);
-            left.ConnectionString = Configuration.Secret.DecryptSecret(comparisonSetting.Settings.LeftDataSource.ConnectionString);
-            var right = new SourceSettingContainer(comparisonSetting.Settings.RightDataSource);
-            right.ConnectionString = Configuration.Secret.DecryptSecret(comparisonSetting.Settings.RightDataSource.ConnectionString);
+            var leftConfig = Configuration.Secret.DecryptSecret(comparisonSetting.Settings.LeftDataSource, nameof(comparisonSetting.Settings.LeftDataSource.ConnectionString));
+            var rightConfig = Configuration.Secret.DecryptSecret(comparisonSetting.Settings.RightDataSource, nameof(comparisonSetting.Settings.RightDataSource.ConnectionString));
 
-            var isLeftOk = GetMatrix(left, out IMatrix leftMatrix);
-            var isRightOk = GetMatrix(right, out IMatrix rightMatrix);
+            var isLeftOk = GetMatrix(leftConfig, out IMatrix leftMatrix);
+            var isRightOk = GetMatrix(rightConfig, out IMatrix rightMatrix);
 
             var reporter = GetReporter(comparisonSetting.Settings.ReportType);
             var reportFileName = Path.Combine(AppContext.BaseDirectory, Configuration.ProjectsRelativePath, projectName, comparisonSetting.Settings.ReportFilePath.PrefixFileTimestamp());

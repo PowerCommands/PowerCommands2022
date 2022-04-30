@@ -62,10 +62,22 @@ public static class LogExtensions
         return lines;
     }
 
-    public static string DecryptSecret(this SecretConfiguration secretConfiguration, string content)
+    public static T DecryptSecret<T>(this SecretConfiguration secretConfiguration, T configurationItem, string propertyName) where T : class, new()
     {
-        var result = content;
-        foreach (var secret in secretConfiguration.Secrets) result = SecretService.Service.ExtractSecret(result, secret.Name, secret.Options, EncryptionService.Service.DecryptString);
-        return result;
+        var retVal = configurationItem.DeepClone();
+        var encryptedContent = (string) configurationItem.GetPropertyValue(propertyName);
+
+        var decryptedContent = encryptedContent;
+        foreach (var secret in secretConfiguration.Secrets)
+        {
+            var findAndReplaceContent = SecretService.Service.ExtractSecret(encryptedContent, secret.Name, secret.Options, EncryptionService.Service.DecryptString);
+            if (!string.Equals(findAndReplaceContent, decryptedContent, StringComparison.Ordinal))
+            {
+                decryptedContent = findAndReplaceContent;
+                break;
+            }
+        }
+        retVal.SetPropertyValue(propertyName, decryptedContent);
+        return retVal;
     }
 }
