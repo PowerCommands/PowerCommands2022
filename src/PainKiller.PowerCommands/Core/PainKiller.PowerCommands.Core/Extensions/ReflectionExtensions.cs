@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel;
 using System.Reflection;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Text.Json;
 using PainKiller.PowerCommands.Shared.Contracts;
 
@@ -58,7 +57,7 @@ public static class ReflectionExtensions
         return attribute.Tags.ToLower().Contains(tag.ToLower());
     }
 
-    public static T DeepClone<T>(this T objSource) where T : class => (T) CopyObject<T>(objSource);
+    public static T DeepClone<T>(this T objSource) where T : class => CopyObject<T>(objSource);
 
     public static T CopyObject<T>(object objSource)
     {

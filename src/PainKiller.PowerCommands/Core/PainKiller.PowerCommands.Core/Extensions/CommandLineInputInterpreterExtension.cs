@@ -23,12 +23,6 @@ public static class CommandLineInputInterpreterExtension
         var path = Join(' ', inputArray);
         return path;
     }
-    private static string RemoveQuotes(this string source, IEnumerable<string> matches)
-    {
-        var retVal = source;
-        foreach (var match in matches) retVal = retVal.Replace($"\"{match}\"", "");
-        return retVal;
-    }
     private static string[] ToStringArray(this MatchCollection matches)
     {
         var retVal = new List<string>();

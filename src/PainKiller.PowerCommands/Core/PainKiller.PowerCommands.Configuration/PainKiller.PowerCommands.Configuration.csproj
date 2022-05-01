@@ -14,8 +14,4 @@
     <Folder Include="Extensions\" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\PainKiller.PowerCommands.Shared\PainKiller.PowerCommands.Shared.csproj" />
-  </ItemGroup>
-
 </Project>

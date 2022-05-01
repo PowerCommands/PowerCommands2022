@@ -3,42 +3,9 @@ configuration:
   defaultGitRepositoryPath: C:\repos\PowerCommands2022
   projectsRelativePath: Projects
   comparisonProjects:
-  - name: ProviderServices
-    settings:
-      leftDataSource:
-        uniqueKeyFields:
-        - ProviderServiceID
-        useEncryption: false
-        connectionString: Server=.;Database=timelineLocalDB;User Id=sa;Password=##localDB##;
-        query: SELECT [ProviderServiceID],[IntegrationID],[Name],[DisplayName]FROM [timeline].[ProviderService]
-        queryFile: 
-        header: false
-        filePath: 
-        separator: 
-        trim: false
-        replaceHeader: 
-        dataSourceType: MsSql
-      rightDataSource:
-        uniqueKeyFields:
-        - ProviderServiceID
-        useEncryption: false
-        connectionString: Server=.;Database=timelineLocalDB;User Id=sa;Password=##localDB##;
-        query: SELECT [ProviderServiceID],[IntegrationID],[Name],[DisplayName]FROM [timeline].[ProviderServiceReplica]
-        queryFile: 
-        header: false
-        filePath: 
-        separator: 
-        trim: false
-        replaceHeader: 
-        dataSourceType: MsSql
-      comparisonFields:
-      - leftFieldName: Name
-        rightFieldName: Name
-      - leftFieldName: DisplayName
-        rightFieldName: DisplayName
-      reportType: Html
-      reportFilePath: Reports
-  regressionProjects: []
+  - name: demo
+  regressionProjects:
+  - name: reg
   showDiagnosticInformation: false
   codeEditor: C:\Users\harri\AppData\Local\Programs\Microsoft VS Code\Code.exe
   metadata:
@@ -54,13 +21,13 @@ configuration:
     name: Serialog
   components:
   - component: PainKiller.PowerCommands.Core.dll
-    checksum: efea89d6885b90064d1c6048ef862a8c
+    checksum: 30cc55b7c6f29f951be3df97f634fb71
     name: PainKiller Core
   - component: PainKiller.PowerCommands.GlitchFinderCommands.dll
     checksum: dc2e52e31c54601b3fa057b9ec3724e6
-    name: My Example Command
+    name: Glithfinder commands
   secret:
     secrets:
     - name: localDB
       options:
-        target: User   
+        target: User

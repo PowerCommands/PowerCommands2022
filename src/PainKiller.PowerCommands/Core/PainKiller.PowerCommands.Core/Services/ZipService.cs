@@ -2,7 +2,6 @@
 using PainKiller.PowerCommands.Core.Extensions;
 using PainKiller.PowerCommands.Security.DomainObjects;
 using PainKiller.PowerCommands.Shared.Contracts;
-using PainKiller.PowerCommands.Shared.DomainObjects.Core;
 
 namespace PainKiller.PowerCommands.Core.Services;
 
@@ -17,7 +16,6 @@ public class ZipService : IZipService
         if (!Directory.Exists(directoryPath)) return new ZipResult {ExceptionMessage = $"Could not find directory: {directoryPath}", HasException = true};
         var result = new ZipResult();
         long totalByteSize = 0;
-        if (string.IsNullOrEmpty(outputDirectory)) outputDirectory = AppContext.BaseDirectory;
 
         archiveName = useTimestampSuffix ? archiveName.FormatFileTimestamp() : archiveName;
         var tempDirectory = $"{Path.GetTempPath()}\\{archiveName}";

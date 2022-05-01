@@ -46,7 +46,9 @@ public class CreateCommand : GlitchFinderBaseCommand
             ReportFilePath = "Reports.html",
             ReportType = ReportType.Html
         };
-        ConfigurationService.Service.Create(settings, Path.Combine(ProjectPath, $"{ComparisonConfigFileName}"));
+        var fileName = Path.Combine(ProjectPath, $"{ComparisonConfigFileName}");
+        if(!File.Exists(fileName)) ConfigurationService.Service.Create(settings, fileName);
+
         WriteLine($"A new comparison project \"{projectName}\" has been created");
     }
     public void NewRegressionTest(string projectName)
@@ -61,7 +63,9 @@ public class CreateCommand : GlitchFinderBaseCommand
             ReportFilePath = "Reports.html",
             ReportType = ReportType.Html
         };
-        ConfigurationService.Service.Create(settings, Path.Combine(ProjectPath, $"{RegressionTestConfigFileName}"));
+        var fileName = Path.Combine(ProjectPath, $"{RegressionTestConfigFileName}");
+        if (!File.Exists(fileName)) ConfigurationService.Service.Create(settings, fileName);
+
         WriteLine($"A new configuration template \"{projectName}\" has been created");
     }
     private void CreateProjectDirectory(string projectName)
