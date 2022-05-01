@@ -30,7 +30,7 @@
   - [Store secrets outside the application path](#store-secrets-outside-the-application-path)
   - [Use the secrets built in functionallity](#use-the-secrets-built-in-functionallity)
   - [Be carefull when decrypting, be sure to protect your secrets in runtime](#be-carefull-when-decrypting-be-sure-to-protect-your-secrets-in-runtime)
-    - [Recomended pattern, pass the DecryptSecret function](#recomended-pattern-pass-the-decryptsecret-function)
+    - [Recomended pattern for custom Compenents using secrets, pass the DecryptSecret function](#recomended-pattern-for-custom-compenents-using-secrets-pass-the-decryptsecret-function)
 - [LOGGING](#logging)
   - [Reduce coad bloat by avoiding try and catch](#reduce-coad-bloat-by-avoiding-try-and-catch)
   - [Reduce coad bloat by avoiding logging](#reduce-coad-bloat-by-avoiding-logging)
@@ -272,31 +272,29 @@ In you command you could get the decrypted secret like this.
 ```
 var cn = Configuration.Secret.DecryptSecret("Server=.;Database=timelineLocalDB;User Id=sa;Password=##localDB##;"); 
 ```
-There is also support to decrypt a certain proparty of an ConfigurationElement like this.
+Sometimes you have to pass a configuration element to a thirdparty or custom module, then this could be usefull, it creates a new clone of the configuration and you pass that, its a good pattern ratcher then pass the runtime configuration instance that could lead to unpredictable result and in worst case revealing the decrypted secret by mistake.
 ```
-config.SourceSetting = Configuration.Secret.DecryptSecret(config.SourceSetting, nameof(config.SourceSetting.ConnectionString));
+var decryptedCloneConfiguration = Configuration.Secret.DecryptSecret(config.SourceSetting, nameof(config.SourceSetting.ConnectionString));
 ```
-In this case the first find secret wich in this case is an existing secret surrounded with ## tags like this **##localDB##** in the ConnectionString property will be decrypted and the property ConnectionString will have a new value with the secret in clear text. 
-## Be carefull when decrypting, be sure to protect your secrets in runtime
-It is very easy to expose a decrypted value by misstake, the decryption should be just before the usage of the decrypted value in code and then vanish without a trace. It should not be passed around with the other configuration values and be exposed in runtime as long as the applikation executes. Maybe the a log call later on will saved the decrypted value to file and the secret is revealed.
+You pass in the configuration and the property name that has a tagged secret and you get a clone of the configuration back where the property value decrypted. In the example above it is the **ConnectionString** property that is decrypted.
 
-### Recomended pattern, pass the DecryptSecret function
-A pattern to reduce this risk could be to send the DecryptSecret function to the target rather then send the decrypted configuration, like this example below. In this real world use case I using a Custom Component, I want to implement the secret handling as late as possible but avoid to create a depandancy between the custom component and PowerCommands. 
+## Be carefull when decrypting, be sure to protect your secrets in runtime
+It is very easy to expose a decrypted value by mistake, the decryption should be in the same scope or in very near scope of the usage. It should not be passed around with the other configuration values and reside in runtime as long as the application executes. The risk is that for example the decrypted value is logged for some reason you cant predict and the secret is logged as clear text, in other words it is revealed and must be changed.
+
+### Recomended pattern for custom Compenents using secrets, pass the DecryptSecret function
+A pattern to reduce this risk could be to send the DecryptSecret function to the target rather then send the decrypted configuration, like this example below. In this real world use case I using a Custom Component, I want to implement the secret handling as late as possible but avoid to create a depandancy between the custom component and PowerCommands. I have to modify the Custom component a bit but no dependancy is needed. 
 ```
 //First I add this to the class in the custom component that will use the connction string.
 private static Func<string, string> _decryptSecretsFunc;
 public static void SetDecryptSecretFunction(Func<string, string> decryptSecretsFunc) => _decryptSecretsFunc = decryptSecretsFunc;
 
-//In the same class when the connection string needs to be decrypted the function will be invoked (if the function has been set earlier).
+//In the same class when the connection string needs to be decrypted the function will be invoked.
 var cnString = _decryptSecretsFunc == null ? dss.ConnectionString : _decryptSecretsFunc.Invoke(dss.ConnectionString);
 using (var connection = new SqlConnection(cnString))
 
 //From the PowerCommand class you need to pass the DecryptSecret function like this
 SqlImport.SetDecryptSecretFunction(Configuration.Secret.DecryptSecret);
 ```
-This way the decrypted value disappears as soon as the method call to the database is done, the exposure of the decrypted value is minimal.
-You do not need to write any of the encryption and decryption logic, it is build in the PowerCommands Core.
-
 # LOGGING
 ## Reduce coad bloat by avoiding try and catch
 No need for try catch in PowerCommands Run method as the call already is encapsulated in a try catch block, to reduce coad bload let custom code just crasch and handle that by the PowerCommands runtime, it will be logged, it will be presented for the user in a generic way that not reveal sensitive informaiton that could be the case if you just use Console.WriteLine(ex.Message).
