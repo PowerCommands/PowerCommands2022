@@ -11,6 +11,9 @@ namespace GlitchFinder.DataSources
 {
     public class SqlImport 
     {
+        private static Func<string, string> _decryptSecretsFunc;
+        public static void SetDecryptSecretFunction(Func<string, string> decryptSecretsFunc) => _decryptSecretsFunc = decryptSecretsFunc;
+
         public bool TryImport(SourceSettingContainer sourceSettings, out IMatrix matrix)
         {
             var dss = sourceSettings.ToDatabaseSourceSetting();
@@ -35,7 +38,8 @@ namespace GlitchFinder.DataSources
                 throw new Exception("SqlImport needs either Query or QueryFile");
 
             rawMatrix = new List<List<string>>();
-            using (SqlConnection connection = new SqlConnection(dss.ConnectionString))
+            var cnString = _decryptSecretsFunc == null ? dss.ConnectionString : _decryptSecretsFunc.Invoke(dss.ConnectionString);
+            using (var connection = new SqlConnection(cnString))
             {
                 SqlCommand command = new SqlCommand(query, connection);
                 connection.Open();

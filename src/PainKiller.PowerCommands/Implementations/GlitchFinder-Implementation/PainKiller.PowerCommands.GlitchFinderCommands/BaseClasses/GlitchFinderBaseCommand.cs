@@ -2,6 +2,7 @@
 using GlitchFinder.DataSources;
 using GlitchFinder.Matrix.Contracts;
 using GlitchFinder.Reporters;
+using PainKiller.PowerCommands.Core.Extensions;
 using PainKiller.PowerCommands.GlitchFinderCommands.Configuration;
 
 namespace PainKiller.PowerCommands.GlitchFinderCommands.BaseClasses;
@@ -12,7 +13,10 @@ public abstract class GlitchFinderBaseCommand : CommandBase<PowerCommandsConfigu
     protected string ComparisonConfigFileName = "comparison.yaml";
     protected string RegressionTestConfigFileName = "regression-test.yaml";
 
-    protected GlitchFinderBaseCommand(string identifier, PowerCommandsConfiguration configuration) : base(identifier, configuration) { }
+    protected GlitchFinderBaseCommand(string identifier, PowerCommandsConfiguration configuration) : base(identifier, configuration)
+    {
+        SqlImport.SetDecryptSecretFunction(Configuration.Secret.DecryptSecret);
+    }
     protected bool GetMatrix(SourceSettingContainer setting, out IMatrix matrix)
     {
         switch (setting.DataSourceType)

@@ -38,11 +38,8 @@ public class ComparisonCommand : GlitchFinderBaseCommand
         var comparisonProject = ConfigurationService.Service.Get<ComparisonSetting>(Path.Combine(ProjectPath, $"{ComparisonConfigFileName}"));
         try
         {
-            var leftConfig = Configuration.Secret.DecryptSecret(comparisonProject.Configuration.LeftDataSource, nameof(comparisonProject.Configuration.LeftDataSource.ConnectionString));
-            var rightConfig = Configuration.Secret.DecryptSecret(comparisonProject.Configuration.RightDataSource, nameof(comparisonProject.Configuration.RightDataSource.ConnectionString));
-
-            var isLeftOk = GetMatrix(leftConfig, out IMatrix leftMatrix);
-            var isRightOk = GetMatrix(rightConfig, out IMatrix rightMatrix);
+            var isLeftOk = GetMatrix(comparisonProject.Configuration.LeftDataSource, out IMatrix leftMatrix);
+            var isRightOk = GetMatrix(comparisonProject.Configuration.RightDataSource, out IMatrix rightMatrix);
 
             var reporter = GetReporter(comparisonProject.Configuration.ReportType);
             var reportFileName = Path.Combine(AppContext.BaseDirectory, Configuration.ProjectsRelativePath, projectName, comparisonProject.Configuration.ReportFilePath.PrefixFileTimestamp());

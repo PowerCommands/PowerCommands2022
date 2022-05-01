@@ -1,11 +1,8 @@
 ﻿using System.IO.Compression;
 using System.Text;
-using PainKiller.PowerCommands.Core.Services;
-using PainKiller.PowerCommands.Security.Services;
 using PainKiller.PowerCommands.Shared.Contracts;
 using static System.DateTime;
 namespace PainKiller.PowerCommands.Core.Extensions;
-
 
 public static class LogExtensions
 {
@@ -60,24 +57,5 @@ public static class LogExtensions
         var lines = File.ReadAllLines(tempFileName).Where(l => l.ToLower().Contains($"#{processTag.ToLower()}#")).ToList();
         File.Delete(tempFileName);
         return lines;
-    }
-
-    public static T DecryptSecret<T>(this SecretConfiguration secretConfiguration, T configurationItem, string propertyName) where T : class, new()
-    {
-        var retVal = configurationItem.DeepClone();
-        var encryptedContent = (string) configurationItem.GetPropertyValue(propertyName);
-
-        var decryptedContent = encryptedContent;
-        foreach (var secret in secretConfiguration.Secrets)
-        {
-            var findAndReplaceContent = SecretService.Service.ExtractSecret(encryptedContent, secret.Name, secret.Options, EncryptionService.Service.DecryptString);
-            if (!string.Equals(findAndReplaceContent, decryptedContent, StringComparison.Ordinal))
-            {
-                decryptedContent = findAndReplaceContent;
-                break;
-            }
-        }
-        retVal.SetPropertyValue(propertyName, decryptedContent);
-        return retVal;
     }
 }

@@ -28,7 +28,6 @@ public class RegressionCommand : GlitchFinderBaseCommand
 
         ProjectPath = Path.Combine(AppContext.BaseDirectory, Configuration.ProjectsRelativePath, projectName);
         var config = ConfigurationService.Service.Get<RegressionTestSetting>(Path.Combine(ProjectPath, $"{RegressionTestConfigFileName}")).Configuration;
-        config.SourceSetting = Configuration.Secret.DecryptSecret(config.SourceSetting, nameof(config.SourceSetting.ConnectionString));
 
         if (input.SingleArgument == "baseline")
         {

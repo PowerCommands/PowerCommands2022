@@ -1,7 +1,25 @@
-﻿namespace GlitchFinder.DataSources
+﻿using System;
+
+namespace GlitchFinder.DataSources
 {
     public static class ConfigurationExtension
     {
+        public static SqlSourceSetting ToDatabaseSourceSetting(this SourceSettingContainer source) => new()
+        {
+            ConnectionString = source.ConnectionString,
+            Query = source.Query,
+            QueryFile = source.QueryFile,
+            UniqueKeyFields = source.UniqueKeyFields
+        };
+
+        public static SourceSettingContainer ToSourceSettingContainer(this SqlSourceSetting source) => new()
+        {
+            DataSourceType = DataSourceType.MsSql,
+            ConnectionString = source.ConnectionString,
+            Query = source.Query,
+            QueryFile = source.QueryFile,
+            UniqueKeyFields = source.UniqueKeyFields
+        };
         public static CsvFileSourceSetting ToCsvFileSourceSetting(this SourceSettingContainer source) => new() {
             UniqueKeyFields = source.UniqueKeyFields,
             FilePath = source.FilePath,
@@ -18,21 +36,6 @@
             Header = source.Header,
             ReplaceHeader = source.ReplaceHeader,
             Trim = source.Trim
-        };
-
-        public static SqlSourceSetting ToDatabaseSourceSetting(this SourceSettingContainer source) => new() { 
-            ConnectionString = source.ConnectionString, 
-            Query = source.Query, 
-            QueryFile = source.QueryFile, 
-            UniqueKeyFields = source.UniqueKeyFields};
-
-        public static SourceSettingContainer ToSourceSettingContainer(this SqlSourceSetting source) => new()
-        {
-            DataSourceType = DataSourceType.MsSql,
-            ConnectionString = source.ConnectionString,
-            Query = source.Query,
-            QueryFile = source.QueryFile,
-            UniqueKeyFields = source.UniqueKeyFields
         };
     };
 }
