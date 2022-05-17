@@ -22,7 +22,7 @@ public class SecretService : ISecretService
         Environment.SetEnvironmentVariable(name, decryptedVal, target);
         return decryptedVal;
     }
-    public string ExtractSecret(string content, string name, Dictionary<string, string> options, Func<string, string> decryptFunction)
+    public string ReplaceSecret(string content, string name, Dictionary<string, string> options, Func<string, string> decryptFunction)
     {
         if (string.IsNullOrEmpty(content) || string.IsNullOrEmpty(name)) return content;
         var hasPlaceHolder = content.ToLower().Contains($"##{name.ToLower()}##");

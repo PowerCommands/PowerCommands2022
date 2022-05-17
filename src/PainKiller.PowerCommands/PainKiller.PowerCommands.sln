@@ -47,6 +47,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PainKiller.PowerCommands.Se
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PainKiller.PowerCommands.Shared", "Core\PainKiller.PowerCommands.Shared\PainKiller.PowerCommands.Shared.csproj", "{F767F717-890F-482C-83D9-6E80A9F87C76}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Drontlog-Implementation", "Drontlog-Implementation", "{9D24F6A2-57FC-4466-B1E7-679AF256AB94}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PainKiller.PowerCommands.Bootstrap", "Implementations\Drontlog-Implementation\PainKiller.PowerCommands.Bootstrap\PainKiller.PowerCommands.Bootstrap.csproj", "{26CD61E4-97E2-4BEA-83F2-CFE1BC6B1D7B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PainKiller.PowerCommands.DrontlogCommands", "Implementations\Drontlog-Implementation\PainKiller.PowerCommands.DrontlogCommands\PainKiller.PowerCommands.DrontlogCommands.csproj", "{B8873CC0-550C-4AEC-9D7F-71EADEA9F86D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PainKiller.PowerCommands.DrontlogConsole", "Implementations\Drontlog-Implementation\PainKiller.PowerCommands.DrontlogConsole\PainKiller.PowerCommands.DrontlogConsole.csproj", "{0565E982-71F1-4BB4-AA91-F2E81DF9573F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PainKiller.Data.SqlExtension", "Custom Components\PainKiller.Data.SqlExtension\PainKiller.Data.SqlExtension.csproj", "{C8C5D024-5B77-42D0-BC1E-A993718F4758}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -113,6 +123,22 @@ Global
 		{F767F717-890F-482C-83D9-6E80A9F87C76}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F767F717-890F-482C-83D9-6E80A9F87C76}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F767F717-890F-482C-83D9-6E80A9F87C76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26CD61E4-97E2-4BEA-83F2-CFE1BC6B1D7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26CD61E4-97E2-4BEA-83F2-CFE1BC6B1D7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26CD61E4-97E2-4BEA-83F2-CFE1BC6B1D7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26CD61E4-97E2-4BEA-83F2-CFE1BC6B1D7B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8873CC0-550C-4AEC-9D7F-71EADEA9F86D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8873CC0-550C-4AEC-9D7F-71EADEA9F86D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8873CC0-550C-4AEC-9D7F-71EADEA9F86D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8873CC0-550C-4AEC-9D7F-71EADEA9F86D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0565E982-71F1-4BB4-AA91-F2E81DF9573F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0565E982-71F1-4BB4-AA91-F2E81DF9573F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0565E982-71F1-4BB4-AA91-F2E81DF9573F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0565E982-71F1-4BB4-AA91-F2E81DF9573F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8C5D024-5B77-42D0-BC1E-A993718F4758}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8C5D024-5B77-42D0-BC1E-A993718F4758}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8C5D024-5B77-42D0-BC1E-A993718F4758}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8C5D024-5B77-42D0-BC1E-A993718F4758}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -132,6 +158,11 @@ Global
 		{CD1CF001-6848-4A71-A7BD-CCECE422AC37} = {4F52B8D3-D980-4D53-A2DF-1A80C35DE99E}
 		{0CD0235A-7F92-41C3-98FC-C1D9E946A33D} = {4F52B8D3-D980-4D53-A2DF-1A80C35DE99E}
 		{F767F717-890F-482C-83D9-6E80A9F87C76} = {4F52B8D3-D980-4D53-A2DF-1A80C35DE99E}
+		{9D24F6A2-57FC-4466-B1E7-679AF256AB94} = {55339C65-F169-4077-AFA4-E8EDE7C2C803}
+		{26CD61E4-97E2-4BEA-83F2-CFE1BC6B1D7B} = {9D24F6A2-57FC-4466-B1E7-679AF256AB94}
+		{B8873CC0-550C-4AEC-9D7F-71EADEA9F86D} = {9D24F6A2-57FC-4466-B1E7-679AF256AB94}
+		{0565E982-71F1-4BB4-AA91-F2E81DF9573F} = {9D24F6A2-57FC-4466-B1E7-679AF256AB94}
+		{C8C5D024-5B77-42D0-BC1E-A993718F4758} = {7715E76B-D673-476C-A4EF-4AB31A8E3CD8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CEFD0AAC-83D9-4B30-ABFA-67E1784F85B9}

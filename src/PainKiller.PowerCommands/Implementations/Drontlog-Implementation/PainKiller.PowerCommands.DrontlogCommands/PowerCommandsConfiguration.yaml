@@ -1,0 +1,28 @@
+﻿version: 1.0
+configuration:  
+  codeEditor: C:\Users\harri\AppData\Local\Programs\Microsoft VS Code\Code.exe  
+  showDiagnosticInformation: false
+  connectionString: Server=.;Database=timelineLocalDB;User Id=sa;Password=##localDB##;
+  metadata:
+    name: Test
+    description: En exempelbeskrivning
+  log:
+    fileName: powercommands.log
+    filePath: logs
+    rollingIntervall: Day
+    restrictedToMinimumLevel: Information
+    component: PainKiller.SerilogExtensions.dll
+    checksum: 173831af7e77b8bd33e32fce0b4e646d
+    name: Serialog
+  components:
+  - component: PainKiller.PowerCommands.Core.dll
+    checksum: 30cc55b7c6f29f951be3df97f634fb71
+    name: PainKiller Core
+  - component: PainKiller.PowerCommands.DrontlogCommands.dll
+    checksum: c8d128cde99a5ee06b56e8337c10b1e2
+    name: Drontlog commands
+  secret:
+    secrets:
+    - name: localDB
+      options:
+        target: User

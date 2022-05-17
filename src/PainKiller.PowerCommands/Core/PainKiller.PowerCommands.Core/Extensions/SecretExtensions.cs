@@ -13,7 +13,7 @@ public static class SecretExtensions
         var decryptedContent = encryptedContent;
         foreach (var secret in secretConfiguration.Secrets)
         {
-            var findAndReplaceContent = SecretService.Service.ExtractSecret(encryptedContent, secret.Name, secret.Options, EncryptionService.Service.DecryptString);
+            var findAndReplaceContent = SecretService.Service.ReplaceSecret(encryptedContent, secret.Name, secret.Options, EncryptionService.Service.DecryptString);
             if (!string.Equals(findAndReplaceContent, decryptedContent, StringComparison.Ordinal))
             {
                 decryptedContent = findAndReplaceContent;
@@ -28,7 +28,7 @@ public static class SecretExtensions
         var decryptedContent = encryptedContent;
         foreach (var secret in secretConfiguration.Secrets)
         {
-            var findAndReplaceContent = SecretService.Service.ExtractSecret(encryptedContent, secret.Name, secret.Options, EncryptionService.Service.DecryptString);
+            var findAndReplaceContent = SecretService.Service.ReplaceSecret(encryptedContent, secret.Name, secret.Options, EncryptionService.Service.DecryptString);
             if (!string.Equals(findAndReplaceContent, decryptedContent, StringComparison.Ordinal))
             {
                 decryptedContent = findAndReplaceContent;
