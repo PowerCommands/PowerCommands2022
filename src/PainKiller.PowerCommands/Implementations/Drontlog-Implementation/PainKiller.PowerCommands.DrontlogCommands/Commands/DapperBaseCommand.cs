@@ -1,5 +1,4 @@
 ﻿using PainKiller.PowerCommands.Core.Extensions;
-using PainKiller.PowerCommands.DrontlogCommands.Configuration;
 
 namespace PainKiller.PowerCommands.DrontlogCommands.Commands;
 

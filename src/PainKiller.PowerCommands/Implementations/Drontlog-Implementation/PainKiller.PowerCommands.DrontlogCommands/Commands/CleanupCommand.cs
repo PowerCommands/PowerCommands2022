@@ -1,7 +1,5 @@
 ﻿using System.Data.SqlClient;
 using Dapper;
-using PainKiller.PowerCommands.DrontlogCommands.Configuration;
-using PainKiller.PowerCommands.DrontlogCommands.Entities;
 
 namespace PainKiller.PowerCommands.DrontlogCommands.Commands;
 

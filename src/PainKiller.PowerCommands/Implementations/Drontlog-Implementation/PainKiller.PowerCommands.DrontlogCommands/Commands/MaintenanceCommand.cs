@@ -1,6 +1,4 @@
-﻿using PainKiller.PowerCommands.DrontlogCommands.Configuration;
-
-namespace PainKiller.PowerCommands.DrontlogCommands.Commands;
+﻿namespace PainKiller.PowerCommands.DrontlogCommands.Commands;
 
 public class MaintenanceCommand : CommandBase<PowerCommandsConfiguration>
 {

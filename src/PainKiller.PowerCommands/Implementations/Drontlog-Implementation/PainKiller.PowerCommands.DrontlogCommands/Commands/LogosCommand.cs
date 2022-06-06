@@ -1,9 +1,5 @@
 ﻿using System.Data.SqlClient;
 using Dapper;
-using PainKiller.PowerCommands.Configuration.DomainObjects;
-using PainKiller.PowerCommands.Core.Managers;
-using PainKiller.PowerCommands.DrontlogCommands.Configuration;
-using PainKiller.PowerCommands.DrontlogCommands.Entities;
 
 namespace PainKiller.PowerCommands.DrontlogCommands.Commands;
 
@@ -11,7 +7,6 @@ namespace PainKiller.PowerCommands.DrontlogCommands.Commands;
 [PowerCommand(description: "Download logos from ProviderServiceReplica table", useAsync: true)]
 public class LogosCommand : DapperCommandBase
 {
-    private ProgressBar? _progressbar;
     public LogosCommand(string identifier, PowerCommandsConfiguration configuration) : base(identifier, configuration) { }
     public override async Task<RunResult> RunAsync(CommandLineInput input)
     {
@@ -24,7 +19,7 @@ public class LogosCommand : DapperCommandBase
     private List<ProviderServiceReplica> GetUrlToLogo()
     {
         using var connection = new SqlConnection(ConnectionString);
-        var retVal = connection.Query<ProviderServiceReplica>($"SELECT * FROM {Schema}.{nameof(ProviderServiceReplica)}");
+        var retVal = connection.Query<ProviderServiceReplica>($"SELECT {nameof(ProviderServiceReplica.ProviderServiceID)}, {nameof(ProviderServiceReplica.UrlToLogo)} FROM {Schema}.{nameof(ProviderServiceReplica)}");
         return retVal.ToList();
     }
 

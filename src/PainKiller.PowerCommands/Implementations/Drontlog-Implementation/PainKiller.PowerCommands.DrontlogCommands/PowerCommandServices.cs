@@ -4,7 +4,6 @@ using PainKiller.PowerCommands.Configuration.Extensions;
 using PainKiller.PowerCommands.Core;
 using PainKiller.PowerCommands.Core.Extensions;
 using PainKiller.PowerCommands.Core.Managers;
-using PainKiller.PowerCommands.DrontlogCommands.Configuration;
 using PainKiller.PowerCommands.ReadLine;
 using PainKiller.PowerCommands.Shared.Contracts;
 using PainKiller.SerilogExtensions.Managers;
