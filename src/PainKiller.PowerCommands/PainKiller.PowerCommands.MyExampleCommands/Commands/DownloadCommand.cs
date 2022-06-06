@@ -29,7 +29,7 @@ public class DownloadCommand : CommandBase<CommandsConfiguration>
         await retVal;
         return CreateRunResult(input);
     }
-    private bool ProgressChanged(long? totalBytes, long totalBytesRead, double? percentage)
+    private bool ProgressChanged(long? totalBytes, long totalBytesRead, double? percentage, string downloadUrl, string filePath)
     {
         _progressbar ??= new ProgressBar(totalBytes ?? 0);
         _progressbar.Update(totalBytesRead);

@@ -9,7 +9,7 @@ namespace PainKiller.PowerCommands.Core.Services
         public async Task Download(
                string downloadUrl,
                string destinationFilePath,
-               Func<long?, long, double?, bool> progressChanged)
+               Func<long?, long, double?, string, string, bool> progressChanged)
         {
             using var httpClient = new HttpClient { Timeout = TimeSpan.FromDays(1) };
             using var response = await httpClient.GetAsync(downloadUrl, HttpCompletionOption.ResponseHeadersRead);
@@ -33,7 +33,7 @@ namespace PainKiller.PowerCommands.Core.Services
                 {
                     isMoreToRead = false;
 
-                    if (progressChanged(totalBytes, totalBytesRead, CalculatePercentage(totalBytes, totalBytesRead)))
+                    if (progressChanged(totalBytes, totalBytesRead, CalculatePercentage(totalBytes, totalBytesRead), downloadUrl, destinationFilePath))
                     {
                         throw new OperationCanceledException();
                     }
@@ -48,7 +48,7 @@ namespace PainKiller.PowerCommands.Core.Services
 
                 if (readCount % 100 == 0)
                 {
-                    if (progressChanged(totalBytes, totalBytesRead, CalculatePercentage(totalBytes, totalBytesRead)))
+                    if (progressChanged(totalBytes, totalBytesRead, CalculatePercentage(totalBytes, totalBytesRead), downloadUrl, destinationFilePath))
                     {
                         throw new OperationCanceledException();
                     }
