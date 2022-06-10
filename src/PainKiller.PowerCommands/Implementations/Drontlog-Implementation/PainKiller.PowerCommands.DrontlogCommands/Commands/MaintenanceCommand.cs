@@ -1,5 +1,7 @@
 ﻿namespace PainKiller.PowerCommands.DrontlogCommands.Commands;
 
+[Tags("maintenance|util")]
+[PowerCommand(description: $"Maintenance jobs, add news post added to the WriterTable, delete rows older then 31 days in table [{nameof(PostCache)}]")]
 public class MaintenanceCommand : CommandBase<PowerCommandsConfiguration>
 {
     public MaintenanceCommand(string identifier, PowerCommandsConfiguration configuration) : base(identifier, configuration) { }

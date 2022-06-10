@@ -3,6 +3,8 @@ using Dapper;
 
 namespace PainKiller.PowerCommands.DrontlogCommands.Commands;
 
+[Tags("maintenance|util")]
+[PowerCommand(description: $"Deletet rows older then 31 days in table [{nameof(PostCache)}]")]
 public class CleanupCommand : DapperCommandBase
 {
     public CleanupCommand(string identifier, PowerCommandsConfiguration configuration) : base(identifier, configuration) { }

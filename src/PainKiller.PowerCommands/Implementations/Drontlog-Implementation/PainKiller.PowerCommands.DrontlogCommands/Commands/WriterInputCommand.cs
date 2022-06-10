@@ -4,6 +4,11 @@ using PainKiller.Data.SqlExtension.DomainObjects.Queries;
 
 namespace PainKiller.PowerCommands.DrontlogCommands.Commands;
 
+[Tags("maintenance|util")]
+[PowerCommand(      description: $"Create posts stored in {nameof(WriterInput)} table, deletes already created posts", 
+                    arguments:"<delete>",
+                    argumentMandatory: false,
+                    example: "writerinput|writerinput delete")]
 public class WriterInputCommand : DapperCommandBase
 {
     public WriterInputCommand(string identifier, PowerCommandsConfiguration configuration) : base(identifier, configuration) { }
