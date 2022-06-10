@@ -3,6 +3,7 @@ configuration:
   codeEditor: C:\Users\harri\AppData\Local\Programs\Microsoft VS Code\Code.exe  
   showDiagnosticInformation: false
   connectionString: Server=.;Database=timelineLocalDB;User Id=sa;Password=##localDB##;
+  defaultGitRepositoryPath: C:\Repos\Drontlog
   metadata:
     name: Test
     description: En exempelbeskrivning
