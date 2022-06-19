@@ -19,8 +19,8 @@ public class GitCommand : CommandBase<PowerCommandsConfiguration>
     public void Commit(string comment)
     {
         if (string.IsNullOrEmpty(comment)) comment = "\"refactoring\"";
-        ShellService.Service.Execute("git", "add .", Configuration.DefaultGitRepositoryPath, WriteLine);
-        ShellService.Service.Execute("git", $"commit -m \"{comment}\"", Configuration.DefaultGitRepositoryPath, WriteLine);
+        ShellService.Service.Execute("git", "add .", Configuration.DefaultGitRepositoryPath, WriteLine, waitForExit:true);
+        ShellService.Service.Execute("git", $"commit -m \"{comment}\"", Configuration.DefaultGitRepositoryPath, WriteLine, waitForExit: true);
     }
-    public void Push() => ShellService.Service.Execute("git", "push", Configuration.DefaultGitRepositoryPath, WriteLine);
+    public void Push() => ShellService.Service.Execute("git", "push", Configuration.DefaultGitRepositoryPath, WriteLine, waitForExit: true);
 }

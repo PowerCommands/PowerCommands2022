@@ -4,11 +4,29 @@ configuration:
   codeEditor: C:\Users\harri\AppData\Local\Programs\Microsoft VS Code\Code.exe
   favorites:
   - name: Music
-    nameOfExecutable: spotify
+    nameOfExecutable: Spotify
     fileExtension: exe
-  - name: Games
-    nameOfExecutable: steam
+    waitForExit: false
+  - name: Steam
+    nameOfExecutable: Steam
     fileExtension: exe
+    waitForExit: false
+  - name: Cheat
+    nameOfExecutable: Wemod
+    fileExtension: exe
+    waitForExit: false
+  - name: AC
+    nameOfExecutable: ArmouryCrate
+    fileExtension: exe
+    waitForExit: false
+  - name: Teams
+    nameOfExecutable: msteams
+    fileExtension: exe
+    waitForExit: false
+  - name: Zoom
+    nameOfExecutable: zoom
+    fileExtension: exe
+    waitForExit: false
   showDiagnosticInformation: false
   metadata:
     name: Test
