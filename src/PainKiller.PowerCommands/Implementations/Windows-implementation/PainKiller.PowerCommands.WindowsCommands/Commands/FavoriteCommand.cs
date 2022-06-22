@@ -28,8 +28,14 @@ public class FavoriteCommand : CommandBase<PowerCommandsConfiguration>
         if (favorite != null) Start(favorite);
         return CreateRunResult(input);
     }
-    protected FavoriteConfiguration? FindFavorite(string name) => Configuration.Favorites.FirstOrDefault(f => f.Name.ToLower() == name.ToLower());
-    protected void Start(FavoriteConfiguration favorite) => ShellService.Service.Execute(favorite.NameOfExecutable, arguments: "", workingDirectory: "", WriteLine, favorite.FileExtension);
+    protected FavoriteConfiguration? FindFavorite(string name)
+    {
+        var favorite = Configuration.Favorites.FirstOrDefault(f => f.Name.ToLower() == name.ToLower());
+        if (favorite == null) WriteLine($"Favorite {name} has no match in the configuration file.");
+        return favorite;
+    }
+
+    protected void Start(FavoriteConfiguration favorite) => ShellService.Service.Execute(favorite.NameOfExecutable, arguments: "", workingDirectory: $"{favorite.WorkingDirectory}", WriteLine, favorite.FileExtension);
 
     private void Show()
     {

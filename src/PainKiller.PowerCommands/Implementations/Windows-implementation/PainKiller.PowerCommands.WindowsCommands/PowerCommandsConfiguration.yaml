@@ -27,6 +27,11 @@ configuration:
     nameOfExecutable: zoom
     fileExtension: exe
     waitForExit: false
+  - name: Forza
+    nameOfExecutable: E:\SteamLibrary\steamapps\common\ForzaHorizon5\ForzaHorizon5
+    fileExtension: exe
+    workingDirectory: E:\SteamLibrary\steamapps\common\ForzaHorizon5\
+    waitForExit: false  
   showDiagnosticInformation: false
   metadata:
     name: Test

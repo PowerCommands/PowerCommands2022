@@ -4,5 +4,6 @@ public enum GameFavorites
 {
     Steam,
     Cheat,
-    AC
+    Ac,
+    Wheel
 }

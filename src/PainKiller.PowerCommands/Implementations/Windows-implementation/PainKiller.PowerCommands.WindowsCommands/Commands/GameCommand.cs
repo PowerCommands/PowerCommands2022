@@ -6,10 +6,10 @@ using PainKiller.PowerCommands.WindowsCommands.Enums;
 namespace PainKiller.PowerCommands.WindowsCommands.Commands;
 
 [Tags("example|shell|execute|program")]
-[PowerCommand(description: "Shows how to execute a external program in combination with some custom configuration.\nFavorite must be defined in the favorites section in the PowerCommandsConfiguration.yaml file",
-    arguments: "<favorite name>",
-    argumentMandatory: true,
-    example: "start music|start games")]
+[PowerCommand(description: "Starts favorites AC, Cheat and Steam (Steam only if you want to).\nYou could provide a name for your game to start as a Quote parameter\nFavorite must be defined in the favorites section in the PowerCommandsConfiguration.yaml file",
+    arguments: "steam",
+    qutes:"<Favorite name>",
+    example: "game|game steam|game \"Forza\"|game steam \"Forza\"")]
 public class GameCommand : FavoriteCommand
 {
     public GameCommand(string identifier, PowerCommandsConfiguration configuration) : base(identifier, configuration) { }
@@ -17,18 +17,20 @@ public class GameCommand : FavoriteCommand
     public override RunResult Run(CommandLineInput input)
     {
         var steam = FindFavorite($"{GameFavorites.Steam}");
-        var ac = FindFavorite($"{GameFavorites.AC}");
+        var ac = FindFavorite($"{GameFavorites.Ac}");
         var cheat = FindFavorite($"{GameFavorites.Cheat}");
+        var wheel = FindFavorite($"{GameFavorites.Wheel}");
 
-        if (input.SingleArgument.ToLower() == $"{GameFavorites.Steam}".ToLower() && steam != null) Start(steam);
+        if (input.Arguments.Any(a => a.ToLower().Contains($"{GameFavorites.Wheel}".ToLower())) && wheel != null) Start(wheel);
+        if (input.Arguments.Any(a => a.ToLower().Contains($"{GameFavorites.Steam}".ToLower())) && steam != null) Start(steam);
+
         if (ac != null) Start(ac);
         if (cheat != null) Start(cheat);
 
-        if (!string.IsNullOrEmpty(input.SingleQuote))
-        {
-            var game = FindFavorite(input.SingleQuote);
-            if (game != null) Start(game);
-        }
+        if (string.IsNullOrEmpty(input.SingleQuote)) return CreateRunResult(input);
+        
+        var game = FindFavorite(input.SingleQuote);
+        if (game != null) Start(game);
         return CreateRunResult(input);
     }
 }
