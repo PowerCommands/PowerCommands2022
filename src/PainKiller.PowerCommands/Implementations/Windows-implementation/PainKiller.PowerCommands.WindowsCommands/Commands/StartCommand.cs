@@ -12,9 +12,9 @@ namespace PainKiller.PowerCommands.WindowsCommands.Commands;
     arguments: "<favorite name>",
     argumentMandatory: true,
     example: "start music|start games")]
-public class FavoriteCommand : CommandBase<PowerCommandsConfiguration>
+public class StartCommand : CommandBase<PowerCommandsConfiguration>
 {
-    public FavoriteCommand(string identifier, PowerCommandsConfiguration configuration) : base(identifier, configuration) { }
+    public StartCommand(string identifier, PowerCommandsConfiguration configuration) : base(identifier, configuration) { }
 
     public override RunResult Run(CommandLineInput input)
     {

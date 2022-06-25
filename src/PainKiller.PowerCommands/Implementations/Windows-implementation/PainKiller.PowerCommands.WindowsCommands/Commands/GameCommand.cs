@@ -10,7 +10,7 @@ namespace PainKiller.PowerCommands.WindowsCommands.Commands;
     arguments: "steam",
     qutes:"<Favorite name>",
     example: "game|game steam|game \"Forza\"|game steam \"Forza\"")]
-public class GameCommand : FavoriteCommand
+public class GameCommand : StartCommand
 {
     public GameCommand(string identifier, PowerCommandsConfiguration configuration) : base(identifier, configuration) { }
 
