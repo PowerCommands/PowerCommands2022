@@ -3,7 +3,7 @@ public class NewsItem
 {
     public NewsItem(string xElementAsString)
     {
-        var rows = xElementAsString.Split('\n');
+        var rows = xElementAsString.Trim().Split('\n');
         Title = rows.Length > 0 ? $"{rows[0].Trim()}" : "";
         Text = rows.Length > 1 ? $"{rows[1].Trim()}" : "";
         Url = rows.Length > 2 ? $"{rows[2].Trim()}" : "";
