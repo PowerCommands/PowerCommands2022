@@ -61,9 +61,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Windows-implementation", "W
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PainKiller.PowerCommands.Bootstrap", "Implementations\Windows-implementation\PainKiller.PowerCommands.Bootstrap\PainKiller.PowerCommands.Bootstrap.csproj", "{E3EBD3E1-4DAB-4B0A-899B-B9CA2E62DAEE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PainKiller.PowerCommands.WindowsCommands", "Implementations\Windows-implementation\PainKiller.PowerCommands.WindowsCommands\PainKiller.PowerCommands.WindowsCommands.csproj", "{EAF22A6B-21CA-4090-9F29-F671594CC9C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PainKiller.PowerCommands.WindowsCommands", "Implementations\Windows-implementation\PainKiller.PowerCommands.WindowsCommands\PainKiller.PowerCommands.WindowsCommands.csproj", "{EAF22A6B-21CA-4090-9F29-F671594CC9C8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PainKiller.PowerCommands.WindowsCommandsConsole", "Implementations\Windows-implementation\PainKiller.PowerCommands.WindowsCommandsConsole\PainKiller.PowerCommands.WindowsCommandsConsole.csproj", "{EFBADE93-8ACE-4627-9C3C-07249FDB41BC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PainKiller.PowerCommands.WindowsCommandsConsole", "Implementations\Windows-implementation\PainKiller.PowerCommands.WindowsCommandsConsole\PainKiller.PowerCommands.WindowsCommandsConsole.csproj", "{EFBADE93-8ACE-4627-9C3C-07249FDB41BC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
