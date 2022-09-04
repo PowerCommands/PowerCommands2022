@@ -8,5 +8,6 @@ public interface ICommandsConfiguration
     Metadata Metadata { get; set; }
     LogComponentConfiguration Log { get; set; }
     List<BaseComponentConfiguration> Components { get; set; }
-    public SecretConfiguration Secret { get; set; }
+    SecretConfiguration Secret { get; set; }
+    EnvironmentConfiguration Environment { get; set; }
 }

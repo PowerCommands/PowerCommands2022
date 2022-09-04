@@ -12,6 +12,7 @@ namespace PainKiller.PowerCommands.Bootstrap
         {
             var services = PowerCommandServices.Service;
 
+            services.Configuration.Environment.InitializeValues();
             services.Logger.LogInformation("Program started, configuration read");
             
             var componentManager = new ComponentManager<PowerCommandsConfiguration>(services.ExtendedConfiguration, services.Diagnostic);

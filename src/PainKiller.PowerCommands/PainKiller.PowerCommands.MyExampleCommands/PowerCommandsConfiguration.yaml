@@ -33,3 +33,9 @@ configuration:
     - name: localDB
       options:
         target: User
+  environment:
+    variables:
+    - name: KEY_VAULT_NAME
+      environmentVariableTarget: User
+    - name: AZURE_CLIENT_ID
+      environmentVariableTarget: User
