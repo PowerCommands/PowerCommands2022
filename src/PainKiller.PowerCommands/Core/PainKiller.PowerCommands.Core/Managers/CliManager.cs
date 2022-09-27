@@ -32,11 +32,18 @@ public class CliManager : ICliManager
     public void DeleteDir(string directory)
     {
         var dirPath = Path.Combine(_path, directory);
-        _logger($"Delete {dirPath}", DisplayAndWriteToLog);
+        _logger($"Delete directory {dirPath}", DisplayAndWriteToLog);
         Directory.Delete(dirPath, recursive: true);
     }
 
-    public void MoveDir(string directory, string name)
+    public void DeleteFile(string fileName)
+    {
+        var path = Path.Combine(_path, fileName);
+        _logger($"Delete file {path}", DisplayAndWriteToLog);
+        File.Delete(path);
+    }
+
+    public void RenameDirectory(string directory, string name)
     {
         var oldDirName = directory.Split('\\').Last();
         var newDirName = directory.Replace($"\\{oldDirName}", $"\\{name}");
@@ -47,6 +54,30 @@ public class CliManager : ICliManager
         _logger.Invoke("", false);
         _logger.Invoke($"Directory moved from [{directory}]", DisplayAndWriteToLog);
         _logger.Invoke($"to [{newDirPath}]", DisplayAndWriteToLog);
+        _logger.Invoke("", false);
+    }
+
+    public void MoveFile(string fileName, string toFileName)
+    {
+        var oldFilePath = Path.Combine(_path, fileName);
+        var newFilePath = Path.Combine(_path, toFileName);
+
+        File.Move(oldFilePath, newFilePath);
+        _logger.Invoke("", false);
+        _logger.Invoke($"File moved from [{fileName}]", DisplayAndWriteToLog);
+        _logger.Invoke($"to [{newFilePath}]", DisplayAndWriteToLog);
+        _logger.Invoke("", false);
+    }
+
+    public void MoveDirectory(string dirctoryName, string toDirctoryName)
+    {
+        var oldFilePath = Path.Combine(_path, dirctoryName);
+        var newFilePath = Path.Combine(_path, toDirctoryName);
+
+        Directory.Move(oldFilePath, newFilePath);
+        _logger.Invoke("", false);
+        _logger.Invoke($"Directory moved from [{dirctoryName}]", DisplayAndWriteToLog);
+        _logger.Invoke($"to [{newFilePath}]", DisplayAndWriteToLog);
         _logger.Invoke("", false);
     }
 
@@ -89,8 +120,17 @@ public class CliManager : ICliManager
             }
             validProjectsRows.Add(row);
         }
-        var solutionFileName = Path.Combine(_path, $"PowerCommands2022\\src\\PainKiller.PowerCommands\\{_name}.sln");
+        var solutionFileName = Path.Combine(_path, $"PowerCommands2022\\src\\PainKiller.PowerCommands\\PowerCommands.{_name}.sln");
         File.WriteAllLines(solutionFileName, validProjectsRows);
         _logger.Invoke($"New solution file [{solutionFileName}] created", DisplayAndWriteToLog);
+    }
+
+    public void ReplaceContentInFile(string fileName, string find, string replace)
+    {
+        var filePath = Path.Combine(_path, fileName);
+        var content = File.ReadAllText(filePath);
+        content = content.Replace(find, replace);
+        File.WriteAllText(filePath, content);
+        _logger.Invoke($"Content replaced in file [{fileName}]", DisplayAndWriteToLog);
     }
 }

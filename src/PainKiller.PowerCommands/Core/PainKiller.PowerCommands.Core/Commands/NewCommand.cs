@@ -28,11 +28,21 @@ public class NewCommand : CommandBase<CommandsConfiguration>
         cli.DeleteDir("PowerCommands2022\\src\\PainKiller.PowerCommands\\Implementations");
         cli.DeleteDir("PowerCommands2022\\src\\PainKiller.PowerCommands\\Custom Components");
 
-        cli.MoveDir("PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.MyExampleCommands", $"PainKiller.PowerCommands.{name}Commands");
+        cli.RenameDirectory("PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.MyExampleCommands", $"PainKiller.PowerCommands.{name}Commands");
         
-
-
         cli.WriteNewSolutionFile();
+
+        cli.ReplaceContentInFile($"PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.Bootstrap\\PainKiller.PowerCommands.Bootstrap.csproj", "MyExampleCommands",$"{name}Commands");
+        cli.MoveFile($"PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.{name}Commands\\PainKiller.PowerCommands.MyExampleCommands.csproj", $"PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.{name}Commands\\PainKiller.PowerCommands.{name}Commands.csproj");
+
+        cli.MoveDirectory("PowerCommands2022\\src\\PainKiller.PowerCommands\\Core", $"Core");
+        cli.MoveDirectory($"PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.{name}Commands", $"PainKiller.PowerCommands.{name}Commands");
+        cli.MoveDirectory("PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.Bootstrap", $"PainKiller.PowerCommands.Bootstrap");
+        cli.MoveDirectory("PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.PowerCommandsConsole", $"PainKiller.PowerCommands.PowerCommandsConsole");
+        cli.MoveDirectory("PowerCommands2022\\src\\PainKiller.PowerCommands\\Third party components", $"Third party components");
+        cli.MoveFile($"PowerCommands2022\\src\\PainKiller.PowerCommands\\PowerCommands.{name}.sln", $"PowerCommands.{name}.sln");
+
+        cli.DeleteDir("PowerCommands2022");
 
         return CreateRunResult(input);
     }
