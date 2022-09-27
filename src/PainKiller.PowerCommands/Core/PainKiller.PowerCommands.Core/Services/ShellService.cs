@@ -20,14 +20,14 @@ public class ShellService : IShellService
         Process.Start(new ProcessStartInfo { FileName = directory, UseShellExecute = true, Verb = "open" });
     }
 
-    public void Execute(string programName, string arguments, string workingDirectory, Action<string,bool> writeFunction, string fileExtension = "exe", bool waitForExit = false)
+    public void Execute(string programName, string arguments, string workingDirectory, Action<string,bool> writeFunction, string fileExtension = "exe", bool waitForExit = false, bool useShellExecute = false)
     {
         _logger.LogInformation($"{nameof(ShellService)} runs Execute with paramaters {programName} {arguments} {workingDirectory} {fileExtension} {waitForExit}");
         var extension = string.IsNullOrEmpty(fileExtension) ? "" : $".{fileExtension}";
         var startInfo = new ProcessStartInfo
         {
-            UseShellExecute = false,
-            RedirectStandardOutput = true,
+            UseShellExecute = useShellExecute,
+            RedirectStandardOutput = !useShellExecute,
             FileName = $"{programName}{extension}",
             Arguments = arguments,
             WorkingDirectory = workingDirectory
@@ -43,13 +43,13 @@ public class ShellService : IShellService
         processAdd!.WaitForExit(waitForExit ? InfiniteWait : ImmediateReturn);
     }
 
-    public void Execute(string programName, string arguments, string workingDirectory, string fileExtension = "exe", bool waitForExit = false)
+    public void Execute(string programName, string arguments, string workingDirectory, string fileExtension = "exe", bool waitForExit = false, bool useShellExecute = false)
     {
         _logger.LogInformation($"{nameof(ShellService)} runs Execute with paramaters {programName} {arguments} {workingDirectory} {fileExtension} {waitForExit}");
         var extension = string.IsNullOrEmpty(fileExtension) ? "" : $".{fileExtension}";
         var startInfo = new ProcessStartInfo
         {
-            UseShellExecute = false,
+            UseShellExecute = useShellExecute,
             RedirectStandardOutput = true,
             FileName = $"{programName}{extension}",
             Arguments = arguments,

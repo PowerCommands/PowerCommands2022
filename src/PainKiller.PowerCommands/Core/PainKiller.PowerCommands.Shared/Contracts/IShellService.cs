@@ -2,7 +2,7 @@
 
 public interface IShellService
 {
-    void Execute(string programName, string arguments, string workingDirectory, string fileExtension = "exe", bool waitForExit = false);
+    void Execute(string programName, string arguments, string workingDirectory, string fileExtension = "exe", bool waitForExit = false, bool useShellExecute = false);
     void OpenDirectory(string directory);
-    void Execute(string programName, string arguments, string workingDirectory, Action<string, bool> writeFunction, string fileExtension = "exe", bool waitForExit = false);
+    void Execute(string programName, string arguments, string workingDirectory, Action<string, bool> writeFunction, string fileExtension = "exe", bool waitForExit = false, bool useShellExecute = false);
 }

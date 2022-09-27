@@ -23,6 +23,13 @@ public class CliManager : ICliManager
         Directory.CreateDirectory(dirI.FullName);
         _logger.Invoke($"Directory {dirI.Attributes} created", DisplayAndWriteToLog);
     }
+
+    public void CreateDirectory(string name)
+    {
+        var dirI = new DirectoryInfo(Path.Combine(_path, name));
+        Directory.CreateDirectory(dirI.FullName);
+        _logger.Invoke($"Directory {dirI.Attributes} created", DisplayAndWriteToLog);
+    }
     public void CloneRepo(string repo)
     {
         var directoryInfo = new DirectoryInfo(_path);

@@ -3,6 +3,7 @@
 public interface ICliManager
 {
     void CreateRootDirectory();
+    void CreateDirectory(string name);
     void CloneRepo(string repo);
     void DeleteDir(string directory);
     void DeleteFile(string fileName);
