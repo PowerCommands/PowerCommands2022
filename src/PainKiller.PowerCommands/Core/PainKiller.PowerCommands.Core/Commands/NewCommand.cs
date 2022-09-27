@@ -23,7 +23,7 @@ public class NewCommand : CommandBase<CommandsConfiguration>
         var cli = new CliManager(name, _path, WriteLine);
         cli.CreateRootDirectory();
         
-        cli.CloneRepo("https://github.com/PowerCommands/PowerCommands2022");
+        cli.CloneRepo(Configuration.Repository);
         WriteLine("Fetching repo from Github...");
 
         cli.DeleteDir("PowerCommands2022\\.vscode");
@@ -35,6 +35,10 @@ public class NewCommand : CommandBase<CommandsConfiguration>
         cli.WriteNewSolutionFile();
 
         cli.ReplaceContentInFile($"PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.Bootstrap\\PainKiller.PowerCommands.Bootstrap.csproj", "MyExampleCommands",$"{name}Commands");
+        cli.ReplaceContentInFile($"PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.Bootstrap\\PowerCommandsManager.cs", "MyExampleCommands",$"{name}Commands");
+        cli.ReplaceContentInFile($"PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.Bootstrap\\Startup.cs", "MyExampleCommands",$"{name}Commands");
+        cli.ReplaceContentInFile($"PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.PowerCommandsConsole\\Program.cs", "Power Commands 1.0", $"{name} Commands 1.0");
+
         cli.ReplaceContentInFile($"PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.{name}Commands\\PowerCommandsConfiguration.yaml", "MyExampleCommands",$"{name}Commands");
         cli.ReplaceContentInFile($"PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.{name}Commands\\Configuration\\PowerCommandsConfiguration.cs", "MyExampleCommands",$"{name}Commands");
         cli.ReplaceContentInFile($"PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.{name}Commands\\Configuration\\FavoriteConfiguration.cs", "MyExampleCommands",$"{name}Commands");
@@ -49,10 +53,11 @@ public class NewCommand : CommandBase<CommandsConfiguration>
         cli.MoveDirectory("PowerCommands2022\\src\\PainKiller.PowerCommands\\Third party components", $"Third party components");
         cli.MoveFile($"PowerCommands2022\\src\\PainKiller.PowerCommands\\PowerCommands.{name}.sln", $"PowerCommands.{name}.sln");
 
+        cli.MoveFile($"PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.{name}Commands\\Commands\\DemoCommand.cs", "DemoCommand.cs");
         cli.MoveDirectory($"PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.{name}Commands", $"PainKiller.PowerCommands.{name}Commands");
         cli.DeleteDir($"PainKiller.PowerCommands.{name}Commands\\Commands");
         cli.CreateDirectory($"PainKiller.PowerCommands.{name}Commands\\Commands");
-        cli.MoveFile($"PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.{name}Commands\\Commands\\DemoCommand.cs", $"PainKiller.PowerCommands.{name}Commands\\Commands\\DemoCommand.cs");
+        cli.MoveFile($"DemoCommand.cs", $"PainKiller.PowerCommands.{name}Commands\\Commands\\DemoCommand.cs");
 
         WriteHeadLine("\nAll work is done, now do the following steps");
         WriteHeadLine("\n1. Delete the directory PowerCommands2022 and it´s content");

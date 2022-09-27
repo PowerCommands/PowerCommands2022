@@ -63,7 +63,6 @@ public class CliManager : ICliManager
         _logger.Invoke($"to [{newDirPath}]", DisplayAndWriteToLog);
         _logger.Invoke("", false);
     }
-
     public void MoveFile(string fileName, string toFileName)
     {
         var oldFilePath = Path.Combine(_path, fileName);
@@ -80,7 +79,7 @@ public class CliManager : ICliManager
     {
         var oldFilePath = Path.Combine(_path, dirctoryName);
         var newFilePath = Path.Combine(_path, toDirctoryName);
-
+        
         Directory.Move(oldFilePath, newFilePath);
         _logger.Invoke("", false);
         _logger.Invoke($"Directory moved from [{dirctoryName}]", DisplayAndWriteToLog);

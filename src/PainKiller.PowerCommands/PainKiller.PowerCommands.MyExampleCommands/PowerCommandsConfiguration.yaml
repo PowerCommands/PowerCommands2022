@@ -2,6 +2,7 @@
 configuration:
   defaultGitRepositoryPath: C:\Repos\PowerCommands2022
   codeEditor: C:\Users\harri\AppData\Local\Programs\Microsoft VS Code\Code.exe
+  repository: https://github.com/PowerCommands/PowerCommands2022
   favorites:
   - name: Music
     nameOfExecutable: spotify
