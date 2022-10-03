@@ -2,7 +2,7 @@
 
 public class EnvironmentConfiguration
 {
-    private Dictionary<string, string?> _values = new();
+    private readonly Dictionary<string, string?> _values = new();
     public List<EnvironmentItemConfiguration> Variables { get; set; } = new();
 
     public void InitializeValues()
@@ -19,4 +19,5 @@ public class EnvironmentConfiguration
         _values.TryGetValue(environmentVariableName, out string? envValue);
         return string.IsNullOrEmpty(envValue) ? "" : envValue;
     }
+    public Dictionary<string, string?> GetValues() => _values;
 }
