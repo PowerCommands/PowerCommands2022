@@ -225,6 +225,7 @@ PowerCommands rely on reflection to find all existing PowerCommands that are val
  - ExitCommand
  - DescribeCommand
  - NewCommand
+ - VersionCommand
 
 ## <a name='helpflag'></a>--help flagg
  The flag --help is handled by the Core framework but you could override that behaviour whith the PowerCommandsAttribute field **overrideHelpFlag**
