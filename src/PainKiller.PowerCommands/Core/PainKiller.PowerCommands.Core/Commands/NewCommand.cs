@@ -20,7 +20,7 @@ public class NewCommand : CommandBase<CommandsConfiguration>
     public override RunResult Run(CommandLineInput input)
     {
         var name = input.SingleArgument;
-        var flag = input.GetFlagValue("--output");
+        var flag = input.GetFlagValue("output");
 
         _path = string.IsNullOrEmpty(flag) ? Path.Combine(AppContext.BaseDirectory, "output",name) : Path.Combine(flag, name);
 
