@@ -20,6 +20,7 @@ public class HelpService : IHelpService
 
         var args = da.Arguments.Split('|');
         var qutes = da.Qutes.Split('|');
+        var flags = da.Flags.Split('|');
         var examples = da.Examples.Split('|');
 
         command.WriteHeaderLine($"{nameof(da.Arguments)}:");
@@ -28,6 +29,8 @@ public class HelpService : IHelpService
         command.WriteHeaderLine($"{nameof(da.Qutes)}:");
         foreach (var q in qutes) Console.WriteLine(q);
         command.WriteObjectDescription("Mandatory", da.QutesMandatory ? "Yes" : "No");
+        command.WriteHeaderLine($"{nameof(da.Flags)}:");
+        foreach (var f in flags) Console.WriteLine(f);
 
         if (!string.IsNullOrEmpty(da.Suggestion))
         {

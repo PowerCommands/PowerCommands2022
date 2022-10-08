@@ -10,11 +10,12 @@ public static class CommandLineInputInterpreterExtension
         if(IsNullOrEmpty(commandLineInput)) throw new ArgumentNullException(nameof(commandLineInput));
         var raw = commandLineInput.Trim();
         var quotes = Regex.Matches(raw, "\\\"(.*?)\\\"").ToStringArray();
-        var arguments = raw.Split(' ').Where(r => !r.Contains('\"')).ToList();
+        var arguments = raw.Split(' ').Where(r => !r.Contains('\"') && !r.StartsWith("--")).ToList();
+        var flags = raw.Split(' ').Where(r => !r.Contains('\"') && r.StartsWith("--")).ToArray();
         var identifier = $"{arguments[0].ToLower()}";
         arguments.RemoveAt(0);  //Remove identifier from arguments
 
-        var retVal = new CommandLineInput {Arguments = arguments.ToArray(), Identifier = identifier, Quotes = quotes, Raw = raw, Path = arguments.ToArray().ToPath()};
+        var retVal = new CommandLineInput {Arguments = arguments.ToArray(), Identifier = identifier, Quotes = quotes, Flags = flags, Raw = raw, Path = arguments.ToArray().ToPath()};
         return retVal;
     }
     public static string ToPath(this string[] inputArray)

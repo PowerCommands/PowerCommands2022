@@ -5,6 +5,7 @@ public interface ICommandLineInput
     string Identifier { get; init; }
     string[] Quotes { get; init; }
     string[] Arguments { get; init; }
+    string[] Flags { get; init; }
     string SingleArgument { get; }
     string SingleQuote { get; }
     string? Path { get; init; }
