@@ -16,6 +16,7 @@
 	* [Write generic custom modules](#Writegenericcustommodules)
 * [Reflection](#Reflection)
 * [Reserved Command namess](#ReservedCommandnamess)
+* [--help flag](#helpflag)
 * [Directoriess](#Directoriess)
 * [Store secrets outside the application path](#Storesecretsoutsidetheapplicationpath)
 * [Use the secrets built in functionallity](#Usethesecretsbuiltinfunctionallity)
@@ -31,6 +32,7 @@
 * [Always describe your PowerCommands](#AlwaysdescribeyourPowerCommands)
 * [Use Tags and PowerCommand attributes](#UseTagsandPowerCommandattributes)
 * [Dependancy diagram](#Dependancydiagram)
+
 <!-- vscode-markdown-toc-config
 	numbering=false
 	autoSave=true
@@ -79,7 +81,7 @@ The core components should be reliable and robust and do not change much over ti
 The bootstrap component is the glue between the Console and the other modules, it has a Startup class whos purpose is to initialize the application and customize its behavoiur if you want to. The main class to edit is in that case the PowerCommandsManager class.
 
 ## <a name='Yourcustomcommandsprojects'></a>Your custom commands project(s)
-The whole purpose of PowerCommands framework is so that you can write your own commands, and every implementation must therefore have at least one project containing this commands. This project also needs a couple of mandatory classes, simply copy the classes from the "MyExampleCommands" project in this github repository.
+The whole purpose of PowerCommands framework is so that you can write your own commands, and every implementation must therefore have at least one project containing this commands. This project also needs a couple of mandatory classes, if you use the PowerCommand new a whole new solution is set upp for you, it is explained further down the road in this documentation, but you have set up everything manuallay. simply copy the classes from the "MyExampleCommands" project in this github repository.
 [My Example Commands](https://github.com/PowerCommands/PowerCommands2022/tree/main/src/PainKiller.PowerCommands/PainKiller.PowerCommands.MyExampleCommands)
 The files needed is:
  - PowerCommandServices   
@@ -222,6 +224,11 @@ PowerCommands rely on reflection to find all existing PowerCommands that are val
  - SecretCommand
  - ExitCommand
  - DescribeCommand
+ - NewCommand
+
+## <a name='helpflag'></a>--help flagg
+ The flag --help is handled by the Core framework but you could override that behaviour whith the PowerCommandsAttribute field **overrideHelpFlag**
+ If you set the value to **true** you should implement your own action to show somekind of help for the user.
 
  This could of cours change in the future and the documentation may not be updated, you could easliy check the reserved commands using this command in the Console:
 
