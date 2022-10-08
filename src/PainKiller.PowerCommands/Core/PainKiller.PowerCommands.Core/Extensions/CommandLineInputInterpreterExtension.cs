@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using PainKiller.PowerCommands.Shared.Contracts;
+using System.Text.RegularExpressions;
 using static System.String;
 
 namespace PainKiller.PowerCommands.Core.Extensions;
@@ -29,5 +30,14 @@ public static class CommandLineInputInterpreterExtension
         var retVal = new List<string>();
         foreach (Match match in matches) retVal.Add(match.ToString());
         return retVal.ToArray();
+    }
+    public static string GetFlagValue(this ICommandLineInput input, string flagName)
+    {
+        var flag = input.Flags.FirstOrDefault(f => f == flagName);
+        if (IsNullOrEmpty(flag)) return "";
+        short index = 0;
+        var indexedInputs = input.Raw.Split(' ').Select(r => new IndexedInput{Index = index+=1,Value = r}).ToList();
+        var flagIndex = indexedInputs.First(i => i.Value == flag).Index;
+        return flagIndex == indexedInputs.Count ? "" : indexedInputs.First(i => i.Index == flagIndex + 1).Value.Replace("\"","");
     }
 }
