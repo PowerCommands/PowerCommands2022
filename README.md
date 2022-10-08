@@ -27,13 +27,23 @@ PowerCommands is a concept for creating your own customized command prompt to pe
 
  PowerCommands uses Serialog as the default logger, it is easy to swith to another one, all logging is done using the abstraction interface Microsoft.Extensions.Logging.ILogger. The ambition is to use as few third party components as possible to avoid compabillity issues and keep the control over the code. 
 
- ## Design principles
- The design principles for this project is to keep the Core lightweight and simple. The Core components is components that you probably or very often will use, while Custom Components do not have that characteristic feature. Another restriction for the Core components is that they should avoid to add any third party dependancies, that way you know exactly what code you are running. 
+ ## Design of your Commands
+ Think of your command as an one line command with some parameters in a cmd prompt environment, it should do a single isolated task, for example lets say you want to convert yaml file to json or xml. A good name could be **ConvertCommand**, as parameters you have a path to the input file, and a flag for the format and a value to that flag. That is a pretty good design for one Command. 
  
- Custom component are aloud to break that rule, custom components should on the other hand avoid to have depandencies to the Core components, they should be design to work as stand-alone components.
+ The usage of this command will look like this if I want to convert my yaml fil to json.
 
- Read more about design principles here: [Design principles](PowerCommands%20Design%20Principles%20And%20Guidlines.md)
+```convert "C:\temp\myYaml.yaml" --format json```
 
+If you want the input to be more self described you can choose to add a flag for the filepath like this:
+
+```convert --file "C:\temp\myYaml.yaml" --format json```
+ 
+There are other ways you can solve the design to, you can solve it with two Commands instead, one command named **XmlCommand** and another named **JsonCommand**, it is all up to you.
+
+You could look here for inspiration:
+[10 design principles for delightful CLIs](https://blog.developer.atlassian.com/10-design-principles-for-delightful-clis/)
+
+Read more about design principles for PowerCommands here: [Design principles](PowerCommands%20Design%20Principles%20And%20Guidlines.md)
 
  # Implementations
  

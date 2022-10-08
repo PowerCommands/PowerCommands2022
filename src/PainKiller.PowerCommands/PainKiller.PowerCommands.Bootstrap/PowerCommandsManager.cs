@@ -71,6 +71,7 @@ public class PowerCommandsManager : IPowerCommandsManager
             case RunResultStatus.RunExternalPowerCommand:
             case RunResultStatus.Initializing:
             case RunResultStatus.Ok:
+            case RunResultStatus.Help:
             default:
                 break;
         }

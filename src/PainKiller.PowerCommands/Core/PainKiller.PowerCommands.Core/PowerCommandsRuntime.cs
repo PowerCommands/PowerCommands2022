@@ -33,6 +33,16 @@ public class PowerCommandsRuntime<TConfig> : IPowerCommandsRuntime where TConfig
         var input = rawInput.Interpret();
         var command = Commands.FirstOrDefault(c => c.Identifier.ToLower() == input.Identifier);
         if (command == null) throw new ArgumentOutOfRangeException($"Could not identify any Commmand with identy {input.Identifier}");
+        
+        if (input.Flags.Any(f => f == "--help"))
+        {
+            if (!command.GetPowerCommandAttribute().OverrideHelpFlag)
+            {
+                HelpService.Service.ShowHelp(command, clearConsole: false);
+                return new RunResult(command, input, "User prompted for help with --help flag", RunResultStatus.Ok);
+            }
+        }
+        
         if (command.GetPowerCommandAttribute().UseAsync) return ExecuteAsyncCommand(command, input);
         try { Latest = command.Run(input); }
         catch (Exception e) { Latest = new RunResult(command, input, e.Message, RunResultStatus.ExceptionThrown); }

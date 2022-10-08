@@ -160,38 +160,11 @@ configuration:
 If your PowerCommand implementation contains more then one PowerCommands project only one of them should contain this classes, it dosent matter wich one.
 
  ## Create your first Hello World Command
- ### Clone this repo and copy this from the src folder
- - PainKiller.PowerCommands.Bootstrap **project**
- - PainKiller.PowerCommands.PowerCommandsConsole **project**
- - Core **Directory**
-
-### Create a new solution and add this as existing projects, add a new .NET class project, name it to what you want.
-Add this files and directories (with content) from the **PainKiller.PowerCommands.MyExampleCommands** project
-- PowerCommandServices.cs **file**
-- PowerCommandsConfiguration.yaml **file**
-- Configuration **Directory**
-
-Take note that the PowerCommandsConfiguration.cs class contains some custom configuration belonging to an example, you could delete all that (leave the class empty) and the **FavoriteConfiguration.cs** class, you should also remove the corresponding configuration in the yaml file.
-
-**Heads up!** If something is wrong in the file a default instanse will be used and a default.yaml file will be created in the application root directory. You could use that to correct the problem of the yaml structure.
-
-Safest in the beginning is to just let it be and things will run smootly, when you are feeling brave later on, then you could start removing unnecessary things.
-
-### Add this project references for the Bootstrap project file.
-Adjust the paths if you are using at diffrent structure of your solution. (If so maybe more practical to include them using the Visual Studio IDE)
-```
-<ItemGroup>
-    <ProjectReference Include="..\Core\PainKiller.PowerCommands.Configuration\PainKiller.PowerCommands.Configuration.csproj" />
-    <ProjectReference Include="..\Core\PainKiller.PowerCommands.Core\PainKiller.PowerCommands.Core.csproj" />
-    <ProjectReference Include="..\Core\PainKiller.PowerCommands.ReadLine\PainKiller.PowerCommands.ReadLine.csproj" />
-    <ProjectReference Include="..\Core\PainKiller.PowerCommands.Security\PainKiller.PowerCommands.Security.csproj" />
-    <ProjectReference Include="..\Core\PainKiller.PowerCommands.Shared\PainKiller.PowerCommands.Shared.csproj" />        
-  </ItemGroup>
-  ```
-**Heads up!** A reference to your newly created class project is also needed in the Bootstrap project, it is not included above.
-### Add a referance for the PowerCommandConsole project to the Bootstrap project
-
-This should be enough, I think you could solve any problem that I have missed here, it is all about setting the referenses correctly for the Bootstrap project, the newly created commands project and the Console project. 
+  - Clone this repo
+  - Open the Solution PainKiller.PowerCommands in the src\PainKiller.PowerCommands folder.
+  - Make sure that one of the Console project is marked as startup project, for example the **PainKiller.PowerCommands.PowerCommandsConsole** in the Solution root
+  - Start the application and run the command new [name] "[Path to directory]"
+  - Follow the instructions to initialize your new solution  
 
 Now you are ready to create your very first Command!
 

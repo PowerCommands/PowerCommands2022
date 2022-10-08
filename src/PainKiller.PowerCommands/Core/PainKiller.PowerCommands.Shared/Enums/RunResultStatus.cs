@@ -9,5 +9,6 @@ public enum RunResultStatus
     SyntaxError,
     RunExternalPowerCommand,
     Initializing,
-    Async
+    Async,
+    Help
 }
