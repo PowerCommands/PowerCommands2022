@@ -158,7 +158,8 @@ If your PowerCommand implementation contains more then one PowerCommands project
   - Open the Solution PainKiller.PowerCommands in the src\PainKiller.PowerCommands folder.
   - Make sure that one of the Console project is marked as startup project, for example the **PainKiller.PowerCommands.PowerCommandsConsole** in the Solution root
   - Build the solution to make sure that the PowerCommandsConfig.yaml file is created in output folder
-  - Start the application and run the command new [name] "[Path to directory]"
+  - Start the application and run the command 
+  ```new nameOfYourCommandsProject --output "Path to directory"```
   - Follow the instructions to initialize your new solution and do a test run.  
 
 Now you are ready to create your very first Command!
@@ -190,7 +191,7 @@ This is the bare minimum that you need, to learn more about what you could do, l
 
 ```convert "C:\temp\myYaml.yaml" --format json```
 
-If you want the input to be more self described you can choose to add a flag for the filepath like this:
+If you want the input to be more self described, which the framework encourages you to do for clarity, you can choose to add a flag for the filepath like this:
 
 ```convert --file "C:\temp\myYaml.yaml" --format json```
  

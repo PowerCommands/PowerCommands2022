@@ -1,13 +1,15 @@
-﻿using PainKiller.PowerCommands.Core.Managers;
+﻿using PainKiller.PowerCommands.Core.Extensions;
+using PainKiller.PowerCommands.Core.Managers;
 using PainKiller.PowerCommands.Core.Services;
 
 namespace PainKiller.PowerCommands.Core.Commands;
 
 [Tags("core|cli|project")]
-[PowerCommand(  description: "Create a new Visual Studio Solution with all depended projects",
-                    example: "new testproject \"C:\\Temp\\\"",
+[PowerCommand(      description: "Create a new Visual Studio Solution with all depended projects",
+                    example: "new testproject --output \"C:\\Temp\\\"",
                     arguments:"Solution name:<name>",
                     argumentMandatory: true,
+                    flags:"output",
                     qutes: "Path: <path>")]
 public class NewCommand : CommandBase<CommandsConfiguration>
 {
@@ -18,7 +20,9 @@ public class NewCommand : CommandBase<CommandsConfiguration>
     public override RunResult Run(CommandLineInput input)
     {
         var name = input.SingleArgument;
-        _path = string.IsNullOrEmpty(input.SingleQuote) ? Path.Combine(AppContext.BaseDirectory, "output",name) : Path.Combine(input.SingleQuote, name);
+        var flag = input.GetFlagValue("--output");
+
+        _path = string.IsNullOrEmpty(flag) ? Path.Combine(AppContext.BaseDirectory, "output",name) : Path.Combine(flag, name);
 
         var cli = new CliManager(name, _path, WriteLine);
         cli.CreateRootDirectory();
@@ -69,6 +73,4 @@ public class NewCommand : CommandBase<CommandsConfiguration>
         ShellService.Service.OpenDirectory(_path);
         return CreateRunResult(input);
     }
-
-    
 }
