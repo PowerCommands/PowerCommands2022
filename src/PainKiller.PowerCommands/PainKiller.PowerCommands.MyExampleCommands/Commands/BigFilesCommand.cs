@@ -30,7 +30,7 @@ public class BigFilesCommand : CommandBase<CommandsConfiguration>
         TraverseDirectory(rootDirectory);
         OverwritePreviousLine("Big files found:");
         foreach (var bigFile in _bigFiles) WriteLine(bigFile);
-        Console.Write($"\nDone!\n{ConfigurationConstants.Prompt}");
+        Console.Write($"\nDone!\n{ConfigurationGlobals.Prompt}");
     }
     private void TraverseDirectory(DirectoryInfo startDirectory)
     {

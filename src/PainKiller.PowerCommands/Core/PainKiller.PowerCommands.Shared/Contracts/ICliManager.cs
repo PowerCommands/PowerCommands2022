@@ -6,7 +6,7 @@ public interface ICliManager
     void CreateDirectory(string name);
     void CloneRepo(string repo);
     void DeleteDir(string directory);
-    void DeleteFile(string fileName);
+    void DeleteFile(string fileName, bool repoFile);
     void RenameDirectory(string directory, string name);
     void MoveDirectory(string dirctoryName, string toDirctoryName);
     void MoveFile(string fileName, string toFileName);

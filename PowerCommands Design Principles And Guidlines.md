@@ -159,7 +159,7 @@ If your PowerCommand implementation contains more then one PowerCommands project
   - Make sure that one of the Console project is marked as startup project, for example the **PainKiller.PowerCommands.PowerCommandsConsole** in the Solution root
   - Build the solution to make sure that the PowerCommandsConfig.yaml file is created in output folder
   - Start the application and run the command 
-  ```new nameOfYourCommandsProject --output "Path to directory"```
+  ```cli new --name nameOfYourCommandsProject --output "Path to directory"```
   - Follow the instructions to initialize your new solution and do a test run.  
 
 Now you are ready to create your very first Command!

@@ -1,5 +1,7 @@
-﻿using PainKiller.PowerCommands.Core.Services;
+﻿using PainKiller.PowerCommands.Configuration.DomainObjects;
+using PainKiller.PowerCommands.Core.Services;
 using PainKiller.PowerCommands.Shared.Contracts;
+using System.IO;
 
 namespace PainKiller.PowerCommands.Core.Managers;
 
@@ -7,6 +9,7 @@ public class CliManager : ICliManager
 {
     private readonly string _name;
     private readonly string _path;
+    private readonly string _srcCodeRootPath;
     private readonly Action<string, bool> _logger;
     
     public bool DisplayAndWriteToLog = true;
@@ -15,6 +18,7 @@ public class CliManager : ICliManager
     {
         _name = name;
         _path = path;
+        _srcCodeRootPath = Path.Combine(ConfigurationGlobals.ApplicationDataFolder, name);
         _logger = logger;
     }
     public void CreateRootDirectory()
@@ -22,6 +26,8 @@ public class CliManager : ICliManager
         var dirI = new DirectoryInfo(_path);
         Directory.CreateDirectory(dirI.FullName);
         _logger.Invoke($"Directory {dirI.Attributes} created", DisplayAndWriteToLog);
+        Directory.CreateDirectory(_srcCodeRootPath);
+        _logger.Invoke($"Directory {_srcCodeRootPath} created", DisplayAndWriteToLog);
     }
 
     public void CreateDirectory(string name)
@@ -32,20 +38,19 @@ public class CliManager : ICliManager
     }
     public void CloneRepo(string repo)
     {
-        var directoryInfo = new DirectoryInfo(_path);
-        ShellService.Service.Execute("git", $"clone {repo}", directoryInfo.FullName, _logger, waitForExit: true);
+        ShellService.Service.Execute("git", $"clone {repo}", _srcCodeRootPath, _logger, waitForExit: true);
     }
 
     public void DeleteDir(string directory)
     {
-        var dirPath = Path.Combine(_path, directory);
+        var dirPath = GetPath(directory);
         _logger($"Delete directory {dirPath}", DisplayAndWriteToLog);
         Directory.Delete(dirPath, recursive: true);
     }
 
-    public void DeleteFile(string fileName)
+    public void DeleteFile(string fileName, bool repoFile)
     {
-        var path = Path.Combine(_path, fileName);
+        var path = repoFile ? Path.Combine(_srcCodeRootPath, fileName) : Path.Combine(_path, fileName);
         _logger($"Delete file {path}", DisplayAndWriteToLog);
         File.Delete(path);
     }
@@ -55,9 +60,10 @@ public class CliManager : ICliManager
         var oldDirName = directory.Split('\\').Last();
         var newDirName = directory.Replace($"\\{oldDirName}", $"\\{name}");
 
-        var oldDirPath = Path.Combine(_path, directory);
-        var newDirPath = Path.Combine(_path, newDirName);
+        var oldDirPath = GetPath(directory);
+        var newDirPath = GetPath(newDirName);
         Directory.Move(oldDirPath, newDirPath);
+        
         _logger.Invoke("", false);
         _logger.Invoke($"Directory moved from [{directory}]", DisplayAndWriteToLog);
         _logger.Invoke($"to [{newDirPath}]", DisplayAndWriteToLog);
@@ -65,31 +71,31 @@ public class CliManager : ICliManager
     }
     public void MoveFile(string fileName, string toFileName)
     {
-        var oldFilePath = Path.Combine(_path, fileName);
-        var newFilePath = Path.Combine(_path, toFileName);
+        var oldFilePath = GetPath(fileName);
+        var newFilePath = GetPath(toFileName);
 
         File.Move(oldFilePath, newFilePath);
         _logger.Invoke("", false);
-        _logger.Invoke($"File moved from [{fileName}]", DisplayAndWriteToLog);
+        _logger.Invoke($"File moved from [{oldFilePath}]", DisplayAndWriteToLog);
         _logger.Invoke($"to [{newFilePath}]", DisplayAndWriteToLog);
         _logger.Invoke("", false);
     }
 
     public void MoveDirectory(string dirctoryName, string toDirctoryName)
     {
-        var oldFilePath = Path.Combine(_path, dirctoryName);
-        var newFilePath = Path.Combine(_path, toDirctoryName);
+        var oldFilePath = GetPath(dirctoryName);
+        var newFilePath = GetPath(toDirctoryName);
         
         Directory.Move(oldFilePath, newFilePath);
         _logger.Invoke("", false);
-        _logger.Invoke($"Directory moved from [{dirctoryName}]", DisplayAndWriteToLog);
+        _logger.Invoke($"Directory moved from [{oldFilePath}]", DisplayAndWriteToLog);
         _logger.Invoke($"to [{newFilePath}]", DisplayAndWriteToLog);
         _logger.Invoke("", false);
     }
 
     public void WriteNewSolutionFile()
     {
-        var solutionFile = Path.Combine(_path, "PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.sln");
+        var solutionFile = Path.Combine(_srcCodeRootPath, "PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.sln");
         var contentRows = File.ReadAllLines(solutionFile);
         var validProjectFiles = new[]
         {
@@ -126,17 +132,26 @@ public class CliManager : ICliManager
             }
             validProjectsRows.Add(row);
         }
-        var solutionFileName = Path.Combine(_path, $"PowerCommands2022\\src\\PainKiller.PowerCommands\\PowerCommands.{_name}.sln");
+        var solutionFileName = Path.Combine(_srcCodeRootPath, $"PowerCommands2022\\src\\PainKiller.PowerCommands\\PowerCommands.{_name}.sln");
         File.WriteAllLines(solutionFileName, validProjectsRows);
         _logger.Invoke($"New solution file [{solutionFileName}] created", DisplayAndWriteToLog);
     }
 
     public void ReplaceContentInFile(string fileName, string find, string replace)
     {
-        var filePath = Path.Combine(_path, fileName);
+        var filePath = GetPath(fileName);
         var content = File.ReadAllText(filePath);
         content = content.Replace(find, replace);
         File.WriteAllText(filePath, content);
         _logger.Invoke($"Content replaced in file [{fileName}]", DisplayAndWriteToLog);
     }
+
+    public static string GetLocalSolutionRoot()
+    {
+        //C:\repos\github\PowerCommands2022\src\PainKiller.PowerCommands\PainKiller.PowerCommands.MyExampleCommands\bin\Debug\net6.0
+        var parts = AppContext.BaseDirectory.Split('\\');
+        var endToRemove = $"\\{parts[parts.Length - 5]}\\{parts[parts.Length-4]}\\{parts[parts.Length-3]}\\{parts[parts.Length-2]}";
+        return AppContext.BaseDirectory.Replace(endToRemove, "");
+    }
+    private string GetPath(string path) => path.StartsWith("PowerCommands2022\\") ? Path.Combine(_srcCodeRootPath, path) : Path.Combine(_path, path);
 }

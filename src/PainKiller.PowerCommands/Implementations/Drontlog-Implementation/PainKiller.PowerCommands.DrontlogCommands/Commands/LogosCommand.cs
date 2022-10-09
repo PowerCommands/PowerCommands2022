@@ -13,7 +13,7 @@ public class LogosCommand : DapperCommandBase
         var logos = GetUrlToLogo();
         await DownloadLogos(logos);
         WriteLine("All logos downloaded");
-        Console.Write($"\n{ConfigurationConstants.Prompt}");
+        Console.Write($"\n{ConfigurationGlobals.Prompt}");
         return CreateRunResult(input);
     }
     private List<ProviderServiceReplica> GetUrlToLogo()

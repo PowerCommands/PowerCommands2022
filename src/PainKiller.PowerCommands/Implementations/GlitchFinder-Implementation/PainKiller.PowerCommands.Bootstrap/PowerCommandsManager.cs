@@ -24,7 +24,7 @@ public class PowerCommandsManager : IPowerCommandsManager
         {
             try
             {
-                var promptText = runResultStatus == RunResultStatus.Async ? "" : $"\n{ConfigurationConstants.Prompt}";
+                var promptText = runResultStatus == RunResultStatus.Async ? "" : $"\n{ConfigurationGlobals.Prompt}";
                 input = runAutomatedAtStartup ? string.Join(' ', args) : ReadLine.ReadLineService.Service.Read(prompt: promptText);
                 runAutomatedAtStartup = false;
                 if (string.IsNullOrEmpty(input.Trim())) continue;
