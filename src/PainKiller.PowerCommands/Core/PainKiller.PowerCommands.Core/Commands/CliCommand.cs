@@ -114,6 +114,8 @@ public class CliCommand : CommandBase<CommandsConfiguration>
         cli.DeleteDownloadsDirectory();
         cli.CreateRootDirectory(onlyRepoSrcCodeRootPath: true);
 
+        cli.BackupDirectory("Core");
+
         cli.CloneRepo(Configuration.Repository);
         WriteLine("Fetching repo from Github...");
 
