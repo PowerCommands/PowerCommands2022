@@ -33,7 +33,7 @@ public static class CommandLineInputInterpreterExtension
     }
     public static string GetFlagValue(this ICommandLineInput input, string flagName)
     {
-        var flag = flagName.Length == 1 ? input.Flags.FirstOrDefault(f => f.ToLower().Substring(0,1) == $"--{flagName.ToLower()}") :  input.Flags.FirstOrDefault(f => f == $"--{flagName.ToLower()}");
+        var flag = input.Flags.FirstOrDefault(f => f == $"--{flagName.ToLower()}" || f.ToLower().Substring(2,1)  == $"{flagName.ToLower()}".Substring(0,1));
         if (IsNullOrEmpty(flag)) return "";
         short index = 0;
         var indexedInputs = input.Raw.Split(' ').Select(r => new IndexedInput{Index = index+=1,Value = r}).ToList();

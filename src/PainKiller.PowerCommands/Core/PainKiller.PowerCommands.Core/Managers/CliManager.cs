@@ -36,8 +36,9 @@ public class CliManager : ICliManager
     public void DeleteDownloadsDirectory()
     {
         if(!Directory.Exists(_srcCodeRootPath)) return;
-
-        var dirInfo = new DirectoryInfo(Path.Combine(_srcCodeRootPath, "PowerCommands2022\\.git\\objects\\pack"));
+        var gitDirectory = Path.Combine(_srcCodeRootPath, "PowerCommands2022\\.git\\objects\\pack");
+        if (!Directory.Exists(gitDirectory)) return;
+        var dirInfo = new DirectoryInfo(gitDirectory);
         foreach (var fileSystemInfo in dirInfo.GetFileSystemInfos())
             File.SetAttributes(fileSystemInfo.FullName, FileAttributes.Normal);
         foreach (var file in dirInfo.GetFiles())
@@ -112,7 +113,8 @@ public class CliManager : ICliManager
 
     public string BackupDirectory(string dirctoryName)
     {
-        var backupRoot = Path.Combine(_srcCodeRootPath, "backup");
+        //_srcCodeRootPath = Path.Combine(ConfigurationGlobals.ApplicationDataFolder, "download", name);
+        var backupRoot = _srcCodeRootPath.Replace($"\\download\\{_name}", $"\\backup\\{_name}");
         if (!Directory.Exists(backupRoot)) Directory.CreateDirectory(backupRoot);
         
         var fullPathSource = Path.Combine(_path, dirctoryName);
