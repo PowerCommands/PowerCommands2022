@@ -126,6 +126,9 @@ public class CliCommand : CommandBase<CommandsConfiguration>
 
         cli.DeleteDownloadsDirectory();
 
+        WriteLine("Your PowerCommands Core component is now up to date with latest code from github!");
+        WriteLine("if you started this from Visual Studio you probably need to restart Visual Studio to reload all dependencies");
+
         return CreateRunResult(input);
     }
 }
