@@ -119,7 +119,6 @@ public class CliManager : ICliManager
             "PainKiller.PowerCommands.Bootstrap\\PainKiller.PowerCommands.Bootstrap.csproj",
             "PainKiller.PowerCommands.PowerCommandsConsole\\PainKiller.PowerCommands.PowerCommandsConsole.csproj",
             "Core",
-            "Test",
             "Third party components",
             "Third party components\\PainKiller.SerilogExtensions\\PainKiller.SerilogExtensions.csproj",
             "Core\\PainKiller.PowerCommands.Configuration\\PainKiller.PowerCommands.Configuration.csproj",

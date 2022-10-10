@@ -24,7 +24,7 @@ public class DescribeCommand : CommandBase<CommandsConfiguration>
         }
         HelpService.Service.ShowHelp(command);
         Console.WriteLine();
-        WriteHeadLine("To se all availible commands type commands");
+        WriteHeadLine("To se all available commands type commands");
         return CreateRunResult(input);
     }
 }

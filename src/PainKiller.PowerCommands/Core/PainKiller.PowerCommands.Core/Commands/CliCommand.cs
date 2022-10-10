@@ -71,10 +71,10 @@ public class CliCommand : CommandBase<CommandsConfiguration>
 
         cli.MoveFile($"PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.{name}Commands\\PainKiller.PowerCommands.MyExampleCommands.csproj", $"PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.{name}Commands\\PainKiller.PowerCommands.{name}Commands.csproj");
 
-        cli.MoveDirectory("PowerCommands2022\\src\\PainKiller.PowerCommands\\Core", $"Core");
-        cli.MoveDirectory("PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.Bootstrap", $"PainKiller.PowerCommands.Bootstrap");
-        cli.MoveDirectory("PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.PowerCommandsConsole", $"PainKiller.PowerCommands.PowerCommandsConsole");
-        cli.MoveDirectory("PowerCommands2022\\src\\PainKiller.PowerCommands\\Third party components", $"Third party components");
+        cli.MoveDirectory("PowerCommands2022\\src\\PainKiller.PowerCommands\\Core", "Core");
+        cli.MoveDirectory("PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.Bootstrap", "PainKiller.PowerCommands.Bootstrap");
+        cli.MoveDirectory("PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.PowerCommandsConsole", "PainKiller.PowerCommands.PowerCommandsConsole");
+        cli.MoveDirectory("PowerCommands2022\\src\\PainKiller.PowerCommands\\Third party components", "Third party components");
         cli.MoveFile($"PowerCommands2022\\src\\PainKiller.PowerCommands\\PowerCommands.{name}.sln", $"PowerCommands.{name}.sln");
 
         cli.MoveFile($"PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.{name}Commands\\Commands\\DemoCommand.cs", "DemoCommand.cs");
@@ -120,9 +120,8 @@ public class CliCommand : CommandBase<CommandsConfiguration>
         cli.DeleteDir("PowerCommands2022\\.vscode");
         cli.DeleteDir("PowerCommands2022\\src\\PainKiller.PowerCommands\\Custom Components");
         cli.DeleteDir("PowerCommands2022\\src\\PainKiller.PowerCommands\\Implementations");
-        cli.DeleteDir("PowerCommands2022\\src\\PainKiller.PowerCommands\\Test");
 
-
+        cli.DeleteDir("Core");
 
         cli.DeleteDownloadsDirectory();
 
