@@ -1,6 +1,17 @@
 # PowerCommands2022
 PowerCommands is a concept for creating your own customized command prompt to perform simple or advanced task with the full control from your command environment. That means no time-consuming hassling with a GUI, concentrate on just the code. The concept relays heavily on reflection so adding your own PowerCommands is very simple and fast.
 
+## Create your first Hello World Commandd
+  - Clone this repo
+  - Open the Solution PainKiller.PowerCommands in the src\PainKiller.PowerCommands folder.
+  - Make sure that one of the Console project is marked as startup project, for example the **PainKiller.PowerCommands.PowerCommandsConsole** in the Solution root
+  - Build the solution to make sure that the PowerCommandsConfig.yaml file is created in output folder
+  - Start the application and run the command 
+  ```cli new --name nameOfYourCommandsProject --output "Path to directory"```
+  - A new solution with all the dependent project is created for you, open the solution, set the PowerCommands Console project as startup project ant hit F5 to try it out.
+
+It's really unfortunate that you have to set up the startup project for the solution, that information is saved in solution user options (*.suo), it's a binary file that you don't want to mess with. But I guess that you already are familiar with that problem.
+
  ## Core
  ### The core components offering this to your custom PowerCommands
  - Logging (using Microsoft.Extensions.Logging.ILogger)

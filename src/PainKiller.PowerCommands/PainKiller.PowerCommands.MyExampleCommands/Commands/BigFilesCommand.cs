@@ -1,4 +1,5 @@
 ﻿using PainKiller.PowerCommands.Configuration.DomainObjects;
+using PainKiller.PowerCommands.Core.Extensions;
 using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
 namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
@@ -6,8 +7,8 @@ namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 [PowerCommand(description: "Input a valid path to a directory and the commmand will analyse the directory and its subdirectories\nThis command showing the use of Path property on the input and how you could display a progress with overwriting one line in the iteration.\nSpaces in the path are allowed en will be merged to the Path property on the Input instance",
                 arguments: "<path to directory>",
         argumentMandatory: true,
-                    qutes: "<size in MB (numeric)>",
-                  example: "directory C:\\Repos|directory C:\\Repos \"1024\"",
+                    flags: "megabytes, value in wrapped by quotation marks \"<size in MB (numeric)>\"",
+                  example: "bigfiles C:\\Repos|bigfiles C:\\Repos --megabytes \"1024\"",
                  useAsync: true)]
 public class BigFilesCommand : CommandBase<CommandsConfiguration>
 {
@@ -17,10 +18,11 @@ public class BigFilesCommand : CommandBase<CommandsConfiguration>
     public BigFilesCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
     public override async Task<RunResult> RunAsync(CommandLineInput input)
     {
-        if (string.IsNullOrEmpty(input.SingleArgument) || !Directory.Exists(input.Path)) return CreateBadParameterRunResult(input, $"{input.SingleQuote} must be a valid directory path");
-        if (int.TryParse(input.SingleQuote, out var number)) _minFileSize = number;
-        var rootDirectory = new DirectoryInfo(input.Path);
+        var megaBytes = input.GetFlagValue("megabytes");
 
+        if (string.IsNullOrEmpty(input.SingleArgument) || !Directory.Exists(input.Path)) return CreateBadParameterRunResult(input, $"{input.SingleQuote} must be a valid directory path");
+        if (int.TryParse(megaBytes, out var number)) _minFileSize = number;
+        var rootDirectory = new DirectoryInfo(input.Path);
         await RunIterations(rootDirectory);
         return CreateRunResult(input);
     }
@@ -28,7 +30,7 @@ public class BigFilesCommand : CommandBase<CommandsConfiguration>
     {
         await Task.Yield();
         TraverseDirectory(rootDirectory);
-        OverwritePreviousLine("Big files found:");
+        OverwritePreviousLine($"Big files found over {_minFileSize} MB:");
         foreach (var bigFile in _bigFiles) WriteLine(bigFile);
         Console.Write($"\nDone!\n{ConfigurationGlobals.Prompt}");
     }

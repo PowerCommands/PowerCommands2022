@@ -30,7 +30,7 @@ public class LogCommand : CommandBase<CommandsConfiguration>
         Console.WriteLine("log view");
 
         Console.WriteLine();
-        WriteHeadLine("To archive the logs into a zipfile type log archive");
+        WriteHeadLine("To archive the logs into a zip file type log archive");
         WriteHeadLine("Example");
         Console.WriteLine("log archive");
     }

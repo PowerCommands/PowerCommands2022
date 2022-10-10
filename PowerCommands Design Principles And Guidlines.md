@@ -16,7 +16,7 @@
 	* [Write generic custom modules](#Writegenericcustommodules)
 * [Reflection](#Reflection)
 * [Reserved Command namess](#ReservedCommandnamess)
-* [--help flag](#helpflag)
+* [--help flagg](#helpflagg)
 * [Directoriess](#Directoriess)
 * [Store secrets outside the application path](#Storesecretsoutsidetheapplicationpath)
 * [Use the secrets built in functionallity](#Usethesecretsbuiltinfunctionallity)
@@ -236,7 +236,7 @@ PowerCommands rely on reflection to find all existing PowerCommands that are val
  - DescribeCommand
  - NewCommand 
 
-## <a name='helpflag'></a>--help flagg
+## <a name='helpflagg'></a>--help flagg
  The flag --help is handled by the Core framework but you could override that behaviour whith the PowerCommandsAttribute field **overrideHelpFlag**
  If you set the value to **true** you should implement your own action to show somekind of help for the user.
 

@@ -8,7 +8,7 @@ namespace PainKiller.PowerCommands.Core.Commands;
 [PowerCommand(description: "Get, creates, removes or view secrets",
                 arguments: "create|get|remove|view (default)",
                     qutes: "name:<name>",
-                  example: "secret|secret get \"mycommand-pass\"|secret create \"mycommand-pass\"")]
+                  example: "secret|secret get \"mycommand-pass\"|secret create \"mycommand-pass\"|secret remove \"mycommand-pass\"")]
 public class SecretCommand : CommandBase<CommandsConfiguration>
 {
     public SecretCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
@@ -23,7 +23,7 @@ public class SecretCommand : CommandBase<CommandsConfiguration>
         if (method == "create") return Create(input);
         if (method == "remove") return Remove(input);
 
-        return CreateRunResult(input);
+        return CreateBadParameterRunResult(input, "No matching parameter");
     }
 
     private RunResult List(CommandLineInput input)
