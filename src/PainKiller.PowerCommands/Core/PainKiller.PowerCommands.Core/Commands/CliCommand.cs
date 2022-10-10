@@ -114,7 +114,7 @@ public class CliCommand : CommandBase<CommandsConfiguration>
         cli.DeleteDownloadsDirectory();
         cli.CreateRootDirectory(onlyRepoSrcCodeRootPath: true);
 
-        cli.BackupDirectory("Core");
+        var backupDirectory = cli.BackupDirectory("Core");
 
         cli.CloneRepo(Configuration.Repository);
         WriteLine("Fetching repo from Github...");
@@ -130,6 +130,9 @@ public class CliCommand : CommandBase<CommandsConfiguration>
 
         WriteLine("Your PowerCommands Core component is now up to date with latest code from github!");
         WriteLine("if you started this from Visual Studio you probably need to restart Visual Studio to reload all dependencies");
+        WriteLine($"A backup of the Core projects has been stored here [{backupDirectory}]");
+
+        ShellService.Service.OpenDirectory(backupDirectory);
 
         return CreateRunResult(input);
     }

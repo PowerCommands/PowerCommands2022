@@ -167,6 +167,12 @@ It's really unfortunate that you have to set up the startup project for the solu
 
 Now you are ready to create your very first Command!
 
+## Update your Core component projects in your custom PowerCommands solution
+You have two options
+ - You do it manually, clone this repo, delete everything i the Core directory and copy the new content from the Core directory you just downloaded.
+ - You can also do it automatically with this command
+ ```cli update``` and then reload the solution
+
 ### <a name='Helloworldexample..'></a>Hello world example..
 ```
 using PainKiller.PowerCommands.MyExampleCommands.Configuration;
