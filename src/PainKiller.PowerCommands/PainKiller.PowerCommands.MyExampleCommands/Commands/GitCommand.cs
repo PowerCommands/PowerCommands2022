@@ -25,6 +25,8 @@ public class GitCommand : CommandBase<PowerCommandsConfiguration>
             case "status":
                 Status();
                 break;
+            default: 
+                return CreateBadParameterRunResult(input, $"Parameter {input.SingleArgument} not supported");
         }
         return CreateRunResult(input);
     }
