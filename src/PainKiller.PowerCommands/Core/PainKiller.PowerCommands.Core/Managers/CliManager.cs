@@ -1,7 +1,6 @@
 ﻿using PainKiller.PowerCommands.Configuration.DomainObjects;
 using PainKiller.PowerCommands.Core.Services;
 using PainKiller.PowerCommands.Shared.Contracts;
-using System.IO;
 
 namespace PainKiller.PowerCommands.Core.Managers;
 
@@ -18,16 +17,34 @@ public class CliManager : ICliManager
     {
         _name = name;
         _path = path;
-        _srcCodeRootPath = Path.Combine(ConfigurationGlobals.ApplicationDataFolder, name);
+        _srcCodeRootPath = Path.Combine(ConfigurationGlobals.ApplicationDataFolder, "download", name);
         _logger = logger;
     }
-    public void CreateRootDirectory()
+    public void CreateRootDirectory(bool onlyRepoSrcCodeRootPath = false)
     {
-        var dirI = new DirectoryInfo(_path);
-        Directory.CreateDirectory(dirI.FullName);
-        _logger.Invoke($"Directory {dirI.Attributes} created", DisplayAndWriteToLog);
+        if (!onlyRepoSrcCodeRootPath)
+        {
+            var dirI = new DirectoryInfo(_path);
+            Directory.CreateDirectory(dirI.FullName);
+            _logger.Invoke($"Directory {dirI.Attributes} created", DisplayAndWriteToLog);
+        }
+
         Directory.CreateDirectory(_srcCodeRootPath);
         _logger.Invoke($"Directory {_srcCodeRootPath} created", DisplayAndWriteToLog);
+    }
+
+    public void DeleteDownloadsDirectory()
+    {
+        if(!Directory.Exists(_srcCodeRootPath)) return;
+
+        var dirInfo = new DirectoryInfo(Path.Combine(_srcCodeRootPath, "PowerCommands2022\\.git\\objects\\pack"));
+        foreach (var fileSystemInfo in dirInfo.GetFileSystemInfos())
+            File.SetAttributes(fileSystemInfo.FullName, FileAttributes.Normal);
+        foreach (var file in dirInfo.GetFiles())
+        {
+            File.Delete(file.FullName);
+        }
+        DeleteDir(_srcCodeRootPath);
     }
 
     public void CreateDirectory(string name)
@@ -45,14 +62,14 @@ public class CliManager : ICliManager
     {
         var dirPath = GetPath(directory);
         _logger($"Delete directory {dirPath}", DisplayAndWriteToLog);
-        Directory.Delete(dirPath, recursive: true);
+        if(Directory.Exists(dirPath)) Directory.Delete(dirPath, recursive: true);
     }
 
     public void DeleteFile(string fileName, bool repoFile)
     {
         var path = repoFile ? Path.Combine(_srcCodeRootPath, fileName) : Path.Combine(_path, fileName);
         _logger($"Delete file {path}", DisplayAndWriteToLog);
-        File.Delete(path);
+        if(File.Exists(path)) File.Delete(path);
     }
 
     public void RenameDirectory(string directory, string name)
@@ -148,9 +165,8 @@ public class CliManager : ICliManager
 
     public static string GetLocalSolutionRoot()
     {
-        //C:\repos\github\PowerCommands2022\src\PainKiller.PowerCommands\PainKiller.PowerCommands.MyExampleCommands\bin\Debug\net6.0
         var parts = AppContext.BaseDirectory.Split('\\');
-        var endToRemove = $"\\{parts[parts.Length - 5]}\\{parts[parts.Length-4]}\\{parts[parts.Length-3]}\\{parts[parts.Length-2]}";
+        var endToRemove = $"\\{parts[^5]}\\{parts[^4]}\\{parts[^3]}\\{parts[^2]}";
         return AppContext.BaseDirectory.Replace(endToRemove, "");
     }
     private string GetPath(string path) => path.StartsWith("PowerCommands2022\\") ? Path.Combine(_srcCodeRootPath, path) : Path.Combine(_path, path);

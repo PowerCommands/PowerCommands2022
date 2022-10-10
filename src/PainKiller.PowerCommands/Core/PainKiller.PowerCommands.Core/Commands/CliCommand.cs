@@ -25,10 +25,18 @@ public class CliCommand : CommandBase<CommandsConfiguration>
         var name = input.GetFlagValue("name");
         var output = input.GetFlagValue("output");
 
-        if (action == "new") return RunNewPowerCommandsProject(input, output, name);
-        if (action == "update") return RunUpdatePowerCommandsProject(input, name);
-        
-        return CreateBadParameterRunResult(input, "Missing arguments");
+        switch (action)
+        {
+            case "version":
+                WriteHeadLine($"Core 1.0.0");
+                return CreateRunResult(input);
+            case "new":
+                return RunNewPowerCommandsProject(input, output, name);
+            case "update":
+                return RunUpdatePowerCommandsProject(input);
+            default:
+                return CreateBadParameterRunResult(input, "Missing arguments");
+        }
     }
 
     private RunResult RunNewPowerCommandsProject(CommandLineInput input, string output, string name)
@@ -36,6 +44,7 @@ public class CliCommand : CommandBase<CommandsConfiguration>
         _path = string.IsNullOrEmpty(output) ? Path.Combine(AppContext.BaseDirectory, "output", name) : Path.Combine(output, name);
 
         var cli = new CliManager(name, _path, WriteLine);
+        cli.DeleteDownloadsDirectory();
         cli.CreateRootDirectory();
 
         cli.CloneRepo(Configuration.Repository);
@@ -74,6 +83,8 @@ public class CliCommand : CommandBase<CommandsConfiguration>
         cli.CreateDirectory($"PainKiller.PowerCommands.{name}Commands\\Commands");
         cli.MoveFile($"DemoCommand.cs", $"PainKiller.PowerCommands.{name}Commands\\Commands\\DemoCommand.cs");
 
+        cli.DeleteDownloadsDirectory();
+
         WriteHeadLine("\nAll work is done, now do the following steps");
         WriteHeadLine("\n1. Set the PowerCommandsConsole project as startup project");
         WriteHeadLine("\n2. Build and then run the solution");
@@ -84,10 +95,37 @@ public class CliCommand : CommandBase<CommandsConfiguration>
         return CreateRunResult(input);
     }
 
-    private RunResult RunUpdatePowerCommandsProject(CommandLineInput input, string name)
+    private RunResult RunUpdatePowerCommandsProject(CommandLineInput input)
     {
         _path = CliManager.GetLocalSolutionRoot();
+        var solutionFile = Directory.GetFileSystemEntries(_path, "*.sln").FirstOrDefault();
+        if (solutionFile == null) return CreateBadParameterRunResult(input, $"No solution file found in directory [{_path}]");
+        var name = solutionFile.Split('\\').Last().Replace(".sln","");
+
+        Console.WriteLine("Update will delete and replace everything in the [Core] and [Third party components] folder");
+        Console.WriteLine($"A backup will be saved in folder [{Path.Combine(_path)}]","Backup");
+        Console.WriteLine("");
+        Console.WriteLine("Do you want to continue with the update? y/n");
+        var response = Console.ReadLine();
+        if ($"{response?.Trim()}" != "y") return CreateRunResult(input);
+        
         var cli = new CliManager(name, _path, WriteLine);
+
+        cli.DeleteDownloadsDirectory();
+        cli.CreateRootDirectory(onlyRepoSrcCodeRootPath: true);
+
+        cli.CloneRepo(Configuration.Repository);
+        WriteLine("Fetching repo from Github...");
+
+        cli.DeleteDir("PowerCommands2022\\.vscode");
+        cli.DeleteDir("PowerCommands2022\\src\\PainKiller.PowerCommands\\Custom Components");
+        cli.DeleteDir("PowerCommands2022\\src\\PainKiller.PowerCommands\\Implementations");
+        cli.DeleteDir("PowerCommands2022\\src\\PainKiller.PowerCommands\\Test");
+
+
+
+        cli.DeleteDownloadsDirectory();
+
         //Not yet implemented
         return CreateRunResult(input);
     }
