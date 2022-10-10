@@ -160,7 +160,10 @@ If your PowerCommand implementation contains more then one PowerCommands project
   - Build the solution to make sure that the PowerCommandsConfig.yaml file is created in output folder
   - Start the application and run the command 
   ```cli new --name nameOfYourCommandsProject --output "Path to directory"```
-  - Follow the instructions to initialize your new solution and do a test run.  
+  - A new solution with all the dependent project is created for you, open the solution, set the PowerCommands Console project as startup project ant hit F5 to try it out.
+
+It's really unfortunate that you have to set up the startup project for the solution, that information is saved in solution user options (*.suo), it's a binary file that you don't want to mess with. But I guess that you already are familiar with that problem.
+
 
 Now you are ready to create your very first Command!
 
@@ -225,8 +228,7 @@ PowerCommands rely on reflection to find all existing PowerCommands that are val
  - SecretCommand
  - ExitCommand
  - DescribeCommand
- - NewCommand
- - VersionCommand
+ - NewCommand 
 
 ## <a name='helpflag'></a>--help flagg
  The flag --help is handled by the Core framework but you could override that behaviour whith the PowerCommandsAttribute field **overrideHelpFlag**

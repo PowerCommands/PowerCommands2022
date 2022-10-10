@@ -122,10 +122,10 @@ public class CliCommand : CommandBase<CommandsConfiguration>
         cli.DeleteDir("PowerCommands2022\\src\\PainKiller.PowerCommands\\Implementations");
 
         cli.DeleteDir("Core");
+        cli.MoveDirectory("PowerCommands2022\\src\\PainKiller.PowerCommands\\Core", "Core");
 
         cli.DeleteDownloadsDirectory();
 
-        //Not yet implemented
         return CreateRunResult(input);
     }
 }
