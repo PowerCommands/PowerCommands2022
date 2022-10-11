@@ -10,6 +10,7 @@ namespace PainKiller.PowerCommands.Core.Commands;
                     arguments:"Solution name:<name>",
                     argumentMandatory: true,
                     flags:"name|output",
+                    suggestion:"new",
                     qutes: "Path: <path>")]
 public class CliCommand : CommandBase<CommandsConfiguration>
 {

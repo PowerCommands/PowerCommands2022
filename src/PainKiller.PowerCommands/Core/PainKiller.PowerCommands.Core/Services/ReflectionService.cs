@@ -1,4 +1,6 @@
 ﻿using System.Reflection;
+using PainKiller.PowerCommands.Core.Extensions;
+using PainKiller.PowerCommands.ReadLine.Managers;
 using PainKiller.PowerCommands.Shared.Contracts;
 
 namespace PainKiller.PowerCommands.Core.Services;
@@ -27,6 +29,8 @@ public class ReflectionService : IReflectionService
             var name = commandType.Name.ToLower();
             Object[] args = { name.Substring(0, name.Length - 7), (constructorInfo.GetParameters()[1].ParameterType == typeof(CommandsConfiguration) ? configuration as CommandsConfiguration : configuration)};
             var command = (IConsoleCommand)Activator.CreateInstance(commandType, args)!;
+            var pcAttribute = command.GetPowerCommandAttribute();
+            if(!string.IsNullOrEmpty(pcAttribute.Flags)) SuggestionProviderManager.AddFContextBoundSuggestions(command.Identifier, pcAttribute.Flags.Split('|').Select(f => $"--{f}").ToArray());
             retVal.Add(command);
         }
         return retVal.OrderBy(c => c.Identifier).ToList();

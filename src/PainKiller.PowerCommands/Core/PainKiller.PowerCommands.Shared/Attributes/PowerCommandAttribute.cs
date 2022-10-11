@@ -9,6 +9,9 @@ public class PowerCommandAttribute : Attribute
     public string Arguments { get; }
     public bool ArgumentMandatory { get; }
     public string Qutes { get; }
+    /// <summary>
+    /// Should always be separated with |
+    /// </summary>
     public string Flags { get; }
     public bool QutesMandatory { get; }
     public bool UseAsync { get; }
