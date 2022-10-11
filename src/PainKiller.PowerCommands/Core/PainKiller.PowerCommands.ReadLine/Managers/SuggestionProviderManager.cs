@@ -5,11 +5,7 @@ public class SuggestionProviderManager
     private static readonly Dictionary<string, string[]> ContextBoundSuggestions = new();
 
     public Func<string, string[]> SuggestionProviderFunc;
-    public SuggestionProviderManager()
-    {
-        SuggestionProviderFunc = GetSuggestions;
-    }
-
+    public SuggestionProviderManager() => SuggestionProviderFunc = GetSuggestions;
     public static void AddFContextBoundSuggestions(string contextId, string[] suggestions)
     {
         if(!ContextBoundSuggestions.ContainsKey(contextId)) ContextBoundSuggestions.Add(contextId, suggestions);
@@ -25,10 +21,7 @@ public class SuggestionProviderManager
             var contextId = inputs.First();
             inputs.RemoveAt(0);
 
-            if (ContextBoundSuggestions.ContainsKey(contextId) && inputs.Last().StartsWith("-"))
-            {
-                return ContextBoundSuggestions.Where(c => c.Key == contextId).Select(c => c.Value).First();
-            }
+            if (ContextBoundSuggestions.ContainsKey(contextId) && inputs.Last().StartsWith("-")) return ContextBoundSuggestions.Where(c => c.Key == contextId).Select(c => c.Value).First();
 
             var buildPath = new List<string>();
             var startOfPathNotFound = true;

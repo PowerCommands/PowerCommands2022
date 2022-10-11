@@ -16,7 +16,6 @@
 	* [Write generic custom modules](#Writegenericcustommodules)
 * [Reflection](#Reflection)
 * [Reserved Command namess](#ReservedCommandnamess)
-* [--help flagg](#helpflagg)
 * [Directoriess](#Directoriess)
 * [Store secrets outside the application path](#Storesecretsoutsidetheapplicationpath)
 * [Use the secrets built in functionallity](#Usethesecretsbuiltinfunctionallity)
@@ -30,8 +29,8 @@
 * [Configuration could be shared by clients](#Configurationcouldbesharedbyclients)
 * [Use Markdown format](#UseMarkdownformat)
 * [Always describe your PowerCommands](#AlwaysdescribeyourPowerCommands)
-* [Use Tags and PowerCommand attributes](#UseTagsandPowerCommandattributes)
-* [Dependancy diagram](#Dependancydiagram)
+* [Use PowerCommand attribute](#UsePowerCommandattribute)
+* [Flags](#Flags)
 
 <!-- vscode-markdown-toc-config
 	numbering=false
@@ -209,6 +208,8 @@ There are other ways you can solve the design to, you can solve it with two Comm
 You could look here for inspiration:
 [10 design principles for delightful CLIs](https://blog.developer.atlassian.com/10-design-principles-for-delightful-clis/)
 
+Dont forget to describe your Commands, read more about that under [Always describe your PowerCommands](#AlwaysdescribeyourPowerCommands)
+
 ## <a name='ExtendPowerCommand'></a>Extend PowerCommand
 
 ### <a name='AvoidchangesinthePowerCommandCoreextendinstead'></a>Avoid changes in the PowerCommand Core, extend instead
@@ -236,14 +237,10 @@ PowerCommands rely on reflection to find all existing PowerCommands that are val
  - DescribeCommand
  - NewCommand 
 
-## <a name='helpflagg'></a>--help flagg
- The flag --help is handled by the Core framework but you could override that behaviour whith the PowerCommandsAttribute field **overrideHelpFlag**
- If you set the value to **true** you should implement your own action to show somekind of help for the user.
-
  This could of cours change in the future and the documentation may not be updated, you could easliy check the reserved commands using this command in the Console:
 
  ```
- commands ! 
+ commands --reserved 
  ``` 
 ## <a name='Directoriess'></a>Directoriess
  Guidlines for naming directories
@@ -332,18 +329,40 @@ In such cases they should support the identical configuration structure otherwis
  The format of dokumentation in text should use the markdown format.
 ## <a name='AlwaysdescribeyourPowerCommands'></a>Always describe your PowerCommands
  Be kind to your consumer as it often turn out to be you that are the consumer, fill in a shourt description of what the PowerCommand is doing and how to use it.
-## <a name='UseTagsandPowerCommandattributes'></a>Use Tags and PowerCommand attributes
+## <a name='UsePowerCommandattribute'></a>Use PowerCommand attribute
 This is an example where every property of the attributes is used
 
 ![Alt text](attributes.png?raw=true "Attributes")
-Attributes is used to show a nice description of the command with the built in describe command.
+Attributes is used to show a nice description of the command with the built in describe command. 
 
 ```
 describe cls
 ```
 ![Alt text](describe.png?raw=true "Describe")
 
-Tags attribute is used to make searches with the commands command.
+But it is just not for displaying the help, the flag property and the suggestion property of the PowerCommandAttribute controls suggestions provided by intellisense, you should really take advantage of that.
+
+## <a name='Flags'></a>Flags
+In the example image showing usage of the attributes you could se that the flags: property is set to **"mode|name"**, that means that this command has two flags one named **mode** and the other one is **name**. This will give the user autocomplete feedback when typing - and using the [Tab] tangent.
+
+Programatically you can use Flags in two ways, you could grab the value, wich is the parameter typed after the flag, like this (using the RegressionCommand as example, it is a user created command).
+
+``` regression --mode normal --name "My sample project" ```
+
+To get the value of the **mode** flag you code like this:
+
+``` var mode = input.GetFlagValue("mode"); ```
+
+Sometimes you just want a flag without a value, you can solve that like this:
+
+``` var mode = input.HasFlag("xml"); ```
+
+### Do not use the help flag, unless you want to override it´s behaviour
+It will not harm anything but --help will trigger the Core frameowrk to display generic help (using the PowerCommands attriute).
+You can override this behaviour if you set the property **overrideHelpFlag** to true. Do not do that if your not intend to implement your own show help functionalllity for that command.
+
+## Tags attribute
+Tags attribute is used to make searches with the commands command, it could be useful if your pilling upp many Commands in your project. But it is not necessary to add them.
 
 ```
 commands tag "help"
