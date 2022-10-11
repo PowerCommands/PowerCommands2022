@@ -13,38 +13,38 @@ public class SecretCommand : CommandBase<CommandsConfiguration>
 {
     public SecretCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
 
-    public override RunResult Run(CommandLineInput input)
+    public override RunResult Run()
     {
-        if ((input.Arguments.Length + input.Quotes.Length < 2) && input.Arguments.Length > 0) throw new MissingFieldException("Two parameters must be provided");
-        if (input.Arguments.Length == 0 || input.Arguments[0] == "view") return List(input);
+        if ((Input.Arguments.Length + Input.Quotes.Length < 2) && Input.Arguments.Length > 0) throw new MissingFieldException("Two parameters must be provided");
+        if (Input.Arguments.Length == 0 || Input.Arguments[0] == "view") return List();
 
-        var method = input.Arguments[0];
-        if (method == "get") return Get(input);
-        if (method == "create") return Create(input);
-        if (method == "remove") return Remove(input);
+        var method = Input.Arguments[0];
+        if (method == "get") return Get();
+        if (method == "create") return Create();
+        if (method == "remove") return Remove();
 
-        return CreateBadParameterRunResult(input, "No matching parameter");
+        return CreateBadParameterRunResult("No matching parameter");
     }
 
-    private RunResult List(CommandLineInput input)
+    private RunResult List()
     {
         foreach (var secret in Configuration.Secret.Secrets) this.WriteObjectDescription(secret.Name, $"{string.Join(',', secret.Options.Keys)}");
-        return CreateRunResult(input);
+        return CreateRunResult();
     }
-    private RunResult Get(CommandLineInput input)
+    private RunResult Get()
     {
-        var name = input.SingleQuote;
+        var name = Input.SingleQuote;
         var secret = Configuration.Secret.Secrets.FirstOrDefault(s => s.Name.ToLower() == name.ToLower());
-        if (secret == null) return CreateBadParameterRunResult(input, $"No secret with name \"{name}\" found.");
+        if (secret == null) return CreateBadParameterRunResult($"No secret with name \"{name}\" found.");
 
         var val = SecretService.Service.GetSecret(name, secret.Options, EncryptionService.Service.DecryptString);
         this.WriteObjectDescription(name, val);
 
-        return CreateRunResult(input);
+        return CreateRunResult();
     }
-    private RunResult Create(CommandLineInput input)
+    private RunResult Create()
     {
-        var name = input.SingleQuote;
+        var name = Input.SingleQuote;
         Console.Write("Enter secret: ");
         var password = PasswordPromptService.Service.ReadPassword();
         Console.WriteLine();
@@ -54,7 +54,7 @@ public class SecretCommand : CommandBase<CommandsConfiguration>
         if (password != passwordConfirm)
         {
             Console.WriteLine();
-            return CreateBadParameterRunResult(input, "Passwords do not match");
+            return CreateBadParameterRunResult("Passwords do not match");
         }
 
         var secret = new SecretItemConfiguration { Name = name };
@@ -66,19 +66,19 @@ public class SecretCommand : CommandBase<CommandsConfiguration>
         WriteHeadLine("New secret created and stored in configuration file");
         this.WriteObjectDescription(name, val);
 
-        return CreateRunResult(input);
+        return CreateRunResult();
     }
-    private RunResult Remove(CommandLineInput input)
+    private RunResult Remove()
     {
-        var name = input.SingleQuote;
+        var name = Input.SingleQuote;
 
         var secret = Configuration.Secret.Secrets.FirstOrDefault(s => s.Name.ToLower() == name.ToLower());
-        if (secret == null) return CreateBadParameterRunResult(input, $"No secret with name \"{name}\" found.");
+        if (secret == null) return CreateBadParameterRunResult($"No secret with name \"{name}\" found.");
 
         Configuration.Secret.Secrets.Remove(secret);
         ConfigurationService.Service.SaveChanges(Configuration);
 
         WriteHeadLine("Secret removed from configuration file\nManually remove the secret key from environment variables or vault depending on how they are stored.");
-        return CreateRunResult(input);
+        return CreateRunResult();
     }
 }

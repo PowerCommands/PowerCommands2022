@@ -9,10 +9,10 @@ public class CleanupCommand : DapperCommandBase
 {
     public CleanupCommand(string identifier, PowerCommandsConfiguration configuration) : base(identifier, configuration) { }
 
-    public override RunResult Run(CommandLineInput input)
+    public override RunResult Run()
     {
         Delete();
-        return CreateRunResult(input);
+        return CreateRunResult();
     }
 
     private void Delete()

@@ -14,15 +14,15 @@ public class PathCommand : CommandBase<PowerCommandsConfiguration>
 {
     public PathCommand(string identifier, PowerCommandsConfiguration configuration) : base(identifier, configuration) { }
 
-    public override RunResult Run(CommandLineInput input)
+    public override RunResult Run()
     {
-        if (input.SingleArgument == "create")
+        if (Input.SingleArgument == "create")
         {
-            CreatePath($"{input.SingleQuote}");
-            return CreateRunResult(input);
+            CreatePath($"{Input.SingleQuote}");
+            return CreateRunResult();
         }
         ShowPaths();
-        return CreateRunResult(input);
+        return CreateRunResult();
     }
 
     private void ShowPaths()

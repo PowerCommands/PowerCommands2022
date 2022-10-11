@@ -5,6 +5,7 @@ namespace PainKiller.PowerCommands.Shared.Contracts;
 public interface IConsoleCommand
 {
     string Identifier { get; }
-    RunResult Run(CommandLineInput input);
-    Task<RunResult> RunAsync(CommandLineInput input);
+    void InitializeRun(ICommandLineInput input);
+    RunResult Run();
+    Task<RunResult> RunAsync();
 }

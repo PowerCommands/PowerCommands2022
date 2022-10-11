@@ -13,11 +13,11 @@ namespace PainKiller.PowerCommands.DrontlogCommands.Commands;
 public class SyndicationCommand : DapperCommandBase
 {
     public SyndicationCommand(string identifier, PowerCommandsConfiguration configuration) : base(identifier, configuration) { }
-    public override RunResult Run(CommandLineInput input)
+    public override RunResult Run()
     {
         var url = "https://trends.google.se/trends/trendingsearches/daily/rss?geo=SE";
         TryRss20FeedFormat(url);
-        return CreateRunResult(input);
+        return CreateRunResult();
     }
     private void TryRss20FeedFormat(string url)
     {

@@ -10,7 +10,7 @@ public class PasswordCommand : CommandBase<CommandsConfiguration>
 {
     public PasswordCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
 
-    public override RunResult Run(CommandLineInput input)
+    public override RunResult Run()
     {
         Console.Write("Password: ");
         var password = PasswordPromptService.Service.ReadPassword();
@@ -22,6 +22,6 @@ public class PasswordCommand : CommandBase<CommandsConfiguration>
         Console.Write("Do you want to see the password in clear text? y/? :");
         var response = Console.ReadLine();
         if (response != null && response.StartsWith('y')) Console.WriteLine(password);
-        return CreateRunResult(input);
+        return CreateRunResult();
     }
 }

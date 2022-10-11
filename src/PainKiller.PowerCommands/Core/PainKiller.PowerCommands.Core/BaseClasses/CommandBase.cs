@@ -5,6 +5,7 @@ using PainKiller.PowerCommands.Shared.Contracts;
 namespace PainKiller.PowerCommands.Core.BaseClasses;
 public abstract class CommandBase<TConfig> : IConsoleCommand where TConfig : new()
 {
+    protected ICommandLineInput Input = new CommandLineInput();
     private readonly StringBuilder _ouput = new();
     protected CommandBase(string identifier, TConfig configuration)
     {
@@ -12,12 +13,17 @@ public abstract class CommandBase<TConfig> : IConsoleCommand where TConfig : new
         Configuration = configuration;
     }
     public string Identifier { get; }
+    public void InitializeRun(ICommandLineInput input) => Input = input;
+
     protected TConfig Configuration { get; set; }
-    public virtual RunResult Run(CommandLineInput input) => throw new NotImplementedException();
-    public virtual async Task<RunResult> RunAsync(CommandLineInput input) => await Task.FromResult(new RunResult(this, input,"",RunResultStatus.Initializing));
-    protected RunResult CreateRunResult(CommandLineInput input) => new(this, input, _ouput.ToString(), RunResultStatus.Ok);
-    protected RunResult CreateQuitResult(CommandLineInput input) => new(this, input, _ouput.ToString(), RunResultStatus.Quit);
-    protected RunResult CreateBadParameterRunResult(CommandLineInput input, string output) => new(this, input, output, RunResultStatus.ArgumentError);
+
+    public virtual RunResult Run() => throw new NotImplementedException();
+    public virtual async Task<RunResult> RunAsync() => await Task.FromResult(new RunResult(this, Input,"",RunResultStatus.Initializing));
+
+    #region helpers
+    protected RunResult CreateRunResult() => new(this, Input, _ouput.ToString(), RunResultStatus.Ok);
+    protected RunResult CreateQuitResult() => new(this, Input, _ouput.ToString(), RunResultStatus.Quit);
+    protected RunResult CreateBadParameterRunResult(string output) => new(this, Input, output, RunResultStatus.ArgumentError);
     protected void WriteLine(string output, bool addToOutput = true)
     {
         if(addToOutput && !string.IsNullOrEmpty(output.Trim())) _ouput.AppendLine(output);
@@ -38,4 +44,5 @@ public abstract class CommandBase<TConfig> : IConsoleCommand where TConfig : new
         WriteLine(output.PadRight(padRight > 0 ? padRight : 0), false);
     }
     protected void WriteProcessLog(string processTag, string processDescription) => IPowerCommandServices.DefaultInstance?.Logger.LogInformation($"#{processTag}# {processDescription}");
+    #endregion
 }

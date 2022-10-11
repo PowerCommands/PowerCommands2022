@@ -16,17 +16,17 @@ public class StartCommand : CommandBase<PowerCommandsConfiguration>
 {
     public StartCommand(string identifier, PowerCommandsConfiguration configuration) : base(identifier, configuration) { }
 
-    public override RunResult Run(CommandLineInput input)
+    public override RunResult Run()
     {
-        if (string.IsNullOrEmpty(input.SingleArgument))
+        if (string.IsNullOrEmpty(Input.SingleArgument))
         {
             Show();
-            return CreateRunResult(input);
+            return CreateRunResult();
         }
 
-        var favorite = FindFavorite(input.SingleArgument);
+        var favorite = FindFavorite(Input.SingleArgument);
         if (favorite != null) Start(favorite);
-        return CreateRunResult(input);
+        return CreateRunResult();
     }
     protected FavoriteConfiguration? FindFavorite(string name)
     {

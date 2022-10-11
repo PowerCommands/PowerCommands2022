@@ -9,10 +9,10 @@ public class DemoCommand : CommandBase<PowerCommandsConfiguration>
 {
     public DemoCommand(string identifier, PowerCommandsConfiguration configuration) : base(identifier, configuration) { }
 
-    public override RunResult Run(CommandLineInput input)
+    public override RunResult Run()
     {
         WriteHeadLine("Congratulations! You have setup your PowerCommands solution correctly!");
         WriteLine("This command could now be removed from your solution.");
-        return CreateRunResult(input);
+        return CreateRunResult();
     }
 }

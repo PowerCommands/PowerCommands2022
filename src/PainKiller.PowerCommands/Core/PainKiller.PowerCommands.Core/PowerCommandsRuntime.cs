@@ -42,9 +42,10 @@ public class PowerCommandsRuntime<TConfig> : IPowerCommandsRuntime where TConfig
                 return new RunResult(command, input, "User prompted for help with --help flag", RunResultStatus.Ok);
             }
         }
-        
+        command.InitializeRun(input);
+
         if (command.GetPowerCommandAttribute().UseAsync) return ExecuteAsyncCommand(command, input);
-        try { Latest = command.Run(input); }
+        try { Latest = command.Run(); }
         catch (Exception e) { Latest = new RunResult(command, input, e.Message, RunResultStatus.ExceptionThrown); }
         return Latest;
     }
@@ -53,7 +54,7 @@ public class PowerCommandsRuntime<TConfig> : IPowerCommandsRuntime where TConfig
     {
         try
         {
-            command.RunAsync(input).ConfigureAwait(continueOnCapturedContext:false);
+            command.RunAsync().ConfigureAwait(continueOnCapturedContext:false);
         }
         catch (Exception e)
         {

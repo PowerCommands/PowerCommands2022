@@ -1,4 +1,5 @@
-﻿using PainKiller.PowerCommands.Shared.Contracts;
+﻿using PainKiller.PowerCommands.Configuration.DomainObjects;
+using PainKiller.PowerCommands.Shared.Contracts;
 using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
 namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
@@ -8,10 +9,10 @@ public class IterationCommand : CommandBase<CommandsConfiguration>
 {
     public IterationCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
 
-    public override async Task<RunResult> RunAsync(CommandLineInput input)
+    public override async Task<RunResult> RunAsync()
     {
         await RunIterations(PowerCommandServices.Service.Runtime.Commands);
-        return CreateRunResult(input);
+        return CreateRunResult();
     }
     private async Task RunIterations(List<IConsoleCommand> runtimeCommands)
     {
@@ -21,6 +22,6 @@ public class IterationCommand : CommandBase<CommandsConfiguration>
             Console.WriteLine(command.Identifier);
             Thread.Sleep(100);
         }
-        Console.Write($"\nDone!\n{{ConfigurationConstants.Prompt}}");
+        Console.Write($"\nDone!\n{ConfigurationGlobals.Prompt}");
     }
 }

@@ -14,23 +14,23 @@ public class GameCommand : StartCommand
 {
     public GameCommand(string identifier, PowerCommandsConfiguration configuration) : base(identifier, configuration) { }
 
-    public override RunResult Run(CommandLineInput input)
+    public override RunResult Run()
     {
         var steam = FindFavorite($"{GameFavorites.Steam}");
         var ac = FindFavorite($"{GameFavorites.Ac}");
         var cheat = FindFavorite($"{GameFavorites.Cheat}");
         var wheel = FindFavorite($"{GameFavorites.Wheel}");
 
-        if (input.Arguments.Any(a => a.ToLower().Contains($"{GameFavorites.Wheel}".ToLower())) && wheel != null) Start(wheel);
-        if (input.Arguments.Any(a => a.ToLower().Contains($"{GameFavorites.Steam}".ToLower())) && steam != null) Start(steam);
+        if (Input.Arguments.Any(a => a.ToLower().Contains($"{GameFavorites.Wheel}".ToLower())) && wheel != null) Start(wheel);
+        if (Input.Arguments.Any(a => a.ToLower().Contains($"{GameFavorites.Steam}".ToLower())) && steam != null) Start(steam);
 
         if (ac != null) Start(ac);
         if (cheat != null) Start(cheat);
 
-        if (string.IsNullOrEmpty(input.SingleQuote)) return CreateRunResult(input);
+        if (string.IsNullOrEmpty(Input.SingleQuote)) return CreateRunResult();
         
-        var game = FindFavorite(input.SingleQuote);
+        var game = FindFavorite(Input.SingleQuote);
         if (game != null) Start(game);
-        return CreateRunResult(input);
+        return CreateRunResult();
     }
 }

@@ -11,14 +11,14 @@ public class LogCommand : CommandBase<CommandsConfiguration>
 {
     public LogCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
 
-    public override RunResult Run(CommandLineInput input)
+    public override RunResult Run()
     {
-        if (string.IsNullOrEmpty(input.SingleArgument) || input.SingleArgument == "list") List();
-        if (input.SingleArgument == "archive") Archive();
-        if (input.SingleArgument == "view") View();
-        if (input.SingleArgument == "process") ProcessLog($"{input.Quotes}");
+        if (string.IsNullOrEmpty(Input.SingleArgument) || Input.SingleArgument == "list") List();
+        if (Input.SingleArgument == "archive") Archive();
+        if (Input.SingleArgument == "view") View();
+        if (Input.SingleArgument == "process") ProcessLog($"{Input.Quotes}");
         
-        return CreateRunResult(input);
+        return CreateRunResult();
     }
     private void List()
     {
@@ -39,7 +39,6 @@ public class LogCommand : CommandBase<CommandsConfiguration>
     {
         foreach (var line in Configuration.Log.ToLines()) Console.WriteLine(line);
     }
-
     private void ProcessLog(string processTag)
     {
         foreach (var line in Configuration.Log.GetProcessLog(processTag)) Console.WriteLine(line);

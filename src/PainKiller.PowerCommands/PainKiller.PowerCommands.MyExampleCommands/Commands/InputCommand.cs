@@ -11,12 +11,12 @@ namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 public class InputCommand : CommandBase<PowerCommandsConfiguration>
 {
     public InputCommand(string identifier, PowerCommandsConfiguration configuration) : base(identifier, configuration) { }
-    public override RunResult Run(CommandLineInput input)
+    public override RunResult Run()
     {
-        if (input.Arguments.Length > 0) WriteLine($"Arguments: {string.Join(' ', input.Arguments)}");
-        if (input.Quotes.Length > 0) WriteLine($"Quotes: {string.Join(' ', input.Quotes)}");
-        if (input.Arguments.Length > 0) WriteLine($"Flags: {string.Join(' ', input.Flags)}");
+        if (Input.Arguments.Length > 0) WriteLine($"Arguments: {string.Join(' ', Input.Arguments)}");
+        if (Input.Quotes.Length > 0) WriteLine($"Quotes: {string.Join(' ', Input.Quotes)}");
+        if (Input.Arguments.Length > 0) WriteLine($"Flags: {string.Join(' ', Input.Flags)}");
         
-        return CreateRunResult(input);
+        return CreateRunResult();
     }
 }

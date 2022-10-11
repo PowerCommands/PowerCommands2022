@@ -13,15 +13,15 @@ public class WriterInputCommand : DapperCommandBase
 {
     public WriterInputCommand(string identifier, PowerCommandsConfiguration configuration) : base(identifier, configuration) { }
 
-    public override RunResult Run(CommandLineInput input)
+    public override RunResult Run()
     {
-        if (input.SingleArgument == "delete")
+        if (Input.SingleArgument == "delete")
         {
             Delete();
-            return CreateRunResult(input);
+            return CreateRunResult();
         }
         Create();
-        return CreateRunResult(input);
+        return CreateRunResult();
     }
 
     private void Create()

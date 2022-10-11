@@ -19,25 +19,25 @@ public class RegressionCommand : GlitchFinderBaseCommand
 {
     public RegressionCommand(string identifier, PowerCommandsConfiguration configuration) : base(identifier, configuration) { }
 
-    public override RunResult Run(CommandLineInput input)
+    public override RunResult Run()
     {
-        if (string.IsNullOrEmpty(input.SingleQuote)) return CreateBadParameterRunResult(input, "A valid project name to existing configuration file must be provided");
-        var projectName = input.SingleQuote;
+        if (string.IsNullOrEmpty(Input.SingleQuote)) return CreateBadParameterRunResult("A valid project name to existing configuration file must be provided");
+        var projectName = Input.SingleQuote;
         
-        if (Configuration.RegressionProjects.FirstOrDefault(s => s.Name.ToLower() == projectName.ToLower()) == null) return CreateBadParameterRunResult(input, $"No project with name {projectName} of the regression project type found, check that the project exist in {nameof(PowerCommandsConfiguration)}.yaml file.");
+        if (Configuration.RegressionProjects.FirstOrDefault(s => s.Name.ToLower() == projectName.ToLower()) == null) return CreateBadParameterRunResult($"No project with name {projectName} of the regression project type found, check that the project exist in {nameof(PowerCommandsConfiguration)}.yaml file.");
 
         ProjectPath = Path.Combine(AppContext.BaseDirectory, Configuration.ProjectsRelativePath, projectName);
         var config = ConfigurationService.Service.Get<RegressionTestSetting>(Path.Combine(ProjectPath, $"{RegressionTestConfigFileName}")).Configuration;
 
-        if (input.SingleArgument == "baseline")
+        if (Input.SingleArgument == "baseline")
         {
             SetBaseline(config, projectName);
-            return CreateRunResult(input);
+            return CreateRunResult();
         }
         var isEqual = RegressionTest(config, projectName);
         if (isEqual) WriteHeadLine("No glitches");
 
-        return CreateRunResult(input);
+        return CreateRunResult();
     }
     public bool SetBaseline(RegressionTestSetting config, string projectName)
     {

@@ -12,12 +12,12 @@ namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 public class GitCommand : CommandBase<PowerCommandsConfiguration>
 {
     public GitCommand(string identifier, PowerCommandsConfiguration configuration) : base(identifier, configuration) { }
-    public override RunResult Run(CommandLineInput input)
+    public override RunResult Run()
     {
-        switch (input.SingleArgument)
+        switch (Input.SingleArgument)
         {
             case "commit":
-                Commit(input.SingleQuote);
+                Commit(Input.SingleQuote);
                 break;
             case "push":
                 Push();
@@ -26,9 +26,9 @@ public class GitCommand : CommandBase<PowerCommandsConfiguration>
                 Status();
                 break;
             default: 
-                return CreateBadParameterRunResult(input, $"Parameter {input.SingleArgument} not supported");
+                return CreateBadParameterRunResult($"Parameter {Input.SingleArgument} not supported");
         }
-        return CreateRunResult(input);
+        return CreateRunResult();
     }
     public void Commit(string comment)
     {

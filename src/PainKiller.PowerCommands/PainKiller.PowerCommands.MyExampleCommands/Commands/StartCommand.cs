@@ -11,12 +11,12 @@ public class StartCommand : CommandBase<PowerCommandsConfiguration>
 {
     public StartCommand(string identifier, PowerCommandsConfiguration configuration) : base(identifier, configuration) { }
 
-    public override RunResult Run(CommandLineInput input)
+    public override RunResult Run()
     {
-        var favorite = Configuration.Favorites.FirstOrDefault(f => f.Name.ToLower() == input.SingleArgument);
-        if (favorite == null) return CreateBadParameterRunResult(input, "No matching favorite found in configuration file");
+        var favorite = Configuration.Favorites.FirstOrDefault(f => f.Name.ToLower() == Input.SingleArgument);
+        if (favorite == null) return CreateBadParameterRunResult("No matching favorite found in configuration file");
 
         ShellService.Service.Execute(favorite.NameOfExecutable, arguments: "", workingDirectory: "",WriteLine, favorite.FileExtension);
-        return CreateRunResult(input);
+        return CreateRunResult();
     }
 }

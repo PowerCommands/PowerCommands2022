@@ -9,29 +9,29 @@ namespace PainKiller.PowerCommands.GlitchFinderCommands.Commands;
 
 [Tags("configuration|help")]
 [PowerCommand(description: "Creates a new project in config file from a template.\nA folder with the given project name in the projects directory will be created.",
-                arguments: "comparsion|regression",
+                arguments: "comparison|regression",
         argumentMandatory: true,
                     qutes: "project name:<name>",
            qutesMandatory: true,
-                  example: "create comparsion \"My comparison project\"|create regression \"My regression test project\"")]
+                  example: "create comparison \"My comparison project\"|create regression \"My regression test project\"")]
 public class CreateCommand : GlitchFinderBaseCommand
 {
     public CreateCommand(string identifier, PowerCommandsConfiguration configuration) : base(identifier, configuration) { }
 
-    public override RunResult Run(CommandLineInput input)
+    public override RunResult Run()
     {
-        if(string.IsNullOrEmpty(input.SingleArgument)) return CreateBadParameterRunResult(input, "You must provide witch type of project to create, comparison or regression");
-        if (string.IsNullOrEmpty(input.SingleQuote)) return CreateBadParameterRunResult(input, "The project needs a name");
+        if(string.IsNullOrEmpty(Input.SingleArgument)) return CreateBadParameterRunResult("You must provide witch type of project to create, comparison or regression");
+        if (string.IsNullOrEmpty(Input.SingleQuote)) return CreateBadParameterRunResult("The project needs a name");
 
-        var projectName = input.SingleQuote;
+        var projectName = Input.SingleQuote;
         ProjectPath = Path.Combine(AppContext.BaseDirectory, Configuration.ProjectsRelativePath, projectName);
 
         CreateProjectDirectory(projectName);
 
-        if(input.SingleArgument == "comparison") NewComparison(projectName);
-        if(input.SingleArgument == "regression") NewRegressionTest(projectName);
+        if(Input.SingleArgument == "comparison") NewComparison(projectName);
+        if(Input.SingleArgument == "regression") NewRegressionTest(projectName);
         
-        return CreateRunResult(input);
+        return CreateRunResult();
     }
     public void NewComparison(string projectName)
     {

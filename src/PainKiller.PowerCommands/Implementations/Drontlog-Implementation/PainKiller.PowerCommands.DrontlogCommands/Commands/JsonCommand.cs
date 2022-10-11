@@ -6,7 +6,7 @@ public class JsonCommand : CommandBase<PowerCommandsConfiguration>
 {
     public JsonCommand(string identifier, PowerCommandsConfiguration configuration) : base(identifier, configuration) { }
 
-    public override RunResult Run(CommandLineInput input)
+    public override RunResult Run()
     {
         var items = new List<string>{"	A01:2021 – Broken Access Control	",
             "	A02:2021 – Cryptographic Failures	",
@@ -58,6 +58,6 @@ public class JsonCommand : CommandBase<PowerCommandsConfiguration>
 
         var jsonData = JsonSerializer.Serialize(vulnerabilities);
         File.WriteAllText("vulnerabilities.json", jsonData);
-        return CreateRunResult(input);
+        return CreateRunResult();
     }
 }

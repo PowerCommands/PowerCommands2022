@@ -9,12 +9,12 @@ public class ExitCommand : CommandBase<CommandsConfiguration>
 {
     public ExitCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
 
-    public override RunResult Run(CommandLineInput input)
+    public override RunResult Run()
     {
-        if (input.Arguments.Length > 0 && input.Arguments.First().ToLower().StartsWith("y")) return new RunResult(this, input, output: "exit program", RunResultStatus.Quit);
+        if (Input.Arguments.Length > 0 && Input.Arguments.First().ToLower().StartsWith("y")) return new RunResult(this, Input, output: "exit program", RunResultStatus.Quit);
         Console.WriteLine("Do you wanna quit the program? y/?");
         var response = $"{Console.ReadLine()}";
-        if (response.ToLower().StartsWith("y")) return new RunResult(this, input, output: "exit program", RunResultStatus.Quit);
-        return new RunResult(this, input, output: "No, dont exit the program", RunResultStatus.Ok);
+        if (response.ToLower().StartsWith("y")) return new RunResult(this, Input, output: "exit program", RunResultStatus.Quit);
+        return new RunResult(this, Input, output: "No, dont exit the program", RunResultStatus.Ok);
     }
 }

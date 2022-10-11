@@ -41,13 +41,14 @@ public class PowerCommandsManager : IPowerCommandsManager
                 var commandsCommand = new CommandsCommand("commands", (Services.Configuration as CommandsConfiguration)!);
                 var interpretedInput = input.Interpret();
                 DisplayErrorMessage($"Could not found any commands with a matching Id: {interpretedInput.Raw}");
-                commandsCommand.Run(interpretedInput);
+                commandsCommand.InitializeRun(interpretedInput);
+                commandsCommand.Run();
                 Services.Logger.LogError(ex, "Could not found any commands with a matching Id");
             }
             catch (Exception e)
             {
-                Services.Logger.LogError(e,"Unkown error");
-                DisplayErrorMessage("Unknown error occured, please try again");
+                Services.Logger.LogError(e,"Unknown error");
+                DisplayErrorMessage("Unknown error occurred, please try again");
             }
         }
     }
@@ -63,7 +64,7 @@ public class PowerCommandsManager : IPowerCommandsManager
             case RunResultStatus.ArgumentError:
             case RunResultStatus.ExceptionThrown:
             case RunResultStatus.SyntaxError:
-                var message = $"Error occured of type {runResult.Status}";
+                var message = $"Error occurred of type {runResult.Status}";
                 Services.Logger.LogError(message);
                 DisplayErrorMessage($"{message} {runResult.Output}");
                 HelpService.Service.ShowHelp(runResult.ExecutingCommand, clearConsole: false);

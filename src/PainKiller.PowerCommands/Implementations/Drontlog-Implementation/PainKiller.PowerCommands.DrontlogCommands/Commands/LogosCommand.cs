@@ -8,13 +8,13 @@ namespace PainKiller.PowerCommands.DrontlogCommands.Commands;
 public class LogosCommand : DapperCommandBase
 {
     public LogosCommand(string identifier, PowerCommandsConfiguration configuration) : base(identifier, configuration) { }
-    public override async Task<RunResult> RunAsync(CommandLineInput input)
+    public override async Task<RunResult> RunAsync()
     {
         var logos = GetUrlToLogo();
         await DownloadLogos(logos);
         WriteLine("All logos downloaded");
         Console.Write($"\n{ConfigurationGlobals.Prompt}");
-        return CreateRunResult(input);
+        return CreateRunResult();
     }
     private List<ProviderServiceReplica> GetUrlToLogo()
     {

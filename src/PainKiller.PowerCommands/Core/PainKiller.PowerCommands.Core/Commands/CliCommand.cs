@@ -18,29 +18,29 @@ public class CliCommand : CommandBase<CommandsConfiguration>
 
     public CliCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
 
-    public override RunResult Run(CommandLineInput input)
+    public override RunResult Run()
     {
-        if (input.Arguments.Length == 0) return CreateBadParameterRunResult(input, "Missing arguments ");
+        if (Input.Arguments.Length == 0) return CreateBadParameterRunResult("Missing arguments ");
 
-        var action = input.Arguments.First().ToLower();
-        var name = input.GetFlagValue("name");
-        var output = input.GetFlagValue("output");
+        var action = Input.Arguments.First().ToLower();
+        var name = Input.GetFlagValue("name");
+        var output = Input.GetFlagValue("output");
 
         switch (action)
         {
             case "version":
                 WriteHeadLine($"Core 1.0.0");
-                return CreateRunResult(input);
+                return CreateRunResult();
             case "new":
-                return RunNewPowerCommandsProject(input, output, name);
+                return RunNewPowerCommandsProject(output, name);
             case "update":
-                return RunUpdatePowerCommandsProject(input);
+                return RunUpdatePowerCommandsProject();
             default:
-                return CreateBadParameterRunResult(input, "Missing arguments");
+                return CreateBadParameterRunResult("Missing arguments");
         }
     }
 
-    private RunResult RunNewPowerCommandsProject(CommandLineInput input, string output, string name)
+    private RunResult RunNewPowerCommandsProject(string output, string name)
     {
         _path = string.IsNullOrEmpty(output) ? Path.Combine(AppContext.BaseDirectory, "output", name) : Path.Combine(output, name);
 
@@ -93,14 +93,14 @@ public class CliCommand : CommandBase<CommandsConfiguration>
         WriteHeadLine("\nNow you are ready to add your commands, read more about that on github:\nhttps://github.com/PowerCommands/PowerCommands2022/blob/main/PowerCommands%20Design%20Principles%20And%20Guidlines.md");
 
         ShellService.Service.OpenDirectory(_path);
-        return CreateRunResult(input);
+        return CreateRunResult();
     }
 
-    private RunResult RunUpdatePowerCommandsProject(CommandLineInput input)
+    private RunResult RunUpdatePowerCommandsProject()
     {
         _path = CliManager.GetLocalSolutionRoot();
         var solutionFile = Directory.GetFileSystemEntries(_path, "*.sln").FirstOrDefault();
-        if (solutionFile == null) return CreateBadParameterRunResult(input, $"No solution file found in directory [{_path}]");
+        if (solutionFile == null) return CreateBadParameterRunResult($"No solution file found in directory [{_path}]");
         var name = solutionFile.Split('\\').Last().Replace(".sln","");
 
         Console.WriteLine("Update will delete and replace everything in the [Core] and [Third party components] folder");
@@ -108,7 +108,7 @@ public class CliCommand : CommandBase<CommandsConfiguration>
         Console.WriteLine("");
         Console.WriteLine("Do you want to continue with the update? y/n");
         var response = Console.ReadLine();
-        if ($"{response?.Trim()}" != "y") return CreateRunResult(input);
+        if ($"{response?.Trim()}" != "y") return CreateRunResult();
         
         var cli = new CliManager(name, _path, WriteLine);
 
@@ -135,6 +135,6 @@ public class CliCommand : CommandBase<CommandsConfiguration>
 
         ShellService.Service.OpenDirectory(backupDirectory);
 
-        return CreateRunResult(input);
+        return CreateRunResult();
     }
 }

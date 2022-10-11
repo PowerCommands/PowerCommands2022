@@ -9,9 +9,9 @@ public class EncryptionCommand : CommandBase<CommandsConfiguration>
 {
     public EncryptionCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
 
-    public override RunResult Run(CommandLineInput input)
+    public override RunResult Run()
     {
-        WriteLine(EncryptionService.Service.EncryptString(input.SingleQuote));
-        return CreateRunResult(input);
+        WriteLine(EncryptionService.Service.EncryptString(Input.SingleQuote));
+        return CreateRunResult();
     }
 }

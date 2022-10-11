@@ -13,15 +13,15 @@ public class CommandsCommand : CommandBase<CommandsConfiguration>
 {
     public CommandsCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
 
-    public override RunResult Run(CommandLineInput input)
+    public override RunResult Run()
     {
-        if (input.HasFlag("custom")) return Custom(input);
-        if (input.HasFlag("reserved")) return Reserved(input);
-        if (string.IsNullOrEmpty(input.SingleQuote)) return NoFilter(input);
-        if (input.HasFlag("name")) return FilterByName(input);
-        return FilterByTag(input);
+        if (Input.HasFlag("custom")) return Custom();
+        if (Input.HasFlag("reserved")) return Reserved();
+        if (string.IsNullOrEmpty(Input.SingleQuote)) return NoFilter();
+        if (Input.HasFlag("name")) return FilterByName();
+        return FilterByTag();
     }
-    private RunResult NoFilter(CommandLineInput input)
+    private RunResult NoFilter()
     {
         WriteHeadLine($"- All commands:\n");
         foreach (var consoleCommand in IPowerCommandsRuntime.DefaultInstance?.Commands!) WriteLine(consoleCommand.Identifier, addToOutput: false);
@@ -35,31 +35,31 @@ public class CommandsCommand : CommandBase<CommandsConfiguration>
         Console.WriteLine("describe exit");
         WriteHeadLine($"You could also use the --help flag for the same thing, but the help flag could show something else if it is overriden by the Command author.");
         Console.WriteLine("exit --help");
-        return CreateRunResult(input);
+        return CreateRunResult();
     }
-    private RunResult Reserved(CommandLineInput input)
+    private RunResult Reserved()
     {
         WriteHeadLine($"- Reserved commands:\n");
         foreach (var consoleCommand in IPowerCommandsRuntime.DefaultInstance?.Commands.Where(c => c.HasTag("core"))!) WriteLine(consoleCommand.Identifier, addToOutput: false);
         WriteHeadLine("This names are reserved and should not be used for your custom commands.");
-        return CreateRunResult(input);
+        return CreateRunResult();
     }
-    private RunResult Custom(CommandLineInput input)
+    private RunResult Custom()
     {
         WriteHeadLine($"- custom commands:");
         foreach (var consoleCommand in IPowerCommandsRuntime.DefaultInstance?.Commands.Where(c => !c.HasTag("core"))!) WriteLine(consoleCommand.Identifier, addToOutput: false);
-        return CreateRunResult(input);
+        return CreateRunResult();
     }
-    private RunResult FilterByName(CommandLineInput input)
+    private RunResult FilterByName()
     {
-        WriteHeadLine($"- Commands with name containing {input.SingleQuote}:\n");
-        foreach (var command in IPowerCommandsRuntime.DefaultInstance?.Commands.Where(c => c.Identifier.Contains(input.SingleQuote))!) WriteLine(command.Identifier, addToOutput: false);
-        return CreateRunResult(input);
+        WriteHeadLine($"- Commands with name containing {Input.SingleQuote}:\n");
+        foreach (var command in IPowerCommandsRuntime.DefaultInstance?.Commands.Where(c => c.Identifier.Contains(Input.SingleQuote))!) WriteLine(command.Identifier, addToOutput: false);
+        return CreateRunResult();
     }
-    private RunResult FilterByTag(CommandLineInput input)
+    private RunResult FilterByTag()
     {
-        WriteHeadLine($"- Commands with tag containing {input.SingleQuote}:\n");
-        foreach (var command in IPowerCommandsRuntime.DefaultInstance?.Commands.Where(c => c.HasTag(input.SingleQuote))!) WriteLine(command.Identifier, addToOutput: false);
-        return CreateRunResult(input);
+        WriteHeadLine($"- Commands with tag containing {Input.SingleQuote}:\n");
+        foreach (var command in IPowerCommandsRuntime.DefaultInstance?.Commands.Where(c => c.HasTag(Input.SingleQuote))!) WriteLine(command.Identifier, addToOutput: false);
+        return CreateRunResult();
     }
 }

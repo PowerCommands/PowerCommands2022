@@ -8,7 +8,7 @@ public class ProgressbarCommand : CommandBase<CommandsConfiguration>
 {
     public ProgressbarCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
 
-    public override RunResult Run(CommandLineInput input)
+    public override RunResult Run()
     {
         var itemCount = 100;
         var progressbar = new ProgressBar(itemCount);
@@ -18,6 +18,6 @@ public class ProgressbarCommand : CommandBase<CommandsConfiguration>
             Thread.Sleep(1);
             progressbar.Show();
         }
-        return CreateRunResult(input);
+        return CreateRunResult();
     }
 }

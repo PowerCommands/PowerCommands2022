@@ -12,11 +12,11 @@ namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 public class ZipCommand : CommandBase<CommandsConfiguration>
 {
     public ZipCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
-    public override RunResult Run(CommandLineInput input)
+    public override RunResult Run()
     {
-        if (string.IsNullOrEmpty(input.Path)) return CreateBadParameterRunResult(input, "A valid path must be provided as argument");
-        WriteHeadLine($"Zipping files in directory: {input.Path}...");
-        var zipResult = ZipService.Service.ArchiveFilesInDirectory(input.Path, "example", useTimestampSuffix: true, filter: string.IsNullOrEmpty(input.SingleQuote) ? "*" : input.SingleQuote);
+        if (string.IsNullOrEmpty(Input.Path)) return CreateBadParameterRunResult("A valid path must be provided as argument");
+        WriteHeadLine($"Zipping files in directory: {Input.Path}...");
+        var zipResult = ZipService.Service.ArchiveFilesInDirectory(Input.Path, "example", useTimestampSuffix: true, filter: string.IsNullOrEmpty(Input.SingleQuote) ? "*" : Input.SingleQuote);
         Console.WriteLine();
         WriteHeadLine("Result", addToOutput: false);
         this.WriteObjectDescription(nameof(zipResult.Path),zipResult.Path!);
@@ -26,6 +26,6 @@ public class ZipCommand : CommandBase<CommandsConfiguration>
         this.WriteObjectDescription(nameof(zipResult.Checksum),zipResult.Checksum!);
         if(zipResult.HasException) this.WriteObjectDescription(nameof(zipResult.ExceptionMessage),zipResult.ExceptionMessage);
         
-        return CreateRunResult(input);
+        return CreateRunResult();
     }
 }

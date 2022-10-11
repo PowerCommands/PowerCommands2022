@@ -16,11 +16,11 @@ namespace PainKiller.PowerCommands.WindowsCommands.Commands;
 public class GitCommand : CommandBase<PowerCommandsConfiguration>
 {
     public GitCommand(string identifier, PowerCommandsConfiguration configuration) : base(identifier, configuration) { }
-    public override RunResult Run(CommandLineInput input)
+    public override RunResult Run()
     {
-        if(input.SingleArgument == "commit") Commit(input.SingleQuote);
-        if(input.SingleArgument == "push") Push();
-        return CreateRunResult(input);
+        if(Input.SingleArgument == "commit") Commit(Input.SingleQuote);
+        if(Input.SingleArgument == "push") Push();
+        return CreateRunResult();
     }
     public void Commit(string comment)
     {

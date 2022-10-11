@@ -15,14 +15,14 @@ public class DirCommand : CommandBase<CommandsConfiguration>
 {
     public DirCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
 
-    public override RunResult Run(CommandLineInput input)
+    public override RunResult Run()
     {
-        var directory = string.IsNullOrEmpty(input.Path) ? AppContext.BaseDirectory : input.Path;
-        if (!string.IsNullOrEmpty(input.SingleArgument)) directory = input.SingleArgument;
-        if (!string.IsNullOrEmpty(input.SingleQuote)) directory = input.SingleQuote;
-        if (!Directory.Exists(directory)) return CreateBadParameterRunResult(input, $"Could not find directory \"{directory}\"");
+        var directory = string.IsNullOrEmpty(Input.Path) ? AppContext.BaseDirectory : Input.Path;
+        if (!string.IsNullOrEmpty(Input.SingleArgument)) directory = Input.SingleArgument;
+        if (!string.IsNullOrEmpty(Input.SingleQuote)) directory = Input.SingleQuote;
+        if (!Directory.Exists(directory)) return CreateBadParameterRunResult($"Could not find directory \"{directory}\"");
         ShellService.Service.OpenDirectory(directory);
         WriteLine($"Open directory {directory}");
-        return CreateRunResult(input);
+        return CreateRunResult();
     }
 }

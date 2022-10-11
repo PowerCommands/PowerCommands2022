@@ -16,15 +16,15 @@ public class BigFilesCommand : CommandBase<CommandsConfiguration>
     private long _minFileSize = 10;
     const int OneMegabyte = 1048576;
     public BigFilesCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
-    public override async Task<RunResult> RunAsync(CommandLineInput input)
+    public override async Task<RunResult> RunAsync()
     {
-        var megaBytes = input.GetFlagValue("megabytes");
+        var megaBytes = Input.GetFlagValue("megabytes");
 
-        if (string.IsNullOrEmpty(input.SingleArgument) || !Directory.Exists(input.Path)) return CreateBadParameterRunResult(input, $"{input.SingleQuote} must be a valid directory path");
+        if (string.IsNullOrEmpty(Input.SingleArgument) || !Directory.Exists(Input.Path)) return CreateBadParameterRunResult($"{Input.SingleQuote} must be a valid directory path");
         if (int.TryParse(megaBytes, out var number)) _minFileSize = number;
-        var rootDirectory = new DirectoryInfo(input.Path);
+        var rootDirectory = new DirectoryInfo(Input.Path);
         await RunIterations(rootDirectory);
-        return CreateRunResult(input);
+        return CreateRunResult();
     }
     private async Task RunIterations(DirectoryInfo rootDirectory)
     {

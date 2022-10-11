@@ -18,12 +18,12 @@ public class ComparisonCommand : GlitchFinderBaseCommand
 {
     public ComparisonCommand(string identifier, PowerCommandsConfiguration configuration) : base(identifier, configuration) { }
 
-    public override RunResult Run(CommandLineInput input)
+    public override RunResult Run()
     {
-        if (string.IsNullOrEmpty(input.SingleQuote)) return CreateBadParameterRunResult(input, "You must provide a project name");
-        var isEqual = Compare(input.SingleQuote);
+        if (string.IsNullOrEmpty(Input.SingleQuote)) return CreateBadParameterRunResult("You must provide a project name");
+        var isEqual = Compare(Input.SingleQuote);
         if(isEqual) WriteHeadLine("No glitches");
-        return CreateRunResult(input);
+        return CreateRunResult();
     }
 
     public bool Compare(string projectName)

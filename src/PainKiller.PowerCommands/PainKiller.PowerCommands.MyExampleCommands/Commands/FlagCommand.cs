@@ -13,13 +13,13 @@ public class FlagCommand : CommandBase<CommandsConfiguration>
 {
     public FlagCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
 
-    public override RunResult Run(CommandLineInput input)
+    public override RunResult Run()
     {
-        var flag = input.Flags.FirstOrDefault();
-        if (flag == null) return CreateBadParameterRunResult(input, "Could not fine any flag in your input, a flag is an argument starting with --");
+        var flag = Input.Flags.FirstOrDefault();
+        if (flag == null) return CreateBadParameterRunResult("Could not fine any flag in your input, a flag is an argument starting with --");
         WriteHeadLine("Flag demo, using only one flag");
-        WriteLine($"Flag: {input.Flags.First()}");
-        WriteLine($"Flag value: {input.GetFlagValue(flag)}");
-        return CreateRunResult(input);
+        WriteLine($"Flag: {Input.Flags.First()}");
+        WriteLine($"Flag value: {Input.GetFlagValue(flag)}");
+        return CreateRunResult();
     }
 }

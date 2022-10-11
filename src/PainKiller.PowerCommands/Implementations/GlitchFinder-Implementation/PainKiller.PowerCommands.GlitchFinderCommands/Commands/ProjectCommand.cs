@@ -13,23 +13,23 @@ public class ProjectCommand : CommandBase<PowerCommandsConfiguration>
 {
     public ProjectCommand(string identifier, PowerCommandsConfiguration configuration) : base(identifier, configuration) { }
 
-    public override RunResult Run(CommandLineInput input)
+    public override RunResult Run()
     {
-        if (input.SingleArgument == "log" && !string.IsNullOrEmpty(input.SingleQuote))
+        if (Input.SingleArgument == "log" && !string.IsNullOrEmpty(Input.SingleQuote))
         {
-            ViewLog(input.SingleQuote);
-            return CreateRunResult(input);
+            ViewLog(Input.SingleQuote);
+            return CreateRunResult();
         }
-        if (input.SingleArgument == "delete" && !string.IsNullOrEmpty(input.SingleQuote))
+        if (Input.SingleArgument == "delete" && !string.IsNullOrEmpty(Input.SingleQuote))
         {
-            Delete(input.SingleQuote);
-            return CreateRunResult(input);
+            Delete(Input.SingleQuote);
+            return CreateRunResult();
         }
 
         WriteHeadLine("Projects");
         foreach (var c in Configuration.ComparisonProjects) this.WriteObjectDescription("     Comparison", $"{c.Name}");
         foreach (var r in Configuration.RegressionProjects) this.WriteObjectDescription("Regression test", $"{r.Name}");
-        return CreateRunResult(input);
+        return CreateRunResult();
     }
     private void ViewLog(string projectName)
     {

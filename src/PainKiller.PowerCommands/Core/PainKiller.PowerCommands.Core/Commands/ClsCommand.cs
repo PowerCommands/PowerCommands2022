@@ -6,9 +6,9 @@
 public class ClsCommand : CommandBase<CommandsConfiguration>
 {
     public ClsCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
-    public override RunResult Run(CommandLineInput input)
+    public override RunResult Run()
     {
         Console.Clear();
-        return CreateRunResult(input);
+        return CreateRunResult();
     }
 }

@@ -7,7 +7,7 @@ public class DilbertCommand : CommandBase<PowerCommandsConfiguration>
 {
     public DilbertCommand(string identifier, PowerCommandsConfiguration configuration) : base(identifier, configuration) { }
 
-    public override RunResult Run(CommandLineInput input)
+    public override RunResult Run()
     {
         var url = $"https://dilbert.com/strip/{DateTime.Now.ToDateString()}";
         using var webClient = new WebClient { BaseAddress =  url};
@@ -17,7 +17,7 @@ public class DilbertCommand : CommandBase<PowerCommandsConfiguration>
         var rows = content.Split('\n');
         var row = rows.FirstOrDefault(r => r.Contains(find));
 
-        if (row == null) return CreateBadParameterRunResult(input, "No data found");
+        if (row == null) return CreateBadParameterRunResult("No data found");
         
         // <img class="img-responsive img-comic" width="900" height="280" alt="Keep The Plastic Bag - Dilbert by Scott Adams" src="https://assets.amuniversal.com/ed7c0900f179013aba2a005056a9545d" />
         var imageLink = row.Split("src=")[1];
@@ -26,6 +26,6 @@ public class DilbertCommand : CommandBase<PowerCommandsConfiguration>
 
         WriteLine(htmlContent);
 
-        return CreateRunResult(input);
+        return CreateRunResult();
     }
 }

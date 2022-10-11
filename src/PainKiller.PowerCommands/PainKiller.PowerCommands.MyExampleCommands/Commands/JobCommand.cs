@@ -8,10 +8,10 @@ namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 public class JobCommand : CommandBase<CommandsConfiguration>
 {
     public JobCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
-    public override RunResult Run(CommandLineInput input)
+    public override RunResult Run()
     {
         RunIterations(PowerCommandServices.Service.Runtime.Commands);
-        return CreateQuitResult(input);
+        return CreateQuitResult();
     }
     private void RunIterations(List<IConsoleCommand> runtimeCommands)
     {

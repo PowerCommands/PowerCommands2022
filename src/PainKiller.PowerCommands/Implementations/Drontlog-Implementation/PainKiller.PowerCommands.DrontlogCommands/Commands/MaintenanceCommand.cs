@@ -6,7 +6,7 @@ public class MaintenanceCommand : CommandBase<PowerCommandsConfiguration>
 {
     public MaintenanceCommand(string identifier, PowerCommandsConfiguration configuration) : base(identifier, configuration) { }
 
-    public override RunResult Run(CommandLineInput input)
+    public override RunResult Run()
     {
         var writerInputCommand = new WriterInputCommand(Identifier, Configuration);
         var cleanUpCommand = new CleanupCommand(Identifier, Configuration);
@@ -15,11 +15,14 @@ public class MaintenanceCommand : CommandBase<PowerCommandsConfiguration>
         while (runJob)
         {
             WriteLine($"{DateTime.Now} Running maintenance job");
-            writerInputCommand.Run(new CommandLineInput{ Arguments = new[] { "" } });
+            writerInputCommand.InitializeRun(new CommandLineInput { Arguments = new[] { "" } });
+            writerInputCommand.Run();
             if (iterationCount % 10 == 0)
             {
-                writerInputCommand.Run(new CommandLineInput { Arguments = new[] { "delete" } });
-                cleanUpCommand.Run(new CommandLineInput());
+                writerInputCommand.InitializeRun(new CommandLineInput { Arguments = new[] { "delete" } });
+                writerInputCommand.Run();
+                cleanUpCommand.InitializeRun(new CommandLineInput());
+                cleanUpCommand.Run();
             }
             Console.WriteLine();
             Console.WriteLine("Waiting 60 seconds...");
@@ -27,6 +30,6 @@ public class MaintenanceCommand : CommandBase<PowerCommandsConfiguration>
             Thread.Sleep(60000);
             iterationCount++;
         }
-        return CreateRunResult(input);
+        return CreateRunResult();
     }
 }
