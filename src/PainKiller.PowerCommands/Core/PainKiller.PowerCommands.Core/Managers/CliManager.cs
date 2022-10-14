@@ -113,12 +113,16 @@ public class CliManager : ICliManager
 
     public string BackupDirectory(string dirctoryName)
     {
-        //_srcCodeRootPath = Path.Combine(ConfigurationGlobals.ApplicationDataFolder, "download", name);
         var backupRoot = _srcCodeRootPath.Replace($"\\download\\{_name}", $"\\backup\\{_name}");
         if (!Directory.Exists(backupRoot)) Directory.CreateDirectory(backupRoot);
-        
         var fullPathSource = Path.Combine(_path, dirctoryName);
         var fullPathTarget = backupRoot;
+
+        if (Directory.Exists(fullPathTarget))
+        {
+            Console.WriteLine("Backup folder already exists, please remove that first.");
+            ShellService.Service.OpenDirectory(fullPathTarget);
+        }
 
         CopyFolder(fullPathSource, fullPathTarget);
 

@@ -178,15 +178,12 @@ using PainKiller.PowerCommands.MyExampleCommands.Configuration;
 namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 public class ExampleCommand : CommandBase<PowerCommandsConfiguration>
 {
-    public ExampleCommand(string identifier, PowerCommandsConfiguration configuration) : base(identifier, configuration)
-    {
+    public ExampleCommand(string identifier, PowerCommandsConfiguration configuration) : base(identifier, configuration) { }
 
-    }
-
-    public override RunResult Run(CommandLineInput input)
+    public override RunResult Run()
     {
         WriteLine("Hello world");
-        return CreateRunResult(input);
+        return CreateRunResult();
     }
 }
 ```
