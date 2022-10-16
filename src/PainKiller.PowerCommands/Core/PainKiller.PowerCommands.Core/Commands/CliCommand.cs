@@ -113,7 +113,7 @@ public class CliCommand : CommandBase<CommandsConfiguration>
         var name = solutionFile.Split('\\').Last().Replace(".sln","");
 
         Console.WriteLine("Update will delete and replace everything in the [Core] and [Third party components] folder");
-        Console.WriteLine($"A backup will be saved in folder [{Path.Combine(_path)}]","Backup. /nEarlier backups needs to be removed");
+        if(backup) Console.WriteLine($"A backup will be saved in folder [{Path.Combine(_path)}]","Backup. /nEarlier backups needs to be removed");
         Console.WriteLine("");
         Console.WriteLine("Do you want to continue with the update? y/n");
         var response = Console.ReadLine();
