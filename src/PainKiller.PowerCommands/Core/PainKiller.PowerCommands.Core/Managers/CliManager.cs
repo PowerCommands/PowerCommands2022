@@ -47,17 +47,13 @@ public class CliManager : ICliManager
         }
         DeleteDir(_srcCodeRootPath);
     }
-
     public void CreateDirectory(string name)
     {
         var dirI = new DirectoryInfo(Path.Combine(_path, name));
         Directory.CreateDirectory(dirI.FullName);
         _logger.Invoke($"Directory {dirI.Attributes} created", DisplayAndWriteToLog);
     }
-    public void CloneRepo(string repo)
-    {
-        ShellService.Service.Execute("git", $"clone {repo}", _srcCodeRootPath, _logger, waitForExit: true);
-    }
+    public void CloneRepo(string repo) => ShellService.Service.Execute("git", $"clone {repo}", _srcCodeRootPath, _logger, waitForExit: true);
 
     public void DeleteDir(string directory)
     {
@@ -192,6 +188,7 @@ public class CliManager : ICliManager
         return AppContext.BaseDirectory.Replace(endToRemove, "");
     }
     private string GetPath(string path) => path.StartsWith("PowerCommands2022\\") ? Path.Combine(_srcCodeRootPath, path) : Path.Combine(_path, path);
+    private string GetTemplatesDownloadPath() => Path.Combine(_srcCodeRootPath.Replace("\\download", ""), "Templates");
 
     private void CopyFolder(string sourceFolder, string destFolder)
     {

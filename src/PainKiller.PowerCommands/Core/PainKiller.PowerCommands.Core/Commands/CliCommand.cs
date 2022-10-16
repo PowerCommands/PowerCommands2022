@@ -1,12 +1,13 @@
 ﻿using PainKiller.PowerCommands.Core.Extensions;
 using PainKiller.PowerCommands.Core.Managers;
 using PainKiller.PowerCommands.Core.Services;
+using PainKiller.PowerCommands.Shared.Contracts;
 
 namespace PainKiller.PowerCommands.Core.Commands;
 
 [Tags("core|cli|project")]
-[PowerCommand(      description: "Create or update the Visual Studio Solution with all depended projects",
-                    example: "cli new --name testproject --output \"C:\\Temp\\\"\ncli update",
+[PowerCommand(      description: "Create or update the Visual Studio Solution with all depended projects, create new Commands from template",
+                    example: "cli new --name testproject --output \"C:\\Temp\\\"\ncli update\ncli update --templates",
                     arguments:"Solution name:<name>",
                     argumentMandatory: true,
                     flags:"name|output",
@@ -25,6 +26,7 @@ public class CliCommand : CommandBase<CommandsConfiguration>
         var action = Input.Arguments.First().ToLower();
         var name = Input.GetFlagValue("name");
         var output = Input.GetFlagValue("output");
+        var template = Input.HasFlag("template");
 
         switch (action)
         {
@@ -34,7 +36,10 @@ public class CliCommand : CommandBase<CommandsConfiguration>
             case "new":
                 return RunNewPowerCommandsProject(output, name);
             case "update":
-                return RunUpdatePowerCommandsProject();
+                if (!template) return RunUpdatePowerCommandsProject();
+                _path = string.IsNullOrEmpty(output) ? Path.Combine(AppContext.BaseDirectory, "output", name) : Path.Combine(output, name);
+                UpdateTemplates(new CliManager(name,_path, WriteLine), name);
+                return CreateRunResult();
             default:
                 return CreateBadParameterRunResult("Missing arguments");
         }
@@ -136,5 +141,14 @@ public class CliCommand : CommandBase<CommandsConfiguration>
         ShellService.Service.OpenDirectory(backupDirectory);
 
         return CreateRunResult();
+    }
+    private void UpdateTemplates(ICliManager cliManager, string name)
+    {
+        cliManager.DeleteDownloadsDirectory();
+        cliManager.CloneRepo(Configuration.Repository);
+
+        var templateManager = new TemplateManager(name, WriteLine);
+        templateManager.InitializeTemplatesDirectory();
+        templateManager.CopyTemplates();
     }
 }
