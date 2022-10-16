@@ -156,13 +156,12 @@ public class PowerCommandCommand : CommandBase<CommandsConfiguration>
     }
     private void UpdateTemplates(ICliManager cliManager, string name, bool cloneRepo = false)
     {
-        if (!cloneRepo)
+        if (cloneRepo)
         {
             cliManager.DeleteDownloadsDirectory();
             cliManager.CreateDownloadsDirectory();
-        }
-        if(cloneRepo) cliManager.CloneRepo(Configuration.Repository);
-        
+            cliManager.CloneRepo(Configuration.Repository);
+        } 
         var templateManager = new TemplateManager(name, WriteLine);
         templateManager.InitializeTemplatesDirectory();
         templateManager.CopyTemplates();
