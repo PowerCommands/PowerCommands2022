@@ -38,7 +38,7 @@ public class CliCommand : CommandBase<CommandsConfiguration>
             case "update":
                 if (!template) return RunUpdatePowerCommandsProject();
                 _path = string.IsNullOrEmpty(output) ? Path.Combine(AppContext.BaseDirectory, "output", name) : Path.Combine(output, name);
-                UpdateTemplates(new CliManager(name,_path, WriteLine), name);
+                UpdateTemplates(new CliManager(name,_path, WriteLine), name, cloneRepo: true);
                 return CreateRunResult();
             default:
                 return CreateBadParameterRunResult("Missing arguments");
@@ -50,11 +50,14 @@ public class CliCommand : CommandBase<CommandsConfiguration>
         _path = string.IsNullOrEmpty(output) ? Path.Combine(AppContext.BaseDirectory, "output", name) : Path.Combine(output, name);
 
         var cli = new CliManager(name, _path, WriteLine);
+        
         cli.DeleteDownloadsDirectory();
         cli.CreateRootDirectory();
 
         cli.CloneRepo(Configuration.Repository);
         WriteLine("Fetching repo from Github...");
+
+        UpdateTemplates(cli, name);
 
         cli.DeleteDir("PowerCommands2022\\.vscode");
         cli.DeleteDir("PowerCommands2022\\src\\PainKiller.PowerCommands\\Implementations");
@@ -125,6 +128,8 @@ public class CliCommand : CommandBase<CommandsConfiguration>
         cli.CloneRepo(Configuration.Repository);
         WriteLine("Fetching repo from Github...");
 
+        UpdateTemplates(cli, name);
+
         cli.DeleteDir("PowerCommands2022\\.vscode");
         cli.DeleteDir("PowerCommands2022\\src\\PainKiller.PowerCommands\\Custom Components");
         cli.DeleteDir("PowerCommands2022\\src\\PainKiller.PowerCommands\\Implementations");
@@ -142,11 +147,11 @@ public class CliCommand : CommandBase<CommandsConfiguration>
 
         return CreateRunResult();
     }
-    private void UpdateTemplates(ICliManager cliManager, string name)
+    private void UpdateTemplates(ICliManager cliManager, string name, bool cloneRepo = false)
     {
         cliManager.DeleteDownloadsDirectory();
         cliManager.CreateDownloadsDirectory();
-        cliManager.CloneRepo(Configuration.Repository);
+        if(cloneRepo) cliManager.CloneRepo(Configuration.Repository);
 
         var templateManager = new TemplateManager(name, WriteLine);
         templateManager.InitializeTemplatesDirectory();
