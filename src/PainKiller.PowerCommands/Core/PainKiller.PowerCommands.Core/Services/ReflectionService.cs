@@ -35,4 +35,5 @@ public class ReflectionService : IReflectionService
         }
         return retVal.OrderBy(c => c.Identifier).ToList();
     }
+    public string GetVersion(Assembly assembly) => $"{assembly.GetName().Version!.Major}.{assembly.GetName().Version!.Minor}.{assembly.GetName().Version!.Build}.{assembly.GetName().Version!.Revision}";
 }

@@ -29,7 +29,7 @@ public class TemplateManager : ITemplateManager
         var filePath = Path.Combine(Path.Combine(_path, "Commands"), $"{templateName}Command.cs");
         if (!File.Exists(filePath))
         {
-            _logger.Invoke($"Template not found, run following command to download current templates\ncli update --template", DisplayAndWriteToLog);
+            _logger.Invoke($"Template not found, run following command to download current templates\npowercommand update --template", DisplayAndWriteToLog);
             return;
         }
         var content = File.ReadAllText(filePath).Replace("namespace PainKiller.PowerCommands.MyExampleCommands.Commands.Templates;", $"namespace PainKiller.PowerCommands.{FindProjectName()}Commands.Commands;").Replace("NameCommand", $"{commandName}Command");

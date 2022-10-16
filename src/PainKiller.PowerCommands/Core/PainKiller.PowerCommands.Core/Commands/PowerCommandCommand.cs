@@ -2,22 +2,23 @@
 using PainKiller.PowerCommands.Core.Managers;
 using PainKiller.PowerCommands.Core.Services;
 using PainKiller.PowerCommands.Shared.Contracts;
+using System.Reflection;
 
 namespace PainKiller.PowerCommands.Core.Commands;
 
 [Tags("core|cli|project")]
 [PowerCommand(      description: "Create or update the Visual Studio Solution with all depended projects, create new Commands from template",
-                    example: "cli new --name testproject --output \"C:\\Temp\\\"|cli update|cli update --templates|cli update --templates --backup",
+                    example: "powercommand new --name testproject --output \"C:\\Temp\\\"|powercommand update|powercommand update --templates|powercommand update --templates --backup",
                     arguments:"Solution name:<name>",
                     argumentMandatory: true,
                     flags:"name|output|template|backup",
                     suggestion:"new",
                     qutes: "Path: <path>")]
-public class CliCommand : CommandBase<CommandsConfiguration>
+public class PowerCommandCommand : CommandBase<CommandsConfiguration>
 {
     private string _path = "";
 
-    public CliCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
+    public PowerCommandCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
 
     public override RunResult Run()
     {
@@ -32,7 +33,11 @@ public class CliCommand : CommandBase<CommandsConfiguration>
         switch (action)
         {
             case "version":
-                WriteHeadLine($"Core 1.0.0");
+                Console.WriteLine($"{nameof(Core)}: {ReflectionService.Service.GetVersion(Assembly.Load($"PainKiller.PowerCommands.Core"))}");
+                Console.WriteLine($"{nameof(PowerCommands.Configuration)}: {ReflectionService.Service.GetVersion(Assembly.Load($"PainKiller.PowerCommands.Configuration"))}");
+                Console.WriteLine($"{nameof(ReadLine)}: {ReflectionService.Service.GetVersion(Assembly.Load($"PainKiller.PowerCommands.ReadLine"))}");
+                Console.WriteLine($"{nameof(Security)}: {ReflectionService.Service.GetVersion(Assembly.Load($"PainKiller.PowerCommands.Security"))}");
+                Console.WriteLine($"{nameof(Shared)}: {ReflectionService.Service.GetVersion(Assembly.Load($"PainKiller.PowerCommands.Shared"))}");
                 return CreateRunResult();
             case "new":
                 return RunNewPowerCommandsProject(output, name);

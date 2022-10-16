@@ -9,7 +9,6 @@
 * [PowerCommandsConfiguration.yaml](#PowerCommandsConfiguration.yaml)
 	* [More then one PowerCommand project in the same implemantation? (no problem but...)](#MorethenonePowerCommandprojectinthesameimplemantationnoproblembut...)
 * [Create your first Hello World Commandd](#CreateyourfirstHelloWorldCommandd)
-	* [Hello world example..](#Helloworldexample..)
 * [Design of your Commands](#DesignofyourCommands)
 * [Extend PowerCommand](#ExtendPowerCommand)
 	* [Avoid changes in the PowerCommand Core, extend instead](#AvoidchangesinthePowerCommandCoreextendinstead)
@@ -158,21 +157,17 @@ If your PowerCommand implementation contains more then one PowerCommands project
   - Make sure that one of the Console project is marked as startup project, for example the **PainKiller.PowerCommands.PowerCommandsConsole** in the Solution root
   - Build the solution to make sure that the PowerCommandsConfig.yaml file is created in output folder
   - Start the application and run the command 
-  ```cli new --name nameOfYourCommandsProject --output "Path to directory"```
+  ``powercommand new --name nameOfYourCommandsProject --output "Path to directory"```
   - A new solution with all the dependent project is created for you, open the solution, set the PowerCommands Console project as startup project ant hit F5 to try it out.
 
 It's really unfortunate that you have to set up the startup project for the solution, that information is saved in solution user options (*.suo), it's a binary file that you don't want to mess with. But I guess that you already are familiar with that problem.
 
 
-Now you are ready to create your very first Command!
+Now you are ready to create your very first Command! You could use that manually or you could use PowerCommands Console it self, start the Console project from your favorite IDE and run this command:
 
-## Update your Core component projects in your custom PowerCommands solution
-You have two options
- - You do it manually, clone this repo, delete everything i the Core directory and copy the new content from the Core directory you just downloaded.
- - You can also do it automatically with this command
- ```cli update``` and then reload the solution
+ ```commands create Example```
 
-### <a name='Helloworldexample..'></a>Hello world example..
+ This will create a new Command in your Commands project in the folder Commands.
 ```
 using PainKiller.PowerCommands.MyExampleCommands.Configuration;
 namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
@@ -182,12 +177,19 @@ public class ExampleCommand : CommandBase<PowerCommandsConfiguration>
 
     public override RunResult Run()
     {
-        WriteLine("Hello world");
+        //insert your code here
         return CreateRunResult();
     }
 }
 ```
-This is the bare minimum that you need, to learn more about what you could do, look at sample commands in the Examaples project in this github repositorys.
+This is the bare minimum that you need, to learn more about what you could do, look at sample commands in the Examaples project in this github repository.
+
+
+## Update your Core component projects in your custom PowerCommands solution
+You have two options
+ - You do it manually, clone this repo, delete everything i the Core directory and copy the new content from the Core directory you just downloaded.
+ - You can also do it automatically with this command
+ ```powercommand update``` and then reload the solution
 
 ## <a name='DesignofyourCommands'></a>Design of your Commands
  Think of your command as an one line command with some parameters in a cmd prompt environment, it should do a single isolated task, for example lets say you want to convert yaml file to json or xml. A good name could be **ConvertCommand**, as parameters you have a path to the input file, and a flag for the format and a value to that flag. That is a pretty good design for one Command. 
@@ -227,7 +229,7 @@ PowerCommands rely on reflection to find all existing PowerCommands that are val
 ## <a name='ReservedCommandnamess'></a>Reserved Command namess
  As the name of the PowerCommand class is used as an identifier, their name must be uniquee, this are the core Commands that you should not use in your custom PowerCommands project, at the moment the reserved commands names are:
  - CommandsCommand
- - ClsCommand
+ - PowerCommandCommand
  - LogCommand
  - SecretCommand
  - ExitCommand
