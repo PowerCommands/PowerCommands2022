@@ -10,7 +10,7 @@ namespace PainKiller.PowerCommands.Core.Commands;
                     example: "cli new --name testproject --output \"C:\\Temp\\\"\ncli update\ncli update --templates",
                     arguments:"Solution name:<name>",
                     argumentMandatory: true,
-                    flags:"name|output",
+                    flags:"name|output|template",
                     suggestion:"new",
                     qutes: "Path: <path>")]
 public class CliCommand : CommandBase<CommandsConfiguration>
@@ -145,6 +145,7 @@ public class CliCommand : CommandBase<CommandsConfiguration>
     private void UpdateTemplates(ICliManager cliManager, string name)
     {
         cliManager.DeleteDownloadsDirectory();
+        cliManager.CreateDownloadsDirectory();
         cliManager.CloneRepo(Configuration.Repository);
 
         var templateManager = new TemplateManager(name, WriteLine);

@@ -1,22 +1,25 @@
 ﻿using PainKiller.PowerCommands.Core.Extensions;
+using PainKiller.PowerCommands.Core.Managers;
 using PainKiller.PowerCommands.Shared.Contracts;
+
 namespace PainKiller.PowerCommands.Core.Commands;
 
 [Tags("core|help")]
-[PowerCommand( description:      "Shows commands, or filter commands by name or by tag, a tag is something that the command support",
-               arguments:        "tag (default)|type|<name>|?|!",
+[PowerCommand( description:      "Shows commands, or filter commands by name or by tag, create a new command",
+               arguments:        "tag (default)|type <name of type>|name <name of new command>",
                qutes:            "filter:<filter>",
-               flags:            "custom|reserved|name",   
+               flags:            "this|reserved|name|create",   
                suggestion:       "tag",
-               example:          "commands|commands --custom|commands --reserved|commands --name \"encrypt\"|commands tag \"checksum\"")]
+               example:          "commands|commands --this|commands --reserved|commands --name \"encrypt\"|commands tag \"checksum\"|commands --create MyNewCommand")]
 public class CommandsCommand : CommandBase<CommandsConfiguration>
 {
     public CommandsCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
 
     public override RunResult Run()
     {
-        if (Input.HasFlag("custom")) return Custom();
+        if (Input.HasFlag("this")) return Custom();
         if (Input.HasFlag("reserved")) return Reserved();
+        if (Input.HasFlag("create")) return Create(Input.SingleArgument);
         if (string.IsNullOrEmpty(Input.SingleQuote)) return NoFilter();
         if (Input.HasFlag("name")) return FilterByName();
         return FilterByTag();
@@ -60,6 +63,12 @@ public class CommandsCommand : CommandBase<CommandsConfiguration>
     {
         WriteHeadLine($"- Commands with tag containing {Input.SingleQuote}:\n");
         foreach (var command in IPowerCommandsRuntime.DefaultInstance?.Commands.Where(c => c.HasTag(Input.SingleQuote))!) WriteLine(command.Identifier, addToOutput: false);
+        return CreateRunResult();
+    }
+    private RunResult Create(string name)
+    {
+        var templateManager = new TemplateManager(name, WriteLine);
+        templateManager.CreateCommand(templateName:"Default", name);
         return CreateRunResult();
     }
 }

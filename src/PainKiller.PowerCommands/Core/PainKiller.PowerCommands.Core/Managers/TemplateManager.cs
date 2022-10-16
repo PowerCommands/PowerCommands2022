@@ -16,14 +16,30 @@ public class TemplateManager : ITemplateManager
         _name = name;
         _logger = logger;
     }
-
     public void InitializeTemplatesDirectory()
     {
         if (Directory.Exists(_path)) Directory.Delete(_path);
         Directory.CreateDirectory(_path);
         _logger.Invoke($"Template directory {_path} initialized", DisplayAndWriteToLog);
     }
-    public void CopyTemplates() => Directory.Move(Path.Combine(GetSrcCodeDownloadPath(), "PowerCommands2022\\\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.MyExampleCommands\\Commands\\Templates"), _path);
+    public void CopyTemplates() => Directory.Move(Path.Combine(GetSrcCodeDownloadPath(), "PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.MyExampleCommands\\Commands\\Templates"), Path.Combine(_path,"Commands"));
 
-    private string GetSrcCodeDownloadPath() => _path.Replace("\\download", "\\templates");
+    public void CreateCommand(string templateName, string commandName)
+    {
+        var filePath = Path.Combine(Path.Combine(_path, "Commands"), $"{templateName}Command.cs");
+        if (!File.Exists(filePath))
+        {
+            _logger.Invoke($"Template not found, run following command to download current templates\ncli update --template", DisplayAndWriteToLog);
+            return;
+        }
+        var content = File.ReadAllText(filePath).Replace("namespace PainKiller.PowerCommands.MyExampleCommands.Commands.Templates;", $"namespace PainKiller.PowerCommands.{FindProjectName()}Commands.Commands;");
+        var commandsFolder = FindCommandsProjectDirectory();
+        var copyFilePath = $"{commandsFolder}\\Commands\\{commandName}Command.cs";
+
+        File.WriteAllText(copyFilePath, content);
+        _logger.Invoke($"File [{copyFilePath}] created", DisplayAndWriteToLog);
+    }
+    private string GetSrcCodeDownloadPath() => _path.Replace("\\templates", "\\download");
+    private string FindCommandsProjectDirectory() => Directory.GetDirectories(CliManager.GetLocalSolutionRoot()).First(c => c.EndsWith("Commands"));
+    private string FindProjectName() => FindCommandsProjectDirectory().Split('\\').Last().Split('.').Last().Replace("Commands","");
 }

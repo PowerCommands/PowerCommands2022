@@ -4,6 +4,7 @@ public interface ICliManager
 {
     void CreateRootDirectory(bool onlyRepoSrcCodeRootPath = false);
     void CreateDirectory(string name);
+    void CreateDownloadsDirectory();
     void DeleteDownloadsDirectory();
     void CloneRepo(string repo);
     void DeleteDir(string directory);

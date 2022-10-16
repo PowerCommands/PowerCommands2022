@@ -47,6 +47,12 @@ public class CliManager : ICliManager
         }
         DeleteDir(_srcCodeRootPath);
     }
+
+    public void CreateDownloadsDirectory()
+    {
+        if (Directory.Exists(_srcCodeRootPath)) return;
+        Directory.CreateDirectory(_srcCodeRootPath);
+    }
     public void CreateDirectory(string name)
     {
         var dirI = new DirectoryInfo(Path.Combine(_path, name));
@@ -188,8 +194,6 @@ public class CliManager : ICliManager
         return AppContext.BaseDirectory.Replace(endToRemove, "");
     }
     private string GetPath(string path) => path.StartsWith("PowerCommands2022\\") ? Path.Combine(_srcCodeRootPath, path) : Path.Combine(_path, path);
-    private string GetTemplatesDownloadPath() => Path.Combine(_srcCodeRootPath.Replace("\\download", ""), "Templates");
-
     private void CopyFolder(string sourceFolder, string destFolder)
     {
         if (!Directory.Exists(destFolder))
