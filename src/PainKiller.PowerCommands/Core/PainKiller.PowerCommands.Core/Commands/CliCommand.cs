@@ -7,10 +7,10 @@ namespace PainKiller.PowerCommands.Core.Commands;
 
 [Tags("core|cli|project")]
 [PowerCommand(      description: "Create or update the Visual Studio Solution with all depended projects, create new Commands from template",
-                    example: "cli new --name testproject --output \"C:\\Temp\\\"\ncli update\ncli update --templates",
+                    example: "cli new --name testproject --output \"C:\\Temp\\\"|cli update|cli update --templates|cli update --templates --backup",
                     arguments:"Solution name:<name>",
                     argumentMandatory: true,
-                    flags:"name|output|template",
+                    flags:"name|output|template|backup",
                     suggestion:"new",
                     qutes: "Path: <path>")]
 public class CliCommand : CommandBase<CommandsConfiguration>
@@ -27,6 +27,7 @@ public class CliCommand : CommandBase<CommandsConfiguration>
         var name = Input.GetFlagValue("name");
         var output = Input.GetFlagValue("output");
         var template = Input.HasFlag("template");
+        var backup = Input.HasFlag("backup");
 
         switch (action)
         {
@@ -36,7 +37,7 @@ public class CliCommand : CommandBase<CommandsConfiguration>
             case "new":
                 return RunNewPowerCommandsProject(output, name);
             case "update":
-                if (!template) return RunUpdatePowerCommandsProject();
+                if (!template) return RunUpdatePowerCommandsProject(backup);
                 _path = string.IsNullOrEmpty(output) ? Path.Combine(AppContext.BaseDirectory, "output", name) : Path.Combine(output, name);
                 UpdateTemplates(new CliManager(name,_path, WriteLine), name, cloneRepo: true);
                 return CreateRunResult();
@@ -104,7 +105,7 @@ public class CliCommand : CommandBase<CommandsConfiguration>
         return CreateRunResult();
     }
 
-    private RunResult RunUpdatePowerCommandsProject()
+    private RunResult RunUpdatePowerCommandsProject(bool backup)
     {
         _path = CliManager.GetLocalSolutionRoot();
         var solutionFile = Directory.GetFileSystemEntries(_path, "*.sln").FirstOrDefault();
@@ -123,7 +124,8 @@ public class CliCommand : CommandBase<CommandsConfiguration>
         cli.DeleteDownloadsDirectory();
         cli.CreateRootDirectory(onlyRepoSrcCodeRootPath: true);
 
-        var backupDirectory = cli.BackupDirectory("Core");
+        var backupDirectory = "";
+        if(backup) backupDirectory = cli.BackupDirectory("Core");
 
         cli.CloneRepo(Configuration.Repository);
         WriteLine("Fetching repo from Github...");
@@ -141,7 +143,7 @@ public class CliCommand : CommandBase<CommandsConfiguration>
 
         WriteLine("Your PowerCommands Core component is now up to date with latest code from github!");
         WriteLine("if you started this from Visual Studio you probably need to restart Visual Studio to reload all dependencies");
-        WriteLine($"A backup of the Core projects has been stored here [{backupDirectory}]");
+        if(backup) WriteLine($"A backup of the Core projects has been stored here [{backupDirectory}]");
 
         ShellService.Service.OpenDirectory(backupDirectory);
 
