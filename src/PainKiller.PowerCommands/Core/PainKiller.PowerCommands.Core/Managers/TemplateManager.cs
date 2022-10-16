@@ -32,7 +32,7 @@ public class TemplateManager : ITemplateManager
             _logger.Invoke($"Template not found, run following command to download current templates\ncli update --template", DisplayAndWriteToLog);
             return;
         }
-        var content = File.ReadAllText(filePath).Replace("namespace PainKiller.PowerCommands.MyExampleCommands.Commands.Templates;", $"namespace PainKiller.PowerCommands.{FindProjectName()}Commands.Commands;");
+        var content = File.ReadAllText(filePath).Replace("namespace PainKiller.PowerCommands.MyExampleCommands.Commands.Templates;", $"namespace PainKiller.PowerCommands.{FindProjectName()}Commands.Commands;").Replace("NameCommand", $"{commandName}Command");
         var commandsFolder = FindCommandsProjectDirectory();
         var copyFilePath = $"{commandsFolder}\\Commands\\{commandName}Command.cs";
 

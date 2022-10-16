@@ -2,9 +2,9 @@
 
 namespace PainKiller.PowerCommands.MyExampleCommands.Commands.Templates;
 
-public class DefaultCommand : CommandBase<CommandsConfiguration>
+public class NameCommand : CommandBase<CommandsConfiguration>
 {
-    public DefaultCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
+    public NameCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
 
     public override RunResult Run()
     {
