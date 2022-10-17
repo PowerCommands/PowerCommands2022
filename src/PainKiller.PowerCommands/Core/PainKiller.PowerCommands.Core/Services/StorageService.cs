@@ -19,7 +19,8 @@ public static class StorageService
     {
         var fileName = Path.Combine(ConfigurationGlobals.ApplicationDataFolder, $"{typeof(T).Name}.data");
         var options = new JsonSerializerOptions { WriteIndented = true, IncludeFields = true };
+        if (!File.Exists(fileName)) return new T();
         var jsonString = File.ReadAllText(fileName);
-        return File.Exists(fileName) ? JsonSerializer.Deserialize<T>(jsonString, options) ?? new T() : new T();
+        return JsonSerializer.Deserialize<T>(jsonString, options) ?? new T();
     }
 }
