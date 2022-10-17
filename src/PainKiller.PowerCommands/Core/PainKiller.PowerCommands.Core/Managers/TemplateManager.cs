@@ -18,7 +18,7 @@ public class TemplateManager : ITemplateManager
     }
     public void InitializeTemplatesDirectory()
     {
-        if (Directory.Exists(_path)) Directory.Delete(_path);
+        if (Directory.Exists(_path)) Directory.Delete(_path, recursive: true);
         Directory.CreateDirectory(_path);
         _logger.Invoke($"Template directory {_path} initialized", DisplayAndWriteToLog);
     }
