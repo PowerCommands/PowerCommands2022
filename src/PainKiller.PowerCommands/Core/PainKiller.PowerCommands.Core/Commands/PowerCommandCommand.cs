@@ -44,7 +44,7 @@ public class PowerCommandCommand : CommandBase<CommandsConfiguration>
             case "update":
                 if (!template) return RunUpdatePowerCommandsProject(backup);
                 _path = string.IsNullOrEmpty(output) ? Path.Combine(AppContext.BaseDirectory, "output", name) : Path.Combine(output, name);
-                UpdateTemplates(new CliManager(name,_path, WriteLine), name, cloneRepo: true);
+                UpdateTemplates(new CliManager(name,_path, WriteLine), cloneRepo: true);
                 return CreateRunResult();
             default:
                 return CreateBadParameterRunResult("Missing arguments");
@@ -63,7 +63,7 @@ public class PowerCommandCommand : CommandBase<CommandsConfiguration>
         cli.CloneRepo(Configuration.Repository);
         WriteLine("Fetching repo from Github...");
 
-        UpdateTemplates(cli, name);
+        UpdateTemplates(cli);
 
         cli.DeleteDir("PowerCommands2022\\.vscode");
         cli.DeleteDir("PowerCommands2022\\src\\PainKiller.PowerCommands\\Implementations");
@@ -115,7 +115,7 @@ public class PowerCommandCommand : CommandBase<CommandsConfiguration>
         _path = CliManager.GetLocalSolutionRoot();
         var solutionFile = Directory.GetFileSystemEntries(_path, "*.sln").FirstOrDefault();
         if (solutionFile == null) return CreateBadParameterRunResult($"No solution file found in directory [{_path}]");
-        var name = solutionFile.Split('\\').Last().Replace(".sln","");
+        var name = CliManager.GetName();
 
         Console.WriteLine("Update will delete and replace everything in the [Core] and [Third party components] folder");
         if(backup) Console.WriteLine($"A backup will be saved in folder [{Path.Combine(_path)}]","Backup. /nEarlier backups needs to be removed");
@@ -135,7 +135,7 @@ public class PowerCommandCommand : CommandBase<CommandsConfiguration>
         cli.CloneRepo(Configuration.Repository);
         WriteLine("Fetching repo from Github...");
 
-        UpdateTemplates(cli, name);
+        UpdateTemplates(cli);
 
         cli.DeleteDir("PowerCommands2022\\.vscode");
         cli.DeleteDir("PowerCommands2022\\src\\PainKiller.PowerCommands\\Custom Components");
@@ -154,14 +154,16 @@ public class PowerCommandCommand : CommandBase<CommandsConfiguration>
 
         return CreateRunResult();
     }
-    private void UpdateTemplates(ICliManager cliManager, string name, bool cloneRepo = false)
+    private void UpdateTemplates(ICliManager cliManager, bool cloneRepo = false)
     {
         if (cloneRepo)
         {
             cliManager.DeleteDownloadsDirectory();
             cliManager.CreateDownloadsDirectory();
             cliManager.CloneRepo(Configuration.Repository);
-        } 
+        }
+
+        var name = CliManager.GetName();
         var templateManager = new TemplateManager(name, WriteLine);
         templateManager.InitializeTemplatesDirectory();
         templateManager.CopyTemplates();

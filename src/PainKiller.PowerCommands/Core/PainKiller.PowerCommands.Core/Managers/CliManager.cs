@@ -193,6 +193,14 @@ public class CliManager : ICliManager
         var endToRemove = $"\\{parts[^5]}\\{parts[^4]}\\{parts[^3]}\\{parts[^2]}";
         return AppContext.BaseDirectory.Replace(endToRemove, "");
     }
+
+    public static string GetName()
+    {
+        var path = GetLocalSolutionRoot();
+        var solutionFile = Directory.GetFileSystemEntries(path, "*.sln").FirstOrDefault();
+        if (solutionFile == null) throw new IndexOutOfRangeException("No solution file could be found, name can not be extracted");
+        return solutionFile.Split('\\').Last().Replace(".sln", "");
+    }
     private string GetPath(string path) => path.StartsWith("PowerCommands2022\\") ? Path.Combine(_srcCodeRootPath, path) : Path.Combine(_path, path);
     private void CopyFolder(string sourceFolder, string destFolder)
     {
