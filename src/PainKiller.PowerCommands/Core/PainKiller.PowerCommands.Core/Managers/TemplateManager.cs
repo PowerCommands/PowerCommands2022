@@ -22,7 +22,7 @@ public class TemplateManager : ITemplateManager
         Directory.CreateDirectory(_path);
         _logger.Invoke($"Template directory {_path} initialized", DisplayAndWriteToLog);
     }
-    public void CopyTemplates() => Directory.Move(Path.Combine(GetSrcCodeDownloadPath(), "PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.MyExampleCommands\\Commands\\Templates"), Path.Combine(_path,"Commands"));
+    public void CopyTemplates() => Directory.Move(Path.Combine(GetSrcCodeDownloadPath(), $"{_name}\\PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.MyExampleCommands\\Commands\\Templates"), Path.Combine(_path,"Commands"));
 
     public void CreateCommand(string templateName, string commandName)
     {
