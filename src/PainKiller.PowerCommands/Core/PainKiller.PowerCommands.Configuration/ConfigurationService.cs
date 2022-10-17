@@ -14,7 +14,7 @@ public class ConfigurationService : IConfigurationService
     public static IConfigurationService Service => Lazy.Value;
     public YamlContainer<T> Get<T>(string inputFileName = "") where T : new()
     {
-        var fileName = string.IsNullOrEmpty(inputFileName) ? $"{typeof(T).Name}.yaml".GetSafePathRegardlessHowApplicationStarted() : inputFileName;
+        var fileName = string.IsNullOrEmpty(inputFileName) ? $"{typeof(T).Name}.yaml".GetSafePathRegardlessHowApplicationStarted() : inputFileName.GetSafePathRegardlessHowApplicationStarted();
         var yamlContent = File.ReadAllText(fileName);
 
         var deserializer = new DeserializerBuilder()
