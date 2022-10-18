@@ -63,7 +63,7 @@ public class PowerCommandCommand : CommandBase<CommandsConfiguration>
         cli.CloneRepo(Configuration.Repository);
         WriteLine("Fetching repo from Github...");
 
-        UpdateTemplates(cli);
+        UpdateTemplates(cli, newProjectName: name);
 
         cli.DeleteDir("PowerCommands2022\\.vscode");
         cli.DeleteDir("PowerCommands2022\\src\\PainKiller.PowerCommands\\Implementations");
@@ -154,7 +154,7 @@ public class PowerCommandCommand : CommandBase<CommandsConfiguration>
 
         return CreateRunResult();
     }
-    private void UpdateTemplates(ICliManager cliManager, bool cloneRepo = false)
+    private void UpdateTemplates(ICliManager cliManager, bool cloneRepo = false, string newProjectName = "")
     {
         if (cloneRepo)
         {
@@ -163,7 +163,7 @@ public class PowerCommandCommand : CommandBase<CommandsConfiguration>
             cliManager.CloneRepo(Configuration.Repository);
         }
 
-        var name = CliManager.GetName();
+        var name = string.IsNullOrEmpty(newProjectName) ? CliManager.GetName() : newProjectName;
         var templateManager = new TemplateManager(name, WriteLine);
         templateManager.InitializeTemplatesDirectory();
         templateManager.CopyTemplates();
