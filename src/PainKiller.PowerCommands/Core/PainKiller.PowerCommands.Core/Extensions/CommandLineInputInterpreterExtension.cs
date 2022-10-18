@@ -6,15 +6,15 @@ namespace PainKiller.PowerCommands.Core.Extensions;
 
 public static class CommandLineInputInterpreterExtension
 {
-    public static CommandLineInput Interpret(this string commandLineInput)
+    public static CommandLineInput Interpret(this string commandLineInput, string defaultCommand = "commands")
     {
         if(IsNullOrEmpty(commandLineInput)) throw new ArgumentNullException(nameof(commandLineInput));
         var raw = commandLineInput.Trim();
         var quotes = Regex.Matches(raw, "\\\"(.*?)\\\"").ToStringArray();
         var arguments = raw.Split(' ').Where(r => !r.Contains('\"') && !r.StartsWith("--")).ToList();
         var flags = raw.Split(' ').Where(r => !r.Contains('\"') && r.StartsWith("--")).ToArray();
-        var identifier = $"{arguments[0].ToLower()}";
-        arguments.RemoveAt(0);  //Remove identifier from arguments
+        var identifier = arguments.Count == 0 ? defaultCommand : $"{arguments[0].ToLower()}";
+        if(arguments.Count > 0) arguments.RemoveAt(0);  //Remove identifier from arguments
 
         var retVal = new CommandLineInput {Arguments = arguments.ToArray(), Identifier = identifier, Quotes = quotes, Flags = flags, Raw = raw, Path = arguments.ToArray().ToPath()};
         return retVal;

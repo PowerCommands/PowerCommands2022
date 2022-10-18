@@ -5,6 +5,7 @@ namespace PainKiller.PowerCommands.Shared.DomainObjects.Configuration
     public class CommandsConfiguration : ICommandsConfiguration
     {
         public bool ShowDiagnosticInformation { get; set; } = true;
+        public string DefaultCommand { get; set; } = "";
         public string CodeEditor { get; set; } = "code";
         public string Repository { get; set; } = "https://github.com/PowerCommands/PowerCommands2022";
         public Metadata Metadata { get; set; } = new();

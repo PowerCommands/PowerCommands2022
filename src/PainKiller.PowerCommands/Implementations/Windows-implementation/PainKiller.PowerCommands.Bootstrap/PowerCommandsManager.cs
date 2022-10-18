@@ -40,7 +40,7 @@ public class PowerCommandsManager : IPowerCommandsManager
             {
                 var commandsCommand = new CommandsCommand("commands", (Services.Configuration as CommandsConfiguration)!);
                 var interpretedInput = input.Interpret();
-                DisplayErrorMessage($"Could not found any commands with a matching Id: {interpretedInput.Raw}");
+                DisplayErrorMessage($"Could not found any commands with a matching Id: {interpretedInput.Raw} and there is no defaultCommand defined in configuration or the defined defaultCommand does not exist.");
                 commandsCommand.InitializeRun(interpretedInput);
                 commandsCommand.Run();
                 Services.Logger.LogError(ex, "Could not found any commands with a matching Id");

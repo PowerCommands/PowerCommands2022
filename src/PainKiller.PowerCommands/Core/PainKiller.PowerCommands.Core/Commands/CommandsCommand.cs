@@ -5,10 +5,10 @@ using PainKiller.PowerCommands.Shared.Contracts;
 namespace PainKiller.PowerCommands.Core.Commands;
 
 [Tags("core|help")]
-[PowerCommand( description:      "Shows commands, or filter commands by name or by tag, create a new command",
+[PowerCommand( description:      "Shows commands, or filter commands by name or by tag, create a new command, show default command with flag --default",
                arguments:        "tag (default)|type <name of type>|name <name of new command>",
                qutes:            "filter:<filter>",
-               flags:            "this|reserved|name|create",   
+               flags:            "this|reserved|name|create|default",   
                suggestion:       "tag",
                example:          "commands|commands --this|commands --reserved|commands --name \"encrypt\"|commands tag \"checksum\"|commands --create MyNewCommand")]
 public class CommandsCommand : CommandBase<CommandsConfiguration>
@@ -18,6 +18,7 @@ public class CommandsCommand : CommandBase<CommandsConfiguration>
     public override RunResult Run()
     {
         if (Input.HasFlag("this")) return Custom();
+        if (Input.HasFlag("default")) return Default();
         if (Input.HasFlag("reserved")) return Reserved();
         if (Input.HasFlag("create")) return Create(Input.SingleArgument);
         if (string.IsNullOrEmpty(Input.SingleQuote)) return NoFilter();
@@ -69,6 +70,13 @@ public class CommandsCommand : CommandBase<CommandsConfiguration>
     {
         var templateManager = new TemplateManager(name, WriteLine);
         templateManager.CreateCommand(templateName:"Default", name);
+        return CreateRunResult();
+    }
+
+    private RunResult Default()
+    {
+        WriteHeadLine($"Default command:");
+        WriteLine(Configuration.DefaultCommand);
         return CreateRunResult();
     }
 }
