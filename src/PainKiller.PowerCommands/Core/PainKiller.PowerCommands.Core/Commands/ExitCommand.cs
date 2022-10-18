@@ -1,4 +1,6 @@
-﻿namespace PainKiller.PowerCommands.Core.Commands;
+﻿using PainKiller.PowerCommands.Core.Services;
+
+namespace PainKiller.PowerCommands.Core.Commands;
 
 [Tags("core")]
 [PowerCommand(       description: "Exit command exits the program",
@@ -12,9 +14,6 @@ public class ExitCommand : CommandBase<CommandsConfiguration>
     public override RunResult Run()
     {
         if (Input.Arguments.Length > 0 && Input.Arguments.First().ToLower().StartsWith("y")) return new RunResult(this, Input, output: "exit program", RunResultStatus.Quit);
-        Console.WriteLine("Do you wanna quit the program? y/?");
-        var response = $"{Console.ReadLine()}";
-        if (response.ToLower().StartsWith("y")) return new RunResult(this, Input, output: "exit program", RunResultStatus.Quit);
-        return new RunResult(this, Input, output: "No, dont exit the program", RunResultStatus.Ok);
+        return DialogService.YesNoDialog("Do you wanna quit the program?") ? new RunResult(this, Input, output: "exit program", RunResultStatus.Quit) : new RunResult(this, Input, output: "No, dont exit the program", RunResultStatus.Ok);
     }
 }
