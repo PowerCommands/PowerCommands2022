@@ -8,6 +8,7 @@ namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 [Tags("core|shell|folder|open|util")]
 [PowerCommand(description: "Open a given directory or current working folder if argument is omitted",
     arguments: "<directory name>",
+    flags: "app",
     example: "dir|dir C:\\repos")]
 public class DirCommand : CommandBase<CommandsConfiguration>
 {
