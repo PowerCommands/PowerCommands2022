@@ -10,7 +10,7 @@ namespace PainKiller.PowerCommands.KnowledgeDBCommands.Commands;
 
 [PowerCommand(  description: "Find a knowledge item, use the index value to open, edit or delete it",
                 arguments:"<SearchPhrase>",
-                flags: "latest|delete|edit|tags|name|source|view",
+                flags: "latest|delete|edit|tags|name|source|view|append",
                 example: "Note that find is default command and could be omitted|find mySearh|find mySearch 0|find mySearch 0 --delete|find mySearch 0 --edit --tags addMyTags|find mySearch 0 --edit --addMyTags --name myNewName --source MyNewSource-url-path-onenote")]
 public class FindCommand : CommandBase<PowerCommandsConfiguration>
 {
@@ -29,6 +29,7 @@ public class FindCommand : CommandBase<PowerCommandsConfiguration>
         {
             if (Input.HasFlag("delete")) Remove(_selectedItem);
             else if (Input.HasFlag("edit")) Edit(_selectedItem, Input.GetFlagValue("name"), Input.GetFlagValue("source"), Input.GetFlagValue("tags"));
+            else if (Input.HasFlag("append")) Append(_selectedItem, Input.GetFlagValue("tags"));
             else if (Input.HasFlag("view")) Details(_selectedItem);
             else Open(_selectedItem);
             return CreateRunResult();
@@ -91,7 +92,19 @@ public class FindCommand : CommandBase<PowerCommandsConfiguration>
 
         if (!string.IsNullOrEmpty(name)) match.Name = name;
         if (!string.IsNullOrEmpty(source) && "url path onenote".Contains(source)) match.SourceType = source;
-        if (!string.IsNullOrEmpty(tags)) match.Tags = $"{match.Tags},{tags}";
+        if (!string.IsNullOrEmpty(tags)) match.Tags = tags;
+        if (!DialogService.YesNoDialog($"Are this update ok? {match.Name} {match.SourceType} {match.Tags}?")) return;
+        db.Items.Add(match);
+        _storage.StoreObject(db);
+        WriteLine($"Item {match.ItemID} {match.Name} updated.");
+    }
+
+    private void Append(KnowledgeItem item, string tags)
+    {
+        var db = _storage.GetObject();
+        var match = db.Items.First(i => i.ItemID == item.ItemID);
+        db.Items.Remove(match);
+        match.Tags = $"{match.Tags},{tags}";
         if (!DialogService.YesNoDialog($"Are this update ok? {match.Name} {match.SourceType} {match.Tags}?")) return;
         db.Items.Add(match);
         _storage.StoreObject(db);
