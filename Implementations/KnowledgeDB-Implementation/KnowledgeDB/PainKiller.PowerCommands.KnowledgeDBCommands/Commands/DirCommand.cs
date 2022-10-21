@@ -3,7 +3,7 @@ using PainKiller.PowerCommands.Core.Extensions;
 using PainKiller.PowerCommands.Core.Services;
 using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
 
-namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
+namespace PainKiller.PowerCommands.KnowledgeDBCommands.Commands;
 
 [Tags("core|shell|folder|open|util")]
 [PowerCommand(description: "Open a given directory or current working folder if argument is omitted",
