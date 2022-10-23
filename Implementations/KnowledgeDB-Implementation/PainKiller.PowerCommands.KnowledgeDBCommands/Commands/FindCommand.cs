@@ -11,7 +11,7 @@ namespace PainKiller.PowerCommands.KnowledgeDBCommands.Commands;
 [PowerCommand(  description: "Find a knowledge item, use the index value to open, edit or delete it",
                 arguments:"<SearchPhrase>",
                 flags: "latest|delete|edit|tags|name|source|view|append",
-                example: "Note that find is default command and could be omitted|find mySearh|find mySearch 0|find mySearch 0 --delete|find mySearch 0 --edit --tags addMyTags|find mySearch 0 --edit --addMyTags --name myNewName --source MyNewSource-url-path-onenote")]
+                example: "/*Note that find is default command and could be omitted*/| |/*Find something you are looking for, you can use two search arguments, the second argument is a filter on whats found with the first argument.*/|find mySearh|/*Find something you are looking for, you can use two search arguments, the second argument is a filter on whats found with the first argument.*/|find mySearch myFilter|/*Open a document from the latest search with the provided index*/|find mySearch 0|/*Delete a document from the latest search with the provided index*/|find 0 --delete|/*Append tag(s) for a document from the latest search with the provided index*/|find 0 --append --tags addMyTags|/*Edit the document from the latest search with the provided index*/|find 0 --edit --tags myNewTags --name myNewName --source MyNewSource-url-path-onenote")]
 public class FindCommand : CommandBase<PowerCommandsConfiguration>
 {
     private List<KnowledgeItem> _items = new();

@@ -8,7 +8,7 @@ namespace PainKiller.PowerCommands.Core.Commands;
 
 [Tags("core|cli|project")]
 [PowerCommand(      description: "Create or update the Visual Studio Solution with all depended projects, create new Commands from template",
-                    example: "powercommand new --name testproject --output \"C:\\Temp\\\"|powercommand update|powercommand update --templates|powercommand update --templates --backup",
+                    example: "/*create new VS solution*/|powercommand new --name testproject --output \"C:\\Temp\\\"|/*Update powercommands core, this will first delete current Core projects and than apply the new Core projects*/|powercommand update|/*Only update template(s)*/|powercommand update --templates|/*Update templates with backup*/|powercommand update --templates --backup",
                     arguments:"Solution name:<name>",
                     argumentMandatory: true,
                     flags:"name|output|template|backup",
@@ -23,6 +23,7 @@ public class PowerCommandCommand : CommandBase<CommandsConfiguration>
     public override RunResult Run()
     {
         if (Input.Arguments.Length == 0) return CreateBadParameterRunResult("Missing arguments ");
+        if (Input.SingleArgument == "new" && !Input.HasFlag("output")) return CreateBadParameterRunResult("You must provide a output path using the flag --output");
 
         var action = Input.Arguments.First().ToLower();
         var name = Input.GetFlagValue("name");
@@ -74,6 +75,7 @@ public class PowerCommandCommand : CommandBase<CommandsConfiguration>
         cli.WriteNewSolutionFile();
 
         cli.ReplaceContentInFile($"PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.Bootstrap\\PainKiller.PowerCommands.Bootstrap.csproj", "MyExampleCommands", $"{name}Commands");
+        cli.ReplaceContentInFile($"PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.PowerCommandsConsole\\PainKiller.PowerCommands.PowerCommandsConsole.csproj", "<AssemblyName>pc</AssemblyName>", $"<AssemblyName>{name}</AssemblyName>");
         cli.ReplaceContentInFile($"PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.Bootstrap\\PowerCommandsManager.cs", "MyExampleCommands", $"{name}Commands");
         cli.ReplaceContentInFile($"PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.Bootstrap\\Startup.cs", "MyExampleCommands", $"{name}Commands");
         cli.ReplaceContentInFile($"PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.PowerCommandsConsole\\Program.cs", "Power Commands 1.0", $"{name} Commands 1.0");
@@ -83,6 +85,8 @@ public class PowerCommandCommand : CommandBase<CommandsConfiguration>
         cli.ReplaceContentInFile($"PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.{name}Commands\\Configuration\\FavoriteConfiguration.cs", "MyExampleCommands", $"{name}Commands");
         cli.ReplaceContentInFile($"PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.{name}Commands\\PowerCommandServices.cs", "MyExampleCommands", $"{name}Commands");
         cli.ReplaceContentInFile($"PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.{name}Commands\\Commands\\DemoCommand.cs", "MyExampleCommands", $"{name}Commands");
+        cli.ReplaceContentInFile($"PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.{name}Commands\\Commands\\ConfigCommand.cs", "MyExampleCommands", $"{name}Commands");
+        cli.ReplaceContentInFile($"PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.{name}Commands\\Commands\\DirCommand.cs", "MyExampleCommands", $"{name}Commands");
         cli.ReplaceContentInFile($"PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.{name}Commands\\PainKiller.PowerCommands.MyExampleCommands.csproj", @"<ItemGroup>
     <Compile Remove=""Commands\Templates\DefaultCommand.cs"" />
   </ItemGroup>", $"");
@@ -99,10 +103,14 @@ public class PowerCommandCommand : CommandBase<CommandsConfiguration>
         cli.MoveFile($"PowerCommands2022\\src\\PainKiller.PowerCommands\\PowerCommands.{name}.sln", $"PowerCommands.{name}.sln");
 
         cli.MoveFile($"PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.{name}Commands\\Commands\\DemoCommand.cs", "DemoCommand.cs");
+        cli.MoveFile($"PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.{name}Commands\\Commands\\ConfigCommand.cs", "ConfigCommand.cs");
+        cli.MoveFile($"PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.{name}Commands\\Commands\\DirCommand.cs", "DirCommand.cs");
         cli.MoveDirectory($"PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.{name}Commands", $"PainKiller.PowerCommands.{name}Commands");
         cli.DeleteDir($"PainKiller.PowerCommands.{name}Commands\\Commands");
         cli.CreateDirectory($"PainKiller.PowerCommands.{name}Commands\\Commands");
         cli.MoveFile($"DemoCommand.cs", $"PainKiller.PowerCommands.{name}Commands\\Commands\\DemoCommand.cs");
+        cli.MoveFile($"ConfigCommand.cs", $"PainKiller.PowerCommands.{name}Commands\\Commands\\ConfigCommand.cs");
+        cli.MoveFile($"DirCommand.cs", $"PainKiller.PowerCommands.{name}Commands\\Commands\\DirCommand.cs");
 
         cli.DeleteDownloadsDirectory();
 

@@ -6,7 +6,7 @@ namespace PainKiller.PowerCommands.KnowledgeDBCommands.Commands;
 
 [PowerCommand(  description: "Add a new knowledge item",
                 flags: "onenote|url|path|name|tags",
-                example: "add --url \"https://wiki/wikis?pagePath=%2FMain&wikiVersion=GBwikiMaster&pageId=1\" --name WikiStart --tags wiki,start|add --path \"C:\\Repos\\github\" --name GithubRepo --tags repo,github|add --onenote \"onenote:///\\\\scb.intra\\users\\H\\SCBHARK\\Mina%20Dokument\\OneNote-anteckningsböcker\\IT%20Arkitektur\\Möten\\IT%20ARK%20Teknikmöten.one#Mötesanteckningar%20ITARK-planering&section-id={AC869D67-12D1-485E-AEFA-8B101A4C4F8B}&page-id={9EEDC531-8CB9-4E5E-9A81-F65F98390F1B}&end\" --name ArkitekturTeknikmöten --tags arkitektur,teknik")]
+                example: "/*Add url*/|add --url \"https://wiki/wikis?pagePath=%2FMain&wikiVersion=GBwikiMaster&pageId=1\" --name WikiStart --tags wiki,start|/*Add path*/|add --path \"C:\\Repos\\github\" --name GithubRepo --tags repo,github|/*Add link to one note document*/|add --onenote \"onenote:///\\\\scb.intra\\users\\H\\USERNAME\\Mina%20Dokument\\OneNote-anteckningsböcker\\möten.one#Mötesanteckningar-id={AC139D67-12D1-485E-AEFA-8B101A4C4F8B}&page-id={9EEDC531-8CB9-4E5E-9A81-F65F98390F1B}&end\" --name Arkitekturmöten --tags arkitektur,teknik")]
 public class AddCommand : CommandBase<PowerCommandsConfiguration>
 {
     public AddCommand(string identifier, PowerCommandsConfiguration configuration) : base(identifier, configuration) { }

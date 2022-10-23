@@ -30,7 +30,7 @@ public class ReflectionService : IReflectionService
             Object[] args = { name.Substring(0, name.Length - 7), (constructorInfo.GetParameters()[1].ParameterType == typeof(CommandsConfiguration) ? configuration as CommandsConfiguration : configuration)};
             var command = (IConsoleCommand)Activator.CreateInstance(commandType, args)!;
             var pcAttribute = command.GetPowerCommandAttribute();
-            if(!string.IsNullOrEmpty(pcAttribute.Flags)) SuggestionProviderManager.AddFContextBoundSuggestions(command.Identifier, pcAttribute.Flags.Split('|').Select(f => $"--{f}").ToArray());
+            if(!string.IsNullOrEmpty(pcAttribute.Flags)) SuggestionProviderManager.AddContextBoundSuggestions(command.Identifier, pcAttribute.Flags.Split('|').Select(f => $"--{f}").ToArray());
             retVal.Add(command);
         }
         return retVal.OrderBy(c => c.Identifier).ToList();
