@@ -40,6 +40,14 @@ public class HelpService : IHelpService
         }
         Console.WriteLine();
         command.WriteHeaderLine($"{nameof(da.Examples)}:");
-        foreach (var e in examples) Console.WriteLine(e);
+        foreach (var e in examples)
+        {
+            if (e.StartsWith("/*"))
+            {
+                command.WriteHeaderLine(e, ConsoleColor.Cyan);
+                continue;
+            }
+            Console.WriteLine(e);
+        }
     }
 }

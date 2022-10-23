@@ -41,4 +41,10 @@ public static class CommandLineInputInterpreterExtension
         return flagIndex == indexedInputs.Count ? "" : indexedInputs.First(i => i.Index == flagIndex + 1).Value.Replace("\"","");
     }
     public static bool HasFlag(this ICommandLineInput input, string flagName) => input.Flags.Any(f => f == $"--{flagName}" || f.ToLower().Substring(2, 1) == $"{flagName.ToLower()}".Substring(0, 1));
+
+    public static void DoBadFlagCheck(this ICommandLineInput input, IConsoleCommand command)
+    {
+        var dokumentedFlags = command.GetPowerCommandAttribute().Flags.Split('|');
+        foreach (var flag in input.Flags) if(dokumentedFlags.All(f => $"--{f.ToLower()}" != flag.ToLower())) command.WriteLine($"Warning, flag [{flag}] is not declared and probably unhandled in command [{command.Identifier}]", ConsoleColor.DarkYellow);
+    }
 }

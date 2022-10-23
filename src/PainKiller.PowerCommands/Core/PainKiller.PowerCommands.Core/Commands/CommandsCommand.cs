@@ -5,25 +5,23 @@ using PainKiller.PowerCommands.Shared.Contracts;
 namespace PainKiller.PowerCommands.Core.Commands;
 
 [Tags("core|help")]
-[PowerCommand( description:      "Shows commands, or filter commands by name or by tag, create a new command, show default command with flag --default",
-               arguments:        "tag (default)|type <name of type>|name <name of new command>",
+[PowerCommand( description:      "Shows commands, or filter commands by name, create a new command, show default command with flag --default",
                qutes:            "filter:<filter>",
-               flags:            "this|reserved|name|create|default",   
-               suggestion:       "tag",
-               example:          "commands|commands --this|commands --reserved|commands --name \"encrypt\"|commands tag \"checksum\"|commands --create MyNewCommand")]
+               flags:            "this|reserved|name|create|default",
+               example:          "commands|commands --this|commands --reserved|commands \"encrypt\"|commands --create --name MyNewCommand")]
 public class CommandsCommand : CommandBase<CommandsConfiguration>
 {
     public CommandsCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
 
     public override RunResult Run()
     {
+        Input.DoBadFlagCheck(this);
         if (Input.HasFlag("this")) return Custom();
         if (Input.HasFlag("default")) return Default();
         if (Input.HasFlag("reserved")) return Reserved();
-        if (Input.HasFlag("create")) return Create(Input.SingleArgument);
-        if (string.IsNullOrEmpty(Input.SingleQuote)) return NoFilter();
-        if (Input.HasFlag("name")) return FilterByName();
-        return FilterByTag();
+        if (Input.HasFlag("create") && Input.HasFlag("name")) return Create(Input.GetFlagValue("name"));
+        if (!string.IsNullOrEmpty(Input.SingleQuote)) return FilterByName();
+        return NoFilter();
     }
     private RunResult NoFilter()
     {

@@ -6,9 +6,10 @@ using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
 namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
 [Tags("core|shell|folder|open|util")]
-[PowerCommand(description: "Open a given directory or current working folder if argument is omitted",
+[PowerCommand(description: "Open a given directory or current working folder if argument is omitted, use flagg --app to open the AppData roaming directory",
     arguments: "<directory name>",
-    example: "dir|dir C:\\repos")]
+    flags: "app",
+    example: "dir|dir C:\\repos|dir --app")]
 public class DirCommand : CommandBase<CommandsConfiguration>
 {
     public DirCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }

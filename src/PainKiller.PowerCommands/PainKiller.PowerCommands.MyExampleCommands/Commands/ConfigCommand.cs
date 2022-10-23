@@ -29,7 +29,6 @@ public class ConfigCommand : CommandBase<PowerCommandsConfiguration>
         {
             try
             {
-                if (!File.Exists(Configuration.CodeEditor)) return CreateBadParameterRunResult($"The configuration codeEditor must be a valid path to the code editor, can not find file {Configuration.CodeEditor}");
                 ShellService.Service.Execute(Configuration.CodeEditor, arguments: $"{Path.Combine(AppContext.BaseDirectory, $"{nameof(PowerCommandsConfiguration)}.yaml")}", workingDirectory: "", WriteLine, fileExtension: "");
             }
             catch (Exception) { return CreateBadParameterRunResult("Your editor must be included in Path environment variables"); }

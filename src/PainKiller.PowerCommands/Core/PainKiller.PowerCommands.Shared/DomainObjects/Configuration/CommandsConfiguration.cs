@@ -6,7 +6,7 @@ namespace PainKiller.PowerCommands.Shared.DomainObjects.Configuration
     {
         public bool ShowDiagnosticInformation { get; set; } = true;
         public string DefaultCommand { get; set; } = "";
-        public string CodeEditor { get; set; } = "code";
+        public string CodeEditor { get; set; } = "C:\\Users\\%USERNAME%\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe";
         public string Repository { get; set; } = "https://github.com/PowerCommands/PowerCommands2022";
         public string BackupPath { get; set; } = "C:\\Temp";
         public Metadata Metadata { get; set; } = new();

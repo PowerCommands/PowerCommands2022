@@ -6,7 +6,7 @@ public class SuggestionProviderManager
 
     public Func<string, string[]> SuggestionProviderFunc;
     public SuggestionProviderManager() => SuggestionProviderFunc = GetSuggestions;
-    public static void AddFContextBoundSuggestions(string contextId, string[] suggestions)
+    public static void AddContextBoundSuggestions(string contextId, string[] suggestions)
     {
         if(!ContextBoundSuggestions.ContainsKey(contextId)) ContextBoundSuggestions.Add(contextId, suggestions);
     }
