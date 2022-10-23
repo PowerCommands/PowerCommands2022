@@ -8,7 +8,7 @@ PowerCommands is a concept for creating your own customized command prompt to pe
   - Build the solution to make sure that the PowerCommandsConfig.yaml file is created in output folder
   - Start the application and run the command 
   ```powercommand new --name nameOfYourCommandsProject --output "Path to directory"```
-  - A new solution with all the dependent project is created for you, open the solution, set the PowerCommands Console project as startup project ant hit F5 to try it out.
+  - A new solution with all the dependent project is created for you, open the solution, set the PowerCommands Console project as startup project ant hit F5 to try it out. Run this command ```demo``` to see that everything is workning and get som basic informtion of what you may need to configure to enable some features, like edit the configuration file.
 
 It's really unfortunate that you have to set up the startup project for the solution, that information is saved in solution user options (*.suo), it's a binary file that you don't want to mess with. But I guess that you already are familiar with that problem.
 
@@ -16,22 +16,22 @@ It's really unfortunate that you have to set up the startup project for the solu
  ### The core components offering this to your custom PowerCommands
  - Logging (using Microsoft.Extensions.Logging.ILogger)
  - Process log (using the standard logger with tags to track a process)
- - Configuration with YAML (very easy to extend)
+ - Configuration with YAML (built to be very easy to extend)
  - Diagnostic 
  - Secret handling to protect sensitive information like password or authentication tokens in the configuration file.
- - Command completion, with history, suggestions and support for Path/File navigation and color highlightning when typing a valid command
+ - Command completion, with history, suggestions, flags and support for Path/File navigation and color highlightning when typing a valid command
  - Progressbar
  - Download files
  - Password prompt
  - Run as job
  - Zip with attributes like checksum, filecount and file size
+ - Describe your commands with code examples using attributes.
  
  Some the core components is separated and are stand-alone components, they could be reused else where, like security and configuration.
  
  ## Custom Components 
- - HttpClientUtils 
- - AzureKeyVault
- - GlitchFinder (by Jooachim)
+  - AzureKeyVault
+  - GlitchFinder (by Jooachim)
 
  ## Third Party Components
  - Serialog
@@ -58,15 +58,19 @@ Read more about design principles for PowerCommands here: [Design principles](Po
 
  # Implementations
  
+## KnowledgeDB
+ A very simple but powerfull application for you to build a knowledge DB adding Url:s, Directory pats and links to One Note documents and enriching them with tags wich makes them more searcheble, I use this PowerCommands implementation every day in my job as an IT-architect.
+
  ## GlitchFinder power commands using GlitchFinder component by Jooachim
 
  Either compare two different datasets or compare a single dataset towards itself over time.
- If there are glitches in the matrix then you get a report showing lines that are missing or different in the two datasets.
+ If there are glitches in the matrix then you get a report showing lines that are missing or different in the two datasets. 
 
 ### Comparison
 This is for comparing two different data sources, could be two different files, two different DB queries, one file vs one query etc.
 
 ### Regression test
 This is for tracking a single dataset/source over time. You create a baseline, which is stored on file, and then later compare data towards this baseline.
+
 
   
