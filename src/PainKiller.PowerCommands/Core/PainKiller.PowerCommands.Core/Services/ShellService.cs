@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics;
-using System.IO;
 using Microsoft.Extensions.Logging;
 using PainKiller.PowerCommands.Shared.Contracts;
 
@@ -20,6 +19,12 @@ public class ShellService : IShellService
         _logger.LogInformation($"{nameof(ShellService)} {nameof(OpenDirectory)} {path}");
         if (!Directory.Exists(path)) return;
         Process.Start(new ProcessStartInfo { FileName = path, UseShellExecute = true, Verb = "open" });
+    }
+
+    public void OpenWithDefaultProgram(string uri)
+    {
+        _logger.LogInformation($"{nameof(ShellService)} {nameof(OpenDirectory)} {uri}");
+        Process.Start(uri);
     }
 
     public void Execute(string programName, string arguments, string workingDirectory, Action<string,bool> writeFunction, string fileExtension = "exe", bool waitForExit = false, bool useShellExecute = false)

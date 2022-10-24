@@ -1,11 +1,15 @@
-﻿using PainKiller.PowerCommands.Core.Services;
+﻿using PainKiller.PowerCommands.Core.Extensions;
+using PainKiller.PowerCommands.Core.Services;
 using PainKiller.PowerCommands.Shared.Contracts;
+using PainKiller.PowerCommands.Shared.DomainObjects.Documentation;
+
 namespace PainKiller.PowerCommands.Core.Commands;
 
 [Tags("core|help")]
-[PowerCommand(       description: "With help command you will be shown the provided description of the command, argument and quotes input parameters",
-                       arguments: "<command name>",
+[PowerCommand(       description: "With help command you will be shown the provided description or online documentation of the command or a PowerCommand feature.",
+                       arguments: "<command name or feature you are interested of knowing more>",
                       suggestion: "cls",
+                           flags: "docs",
                          example: "describe exit|describe cls|describe log")]
 public class DescribeCommand : CommandBase<CommandsConfiguration>
 {
@@ -13,18 +17,47 @@ public class DescribeCommand : CommandBase<CommandsConfiguration>
 
     public override RunResult Run()
     {
+        if(Input.HasFlag("docs")) ShowDoc();
+        else ShowCommand();
+        return CreateRunResult();
+    }
+
+    public void ShowDoc()
+    {
+        var docSearch = Input.HasFlag("docs") ? Input.GetFlagValue("docs") : Input.SingleArgument;
+        var docs = StorageService<DocsDB>.Service.GetObject().Docs;
+        var matchDocs = docs.Where(d => d.Name.Contains(docSearch) || d.Tags.Contains(docSearch)).ToArray();
+        if (matchDocs.Length == 1)
+        {
+            ShellService.Service.OpenWithDefaultProgram(matchDocs.First().Uri);
+            return;
+        }
+        else if (matchDocs.Length > 1)
+        {
+            WriteHeadLine($"Found {matchDocs.Length} number of documents.");
+            foreach (var matchDoc in matchDocs)
+            {
+                WriteLine($"{matchDoc.Name} {matchDoc.Uri.Split('/').Last()} {matchDoc.Tags}");
+            }
+            return;
+        }
+        WriteHeadLine("Could not find any command or documentation to describe");
+        WriteHeadLine("Documentation");
+        foreach (var doc in docs) WriteLine($"{doc.Name} {doc.Uri.Split('/').Last()} {doc.Tags}");
+    }
+
+    private void ShowCommand()
+    {
         var identifier = string.IsNullOrEmpty(Input.SingleArgument) ? "describe" : Input.SingleArgument;
         var command = IPowerCommandsRuntime.DefaultInstance?.Commands.FirstOrDefault(c => c.Identifier == identifier);
         if (command == null)
         {
-            if(Input.Identifier != nameof(DescribeCommand).ToLower().Replace("command","")) WriteLine($"Command with identifier:{Input.Identifier} not found");
-            WriteLine("Found commands are:", addToOutput: false);
-            foreach (var consoleCommand in IPowerCommandsRuntime.DefaultInstance?.Commands!) WriteLine(consoleCommand.Identifier, addToOutput: false);
-            return CreateRunResult();
+            if (Input.Identifier != nameof(DescribeCommand).ToLower().Replace("command", "")) WriteLine($"Command with identifier:{Input.Identifier} not found");
+            ShowDoc();
+            return;
         }
         HelpService.Service.ShowHelp(command);
         Console.WriteLine();
         WriteHeadLine("To se all available commands type commands");
-        return CreateRunResult();
     }
 }

@@ -2,7 +2,6 @@
 
 namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
-[Tags("demo")]
 [PowerCommand(  description: "Demo command just to se that your solution is setup properly",
                 example: "demo")]
 public class DemoCommand : CommandBase<PowerCommandsConfiguration>
