@@ -1,4 +1,5 @@
-﻿using PainKiller.PowerCommands.MyExampleCommands.Configuration;
+﻿using PainKiller.PowerCommands.Core.Extensions;
+using PainKiller.PowerCommands.MyExampleCommands.Configuration;
 
 namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
@@ -10,6 +11,9 @@ public class DemoCommand : CommandBase<PowerCommandsConfiguration>
 
     public override RunResult Run()
     {
+        if(Input.HasFlag("hello")) WriteLine("Hello World!");
+
+
         WriteHeadLine("Congratulations! You have setup your PowerCommands solution correctly!");
         WriteLine("You may set up some things in your PowerCommandsConfiguration.yaml file, like the path to your favorite code editor");
         WriteLine("Just type dir and hit enter to open up this applications bin directory");

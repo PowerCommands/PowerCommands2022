@@ -13,4 +13,4 @@ Run this command
 
 ```demo``` to see that everything is workning and get som basic informtion of what you may need to configure to enable some features, like edit the configuration file.
 
-![Alt text](DemoCommand.png?raw=true "Component Diagram")
+![Alt text](images/DemoCommand.png?raw=true "Component Diagram")

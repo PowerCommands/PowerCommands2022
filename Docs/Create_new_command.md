@@ -22,12 +22,12 @@ helloworld
 ```
 This is what you get:
 
-![Alt text](HelloWorld.png?raw=true "Component Diagram")
+![Alt text](images/HelloWorld.png?raw=true "Hello World")
 
 The PowerCommand Core finds your new Command class automatically, and can  there fore hightligt the name of the command in blue color and of course execute the command.
 
 ## Use the PowerCommand CLI to create a new Command
 The Core has creation of new commands to your Visual Studio Solution built in, just type:
 
-![Alt text](NewCommand.png?raw=true "Component Diagram")
+![Alt text](images/NewCommand.png?raw=true "New Command")
 And a new command with the name HelloWorldCommand.cs is created in you Commands project.
