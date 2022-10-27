@@ -1,59 +1,59 @@
 {
   "Docs": [
     {
-      "DocID": "86b340da-b0c7-43de-bab0-e613ae681f1f",
-      "Name": "Create_new_command",
-      "Uri": "https://github.com/PowerCommands/PowerCommands2022/blob/main/Docs/Create_new_command.md",
-      "Updated": "2022-10-24T21:36:44.7062166+02:00",
-      "Tags": "create,new,command",
+      "DocID": 1,
+      "Name": "ReadMe",
+      "Uri": "https://github.com/PowerCommands/PowerCommands2022/tree/main/Docs",
+      "Updated": "2022-10-27T23:27:30.5781561+02:00",
+      "Tags": "start,documentation,index",
       "Version": 1
     },
     {
-      "DocID": "deeaabc2-2df1-45ea-8dff-4cd6765e3751",
-      "Name": "Create-new-project",
+      "DocID": 2,
+      "Name": "Create-New-PowerCommands-VS-Solution",
       "Uri": "https://github.com/PowerCommands/PowerCommands2022/blob/main/Docs/Create_new_%20project.md",
-      "Updated": "2022-10-24T21:42:57.1243688+02:00",
-      "Tags": "powercommand,visual,studio,cli",
+      "Updated": "2022-10-27T23:30:54.3917815+02:00",
+      "Tags": "",
       "Version": 1
     },
     {
-      "DocID": "b8a0ea8b-762f-4d0c-a47a-181cbb491f75",
+      "DocID": 3,
+      "Name": "Create-New-Command",
+      "Uri": "https://github.com/PowerCommands/PowerCommands2022/blob/main/Docs/Create_new_command.md",
+      "Updated": "2022-10-27T23:32:08.2584632+02:00",
+      "Tags": "visual,studio,template",
+      "Version": 1
+    },
+    {
+      "DocID": 4,
       "Name": "Design-Your-Command",
       "Uri": "https://github.com/PowerCommands/PowerCommands2022/blob/main/Docs/Design_command.md",
-      "Updated": "2022-10-27T19:36:23.6123114+02:00",
-      "Tags": "flags,attribute,code,example",
+      "Updated": "2022-10-27T23:33:28.4248646+02:00",
+      "Tags": "guidance,architecture",
       "Version": 1
     },
     {
-      "DocID": "09638975-e76d-4133-a500-3ccbefc123b9",
-      "Name": "interface-ICommandLineInput",
-      "Uri": "https://github.com/PowerCommands/PowerCommands2022/blob/main/Docs/Input.md",
-      "Updated": "2022-10-27T19:40:22.3475444+02:00",
-      "Tags": "flag,identifier,quote,argument,single",
-      "Version": 1
-    },
-    {
-      "DocID": "5474baa1-988b-4632-b392-7f5c57fb028f",
-      "Name": "Documentation-Start",
-      "Uri": "https://github.com/PowerCommands/PowerCommands2022/blob/main/Docs/README.md",
-      "Updated": "2022-10-27T20:06:31.6692349+02:00",
-      "Tags": "readme,powercommands",
-      "Version": 1
-    },
-    {
-      "DocID": "be2607ef-a216-444d-883b-558ffbf5d07e",
-      "Name": "PowerCommandAttribute-Flags",
+      "DocID": 5,
+      "Name": "Flags",
       "Uri": "https://github.com/PowerCommands/PowerCommands2022/blob/main/Docs/Flags.md",
-      "Updated": "2022-10-27T22:09:06.9701351+02:00",
-      "Tags": "documentation,parameters,help,description",
+      "Updated": "2022-10-27T23:35:11.2412905+02:00",
+      "Tags": "Description,Attribute,Command",
       "Version": 1
     },
     {
-      "DocID": "ec4b4af9-2a5f-4b54-893d-f6f2181cbae4",
-      "Name": "PowerCommands-Attribute",
-      "Uri": "https://github.com/PowerCommands/PowerCommands2022/blob/main/Docs/PowerCommandsAttribute.md",
-      "Updated": "2022-10-27T22:50:06.0189839+02:00",
-      "Tags": "help,description,support,flags",
+      "DocID": 6,
+      "Name": "ICommandLineInput",
+      "Uri": "https://github.com/PowerCommands/PowerCommands2022/blob/main/Docs/Input.md",
+      "Updated": "2022-10-27T23:36:37.0650113+02:00",
+      "Tags": "Input,contracts,common,shared,code",
+      "Version": 1
+    },
+    {
+      "DocID": 7,
+      "Name": "PowerCommandsAttribute",
+      "Uri": "https://github.com/PowerCommands/PowerCommands2022/blob/main/Docs/PowerCommandAttribute.md",
+      "Updated": "2022-10-27T23:38:02.4488661+02:00",
+      "Tags": "describe,help",
       "Version": 1
     }
   ]
