@@ -23,6 +23,22 @@
       "Updated": "2022-10-25T23:07:05.2553133+02:00",
       "Tags": "index",
       "Version": 1
+    },
+    {
+      "DocID": "b8a0ea8b-762f-4d0c-a47a-181cbb491f75",
+      "Name": "Design-Your-Command",
+      "Uri": "https://github.com/PowerCommands/PowerCommands2022/blob/main/Docs/Design_command.md",
+      "Updated": "2022-10-27T19:36:23.6123114+02:00",
+      "Tags": "flags,attribute,code,example",
+      "Version": 1
+    },
+    {
+      "DocID": "09638975-e76d-4133-a500-3ccbefc123b9",
+      "Name": "interface-ICommandLineInput",
+      "Uri": "https://github.com/PowerCommands/PowerCommands2022/blob/main/Docs/Input.md",
+      "Updated": "2022-10-27T19:40:22.3475444+02:00",
+      "Tags": "flag,identifier,quote,argument,single",
+      "Version": 1
     }
   ]
 }
