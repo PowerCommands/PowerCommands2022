@@ -40,8 +40,7 @@ public static class CommandLineInputInterpreterExtension
         var flagIndex = indexedInputs.First(i => i.Value.ToLower() == flag).Index;
         return flagIndex == indexedInputs.Count ? "" : indexedInputs.First(i => i.Index == flagIndex + 1).Value.Replace("\"","");
     }
-    public static bool HasFlag(this ICommandLineInput input, string flagName) => input.Flags.Any(f => f == $"--{flagName}" || f.ToLower().Substring(2, 1) == $"{flagName.ToLower()}".Substring(0, 1));
-
+    public static bool HasFlag(this ICommandLineInput input, string flagName) => input.Flags.Any(f => f == $"--{flagName}");
     public static void DoBadFlagCheck(this ICommandLineInput input, IConsoleCommand command)
     {
         var dokumentedFlags = command.GetPowerCommandAttribute().Flags.Split('|');

@@ -26,7 +26,7 @@ public class DescribeCommand : CommandBase<CommandsConfiguration>
     {
         var docSearch = Input.HasFlag("docs") ? Input.GetFlagValue("docs").ToLower() : Input.SingleArgument.ToLower();
         var docs = StorageService<DocsDB>.Service.GetObject().Docs;
-        var matchDocs = docs.Where(d => d.Name.ToLower().Contains(docSearch) || d.Tags.ToLower().Contains(docSearch)).ToArray();
+        var matchDocs = docs.Where(d => d.DocID.ToString().PadLeft(4, '0') == docSearch || d.Name.ToLower().Contains(docSearch) || d.Tags.ToLower().Contains(docSearch)).ToArray();
         if (matchDocs.Length == 1)
         {
             ShellService.Service.OpenWithDefaultProgram(matchDocs.First().Uri);
@@ -37,7 +37,7 @@ public class DescribeCommand : CommandBase<CommandsConfiguration>
             WriteHeadLine($"Found {matchDocs.Length} number of documents.");
             foreach (var matchDoc in matchDocs)
             {
-                WriteLine($"{matchDoc.Name} {matchDoc.Uri.Split('/').Last()} {matchDoc.Tags}");
+                WriteLine($"{matchDoc.DocID.ToString().PadLeft(4, '0')} {matchDoc.Name} {matchDoc.Uri.Split('/').Last()} {matchDoc.Tags}");
             }
             return;
         }

@@ -4,7 +4,7 @@ namespace PainKiller.PowerCommands.Shared.DomainObjects.Documentation;
 
 public class Doc
 {
-    public Guid? DocID { get; set; }
+    public int DocID { get; set; }
     public string Name { get; set; } = "";
     public string Uri { get; set; } = "";
     public DateTime Updated { get; set; } = DateTime.Now;

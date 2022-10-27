@@ -94,7 +94,7 @@ public class DocCommand : CommandBase<CommandsConfiguration>
     }
     private void Add()
     {
-        var item = new Doc { DocID = Guid.NewGuid(), Name = Input.GetFlagValue("name"), Version = 1, Tags = Input.GetFlagValue("tags"), Updated = DateTime.Now, Uri = Input.SingleQuote };
+        var item = new Doc { DocID = _docs.Count > 0 ? _docs.Max(d => d.DocID) + 1 : 1, Name = Input.GetFlagValue("name"), Version = 1, Tags = Input.GetFlagValue("tags"), Updated = DateTime.Now, Uri = Input.SingleQuote };
         Print(item, 0);
         if (!DialogService.YesNoDialog("Is this information correct?")) return;
         var db = _storage.GetObject();
