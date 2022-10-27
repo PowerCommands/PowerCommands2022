@@ -197,8 +197,7 @@ public class CliManager : ICliManager
     public static string GetName()
     {
         var path = GetLocalSolutionRoot();
-        var solutionFile = Directory.GetFileSystemEntries(path, "*.sln").FirstOrDefault();
-        if (solutionFile == null) throw new IndexOutOfRangeException("No solution file could be found, name can not be extracted");
+        var solutionFile = Directory.GetFileSystemEntries(path, "*.sln").FirstOrDefault() ?? Directory.GetFileSystemEntries(AppContext.BaseDirectory, "*.exe").First().Replace(".exe", "");
         return solutionFile.Split('\\').Last().Replace(".sln", "");
     }
 

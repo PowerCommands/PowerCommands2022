@@ -6,5 +6,9 @@
 
 [Design your Command](Design_command.md)
 
-## Command explained in detail
+## Command explained in depth
 [Input](Input.md)
+
+[Flags](Flags.md)
+
+[PowerCommands Attribute](PowerCommandAttribute.md)

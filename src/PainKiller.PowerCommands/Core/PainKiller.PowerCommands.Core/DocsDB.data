@@ -47,6 +47,14 @@
       "Updated": "2022-10-27T22:09:06.9701351+02:00",
       "Tags": "documentation,parameters,help,description",
       "Version": 1
+    },
+    {
+      "DocID": "ec4b4af9-2a5f-4b54-893d-f6f2181cbae4",
+      "Name": "PowerCommands-Attribute",
+      "Uri": "https://github.com/PowerCommands/PowerCommands2022/blob/main/Docs/PowerCommandsAttribute.md",
+      "Updated": "2022-10-27T22:50:06.0189839+02:00",
+      "Tags": "help,description,support,flags",
+      "Version": 1
     }
   ]
 }

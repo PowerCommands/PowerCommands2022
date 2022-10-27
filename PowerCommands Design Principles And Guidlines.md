@@ -332,12 +332,12 @@ In such cases they should support the identical configuration structure otherwis
 This is an example where every property of the attributes is used
 
 ![Alt text](attributes.png?raw=true "Attributes")
-Attributes is used to show a nice description of the command with the built in describe command. 
+Attributes is used to show a nice description of the command with the built in --help flag. 
 
 ```
-describe cls
+regression --help
 ```
-![Alt text](describe.png?raw=true "Describe")
+![Alt text](Docs/images/power_command_attribute.png?raw=true "Usage of help flag")
 
 But it is just not for displaying the help, the flag property and the suggestion property of the PowerCommandAttribute controls suggestions provided by intellisense, you should really take advantage of that.
 
