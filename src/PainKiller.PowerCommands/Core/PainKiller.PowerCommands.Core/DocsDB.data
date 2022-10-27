@@ -39,6 +39,14 @@
       "Updated": "2022-10-27T20:06:31.6692349+02:00",
       "Tags": "readme,powercommands",
       "Version": 1
+    },
+    {
+      "DocID": "be2607ef-a216-444d-883b-558ffbf5d07e",
+      "Name": "PowerCommandAttribute-Flags",
+      "Uri": "https://github.com/PowerCommands/PowerCommands2022/blob/main/Docs/Flags.md",
+      "Updated": "2022-10-27T22:09:06.9701351+02:00",
+      "Tags": "documentation,parameters,help,description",
+      "Version": 1
     }
   ]
 }

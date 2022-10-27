@@ -131,8 +131,15 @@ public class PowerCommandCommand : CommandBase<CommandsConfiguration>
     {
         _path = CliManager.GetLocalSolutionRoot();
         var solutionFile = Directory.GetFileSystemEntries(_path, "*.sln").FirstOrDefault();
-        if (solutionFile == null) return CreateBadParameterRunResult($"No solution file found in directory [{_path}]");
         var name = CliManager.GetName();
+        var cli = new CliManager(name, _path, WriteLine);
+
+        if (solutionFile == null)
+        {
+            WriteLine("When running in application scope (outside VS Env) only the Documentation file will be updated...");
+            cli.MergeDocsDB();
+            return CreateRunResult();
+        }
 
         Console.WriteLine("Update will delete and replace everything in the [Core] and [Third party components] folder");
         if(backup) Console.WriteLine($"A backup will be saved in folder [{Path.Combine(_path)}]","Backup. /nEarlier backups needs to be removed");
@@ -141,7 +148,7 @@ public class PowerCommandCommand : CommandBase<CommandsConfiguration>
         var response = Console.ReadLine();
         if ($"{response?.Trim()}" != "y") return CreateRunResult();
         
-        var cli = new CliManager(name, _path, WriteLine);
+        
 
         cli.DeleteDownloadsDirectory();
         cli.CreateRootDirectory(onlyRepoSrcCodeRootPath: true);

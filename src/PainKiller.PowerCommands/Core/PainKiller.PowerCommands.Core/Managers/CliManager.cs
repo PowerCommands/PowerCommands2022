@@ -1,4 +1,5 @@
-﻿using PainKiller.PowerCommands.Configuration.DomainObjects;
+﻿using System.Net.Http.Json;
+using PainKiller.PowerCommands.Configuration.DomainObjects;
 using PainKiller.PowerCommands.Core.Services;
 using PainKiller.PowerCommands.Shared.Contracts;
 using PainKiller.PowerCommands.Shared.DomainObjects.Documentation;
@@ -203,12 +204,26 @@ public class CliManager : ICliManager
 
     public void MergeDocsDB()
     {
-        var newDocsDB = StorageService<DocsDB>.Service.GetObject(Path.Combine(_srcCodeRootPath, $"PowerCommands2022\\src\\PainKiller.PowerCommands\\Core\\PainKiller.PowerCommands.Core\\DocsDB.data"));
+        var httpClient = new HttpClient();
+        var uri = "https://raw.githubusercontent.com/PowerCommands/PowerCommands2022/main/src/PainKiller.PowerCommands/Core/PainKiller.PowerCommands.Core/DocsDB.data";
+        var newDocsDB = httpClient.GetFromJsonAsync<DocsDB?>(uri).Result;
+        if (newDocsDB == null)
+        {
+            _logger.Invoke($"Could not download {nameof(DocsDB)} from {uri}", DisplayAndWriteToLog);
+            return;
+        }
+        _logger.Invoke($"Downloaded latest available {nameof(DocsDB)} from {uri} OK", DisplayAndWriteToLog);
         var currentDocsDB = StorageService<DocsDB>.Service.GetObject();
+
+        _logger.Invoke($"Merging changes (if any) in {nameof(DocsDB)}", DisplayAndWriteToLog);
+        _logger.Invoke($"Local DB items count: {currentDocsDB.Docs.Count}", DisplayAndWriteToLog);
+        _logger.Invoke($"New   DB items count: {newDocsDB.Docs.Count}", DisplayAndWriteToLog);
+
+        var hasChanges = false;
         foreach (var doc in newDocsDB.Docs)
         {
             if(currentDocsDB.Docs.Any(d => d.Name == doc.Name && d.Tags == doc.Tags && d.Uri == doc.Uri)) continue;
-
+            hasChanges = true;
             var needsUpdate = currentDocsDB.Docs.FirstOrDefault(d => d.Name == doc.Name && d.Updated < doc.Updated);
             if (needsUpdate != null)
             {
@@ -224,8 +239,14 @@ public class CliManager : ICliManager
             currentDocsDB.Docs.Add(doc);
             _logger.Invoke($"{doc.Name} has been added to the {nameof(DocsDB)}", DisplayAndWriteToLog);
         }
-        var fileName = StorageService<DocsDB>.Service.StoreObject(currentDocsDB);
-        _logger.Invoke($"The {nameof(DocsDB)} has been saved to file [{fileName}]", DisplayAndWriteToLog);
+
+        if (hasChanges)
+        {
+            var fileName = StorageService<DocsDB>.Service.StoreObject(currentDocsDB);
+            _logger.Invoke($"The changes has been merged with your local {nameof(DocsDB)} file and saved to file [{fileName}]", DisplayAndWriteToLog);
+            return;
+        }
+        _logger.Invoke($"Your local {nameof(DocsDB)} is already up to date with the latest version, no changes made.", DisplayAndWriteToLog);
     }
     private string GetPath(string path) => path.StartsWith("PowerCommands2022\\") ? Path.Combine(_srcCodeRootPath, path) : Path.Combine(_path, path);
     private void CopyFolder(string sourceFolder, string destFolder)
