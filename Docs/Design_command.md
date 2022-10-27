@@ -44,7 +44,7 @@ convert --help
 ```
 This help will be automatically displayed!
 
-![Alt text](images/DemoCommand.png?raw=true "Convert command example")
+![Alt text](images/convert_sample.png?raw=true "Convert command example")
 
 ## But must I use the PowerCommand attribute on every command I create?
 No that is not mandatory but it is recommended, note that when you declare the flags, they will be available for code completion, wich means that when the consumer types - and hit the tab button the user will can se what flags there are that could be used. That is really nice, you could read more about design of good Command Line Inter fade design here:
