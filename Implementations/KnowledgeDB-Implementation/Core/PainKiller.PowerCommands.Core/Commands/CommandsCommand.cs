@@ -7,7 +7,7 @@ namespace PainKiller.PowerCommands.Core.Commands;
 [Tags("core|help")]
 [PowerCommand( description:      "Shows commands, or filter commands by name, create a new command, show default command with flag --default",
                qutes:            "filter:<filter>",
-               flags:            "this|reserved|name|create|default",
+               flags:            "this|reserved|name|new|default",
                example:          "commands|commands --this|commands --reserved|commands \"encrypt\"|commands --create --name MyNewCommand")]
 public class CommandsCommand : CommandBase<CommandsConfiguration>
 {
@@ -19,7 +19,7 @@ public class CommandsCommand : CommandBase<CommandsConfiguration>
         if (Input.HasFlag("this")) return Custom();
         if (Input.HasFlag("default")) return Default();
         if (Input.HasFlag("reserved")) return Reserved();
-        if (Input.HasFlag("create") && Input.HasFlag("name")) return Create(Input.GetFlagValue("name"));
+        if (Input.HasFlag("new") && Input.HasFlag("name")) return Create(Input.GetFlagValue("name"));
         if (!string.IsNullOrEmpty(Input.SingleQuote)) return FilterByName();
         return NoFilter();
     }

@@ -87,6 +87,7 @@ public class PowerCommandCommand : CommandBase<CommandsConfiguration>
         cli.ReplaceContentInFile($"PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.{name}Commands\\Commands\\DemoCommand.cs", "MyExampleCommands", $"{name}Commands");
         cli.ReplaceContentInFile($"PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.{name}Commands\\Commands\\ConfigCommand.cs", "MyExampleCommands", $"{name}Commands");
         cli.ReplaceContentInFile($"PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.{name}Commands\\Commands\\DirCommand.cs", "MyExampleCommands", $"{name}Commands");
+        cli.ReplaceContentInFile($"PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.{name}Commands\\Commands\\DocCommand.cs", "MyExampleCommands", $"{name}Commands");
         cli.ReplaceContentInFile($"PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.{name}Commands\\PainKiller.PowerCommands.MyExampleCommands.csproj", @"<ItemGroup>
     <Compile Remove=""Commands\Templates\DefaultCommand.cs"" />
   </ItemGroup>", $"");
@@ -105,12 +106,14 @@ public class PowerCommandCommand : CommandBase<CommandsConfiguration>
         cli.MoveFile($"PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.{name}Commands\\Commands\\DemoCommand.cs", "DemoCommand.cs");
         cli.MoveFile($"PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.{name}Commands\\Commands\\ConfigCommand.cs", "ConfigCommand.cs");
         cli.MoveFile($"PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.{name}Commands\\Commands\\DirCommand.cs", "DirCommand.cs");
+        cli.MoveFile($"PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.{name}Commands\\Commands\\DocCommand.cs", "DocCommand.cs");
         cli.MoveDirectory($"PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.{name}Commands", $"PainKiller.PowerCommands.{name}Commands");
         cli.DeleteDir($"PainKiller.PowerCommands.{name}Commands\\Commands");
         cli.CreateDirectory($"PainKiller.PowerCommands.{name}Commands\\Commands");
         cli.MoveFile($"DemoCommand.cs", $"PainKiller.PowerCommands.{name}Commands\\Commands\\DemoCommand.cs");
         cli.MoveFile($"ConfigCommand.cs", $"PainKiller.PowerCommands.{name}Commands\\Commands\\ConfigCommand.cs");
         cli.MoveFile($"DirCommand.cs", $"PainKiller.PowerCommands.{name}Commands\\Commands\\DirCommand.cs");
+        cli.MoveFile($"DocCommand.cs", $"PainKiller.PowerCommands.{name}Commands\\Commands\\DocCommand.cs");
 
         cli.DeleteDownloadsDirectory();
 
@@ -128,8 +131,15 @@ public class PowerCommandCommand : CommandBase<CommandsConfiguration>
     {
         _path = CliManager.GetLocalSolutionRoot();
         var solutionFile = Directory.GetFileSystemEntries(_path, "*.sln").FirstOrDefault();
-        if (solutionFile == null) return CreateBadParameterRunResult($"No solution file found in directory [{_path}]");
         var name = CliManager.GetName();
+        var cli = new CliManager(name, _path, WriteLine);
+
+        if (solutionFile == null)
+        {
+            WriteLine("When running in application scope (outside VS Env) only the Documentation file will be updated...");
+            cli.MergeDocsDB();
+            return CreateRunResult();
+        }
 
         Console.WriteLine("Update will delete and replace everything in the [Core] and [Third party components] folder");
         if(backup) Console.WriteLine($"A backup will be saved in folder [{Path.Combine(_path)}]","Backup. /nEarlier backups needs to be removed");
@@ -138,7 +148,7 @@ public class PowerCommandCommand : CommandBase<CommandsConfiguration>
         var response = Console.ReadLine();
         if ($"{response?.Trim()}" != "y") return CreateRunResult();
         
-        var cli = new CliManager(name, _path, WriteLine);
+        
 
         cli.DeleteDownloadsDirectory();
         cli.CreateRootDirectory(onlyRepoSrcCodeRootPath: true);
@@ -181,5 +191,8 @@ public class PowerCommandCommand : CommandBase<CommandsConfiguration>
         var templateManager = new TemplateManager(name, WriteLine);
         templateManager.InitializeTemplatesDirectory();
         templateManager.CopyTemplates();
+        
+        cliManager.MergeDocsDB();
+        cliManager.DeleteFile($"PowerCommands2022\\src\\PainKiller.PowerCommands\\Core\\PainKiller.PowerCommands.Core\\DocsDB.data", repoFile:true);
     }
 }

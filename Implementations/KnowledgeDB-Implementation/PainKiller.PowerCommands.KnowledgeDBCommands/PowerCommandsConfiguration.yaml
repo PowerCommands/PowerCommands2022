@@ -2,8 +2,7 @@ version: 1.0
 configuration:
   backupPath: C:\repos\Backup
   shellConfiguration:
-    pathToOneNote: C:\Program Files\Microsoft Office\root\Office16\ONENOTE
-    browser: C:\Program Files (x86)\Microsoft\Edge\Application\msedge
+    pathToOneNote: C:\Program Files\Microsoft Office\root\Office16\ONENOTE    
     displaySeparator: \t
     autostart: false
   showDiagnosticInformation: false
