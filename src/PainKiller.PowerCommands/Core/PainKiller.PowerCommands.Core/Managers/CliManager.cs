@@ -204,12 +204,12 @@ public class CliManager : ICliManager
     public void MergeDocsDB()
     {
         var newDocsDB = StorageService<DocsDB>.Service.GetObject(Path.Combine(_srcCodeRootPath, $"PowerCommands2022\\src\\PainKiller.PowerCommands\\Core\\PainKiller.PowerCommands.Core\\DocsDB.data"));
-        var currentDocsCB = StorageService<DocsDB>.Service.GetObject();
+        var currentDocsDB = StorageService<DocsDB>.Service.GetObject();
         foreach (var doc in newDocsDB.Docs)
         {
-            if(currentDocsCB.Docs.Any(d => d.Name == doc.Name && d.Tags == doc.Tags && d.Uri == doc.Uri)) continue;
+            if(currentDocsDB.Docs.Any(d => d.Name == doc.Name && d.Tags == doc.Tags && d.Uri == doc.Uri)) continue;
 
-            var needsUpdate = currentDocsCB.Docs.FirstOrDefault(d => d.Name == doc.Name && d.Updated < doc.Updated);
+            var needsUpdate = currentDocsDB.Docs.FirstOrDefault(d => d.Name == doc.Name && d.Updated < doc.Updated);
             if (needsUpdate != null)
             {
                 _logger.Invoke($"{needsUpdate.Name} has change and the new changes will be updated in {nameof(DocsDB)}", DisplayAndWriteToLog);
@@ -217,14 +217,14 @@ public class CliManager : ICliManager
                 needsUpdate.Uri = doc.Uri;
                 needsUpdate.Updated = DateTime.Now;
                 needsUpdate.Version = +1;
-                currentDocsCB.Docs.Remove(needsUpdate);
-                currentDocsCB.Docs.Add(needsUpdate);
+                currentDocsDB.Docs.Remove(needsUpdate);
+                currentDocsDB.Docs.Add(needsUpdate);
                 continue;
             }
-            currentDocsCB.Docs.Add(doc);
+            currentDocsDB.Docs.Add(doc);
             _logger.Invoke($"{doc.Name} has been added to the {nameof(DocsDB)}", DisplayAndWriteToLog);
         }
-        var fileName = StorageService<DocsDB>.Service.StoreObject(currentDocsCB);
+        var fileName = StorageService<DocsDB>.Service.StoreObject(currentDocsDB);
         _logger.Invoke($"The {nameof(DocsDB)} has been saved to file [{fileName}]", DisplayAndWriteToLog);
     }
     private string GetPath(string path) => path.StartsWith("PowerCommands2022\\") ? Path.Combine(_srcCodeRootPath, path) : Path.Combine(_path, path);

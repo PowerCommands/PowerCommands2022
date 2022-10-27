@@ -87,6 +87,7 @@ public class PowerCommandCommand : CommandBase<CommandsConfiguration>
         cli.ReplaceContentInFile($"PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.{name}Commands\\Commands\\DemoCommand.cs", "MyExampleCommands", $"{name}Commands");
         cli.ReplaceContentInFile($"PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.{name}Commands\\Commands\\ConfigCommand.cs", "MyExampleCommands", $"{name}Commands");
         cli.ReplaceContentInFile($"PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.{name}Commands\\Commands\\DirCommand.cs", "MyExampleCommands", $"{name}Commands");
+        cli.ReplaceContentInFile($"PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.{name}Commands\\Commands\\DocCommand.cs", "MyExampleCommands", $"{name}Commands");
         cli.ReplaceContentInFile($"PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.{name}Commands\\PainKiller.PowerCommands.MyExampleCommands.csproj", @"<ItemGroup>
     <Compile Remove=""Commands\Templates\DefaultCommand.cs"" />
   </ItemGroup>", $"");
@@ -105,6 +106,7 @@ public class PowerCommandCommand : CommandBase<CommandsConfiguration>
         cli.MoveFile($"PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.{name}Commands\\Commands\\DemoCommand.cs", "DemoCommand.cs");
         cli.MoveFile($"PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.{name}Commands\\Commands\\ConfigCommand.cs", "ConfigCommand.cs");
         cli.MoveFile($"PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.{name}Commands\\Commands\\DirCommand.cs", "DirCommand.cs");
+        cli.MoveFile($"PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.{name}Commands\\Commands\\DocCommand.cs", "DocCommand.cs");
         cli.MoveDirectory($"PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.{name}Commands", $"PainKiller.PowerCommands.{name}Commands");
         cli.DeleteDir($"PainKiller.PowerCommands.{name}Commands\\Commands");
         cli.CreateDirectory($"PainKiller.PowerCommands.{name}Commands\\Commands");
