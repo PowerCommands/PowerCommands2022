@@ -183,5 +183,6 @@ public class PowerCommandCommand : CommandBase<CommandsConfiguration>
         templateManager.CopyTemplates();
         
         cliManager.MergeDocsDB();
+        cliManager.DeleteFile($"PowerCommands2022\\src\\PainKiller.PowerCommands\\Core\\PainKiller.PowerCommands.Core\\DocsDB.data", repoFile:true);
     }
 }
