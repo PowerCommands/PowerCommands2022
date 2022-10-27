@@ -17,14 +17,6 @@
       "Version": 1
     },
     {
-      "DocID": "bfd65163-d9f8-432a-97da-539cccb3c5b6",
-      "Name": "Documentation-Start",
-      "Uri": "https://github.com/PowerCommands/PowerCommands2022/blob/main/Docs/Start.md",
-      "Updated": "2022-10-25T23:07:05.2553133+02:00",
-      "Tags": "index",
-      "Version": 1
-    },
-    {
       "DocID": "b8a0ea8b-762f-4d0c-a47a-181cbb491f75",
       "Name": "Design-Your-Command",
       "Uri": "https://github.com/PowerCommands/PowerCommands2022/blob/main/Docs/Design_command.md",
@@ -38,6 +30,14 @@
       "Uri": "https://github.com/PowerCommands/PowerCommands2022/blob/main/Docs/Input.md",
       "Updated": "2022-10-27T19:40:22.3475444+02:00",
       "Tags": "flag,identifier,quote,argument,single",
+      "Version": 1
+    },
+    {
+      "DocID": "5474baa1-988b-4632-b392-7f5c57fb028f",
+      "Name": "Documentation-Start",
+      "Uri": "https://github.com/PowerCommands/PowerCommands2022/blob/main/Docs/README.md",
+      "Updated": "2022-10-27T20:06:31.6692349+02:00",
+      "Tags": "readme,powercommands",
       "Version": 1
     }
   ]
