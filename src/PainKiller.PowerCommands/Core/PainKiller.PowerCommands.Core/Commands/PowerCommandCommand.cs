@@ -113,6 +113,7 @@ public class PowerCommandCommand : CommandBase<CommandsConfiguration>
         cli.MoveFile($"DemoCommand.cs", $"PainKiller.PowerCommands.{name}Commands\\Commands\\DemoCommand.cs");
         cli.MoveFile($"ConfigCommand.cs", $"PainKiller.PowerCommands.{name}Commands\\Commands\\ConfigCommand.cs");
         cli.MoveFile($"DirCommand.cs", $"PainKiller.PowerCommands.{name}Commands\\Commands\\DirCommand.cs");
+        cli.MoveFile($"DocCommand.cs", $"PainKiller.PowerCommands.{name}Commands\\Commands\\DocCommand.cs");
 
         cli.DeleteDownloadsDirectory();
 
