@@ -181,5 +181,7 @@ public class PowerCommandCommand : CommandBase<CommandsConfiguration>
         var templateManager = new TemplateManager(name, WriteLine);
         templateManager.InitializeTemplatesDirectory();
         templateManager.CopyTemplates();
+        
+        cliManager.MergeDocsDB();
     }
 }

@@ -15,4 +15,5 @@ public interface ICliManager
     void MoveFile(string fileName, string toFileName);
     void WriteNewSolutionFile();
     void ReplaceContentInFile(string fileName, string find, string replace);
+    void MergeDocsDB();
 }

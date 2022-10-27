@@ -1,6 +1,7 @@
 ﻿using PainKiller.PowerCommands.Configuration.DomainObjects;
 using PainKiller.PowerCommands.Core.Services;
 using PainKiller.PowerCommands.Shared.Contracts;
+using PainKiller.PowerCommands.Shared.DomainObjects.Documentation;
 
 namespace PainKiller.PowerCommands.Core.Managers;
 
@@ -100,7 +101,6 @@ public class CliManager : ICliManager
         _logger.Invoke($"to [{newFilePath}]", DisplayAndWriteToLog);
         _logger.Invoke("", false);
     }
-
     public void MoveDirectory(string dirctoryName, string toDirctoryName)
     {
         var oldFilePath = GetPath(dirctoryName);
@@ -134,7 +134,6 @@ public class CliManager : ICliManager
         _logger.Invoke("", false);
         return backupRoot;
     }
-
     public void WriteNewSolutionFile()
     {
         var solutionFile = Path.Combine(_srcCodeRootPath, "PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.sln");
@@ -200,6 +199,33 @@ public class CliManager : ICliManager
         var solutionFile = Directory.GetFileSystemEntries(path, "*.sln").FirstOrDefault();
         if (solutionFile == null) throw new IndexOutOfRangeException("No solution file could be found, name can not be extracted");
         return solutionFile.Split('\\').Last().Replace(".sln", "");
+    }
+
+    public void MergeDocsDB()
+    {
+        var newDocsDB = StorageService<DocsDB>.Service.GetObject(Path.Combine(_srcCodeRootPath, $"PowerCommands2022\\src\\PainKiller.PowerCommands\\Core\\PainKiller.PowerCommands.Core\\DocsDB.data"));
+        var currentDocsCB = StorageService<DocsDB>.Service.GetObject();
+        foreach (var doc in newDocsDB.Docs)
+        {
+            if(currentDocsCB.Docs.Any(d => d.Name == doc.Name && d.Tags == doc.Tags && d.Uri == doc.Uri)) continue;
+
+            var needsUpdate = currentDocsCB.Docs.FirstOrDefault(d => d.Name == doc.Name && d.Updated < doc.Updated);
+            if (needsUpdate != null)
+            {
+                _logger.Invoke($"{needsUpdate.Name} has change and the new changes will be updated in {nameof(DocsDB)}", DisplayAndWriteToLog);
+                needsUpdate.Tags = doc.Tags;
+                needsUpdate.Uri = doc.Uri;
+                needsUpdate.Updated = DateTime.Now;
+                needsUpdate.Version = +1;
+                currentDocsCB.Docs.Remove(needsUpdate);
+                currentDocsCB.Docs.Add(needsUpdate);
+                continue;
+            }
+            currentDocsCB.Docs.Add(doc);
+            _logger.Invoke($"{doc.Name} has been added to the {nameof(DocsDB)}", DisplayAndWriteToLog);
+        }
+        var fileName = StorageService<DocsDB>.Service.StoreObject(currentDocsCB);
+        _logger.Invoke($"The {nameof(DocsDB)} has been saved to file [{fileName}]", DisplayAndWriteToLog);
     }
     private string GetPath(string path) => path.StartsWith("PowerCommands2022\\") ? Path.Combine(_srcCodeRootPath, path) : Path.Combine(_path, path);
     private void CopyFolder(string sourceFolder, string destFolder)

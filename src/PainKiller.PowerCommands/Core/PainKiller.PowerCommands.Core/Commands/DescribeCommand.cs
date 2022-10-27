@@ -24,9 +24,9 @@ public class DescribeCommand : CommandBase<CommandsConfiguration>
 
     public void ShowDoc()
     {
-        var docSearch = Input.HasFlag("docs") ? Input.GetFlagValue("docs") : Input.SingleArgument;
+        var docSearch = Input.HasFlag("docs") ? Input.GetFlagValue("docs").ToLower() : Input.SingleArgument.ToLower();
         var docs = StorageService<DocsDB>.Service.GetObject().Docs;
-        var matchDocs = docs.Where(d => d.Name.Contains(docSearch) || d.Tags.Contains(docSearch)).ToArray();
+        var matchDocs = docs.Where(d => d.Name.ToLower().Contains(docSearch) || d.Tags.ToLower().Contains(docSearch)).ToArray();
         if (matchDocs.Length == 1)
         {
             ShellService.Service.OpenWithDefaultProgram(matchDocs.First().Uri);

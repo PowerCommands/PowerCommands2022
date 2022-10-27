@@ -67,6 +67,7 @@ public class DocCommand : CommandBase<CommandsConfiguration>
         if (!string.IsNullOrEmpty(Input.GetFlagValue("name"))) match.Name = Input.GetFlagValue("name");
         if (!string.IsNullOrEmpty(Input.GetFlagValue("tags"))) match.Tags = Input.GetFlagValue("tags");
         if (!DialogService.YesNoDialog($"Are this update ok? {match.Name} {match.Tags}?")) return;
+        match.Version += 1;
         db.Docs.Add(match);
         _storage.StoreObject(db);
         _docs = _storage.GetObject().Docs;
@@ -80,6 +81,7 @@ public class DocCommand : CommandBase<CommandsConfiguration>
         db.Docs.Remove(match);
         match.Tags = $"{match.Tags},{Input.GetFlagValue("tags")}";
         if (!DialogService.YesNoDialog($"Are this update ok? {match.Name} {match.Tags}?")) return;
+        match.Version += 1;
         db.Docs.Add(match);
         _storage.StoreObject(db);
         _docs = _storage.GetObject().Docs;

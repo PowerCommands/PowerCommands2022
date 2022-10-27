@@ -1,0 +1,28 @@
+{
+  "Docs": [
+    {
+      "DocID": "86b340da-b0c7-43de-bab0-e613ae681f1f",
+      "Name": "Create_new_command",
+      "Uri": "https://github.com/PowerCommands/PowerCommands2022/blob/main/Docs/Create_new_command.md",
+      "Updated": "2022-10-24T21:36:44.7062166+02:00",
+      "Tags": "create,new,command",
+      "Version": 1
+    },
+    {
+      "DocID": "deeaabc2-2df1-45ea-8dff-4cd6765e3751",
+      "Name": "Create-new-project",
+      "Uri": "https://github.com/PowerCommands/PowerCommands2022/blob/main/Docs/Create_new_%20project.md",
+      "Updated": "2022-10-24T21:42:57.1243688+02:00",
+      "Tags": "powercommand,visual,studio,cli",
+      "Version": 1
+    },
+    {
+      "DocID": "bfd65163-d9f8-432a-97da-539cccb3c5b6",
+      "Name": "Documentation-Start",
+      "Uri": "https://github.com/PowerCommands/PowerCommands2022/blob/main/Docs/Start.md",
+      "Updated": "2022-10-25T23:07:05.2553133+02:00",
+      "Tags": "index",
+      "Version": 1
+    }
+  ]
+}

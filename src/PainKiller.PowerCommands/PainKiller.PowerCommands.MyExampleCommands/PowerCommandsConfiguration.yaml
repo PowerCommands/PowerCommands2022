@@ -5,7 +5,7 @@ configuration:
   defaultGitRepositoryPath: C:\repos\github\PowerCommands2022
   codeEditor: C:\Users\%USERNAME%\AppData\Local\Programs\Microsoft VS Code\Code.exe
   repository: https://github.com/PowerCommands/PowerCommands2022
-  backupPath: C:\repos\Test\Backups
+  backupPath: ..\..\..\..\Core\PainKiller.PowerCommands.Core\
   favorites:
   - name: Music
     nameOfExecutable: spotify

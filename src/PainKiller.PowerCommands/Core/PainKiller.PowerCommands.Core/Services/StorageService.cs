@@ -11,38 +11,34 @@ public class StorageService<T> : IStorageService<T> where T : new()
 
     private static readonly Lazy<IStorageService<T>> Lazy = new(() => new StorageService<T>());
     public static IStorageService<T> Service => Lazy.Value;
-
-    public string StoreObject(T storeObject)
+    public string StoreObject(T storeObject, string fileName = "")
     {
-        var fileName = Path.Combine(ConfigurationGlobals.ApplicationDataFolder, $"{typeof(T).Name}.data");
+        var fName = string.IsNullOrEmpty(fileName) ? Path.Combine(ConfigurationGlobals.ApplicationDataFolder, $"{typeof(T).Name}.data") : fileName;
         var options = new JsonSerializerOptions { WriteIndented = true, IncludeFields = true };
         var jsonString = JsonSerializer.Serialize(storeObject, options);
-        File.WriteAllText(fileName, jsonString, Encoding.Unicode);
-        return fileName;
+        File.WriteAllText(fName, jsonString, Encoding.Unicode);
+        return fName;
     }
-
-    public string DeleteObject()
+    public string DeleteObject(string fileName = "")
     {
-        var fileName = Path.Combine(ConfigurationGlobals.ApplicationDataFolder, $"{typeof(T).Name}.data");
-        File.Delete(fileName);
-        return fileName;
+        var fName = string.IsNullOrEmpty(fileName) ? Path.Combine(ConfigurationGlobals.ApplicationDataFolder, $"{typeof(T).Name}.data") : fileName;
+        File.Delete(fName);
+        return fName;
     }
-
-    public T GetObject()
+    public T GetObject(string fileName = "")
     {
-        var fileName = Path.Combine(ConfigurationGlobals.ApplicationDataFolder, $"{typeof(T).Name}.data");
+        var fName = string.IsNullOrEmpty(fileName) ? Path.Combine(ConfigurationGlobals.ApplicationDataFolder, $"{typeof(T).Name}.data") : fileName;
         var options = new JsonSerializerOptions { WriteIndented = true, IncludeFields = true };
-        if (!File.Exists(fileName)) return new T();
-        var jsonString = File.ReadAllText(fileName);
+        if (!File.Exists(fName)) return new T();
+        var jsonString = File.ReadAllText(fName);
         return JsonSerializer.Deserialize<T>(jsonString, options) ?? new T();
     }
-
-    public string Backup()
+    public string Backup(string fileName = "")
     {
         var d = DateTime.Now;
-        var fileName = $"{typeof(T).Name}";
-        var sourceFilePath = Path.Combine(ConfigurationGlobals.ApplicationDataFolder, $"{fileName}.data");
-        var backupFilePath = Path.Combine(IPowerCommandServices.DefaultInstance!.Configuration.BackupPath, $"{fileName}-{d.Year}{d.Month}{d.Day}{d.Hour}{d.Minute}{d.Second}.data");
+        var fName = string.IsNullOrEmpty(fileName) ? Path.Combine(ConfigurationGlobals.ApplicationDataFolder, $"{typeof(T).Name}.data") : fileName;
+        var sourceFilePath = Path.Combine(ConfigurationGlobals.ApplicationDataFolder, $"{fName}.data");
+        var backupFilePath = Path.Combine(IPowerCommandServices.DefaultInstance!.Configuration.BackupPath, $"{fName}-{d.Year}{d.Month}{d.Day}{d.Hour}{d.Minute}{d.Second}.data");
         var content = File.ReadAllText(sourceFilePath);
         File.WriteAllText(backupFilePath, content);
         return backupFilePath;
