@@ -3,7 +3,6 @@ using PainKiller.PowerCommands.Shared.Contracts;
 using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
 namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
-[Tags("example|iteration|async")]
 [PowerCommand("A dummie iteration is running in async mode", example:"iteration", useAsync: true)]
 public class IterationCommand : CommandBase<CommandsConfiguration>
 {

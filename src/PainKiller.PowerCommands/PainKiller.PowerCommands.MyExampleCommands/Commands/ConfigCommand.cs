@@ -6,7 +6,6 @@ using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
 
 namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
-[Tags("help|configuration|util")]
 [PowerCommand( description: "Config command is a util to help you build a default yaml configuration file, practical when you adding new configuration elements to the PowerCommandsConfiguration class",
                  arguments: "create|edit",
                 suggestion: "edit",

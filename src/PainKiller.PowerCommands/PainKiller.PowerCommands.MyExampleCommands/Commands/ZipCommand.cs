@@ -1,9 +1,7 @@
-﻿using PainKiller.PowerCommands.Core.Extensions;
-using PainKiller.PowerCommands.Core.Services;
+﻿using PainKiller.PowerCommands.Core.Services;
 using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
 namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
-[Tags("zip|compression|temp|path")]
 [PowerCommand(description: "Zip files of a given path, filter could be use to select only certain files that matches the filter",
                 arguments: "<directory>",
         argumentMandatory: true,
@@ -19,12 +17,12 @@ public class ZipCommand : CommandBase<CommandsConfiguration>
         var zipResult = ZipService.Service.ArchiveFilesInDirectory(Input.Path, "example", useTimestampSuffix: true, filter: string.IsNullOrEmpty(Input.SingleQuote) ? "*" : Input.SingleQuote);
         Console.WriteLine();
         WriteHeadLine("Result", addToOutput: false);
-        this.WriteObjectDescription(nameof(zipResult.Path),zipResult.Path!);
-        this.WriteObjectDescription(nameof(zipResult.FileCount),zipResult.FileCount.ToString());
-        this.WriteObjectDescription(nameof(zipResult.FileSizeUncompressedInKb),zipResult.FileSizeUncompressedInKb.ToString());
-        this.WriteObjectDescription(nameof(zipResult.FileSizeCompressedInKb),zipResult.FileSizeCompressedInKb.ToString());
-        this.WriteObjectDescription(nameof(zipResult.Checksum),zipResult.Checksum!);
-        if(zipResult.HasException) this.WriteObjectDescription(nameof(zipResult.ExceptionMessage),zipResult.ExceptionMessage);
+        ConsoleService.WriteObjectDescription($"{GetType().Name}", nameof(zipResult.Path),zipResult.Path!);
+        ConsoleService.WriteObjectDescription($"{GetType().Name}",nameof(zipResult.FileCount),zipResult.FileCount.ToString());
+        ConsoleService.WriteObjectDescription($"{GetType().Name}",nameof(zipResult.FileSizeUncompressedInKb),zipResult.FileSizeUncompressedInKb.ToString());
+        ConsoleService.WriteObjectDescription($"{GetType().Name}",nameof(zipResult.FileSizeCompressedInKb),zipResult.FileSizeCompressedInKb.ToString());
+        ConsoleService.WriteObjectDescription($"{GetType().Name}", nameof(zipResult.Checksum),zipResult.Checksum!);
+        if(zipResult.HasException) ConsoleService.WriteObjectDescription($"{GetType().Name}", nameof(zipResult.ExceptionMessage),zipResult.ExceptionMessage);
         
         return CreateRunResult();
     }

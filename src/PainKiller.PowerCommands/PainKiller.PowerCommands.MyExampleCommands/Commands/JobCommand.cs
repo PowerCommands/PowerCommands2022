@@ -3,7 +3,6 @@ using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
 
 namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
-[Tags("example|iteration|job|start|quit")]
 [PowerCommand("Start up the application with commandline argument job to run once and then quit the program", example: "job")]
 public class JobCommand : CommandBase<CommandsConfiguration>
 {

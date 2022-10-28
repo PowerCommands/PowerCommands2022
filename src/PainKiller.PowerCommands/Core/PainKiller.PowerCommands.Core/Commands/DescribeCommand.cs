@@ -5,7 +5,6 @@ using PainKiller.PowerCommands.Shared.DomainObjects.Documentation;
 
 namespace PainKiller.PowerCommands.Core.Commands;
 
-[Tags("core|help")]
 [PowerCommand(       description: "With help command you will be shown the provided description or online documentation of the command or a PowerCommand feature.",
                        arguments: "<command name or feature you are interested of knowing more>",
                       suggestion: "cls",
@@ -32,9 +31,9 @@ public class DescribeCommand : CommandBase<CommandsConfiguration>
             ShellService.Service.OpenWithDefaultProgram(matchDocs.First().Uri);
             return;
         }
-        else if (matchDocs.Length > 1)
+        if (matchDocs.Length > 1)
         {
-            WriteHeadLine($"Found {matchDocs.Length} number of documents.");
+            WriteHeadLine($"Found {matchDocs.Length} number of documents, you can use the docID the for digit number to the right to choose document to show.");
             foreach (var matchDoc in matchDocs)
             {
                 WriteLine($"{matchDoc.DocID.ToString().PadLeft(4, '0')} {matchDoc.Name} {matchDoc.Uri.Split('/').Last()} {matchDoc.Tags}");

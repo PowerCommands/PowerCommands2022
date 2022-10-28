@@ -2,7 +2,6 @@
 
 namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
-[Tags("Demo|Example")]
 [PowerCommand(  description: "Demonstration command just to show your input of arguments, quotes and flags",
                 arguments: "<value>",
                 qutes:"<value>",

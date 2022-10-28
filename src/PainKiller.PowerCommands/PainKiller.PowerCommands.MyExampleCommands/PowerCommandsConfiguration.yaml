@@ -22,14 +22,14 @@ configuration:
     rollingIntervall: Day
     restrictedToMinimumLevel: Information
     component: PainKiller.SerilogExtensions.dll
-    checksum: 173831af7e77b8bd33e32fce0b4e646d
+    checksum: 13b9944b55efe60362720a679f17a22c
     name: Serialog
   components:
   - component: PainKiller.PowerCommands.Core.dll
-    checksum: 30cc55b7c6f29f951be3df97f634fb71
+    checksum: 4f04313db8e67b2bc4b059c478a900af
     name: PainKiller Core
   - component: PainKiller.PowerCommands.MyExampleCommands.dll
-    checksum: c8d128cde99a5ee06b56e8337c10b1e2
+    checksum: a2df61ea89e4f9ec265d921bfad87193
     name: My Example Command
   secret:
     secrets:

@@ -1,7 +1,6 @@
 ﻿using PainKiller.PowerCommands.Core.Extensions;
 namespace PainKiller.PowerCommands.Core.Commands;
 
-[Tags("core|diagnostic|log|debug|zip|compression|temp")]
 [PowerCommand(       description: "View and manage the log",
                        arguments: "view|archive|list (default)",
                            qutes: "process name:<name>",

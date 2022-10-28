@@ -23,8 +23,13 @@ public class PowerCommandsRuntime<TConfig> : IPowerCommandsRuntime where TConfig
     }
     private void Initialize()
     {
-        foreach (var component in _configuration.Components) Commands.AddRange(ReflectionService.Service.GetCommands(component, _configuration));
-        if(_configuration.ShowDiagnosticInformation) foreach (var consoleCommand in Commands) _diagnostic.Message(consoleCommand.Identifier);
+        foreach (var component in _configuration.Components)
+        {
+            Commands.AddRange(ReflectionService.Service.GetCommands(component, _configuration));
+            if (!_configuration.ShowDiagnosticInformation) continue;
+            _diagnostic.Header($"\nFound commands in component: {component.Name}");
+            foreach (var consoleCommand in Commands) _diagnostic.Message(consoleCommand.Identifier);
+        }
         IPowerCommandsRuntime.DefaultInstance = this;
     }
     public string[] CommandIDs => Commands.Select(c => c.Identifier).ToArray();

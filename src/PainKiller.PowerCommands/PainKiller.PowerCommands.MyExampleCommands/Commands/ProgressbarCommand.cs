@@ -2,7 +2,6 @@
 using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
 namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
-[Tags("progressbar|example")]
 [PowerCommand(description: "Sample command just to show how ProgressBar looks", example:"progressbar")]
 public class ProgressbarCommand : CommandBase<CommandsConfiguration>
 {

@@ -3,7 +3,6 @@ using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
 
 namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
-[Tags("Demo|Example|Flag|Parameter")]
 [PowerCommand(description: "Try out how flag and argument or quote parameter works together",
     arguments: "<value>",
     qutes: "<value>",

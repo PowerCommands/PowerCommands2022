@@ -4,7 +4,6 @@ using PainKiller.PowerCommands.Security.DomainObjects;
 using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
 namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
-[Tags("download|checksum|example")]
 [PowerCommand(     description: "Download a file that is provides as an argument, after download you get a checksum of the downloaded file",
                      arguments: "<url>",
              argumentMandatory: true,

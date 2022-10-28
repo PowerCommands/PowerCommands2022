@@ -3,7 +3,6 @@ using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
 
 namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
-[Tags("objectstorage|backup")]
 [PowerCommand(description: "Store object with StorageService, create a backup, delete the object",
     arguments: "<mode> (read,create,backup,delete)",
     argumentMandatory: true,
