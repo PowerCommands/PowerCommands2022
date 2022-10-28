@@ -1,5 +1,6 @@
 ﻿using PainKiller.PowerCommands.Shared.Contracts;
 using System.Text.RegularExpressions;
+using PainKiller.PowerCommands.Core.Services;
 using static System.String;
 
 namespace PainKiller.PowerCommands.Core.Extensions;
@@ -44,6 +45,6 @@ public static class CommandLineInputInterpreterExtension
     public static void DoBadFlagCheck(this ICommandLineInput input, IConsoleCommand command)
     {
         var dokumentedFlags = command.GetPowerCommandAttribute().Flags.Split('|');
-        foreach (var flag in input.Flags) if(dokumentedFlags.All(f => $"--{f.ToLower()}" != flag.ToLower())) command.WriteLine($"Warning, flag [{flag}] is not declared and probably unhandled in command [{command.Identifier}]", ConsoleColor.DarkYellow);
+        foreach (var flag in input.Flags) if(dokumentedFlags.All(f => $"--{f.ToLower()}" != flag.ToLower())) ConsoleService.WriteLine($"{input.Identifier}", $"Warning, flag [{flag}] is not declared and probably unhandled in command [{command.Identifier}]", ConsoleColor.DarkYellow);
     }
 }

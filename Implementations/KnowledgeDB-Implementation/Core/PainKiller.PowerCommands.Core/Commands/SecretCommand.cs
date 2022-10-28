@@ -1,10 +1,8 @@
 ﻿using PainKiller.PowerCommands.Configuration;
-using PainKiller.PowerCommands.Core.Extensions;
 using PainKiller.PowerCommands.Core.Services;
 using PainKiller.PowerCommands.Security.Services;
 
 namespace PainKiller.PowerCommands.Core.Commands;
-[Tags("core|encryption|secret|security")]
 [PowerCommand(description: "Get, creates, removes or view secrets",
                 arguments: "create|get|remove|view (default)",
                     qutes: "name:<name>",
@@ -28,7 +26,7 @@ public class SecretCommand : CommandBase<CommandsConfiguration>
 
     private RunResult List()
     {
-        foreach (var secret in Configuration.Secret.Secrets) this.WriteObjectDescription(secret.Name, $"{string.Join(',', secret.Options.Keys)}");
+        foreach (var secret in Configuration.Secret.Secrets) ConsoleService.WriteObjectDescription($"{GetType().Name}", secret.Name, $"{string.Join(',', secret.Options.Keys)}");
         return CreateRunResult();
     }
     private RunResult Get()
@@ -38,7 +36,7 @@ public class SecretCommand : CommandBase<CommandsConfiguration>
         if (secret == null) return CreateBadParameterRunResult($"No secret with name \"{name}\" found.");
 
         var val = SecretService.Service.GetSecret(name, secret.Options, EncryptionService.Service.DecryptString);
-        this.WriteObjectDescription(name, val);
+        ConsoleService.WriteObjectDescription($"{GetType().Name}", name, val);
 
         return CreateRunResult();
     }
@@ -64,7 +62,7 @@ public class SecretCommand : CommandBase<CommandsConfiguration>
         ConfigurationService.Service.SaveChanges(Configuration);
         Console.WriteLine();
         WriteHeadLine("New secret created and stored in configuration file");
-        this.WriteObjectDescription(name, val);
+        ConsoleService.WriteObjectDescription($"{GetType().Name}", name, val);
 
         return CreateRunResult();
     }

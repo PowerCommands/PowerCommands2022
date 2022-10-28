@@ -8,7 +8,8 @@ public class SuggestionProviderManager
     public SuggestionProviderManager() => SuggestionProviderFunc = GetSuggestions;
     public static void AddContextBoundSuggestions(string contextId, string[] suggestions)
     {
-        if(!ContextBoundSuggestions.ContainsKey(contextId)) ContextBoundSuggestions.Add(contextId, suggestions);
+        var excludeComments = suggestions.Where(s => !s.StartsWith("--/*")).ToArray();
+        if(!ContextBoundSuggestions.ContainsKey(contextId)) ContextBoundSuggestions.Add(contextId, excludeComments);
     }
 
     private static string[] GetSuggestions(string input)

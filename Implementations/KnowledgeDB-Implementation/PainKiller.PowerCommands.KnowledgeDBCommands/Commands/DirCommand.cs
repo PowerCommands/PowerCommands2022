@@ -5,7 +5,6 @@ using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
 
 namespace PainKiller.PowerCommands.KnowledgeDBCommands.Commands;
 
-[Tags("core|shell|folder|open|util")]
 [PowerCommand(description: "Open a given directory or current working folder if argument is omitted",
     arguments: "<directory name>",
     flags: "app",

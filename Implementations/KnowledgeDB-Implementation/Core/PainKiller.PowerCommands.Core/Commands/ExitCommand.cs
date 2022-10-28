@@ -2,7 +2,6 @@
 
 namespace PainKiller.PowerCommands.Core.Commands;
 
-[Tags("core")]
 [PowerCommand(       description: "Exit command exits the program",
                        arguments: "answer:y",
                       suggestion: "y",

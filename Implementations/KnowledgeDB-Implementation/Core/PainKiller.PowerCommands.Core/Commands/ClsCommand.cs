@@ -1,6 +1,5 @@
 ﻿namespace PainKiller.PowerCommands.Core.Commands;
 
-[Tags("core|console|clear")]
 [PowerCommand(description: "Clears the console",
                   example: "/*Clear the console*/|cls")]
 public class ClsCommand : CommandBase<CommandsConfiguration>

@@ -6,7 +6,6 @@ using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
 
 namespace PainKiller.PowerCommands.KnowledgeDBCommands.Commands;
 
-[Tags("help|configuration|util")]
 [PowerCommand( description: "Config command is a util to help you build a default yaml configuration file, practical when you adding new configuration elements to the PowerCommandsConfiguration class",
                  arguments: "create|edit",
                 suggestion: "edit",
@@ -33,6 +32,7 @@ public class ConfigCommand : CommandBase<PowerCommandsConfiguration>
             }
             catch (Exception) { return CreateBadParameterRunResult("Your editor must be included in Path environment variables"); }
         }
+        Console.Clear();
         var configurationRows = File.ReadAllText(Path.Combine(AppContext.BaseDirectory, $"{nameof(PowerCommandsConfiguration)}.yaml")).Split('\n');
         foreach (var configurationRow in configurationRows) Console.WriteLine(configurationRow);
         return CreateRunResult();

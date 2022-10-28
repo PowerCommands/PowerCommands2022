@@ -50,13 +50,6 @@ public static class ReflectionExtensions
         var attribute = command.GetType().GetCustomAttributes(typeof(PowerCommandAttribute), inherit: false).FirstOrDefault() as PowerCommandAttribute;
         return attribute is null ? "" : attribute.Suggestion;
     }
-    public static bool HasTag(this IConsoleCommand command, string tag)
-    {
-        var attribute = command.GetType().GetCustomAttributes(typeof(TagsAttribute), inherit: false).FirstOrDefault() as TagsAttribute;
-        if (attribute is null || string.IsNullOrEmpty(tag)) return false;
-        return attribute.Tags.ToLower().Contains(tag.ToLower());
-    }
-
     public static T DeepClone<T>(this T objSource) where T : class => CopyObject<T>(objSource);
 
     public static T CopyObject<T>(object objSource)

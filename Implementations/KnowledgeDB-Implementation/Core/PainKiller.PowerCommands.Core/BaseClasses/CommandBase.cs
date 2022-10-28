@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using Microsoft.Extensions.Logging;
+using PainKiller.PowerCommands.Core.Services;
 using PainKiller.PowerCommands.Shared.Contracts;
 
 namespace PainKiller.PowerCommands.Core.BaseClasses;
@@ -27,16 +28,32 @@ public abstract class CommandBase<TConfig> : IConsoleCommand where TConfig : new
     protected void WriteLine(string output, bool addToOutput = true)
     {
         if(addToOutput && !string.IsNullOrEmpty(output.Trim())) _ouput.AppendLine(output);
-        Console.WriteLine(output);
+        ConsoleService.WriteLine(GetType().Name, output, null);
     }
     protected void WriteHeadLine(string output, bool addToOutput = true)
     {
         if (addToOutput && string.IsNullOrEmpty(output.Trim())) _ouput.AppendLine(output);
-        var color = Console.ForegroundColor;
-        Console.ForegroundColor = ConsoleColor.Green;
-        Console.WriteLine(output);
-        Console.ForegroundColor = color;
+        ConsoleService.WriteHeaderLine(GetType().Name, output);
     }
+
+    protected void WriteWarning(string output, bool addToOutput = true)
+    {
+        if (addToOutput && string.IsNullOrEmpty(output.Trim())) _ouput.AppendLine(output);
+        ConsoleService.WriteWarning(GetType().Name, output);
+    }
+
+    protected void WriteError(string output, bool addToOutput = true)
+    {
+        if (addToOutput && string.IsNullOrEmpty(output.Trim())) _ouput.AppendLine(output);
+        ConsoleService.WriteError(GetType().Name, output);
+    }
+
+    protected void WriteCritical(string output, bool addToOutput = true)
+    {
+        if (addToOutput && string.IsNullOrEmpty(output.Trim())) _ouput.AppendLine(output);
+        ConsoleService.WriteCritical(GetType().Name, output);
+    }
+
     protected void OverwritePreviousLine(string output)
     {
         Console.SetCursorPosition(Console.CursorLeft, Console.CursorTop - 1);

@@ -6,8 +6,7 @@ using System.Reflection;
 
 namespace PainKiller.PowerCommands.Core.Commands;
 
-[Tags("core|cli|project")]
-[PowerCommand(      description: "Create or update the Visual Studio Solution with all depended projects, create new Commands from template",
+[PowerCommand(      description: "Create or update the Visual Studio Solution with all depended projects",
                     example: "/*create new VS solution*/|powercommand new --name testproject --output \"C:\\Temp\\\"|/*Update powercommands core, this will first delete current Core projects and than apply the new Core projects*/|powercommand update|/*Only update template(s)*/|powercommand update --templates|/*Update templates with backup*/|powercommand update --templates --backup",
                     arguments:"Solution name:<name>",
                     argumentMandatory: true,
