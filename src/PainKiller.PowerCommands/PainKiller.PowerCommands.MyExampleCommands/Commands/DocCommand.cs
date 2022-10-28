@@ -9,7 +9,7 @@ namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
 [PowerCommand(  description: "Add a document to the DocDB that is used as an KnowledgeDB internally by PowerCommands, view document, append tags, edit and delete documents. Backup KnowledgeDB",
                 flags: "view|delete|edit|append|list|backup",
-                example: "/*Add a new document*/|doc \"https://www.google.se/\" --name Google-Search --tags tools,search,google")]
+                example: "//Add a new document|doc \"https://www.google.se/\" --name Google-Search --tags tools,search,google|//List all documents|doc --list")]
 public class DocCommand : CommandBase<CommandsConfiguration>
 {
     private List<Doc> _docs = new();
@@ -24,10 +24,10 @@ public class DocCommand : CommandBase<CommandsConfiguration>
         //When first argument is a integer, the user want to open, edit or delete an item from a previous search, wrong index will throw an IndexOutOfRange exception and that is ok
         _selectedItem = (int.TryParse(Input.SingleArgument, out var index) ? _docs[index] : null)!;
 
-        if (Input.HasFlag("delete") || _selectedItem != null) Delete();
-        else if (Input.HasFlag("edit") || _selectedItem != null) Edit();
-        else if (Input.HasFlag("append") || _selectedItem != null) Append();
-        else if (Input.HasFlag("view") || _selectedItem != null) Details();
+        if (Input.HasFlag("delete") && _selectedItem != null) Delete();
+        else if (Input.HasFlag("edit") && _selectedItem != null) Edit();
+        else if (Input.HasFlag("append") && _selectedItem != null) Append();
+        else if (Input.HasFlag("view") && _selectedItem != null) Details();
         else if (Input.HasFlag("list")) List();
         else if (Input.HasFlag("backup")) Backup();
         else Add();
@@ -108,5 +108,5 @@ public class DocCommand : CommandBase<CommandsConfiguration>
         _docs = _storage.GetObject().Docs;
         WriteLine($"Document {item.Name} has successfully been added.");
     }
-    private static void Print(Doc doc, int index) => Console.WriteLine($"{index} {doc.Name} {doc.Uri}\t[{doc.Tags}]");
+    private static void Print(Doc doc, int index) => Console.WriteLine($"{index} {doc.Name.PadRight(50)} {doc.Uri.PadRight(100)}\t[{doc.Tags}] version: {doc.Version}");
 }

@@ -5,7 +5,7 @@ namespace PainKiller.PowerCommands.Core.Commands;
                        arguments: "view|archive|list (default)",
                            qutes: "process name:<name>",
                       suggestion: "view",
-                         example: "/*View a list with all the logfiles*/|log list|/*Archive the logs into a zip file.*/|log archive|/*View content of the current log*/|log view|/*Filter the log show only posts matching the provided process tag, this requires that you are using process tags when logging in your command(s).*/|log process created")]
+                         example: "//View a list with all the logfiles|log list|//Archive the logs into a zip file.|log archive|//View content of the current log|log view|//Filter the log show only posts matching the provided process tag, this requires that you are using process tags when logging in your command(s).|log process created")]
 public class LogCommand : CommandBase<CommandsConfiguration>
 {
     public LogCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
