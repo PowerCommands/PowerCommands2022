@@ -12,3 +12,6 @@
 [Flags](Flags.md)
 
 [PowerCommands Attribute](PowerCommandAttribute.md)
+
+## Architecture
+[Design principles and guidlines](PowerCommands%20Design%20Principles%20And%20Guidlines.md)

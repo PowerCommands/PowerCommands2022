@@ -23,8 +23,8 @@ using PainKiller.PowerCommands.MyExampleCommands.Configuration;
 namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
 [PowerCommand(  description: "Converting yaml format to json or xml format",
-                flags:"path|format",
-                example: "convert --path \"c:\\temp\\test.yaml\" --format json")]
+                flags: "path|format",
+                example: "//Convert to json format|convert --path \"c:\\temp\\test.yaml\" --format json|//Convert to xml format|convert --path \"c:\\temp\\test.yaml\" --format xml")]
 public class ConvertCommand : CommandBase<PowerCommandsConfiguration>
 {
     public ConvertCommand(string identifier, PowerCommandsConfiguration configuration) : base(identifier, configuration) { }
@@ -36,15 +36,12 @@ public class ConvertCommand : CommandBase<PowerCommandsConfiguration>
     }
 }
 ```
+Notice that the documentation for how this command will be used is created with the [PowerCommand](PowerCommandAttribute.md) attribute.
 
-Notice the practical PowerCommand attribute that let´s you decribe the usage for the consumer of this command.
-If the consumer of this command types 
-```
-convert --help
-```
-This help will be automatically displayed!
+## The user input
+![Alt text](images/Command_line_input_convert.png?raw=true "Describe convert command")
 
-![Alt text](images/convert_sample.png?raw=true "Convert command example")
+This input will first be handled by the Core Framework, using the Identifier an instanse of the ConvertCommand will be created and the framework will also add the [Input](Input.md) instance to the ConvertCommand instans wich give your convert command two flags named **path** and **format** to handle progamatically to create a file on the given path with the given format.
 
 ## But must I use the PowerCommand attribute on every command I create?
 No that is not mandatory but it is recommended, note that when you declare the flags, they will be available for code completion, wich means that when the consumer types - and hit the tab button the user will can se what flags there are that could be used. That is really nice, you could read more about design of good Command Line Inter fade design here:

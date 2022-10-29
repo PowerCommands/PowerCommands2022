@@ -17,7 +17,13 @@ public interface ICommandLineInput
 }
 ```
 ## How is it initialized and used by the command?
-After the user hits return the input will be intpreted by the PowerCommands Runtime and if a valid Command could be matched, this Command will be created in runtime and Initialized with the CommandLineInput instance. It will then be programaticallay availeble in the Commands Run method.
+After the user hits return the input will be intpreted by the PowerCommands Runtime and if a valid Command could be matched, this Command will be created in runtime and Initialized with the CommandLineInput instance. It will then be programaticallay available in the Commands Run method.
+
+## How is the user input mapped to the CommandLineInput instance?
+![Alt text](images/Command_line_input_described.png?raw=true "Describe convert command")
+
+### Path
+Path is not shown in the example below, it is a special input when your only input except for the Identifier is a path, it is simply explained "the rest" of the input after the Identifier, and it must be a valid file path.
 
 ## Use the CommandLineInput instance in code
 It could look something like this.

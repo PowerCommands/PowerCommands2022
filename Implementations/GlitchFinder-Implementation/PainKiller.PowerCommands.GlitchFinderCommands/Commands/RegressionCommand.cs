@@ -9,7 +9,6 @@ using PainKiller.PowerCommands.GlitchFinderCommands.Configuration;
 
 namespace PainKiller.PowerCommands.GlitchFinderCommands.Commands;
 
-[Tags("comparsion|regression")]
 [PowerCommand(description: "This is for tracking a single dataset/source over time.\nYou create a baseline, which is stored on file, and then later compare data towards this baseline.",
                 arguments: "baseline",
                     qutes: "project:<name>",

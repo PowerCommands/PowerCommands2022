@@ -3,7 +3,6 @@ using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
 
 namespace PainKiller.PowerCommands.GlitchFinderCommands.Commands;
 
-[Tags("core|shell|folder|open|util")]
 [PowerCommand(description: "Open a given directory or current working folder if argument is omitted",
     arguments: "Directory name:<directory name>",
     example: "dir|dir C:\\repos")]

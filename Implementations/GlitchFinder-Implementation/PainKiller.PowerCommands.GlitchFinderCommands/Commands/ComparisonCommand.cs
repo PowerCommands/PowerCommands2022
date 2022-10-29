@@ -9,7 +9,6 @@ using PainKiller.PowerCommands.GlitchFinderCommands.Configuration;
 
 namespace PainKiller.PowerCommands.GlitchFinderCommands.Commands;
 
-[Tags("comparsion")]
 [PowerCommand(description: "Compare to datasources with each other, find glitches, if any...",
                 arguments: "project:<name>",
         argumentMandatory: true,

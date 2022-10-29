@@ -1,10 +1,10 @@
 ﻿using PainKiller.PowerCommands.Configuration;
 using PainKiller.PowerCommands.Core.Extensions;
+using PainKiller.PowerCommands.Core.Services;
 using PainKiller.PowerCommands.GlitchFinderCommands.Configuration;
 
 namespace PainKiller.PowerCommands.GlitchFinderCommands.Commands;
 
-[Tags("project|help")]
 [PowerCommand( description: "Project management, no parameter lists all projects, with log could se the log for a named project",
                  arguments: "log|delete",
                      qutes: "<project name>",
@@ -27,8 +27,8 @@ public class ProjectCommand : CommandBase<PowerCommandsConfiguration>
         }
 
         WriteHeadLine("Projects");
-        foreach (var c in Configuration.ComparisonProjects) this.WriteObjectDescription("     Comparison", $"{c.Name}");
-        foreach (var r in Configuration.RegressionProjects) this.WriteObjectDescription("Regression test", $"{r.Name}");
+        foreach (var c in Configuration.ComparisonProjects) ConsoleService.WriteObjectDescription(GetType().Name, "     Comparison", $"{c.Name}");
+        foreach (var r in Configuration.RegressionProjects) ConsoleService.WriteObjectDescription(GetType().Name, "Regression test", $"{r.Name}");
         return CreateRunResult();
     }
     private void ViewLog(string projectName)
