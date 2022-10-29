@@ -1,5 +1,4 @@
 ﻿using PainKiller.PowerCommands.Core.BaseClasses;
-using PainKiller.PowerCommands.Core.Extensions;
 using PainKiller.PowerCommands.Core.Services;
 using PainKiller.PowerCommands.Shared.Attributes;
 using PainKiller.PowerCommands.Shared.DomainObjects.Core;
@@ -7,7 +6,7 @@ using PainKiller.PowerCommands.WindowsCommands.Configuration;
 
 namespace PainKiller.PowerCommands.WindowsCommands.Commands;
 
-[Tags("example|shell|execute|program")]
+
 [PowerCommand(description: "Shows how to execute a external program in combination with some custom configuration.\nFavorite must be defined in the favorites section in the PowerCommandsConfiguration.yaml file",
     arguments: "<favorite name>",
     argumentMandatory: true,
@@ -40,6 +39,6 @@ public class StartCommand : CommandBase<PowerCommandsConfiguration>
     private void Show()
     {
         WriteHeadLine("Favorites\n");
-        foreach (var favorite in Configuration.Favorites) this.WriteObjectDescription(favorite.Name, $"Shell executes: {favorite.NameOfExecutable}");
+        foreach (var favorite in Configuration.Favorites) ConsoleService.WriteObjectDescription(GetType().Name, favorite.Name, $"Shell executes: {favorite.NameOfExecutable}");
     }
 }

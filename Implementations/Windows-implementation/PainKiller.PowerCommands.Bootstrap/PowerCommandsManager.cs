@@ -40,15 +40,15 @@ public class PowerCommandsManager : IPowerCommandsManager
             {
                 var commandsCommand = new CommandsCommand("commands", (Services.Configuration as CommandsConfiguration)!);
                 var interpretedInput = input.Interpret();
-                DisplayErrorMessage($"Could not found any commands with a matching Id: {interpretedInput.Raw} and there is no defaultCommand defined in configuration or the defined defaultCommand does not exist.");
+                ConsoleService.WriteError(GetType().Name, $"Could not found any commands with a matching Id: {interpretedInput.Raw} and there is no defaultCommand defined in configuration or the defined defaultCommand does not exist.");
                 commandsCommand.InitializeRun(interpretedInput);
                 commandsCommand.Run();
                 Services.Logger.LogError(ex, "Could not found any commands with a matching Id");
             }
             catch (Exception e)
             {
-                Services.Logger.LogError(e,"Unknown error");
-                DisplayErrorMessage("Unknown error occurred, please try again");
+                Services.Logger.LogError(e, "Unknown error");
+                ConsoleService.WriteError(GetType().Name, "Unknown error occurred, please try again");
             }
         }
     }
@@ -66,22 +66,15 @@ public class PowerCommandsManager : IPowerCommandsManager
             case RunResultStatus.SyntaxError:
                 var message = $"Error occurred of type {runResult.Status}";
                 Services.Logger.LogError(message);
-                DisplayErrorMessage($"{message} {runResult.Output}");
+                ConsoleService.WriteError(GetType().Name, $"{message} {runResult.Output}");
                 HelpService.Service.ShowHelp(runResult.ExecutingCommand, clearConsole: false);
                 break;
             case RunResultStatus.RunExternalPowerCommand:
             case RunResultStatus.Initializing:
             case RunResultStatus.Ok:
+            case RunResultStatus.Help:
             default:
                 break;
         }
-    }
-    private void DisplayErrorMessage(string message)
-    {
-        var currentColor = Console.ForegroundColor;
-        Console.ForegroundColor = ConsoleColor.DarkRed;
-        Console.WriteLine(message);
-        Console.WriteLine();
-        Console.ForegroundColor = currentColor;
     }
 }

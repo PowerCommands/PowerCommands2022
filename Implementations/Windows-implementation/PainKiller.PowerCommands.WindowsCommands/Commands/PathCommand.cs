@@ -6,7 +6,6 @@ using PainKiller.PowerCommands.WindowsCommands.Configuration;
 
 namespace PainKiller.PowerCommands.WindowsCommands.Commands;
 
-[Tags("environment variables|path")]
 [PowerCommand(description: "Display registred paths in Enviroment variable Path",
     arguments: "<create>",
     example: "path|path \"<path to directory>\"")]

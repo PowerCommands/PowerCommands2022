@@ -6,7 +6,6 @@ using PainKiller.PowerCommands.WindowsCommands.Configuration;
 
 namespace PainKiller.PowerCommands.WindowsCommands.Commands;
 
-[Tags("example|shell|git|execute|program|util")]
 [PowerCommand(description: "Example shows how to execute a external program, in this case git, commmit and push your repository, path to repository is in the configuratin file",
                 arguments: "commit|push",
         argumentMandatory: true,

@@ -5,7 +5,6 @@ using PainKiller.PowerCommands.WindowsCommands.Enums;
 
 namespace PainKiller.PowerCommands.WindowsCommands.Commands;
 
-[Tags("example|shell|execute|program")]
 [PowerCommand(description: "Starts favorites AC, Cheat and Steam (Steam only if you want to).\nYou could provide a name for your game to start as a Quote parameter\nFavorite must be defined in the favorites section in the PowerCommandsConfiguration.yaml file",
     arguments: "steam",
     qutes:"<Favorite name>",
