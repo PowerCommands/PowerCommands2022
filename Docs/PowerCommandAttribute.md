@@ -56,3 +56,11 @@ Flags, quotes, arguments and example all have a property on the PowerCommandAttr
 example: "**//Convert to json format**|convert --path \"c:\\temp\\test.yaml\" --format json|**//Convert to xml format**|convert --path \"c:\\temp\\test.yaml\" 
 
 This will hopefully give you more understanding on how to describe your command and design them.
+
+Read more about:
+
+[Design your Command](Design_command.md)
+
+[Input](Input.md)
+
+[Flags](Flags.md)

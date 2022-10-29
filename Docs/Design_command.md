@@ -47,3 +47,11 @@ This input will first be handled by the Core Framework, using the Identifier an 
 No that is not mandatory but it is recommended, note that when you declare the flags, they will be available for code completion, wich means that when the consumer types - and hit the tab button the user will can se what flags there are that could be used. That is really nice, you could read more about design of good Command Line Inter fade design here:
 
 [10 design principles for delightful CLIs](https://blog.developer.atlassian.com/10-design-principles-for-delightful-clis/)
+
+Read more about:
+
+[Input](Input.md)
+
+[Flags](Flags.md)
+
+[PowerCommands Attribute](PowerCommandAttribute.md)

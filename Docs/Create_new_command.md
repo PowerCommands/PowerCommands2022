@@ -1,6 +1,9 @@
-# Create a new Command
+# Create a Hello world Command
 
-## There is two ways of doing that, the first one is to create a new class in the Commands directory, the class shoult look like this.
+## There is two ways of doing that, manually our let PowerCommand create one for you, using a template
+
+### Manually
+ Create a new class in the Commands directory or copy one existing and just rename it, a command that outputs "Hello World!" shoult look like this.
 
 ``` 
 [PowerCommand(  description: "The Hello World classic!", example: "helloworld")]
@@ -27,7 +30,13 @@ This is what you get:
 The PowerCommand Core finds your new Command class automatically, and can  there fore hightligt the name of the command in blue color and of course execute the command.
 
 ## Use the PowerCommand CLI to create a new Command
-The Core has creation of new commands to your Visual Studio Solution built in, just type:
+The PowerCommands framework has creation of new commands to your Visual Studio Solution built in, so you could just start your solution in Visual Studio and type:
+
+```
+commands new --name HelloWorld
+```
+And a new command with the name HelloWorldCommand.cs is created in you Commands project.
 
 ![Alt text](images/NewCommand.png?raw=true "New Command")
-And a new command with the name HelloWorldCommand.cs is created in you Commands project.
+
+Next step is to read about how you can [Design your Command](Design_command.md).

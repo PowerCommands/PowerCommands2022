@@ -20,3 +20,11 @@ Sometimes you just want a flag without a value, you can solve that like this:
 ### Do not use the help flag, unless you want to override it´s behaviour
 It will not harm anything but --help will trigger the Core frameowrk to display generic help (using the PowerCommands attriute).
 You can override this behaviour if you set the property **overrideHelpFlag** to true. Do not do that if your not intend to implement your own show help functionalllity for that command.
+
+Read more about:
+
+[Design your Command](Design_command.md)
+
+[Input](Input.md)
+
+[PowerCommands Attribute](PowerCommandAttribute.md)

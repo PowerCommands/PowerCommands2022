@@ -53,3 +53,11 @@ All input strings not surrounded with " except for the first one (wich is the Id
 All arguments that is staring with the -- marks is considered as flags, and ever argument after the flag is considered as that flags value, in the example the flag **demo** has the value **myFlagValue** a flag must not have a value.
 ### Path
 The path is a special value if your command only should have an input that is a path, then it is usefull, you do not need to input the path in quotation marks even if it contains blank space.
+
+Read more about:
+
+[Design your Command](Design_command.md)
+
+[Flags](Flags.md)
+
+[PowerCommands Attribute](PowerCommandAttribute.md)

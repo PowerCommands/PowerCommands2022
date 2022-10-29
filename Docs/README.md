@@ -4,14 +4,23 @@
 
 [Create a new Command](Create_new_command.md)
 
+## Commands development
 [Design your Command](Design_command.md)
 
-## Command explained in depth
-[Input](Input.md)
+[Command base class](CommandBase.md)
 
-[Flags](Flags.md)
+[Handling the Input](Input.md)
 
-[PowerCommands Attribute](PowerCommandAttribute.md)
+[Using Flags](Flags.md)
+
+[Output to the Console guidline](ConsoleService.md)
+
+[Self documentation using attribute](PowerCommandAttribute.md)
+
+## Configuration and documentation
+[Basic application configuration](Configuration.md)
+
+[Documentation index](DocumentationIndexDB.md)
 
 ## Architecture
 [Design principles and guidlines](PowerCommands%20Design%20Principles%20And%20Guidlines.md)
