@@ -15,4 +15,4 @@ You could se PowerCommands as an easy Create your CLI applikation starter kit. I
  - Zip with attributes like checksum, filecount and file size
  - Describe your commands with code examples using attributes. 
 
- ## [Get started](/blob/main/Docs/README.md)
+ ## [Get started](https://github.com/PowerCommands/PowerCommands2022/blob/main/Docs/README.md)
