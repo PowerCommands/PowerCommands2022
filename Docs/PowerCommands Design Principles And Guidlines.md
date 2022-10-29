@@ -54,7 +54,7 @@ The core components should be reliable and robust and do not change much over ti
  - Custom components 
  - PowerCommands
 
- ![Alt text](PowerCommands-Overview.png?raw=true "Component Diagram")
+ ![Alt text](images/PowerCommands-Overview.png?raw=true "Component Diagram")
 
  # CREATE YOUR OWN POWER COMMANDS IMPLEMENTATION
 
@@ -331,13 +331,13 @@ In such cases they should support the identical configuration structure otherwis
 ## <a name='UsePowerCommandattribute'></a>Use PowerCommand attribute
 This is an example where every property of the attributes is used
 
-![Alt text](attributes.png?raw=true "Attributes")
+![Alt text](images/attributes.png?raw=true "Attributes")
 Attributes is used to show a nice description of the command with the built in --help flag. 
 
 ```
 regression --help
 ```
-![Alt text](Docs/images/power_command_attribute.png?raw=true "Usage of help flag")
+![Alt text](images/power_command_attribute.png?raw=true "Usage of help flag")
 
 But it is just not for displaying the help, the flag property and the suggestion property of the PowerCommandAttribute controls suggestions provided by intellisense, you should really take advantage of that.
 
@@ -360,14 +360,7 @@ Sometimes you just want a flag without a value, you can solve that like this:
 It will not harm anything but --help will trigger the Core frameowrk to display generic help (using the PowerCommands attriute).
 You can override this behaviour if you set the property **overrideHelpFlag** to true. Do not do that if your not intend to implement your own show help functionalllity for that command.
 
-## Tags attribute
-Tags attribute is used to make searches with the commands command, it could be useful if your pilling upp many Commands in your project. But it is not necessary to add them.
-
-```
-commands tag "help"
-```
-![Alt text](tags.png?raw=true "Describe")
 
 # ARCHITECTURE
 ## <a name='Dependancydiagram'></a>Dependancy diagram
-![Alt text](dependancies_example.png?raw=true "Describe")
+![Alt text](images/dependancies_example.png?raw=true "Describe")
