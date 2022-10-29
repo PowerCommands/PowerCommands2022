@@ -1,7 +1,7 @@
 # Flags
 
 This image below shows a nice description of the command with the built in describe command.
-![Alt text](../attributes.png?raw=true "Attributes")
+![Alt text](images/attributes.png?raw=true "Attributes")
 
 You could also se that this Command has two flags separated with pipe **"mode|name"**, first one named **mode** and the other one is **name**. This will give the user autocomplete feedback when typing - and using the [Tab] tangent.
 

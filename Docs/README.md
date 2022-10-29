@@ -17,6 +17,9 @@
 
 [Self documentation using attribute](PowerCommandAttribute.md)
 
+## Core framework
+[PowerCommandsRuntime](PowerCommandsRuntime.md)
+
 ## Configuration and documentation
 [Basic application configuration](Configuration.md)
 
