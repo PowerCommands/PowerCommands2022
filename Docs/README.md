@@ -13,7 +13,7 @@
 
 [Using Flags](Flags.md)
 
-[Output to the Console guidline](ConsoleService.md)
+[Output to the Console guidline](ConsoleOutput.md)
 
 [Self documentation using attribute](PowerCommandAttribute.md)
 
