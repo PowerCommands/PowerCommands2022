@@ -20,6 +20,8 @@
 ## Configuration and documentation
 [Basic application configuration](Configuration.md)
 
+[Extend your configuration](ExtendYourConfiguration.md)
+
 [Documentation index](DocumentationIndexDB.md)
 
 ## Architecture

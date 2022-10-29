@@ -4,8 +4,6 @@
 The content in these file has two parts, the first part is the core configuration, that part all PowerCommand application has.
 Second part is the extended configuration parts, this part is optional if you need custom configuration you need to implement this by your self. The conten of this part is then merged into one configuration file. 
 
-As already mentioned if you do not need any more configuration you do not neeed to do anything.
-
 ## The base configuration class diagram:
 
 ![Alt text](images/CommandsConfiguration.png?raw=true "Command Base")
@@ -81,6 +79,8 @@ configuration:
     - name: CLIENT_ID
       environmentVariableTarget: User
 ```
+
+Next step could be to [Extend your configuration](ExtendYourConfiguration.md)
 
 Read more about:
 
