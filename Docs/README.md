@@ -15,3 +15,9 @@
 
 ## Architecture
 [Design principles and guidlines](PowerCommands%20Design%20Principles%20And%20Guidlines.md)
+
+## Implementations
+[Glitchfinder and KnowledgedDB](Implementations.md)
+
+## Links
+[10 design principles for delightful CLIs](https://blog.developer.atlassian.com/10-design-principles-for-delightful-clis/)
