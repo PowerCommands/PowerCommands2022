@@ -17,7 +17,8 @@ Easiest way is to start the applicatin from the bin folder, and use this command
 powercommands update
 ```
 
-If you run the same command while debugging in Visual Studio the hole Core Framwork will be updated. (no harm doing that but you need to be aware of it)
+If you run the same command while debugging in Visual Studio the whole Core Framwork will be updated. (no harm doing that but you need to be aware of it)
+The update will merge the content of your local stored file with the file on Github, so you do not lose your own added Docs.
 
 Read more about:
 

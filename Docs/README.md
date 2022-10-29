@@ -27,6 +27,8 @@
 ## Architecture
 [Design principles and guidlines](PowerCommands%20Design%20Principles%20And%20Guidlines.md)
 
+[Customize your project](Customize.md)
+
 ## Implementations
 [Glitchfinder and KnowledgedDB](Implementations.md)
 
