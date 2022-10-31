@@ -244,7 +244,7 @@ public class CliManager : ICliManager
             if (hasChanges)
             {
                 var fileName = StorageService<DocsDB>.Service.StoreObject(currentDocsDB);
-                _logger.Invoke($"The changes has been merged with your local {nameof(DocsDB)} file and saved to file [{fileName}]", DisplayAndWriteToLog);
+                _logger.Invoke($"\nThe changes has been merged with your local {nameof(DocsDB)} file and saved to file [{fileName}]", DisplayAndWriteToLog);
                 return;
             }
             _logger.Invoke($"Your local {nameof(DocsDB)} is already up to date with the latest version, no changes made.", DisplayAndWriteToLog);

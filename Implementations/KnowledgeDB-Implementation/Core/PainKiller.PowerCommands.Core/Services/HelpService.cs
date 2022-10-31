@@ -41,22 +41,14 @@ public class HelpService : IHelpService
         }
         Console.WriteLine();
         ConsoleService.WriteHeaderLine($"{GetType().Name}", $"{nameof(da.Examples)}:", writeLog: WriteToLog);
-        foreach (var e in examples)
-        {
-            if (e.StartsWith("/*"))
-            {
-                ConsoleService.WriteHeaderLine($"{GetType().Name}", e, ConsoleColor.Cyan);
-                continue;
-            }
-            ConsoleService.WriteLine(GetType().Name, e, null, WriteToLog);
-        }
+        foreach (var e in examples) WriteItem(e);
     }
 
     private void WriteItem(string description)
     {
-        if (description.StartsWith("/*"))
+        if (description.StartsWith("//"))
         {
-            ConsoleService.WriteHeaderLine($"{GetType().Name}", description, ConsoleColor.Cyan);
+            ConsoleService.WriteHeaderLine($"{GetType().Name}", $"\n{description}", ConsoleColor.Green);
             return;
         }
         ConsoleService.WriteLine(GetType().Name, description, null, WriteToLog);

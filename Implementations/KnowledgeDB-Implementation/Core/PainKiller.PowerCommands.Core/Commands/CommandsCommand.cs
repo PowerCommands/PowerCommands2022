@@ -5,9 +5,9 @@ using PainKiller.PowerCommands.Shared.Contracts;
 namespace PainKiller.PowerCommands.Core.Commands;
 
 [PowerCommand( description:      "Shows commands, or filter commands by name, create a new command, show default command with flag --default",
-               qutes:            "/*Search for a specific command with a filter that is using Contains to match loaded commands.*/|filter",
-               flags:            "/*Show only this projects available commands.*/|this|/*Show the Core command names that should not be used.*/|reserved|/*The name flag is used when you also use the create flag and must be followed next with the name argument (se examples)*/|name|/*Create a new command, that requires that you are starting the application from Visual Studio or some other IDE like VS Code*/|new|/*Shows the default command configured in the PowerCommandsConfiguration.yaml file*/|default",
-               example:          "/*Show all commands*/|commands|/*Show your custom commands*/|commands --this|/*Show reserved commands*/|commands --reserved|/*Search for commands matching \"encrypt\"*/|commands \"encrypt\"|/*Create a new command*/|commands --create --name MyNewCommand|/*Show default command*/|commands --default")]
+               qutes:            "//Search for a specific command with a filter that is using Contains to match loaded commands.|filter",
+               flags:            "//Show only this projects available commands.|this|//Show the Core command names that should not be used.|reserved|//The name flag is used when you also use the create flag and must be followed next with the name argument (se examples)|name|//Create a new command, that requires that you are starting the application from Visual Studio or some other IDE like VS Code|new|//Shows the default command configured in the PowerCommandsConfiguration.yaml file|default",
+               example:          "//Show all commands|commands|//Show your custom commands|commands --this|//Show reserved commands|commands --reserved|//Search for commands matching \"encrypt\"|commands \"encrypt\"|//Create a new command|commands --create --name MyNewCommand|//Show default command|commands --default")]
 public class CommandsCommand : CommandBase<CommandsConfiguration>
 {
     public CommandsCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
