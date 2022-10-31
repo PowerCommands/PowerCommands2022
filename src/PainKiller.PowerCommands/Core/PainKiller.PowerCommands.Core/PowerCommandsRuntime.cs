@@ -3,7 +3,7 @@ global using PainKiller.PowerCommands.Shared.Attributes;
 global using PainKiller.PowerCommands.Shared.DomainObjects.Core;
 global using PainKiller.PowerCommands.Shared.Enums;
 global using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
-
+using PainKiller.PowerCommands.Core.Commands;
 using PainKiller.PowerCommands.Core.Extensions;
 using PainKiller.PowerCommands.Core.Services;
 using PainKiller.PowerCommands.Shared.Contracts;
@@ -29,6 +29,17 @@ public class PowerCommandsRuntime<TConfig> : IPowerCommandsRuntime where TConfig
             if (!_configuration.ShowDiagnosticInformation) continue;
             _diagnostic.Header($"\nFound commands in component: {component.Name}");
             foreach (var consoleCommand in Commands) _diagnostic.Message(consoleCommand.Identifier);
+        }
+
+        foreach (var proxyCommand in _configuration.ProxyCommands)
+        {
+            foreach (var command in proxyCommand.Commands)
+            {
+                ConsoleService.WriteLine("PowerCommandsRuntime", $"Proxy command [{command}] added", null);
+                var powerCommand = new ProxyCommando(command, _configuration, proxyCommand.Name, proxyCommand.WorkingDirctory);
+                if(Commands.All(c => c.Identifier != powerCommand.Identifier)) Commands.Add(powerCommand);
+                else ConsoleService.WriteWarning("PowerCommandsRuntime", $"A command with the same identifier [{command}] already exist, proxy command not added.");
+            }
         }
         IPowerCommandsRuntime.DefaultInstance = this;
     }
