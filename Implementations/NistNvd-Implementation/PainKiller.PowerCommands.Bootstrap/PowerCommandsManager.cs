@@ -26,9 +26,16 @@ public class PowerCommandsManager : IPowerCommandsManager
             {
                 var promptText = runResultStatus == RunResultStatus.Async ? "" : $"\n{ConfigurationGlobals.Prompt}";
                 input = runAutomatedAtStartup ? string.Join(' ', args) : ReadLine.ReadLineService.Service.Read(prompt: promptText);
-                runAutomatedAtStartup = false;
                 if (string.IsNullOrEmpty(input.Trim())) continue;
                 var interpretedInput = input.Interpret();
+                if (runAutomatedAtStartup)
+                {
+                    Services.Diagnostic.Message($"Started up with args: {interpretedInput.Raw}");
+                    ConsoleService.Write($"{nameof(PowerCommandsManager)}", ConfigurationGlobals.Prompt, null);
+                    ConsoleService.Write($"{nameof(PowerCommandsManager)} automated startup", $"{interpretedInput.Identifier}", ConsoleColor.Blue);
+                    ConsoleService.WriteLine($"{nameof(PowerCommandsManager)} automated startup", interpretedInput.Raw.Replace($"{interpretedInput.Identifier}", ""), null);
+                }
+                runAutomatedAtStartup = false;
                 Services.Logger.LogInformation($"Console input Identifier:{interpretedInput.Identifier} raw:{interpretedInput.Raw}");
                 Services.Diagnostic.Start();
                 var runResult = Services.Runtime.ExecuteCommand($"{input}");
@@ -47,7 +54,7 @@ public class PowerCommandsManager : IPowerCommandsManager
             }
             catch (Exception e)
             {
-                Services.Logger.LogError(e,"Unknown error");
+                Services.Logger.LogError(e, "Unknown error");
                 ConsoleService.WriteError(GetType().Name, "Unknown error occurred, please try again");
             }
         }

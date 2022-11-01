@@ -57,6 +57,13 @@ public class ConfigurationService : IConfigurationService
         File.WriteAllText(fullFileName, yamlData);
     }
 
+    /// <summary>
+    /// Return a configuration file stored in the AppData/Roaming/PowerCommands directory, if the file does not exist it will be created.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="defaultIfMissing"></param>
+    /// <param name="inputFileName"></param>
+    /// <returns></returns>
     public YamlContainer<T> GetAppDataConfiguration<T>(T defaultIfMissing, string inputFileName = "") where T : new()
     {
         var directory = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\{nameof(PowerCommands)}";

@@ -8,7 +8,7 @@ public static class ConsoleService
     public static void WriteObjectDescription(string scope, string name, string description, bool writeLog = true)
     {
         var currentColor = Console.ForegroundColor;
-        Console.ForegroundColor = ConsoleColor.DarkYellow;
+        Console.ForegroundColor = ConsoleColor.White;
         Console.Write($"{name}: ");
         Console.ForegroundColor = ConsoleColor.Blue;
         Console.WriteLine($"{description}");

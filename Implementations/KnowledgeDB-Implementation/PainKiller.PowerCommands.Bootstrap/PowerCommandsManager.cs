@@ -10,7 +10,6 @@ using PainKiller.PowerCommands.Shared.DomainObjects.Core;
 using PainKiller.PowerCommands.Shared.Enums;
 
 namespace PainKiller.PowerCommands.Bootstrap;
-
 public class PowerCommandsManager : IPowerCommandsManager
 {
     public readonly IExtendedPowerCommandServices<PowerCommandsConfiguration> Services;
@@ -26,9 +25,16 @@ public class PowerCommandsManager : IPowerCommandsManager
             {
                 var promptText = runResultStatus == RunResultStatus.Async ? "" : $"\n{ConfigurationGlobals.Prompt}";
                 input = runAutomatedAtStartup ? string.Join(' ', args) : ReadLine.ReadLineService.Service.Read(prompt: promptText);
-                runAutomatedAtStartup = false;
                 if (string.IsNullOrEmpty(input.Trim())) continue;
                 var interpretedInput = input.Interpret();
+                if (runAutomatedAtStartup)
+                {
+                    Services.Diagnostic.Message($"Started up with args: {interpretedInput.Raw}");
+                    ConsoleService.Write($"{nameof(PowerCommandsManager)}", ConfigurationGlobals.Prompt, null);
+                    ConsoleService.Write($"{nameof(PowerCommandsManager)} automated startup", $"{interpretedInput.Identifier}", ConsoleColor.Blue);
+                    ConsoleService.WriteLine($"{nameof(PowerCommandsManager)} automated startup", interpretedInput.Raw.Replace($"{interpretedInput.Identifier}", ""), null);
+                }
+                runAutomatedAtStartup = false;
                 Services.Logger.LogInformation($"Console input Identifier:{interpretedInput.Identifier} raw:{interpretedInput.Raw}");
                 Services.Diagnostic.Start();
                 var runResult = Services.Runtime.ExecuteCommand($"{input}");
@@ -40,15 +46,15 @@ public class PowerCommandsManager : IPowerCommandsManager
             {
                 var commandsCommand = new CommandsCommand("commands", (Services.Configuration as CommandsConfiguration)!);
                 var interpretedInput = input.Interpret();
-                DisplayErrorMessage($"Could not found any commands with a matching Id: {interpretedInput.Raw} and there is no defaultCommand defined in configuration or the defined defaultCommand does not exist.");
+                ConsoleService.WriteError(GetType().Name, $"Could not found any commands with a matching Id: {interpretedInput.Raw} and there is no defaultCommand defined in configuration or the defined defaultCommand does not exist.");
                 commandsCommand.InitializeRun(interpretedInput);
                 commandsCommand.Run();
                 Services.Logger.LogError(ex, "Could not found any commands with a matching Id");
             }
             catch (Exception e)
             {
-                Services.Logger.LogError(e,"Unknown error");
-                DisplayErrorMessage("Unknown error occurred, please try again");
+                Services.Logger.LogError(e, "Unknown error");
+                ConsoleService.WriteError(GetType().Name, "Unknown error occurred, please try again");
             }
         }
     }
@@ -66,7 +72,7 @@ public class PowerCommandsManager : IPowerCommandsManager
             case RunResultStatus.SyntaxError:
                 var message = $"Error occurred of type {runResult.Status}";
                 Services.Logger.LogError(message);
-                DisplayErrorMessage($"{message} {runResult.Output}");
+                ConsoleService.WriteError(GetType().Name, $"{message} {runResult.Output}");
                 HelpService.Service.ShowHelp(runResult.ExecutingCommand, clearConsole: false);
                 break;
             case RunResultStatus.RunExternalPowerCommand:
@@ -76,13 +82,5 @@ public class PowerCommandsManager : IPowerCommandsManager
             default:
                 break;
         }
-    }
-    private void DisplayErrorMessage(string message)
-    {
-        var currentColor = Console.ForegroundColor;
-        Console.ForegroundColor = ConsoleColor.DarkRed;
-        Console.WriteLine(message);
-        Console.WriteLine();
-        Console.ForegroundColor = currentColor;
     }
 }

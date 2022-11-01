@@ -1,29 +1,35 @@
 ﻿using PainKiller.PowerCommands.Configuration;
+using PainKiller.PowerCommands.Core.Extensions;
 using PainKiller.PowerCommands.Core.Services;
 using PainKiller.PowerCommands.Security.Services;
+using PainKiller.PowerCommands.Shared.Contracts;
 
 namespace PainKiller.PowerCommands.Core.Commands;
-[PowerCommand(description: "Get, creates, removes or view secrets",
-                arguments: "create|get|remove|view (default)",
-                    qutes: "name:<name>",
-                  example: "secret|secret get \"mycommand-pass\"|secret create \"mycommand-pass\"|secret remove \"mycommand-pass\"")]
+[PowerCommand(description: "Get, creates, removes or view secrets, first you need to configure your encryption key with initialize argument",
+                    flags: "create|get|remove|salt",
+                  example: "//View all declared secrets|secret|secret --get \"mycommand-pass\"|secret --create \"mycommand-pass\"|secret --remove \"mycommand-pass\"|Initialize your machine with a new encryption key (stops if this is already done)|secret --initialize")]
 public class SecretCommand : CommandBase<CommandsConfiguration>
 {
     public SecretCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
 
     public override RunResult Run()
     {
+        if (Input.HasFlag("salt")) return Salt();
         if ((Input.Arguments.Length + Input.Quotes.Length < 2) && Input.Arguments.Length > 0) throw new MissingFieldException("Two parameters must be provided");
         if (Input.Arguments.Length == 0 || Input.Arguments[0] == "view") return List();
 
-        var method = Input.Arguments[0];
-        if (method == "get") return Get();
-        if (method == "create") return Create();
-        if (method == "remove") return Remove();
+        if (Input.HasFlag("get")) return Get();
+        if (Input.HasFlag("create")) return Create();
+        if (Input.HasFlag("remove")) return Remove();
 
         return CreateBadParameterRunResult("No matching parameter");
     }
 
+    private RunResult Salt()
+    {
+        Console.WriteLine(IEncryptionService.GetRandomSalt());
+        return CreateRunResult();
+    }
     private RunResult List()
     {
         foreach (var secret in Configuration.Secret.Secrets) ConsoleService.WriteObjectDescription($"{GetType().Name}", secret.Name, $"{string.Join(',', secret.Options.Keys)}");
