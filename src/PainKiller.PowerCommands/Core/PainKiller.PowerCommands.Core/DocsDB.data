@@ -119,6 +119,14 @@
       "Updated": "2022-10-29T23:17:52.0336282+02:00",
       "Tags": "Boostrap,startup,program,PowerCommandServices",
       "Version": 2
+    },
+    {
+      "DocID": 1,
+      "Name": "Secrets",
+      "Uri": "https://github.com/PowerCommands/PowerCommands2022/blob/main/Docs/Secrets.md",
+      "Updated": "2022-11-01T20:20:06.7320205+01:00",
+      "Tags": "encryption,configuration,owasp,security",
+      "Version": 1
     }
   ]
 }

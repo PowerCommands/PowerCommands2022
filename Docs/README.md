@@ -25,6 +25,8 @@
 
 [Extend your configuration](ExtendYourConfiguration.md)
 
+[Configure your environment to use encrypt/decrypt secrets](Secrets.md)
+
 [Documentation index](DocumentationIndexDB.md)
 
 ## Architecture

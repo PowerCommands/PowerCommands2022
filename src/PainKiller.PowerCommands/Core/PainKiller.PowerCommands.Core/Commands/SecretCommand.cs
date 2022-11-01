@@ -6,7 +6,7 @@ using PainKiller.PowerCommands.Shared.Contracts;
 
 namespace PainKiller.PowerCommands.Core.Commands;
 [PowerCommand(description: "Get, creates, removes or view secrets, first you need to configure your encryption key with initialize argument",
-                    flags: "create|get|remove|salt",
+                    flags: "configuration|create|get|remove|salt",
                   example: "//View all declared secrets|secret|secret --get \"mycommand-pass\"|secret --create \"mycommand-pass\"|secret --remove \"mycommand-pass\"|Initialize your machine with a new encryption key (stops if this is already done)|secret --initialize")]
 public class SecretCommand : CommandBase<CommandsConfiguration>
 {
@@ -14,15 +14,32 @@ public class SecretCommand : CommandBase<CommandsConfiguration>
 
     public override RunResult Run()
     {
+        if (Input.HasFlag("configuration")) return CheckEncryptConfiguration();
         if (Input.HasFlag("salt")) return Salt();
-        if ((Input.Arguments.Length + Input.Quotes.Length < 2) && Input.Arguments.Length > 0) throw new MissingFieldException("Two parameters must be provided");
-        if (Input.Arguments.Length == 0 || Input.Arguments[0] == "view") return List();
-
         if (Input.HasFlag("get")) return Get();
         if (Input.HasFlag("create")) return Create();
         if (Input.HasFlag("remove")) return Remove();
+        if ((Input.Arguments.Length + Input.Quotes.Length < 2) && Input.Arguments.Length > 0) throw new MissingFieldException("Two parameters must be provided");
+        if (Input.Arguments.Length == 0 || Input.Arguments[0] == "view") return List();
 
         return CreateBadParameterRunResult("No matching parameter");
+    }
+
+    private RunResult CheckEncryptConfiguration()
+    {
+        try
+        {
+            var encryptedString = EncryptionService.Service.EncryptString("Encryption is setup properly");
+            var decryptedString = EncryptionService.Service.DecryptString(encryptedString);
+            WriteLine(encryptedString);
+            WriteLine(decryptedString);
+        }
+        catch
+        {
+            Console.WriteLine("");
+            WriteError("Encryption is not configured properly");
+        }
+        return CreateRunResult();
     }
 
     private RunResult Salt()
@@ -32,6 +49,7 @@ public class SecretCommand : CommandBase<CommandsConfiguration>
     }
     private RunResult List()
     {
+        if (Configuration.Secret.Secrets == null) return CreateRunResult();
         foreach (var secret in Configuration.Secret.Secrets) ConsoleService.WriteObjectDescription($"{GetType().Name}", secret.Name, $"{string.Join(',', secret.Options.Keys)}");
         return CreateRunResult();
     }
