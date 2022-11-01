@@ -13,7 +13,7 @@ secret --salt
 ```
 Copy the result and create a environment variable in user scope with the name **_encryptionManager** and the copied random key, now your environment is ready to use Encryption with all your PowerCommands running on that machine. 
 
-Please not that the name of the environment variable is configurable in the secret.yaml file, **_encryptionManager** is the default name.
+Please note that the name of the environment variable is configurable in the secret.yaml file, **_encryptionManager** is the default name.
 
 Now your environment is ready!
 
@@ -56,3 +56,5 @@ Read more about:
 [Basic application configuration](Configuration.md)
 
 [Extend your configuration](ExtendYourConfiguration.md)
+
+[Back to start](https://github.com/PowerCommands/PowerCommands2022/blob/main/Docs/README.md)

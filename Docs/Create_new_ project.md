@@ -16,3 +16,5 @@ And this is what you should se!
 ![Alt text](images/DemoCommand.png?raw=true "Demo Command")
 
 Next step, create your first [PowerCommand](Create_new_command.md).
+
+[Back to start](https://github.com/PowerCommands/PowerCommands2022/blob/main/Docs/README.md)

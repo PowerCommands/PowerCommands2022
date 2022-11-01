@@ -64,3 +64,5 @@ Read more about:
 [Input](Input.md)
 
 [Flags](Flags.md)
+
+[Back to start](https://github.com/PowerCommands/PowerCommands2022/blob/main/Docs/README.md)

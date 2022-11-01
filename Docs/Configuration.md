@@ -87,3 +87,5 @@ Read more about:
 [Design your Command](Design_command.md)
 
 [Documentation index](DocumentationIndexDB.md)
+
+[Back to start](https://github.com/PowerCommands/PowerCommands2022/blob/main/Docs/README.md)

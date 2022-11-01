@@ -42,3 +42,5 @@ Read more about:
 [Extend your configuration](ExtendYourConfiguration.md)
 
 [Design principles and guidlines](PowerCommands%20Design%20Principles%20And%20Guidlines.md)
+
+[Back to start](https://github.com/PowerCommands/PowerCommands2022/blob/main/Docs/README.md)

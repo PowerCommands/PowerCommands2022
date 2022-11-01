@@ -364,3 +364,5 @@ You can override this behaviour if you set the property **overrideHelpFlag** to 
 # ARCHITECTURE
 ## <a name='Dependancydiagram'></a>Dependancy diagram
 ![Alt text](images/dependancies_example.png?raw=true "Describe")
+
+[Back to start](https://github.com/PowerCommands/PowerCommands2022/blob/main/Docs/README.md)

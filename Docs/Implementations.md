@@ -17,3 +17,5 @@ This is for comparing two different data sources, could be two different files, 
 **Regression test**
 
 This is for tracking a single dataset/source over time. You create a baseline, which is stored on file, and then later compare data towards this baseline.
+
+[Back to start](https://github.com/PowerCommands/PowerCommands2022/blob/main/Docs/README.md)

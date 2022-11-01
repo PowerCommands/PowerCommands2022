@@ -103,3 +103,5 @@ Read more about:
 [Basic application configuration](Configuration.md)
 
 [Documentation index](DocumentationIndexDB.md)
+
+[Back to start](https://github.com/PowerCommands/PowerCommands2022/blob/main/Docs/README.md)

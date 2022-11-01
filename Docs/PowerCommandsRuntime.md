@@ -31,3 +31,5 @@ Read more about:
 [Extend your configuration](ExtendYourConfiguration.md)
 
 [Handling the Input](Input.md)
+
+[Back to start](https://github.com/PowerCommands/PowerCommands2022/blob/main/Docs/README.md)
