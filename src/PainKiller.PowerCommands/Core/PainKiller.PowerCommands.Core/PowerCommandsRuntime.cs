@@ -4,9 +4,6 @@ global using PainKiller.PowerCommands.Shared.DomainObjects.Core;
 global using PainKiller.PowerCommands.Shared.Enums;
 global using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
 using PainKiller.PowerCommands.Core.Commands;
-using PainKiller.PowerCommands.Core.Extensions;
-using PainKiller.PowerCommands.Core.Services;
-using PainKiller.PowerCommands.Shared.Contracts;
 
 namespace PainKiller.PowerCommands.Core;
 

@@ -1,9 +1,4 @@
-﻿using PainKiller.PowerCommands.Core.Extensions;
-using PainKiller.PowerCommands.Core.Services;
-using PainKiller.PowerCommands.Shared.Contracts;
-using PainKiller.PowerCommands.Shared.DomainObjects.Documentation;
-
-namespace PainKiller.PowerCommands.Core.Commands;
+﻿namespace PainKiller.PowerCommands.Core.Commands;
 
 [PowerCommand(       description: "With help command you will be shown the provided description or online documentation of the command or a PowerCommand feature.",
                        arguments: "<command name or feature you are interested of knowing more>",

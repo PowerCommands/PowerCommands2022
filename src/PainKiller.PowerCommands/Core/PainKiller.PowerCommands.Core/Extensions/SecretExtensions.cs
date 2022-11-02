@@ -1,5 +1,4 @@
-﻿using PainKiller.PowerCommands.Core.Services;
-using PainKiller.PowerCommands.Security.Services;
+﻿using PainKiller.PowerCommands.Security.Services;
 
 namespace PainKiller.PowerCommands.Core.Extensions;
 

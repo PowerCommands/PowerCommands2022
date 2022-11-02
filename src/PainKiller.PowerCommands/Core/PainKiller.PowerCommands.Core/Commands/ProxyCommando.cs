@@ -1,6 +1,4 @@
-﻿using PainKiller.PowerCommands.Core.Services;
-
-namespace PainKiller.PowerCommands.Core.Commands;
+﻿namespace PainKiller.PowerCommands.Core.Commands;
 
 [PowerCommand(description: "Proxy command, this command is executing a command outside this application, the functionallity is therefore unknown")]
 public class ProxyCommando : CommandBase<CommandsConfiguration>

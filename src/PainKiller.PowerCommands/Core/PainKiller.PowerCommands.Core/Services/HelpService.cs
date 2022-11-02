@@ -1,7 +1,4 @@
-﻿using PainKiller.PowerCommands.Core.Extensions;
-using PainKiller.PowerCommands.Shared.Contracts;
-
-namespace PainKiller.PowerCommands.Core.Services;
+﻿namespace PainKiller.PowerCommands.Core.Services;
 
 public class HelpService : IHelpService
 {
@@ -43,7 +40,6 @@ public class HelpService : IHelpService
         ConsoleService.WriteHeaderLine($"{GetType().Name}", $"{nameof(da.Examples)}:", writeLog: WriteToLog);
         foreach (var e in examples) WriteItem(e);
     }
-
     private void WriteItem(string description)
     {
         if (description.StartsWith("//"))

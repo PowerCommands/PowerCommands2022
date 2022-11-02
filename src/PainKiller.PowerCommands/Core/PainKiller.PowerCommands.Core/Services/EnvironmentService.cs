@@ -1,5 +1,4 @@
-﻿using PainKiller.PowerCommands.Shared.Contracts;
-namespace PainKiller.PowerCommands.Core.Services;
+﻿namespace PainKiller.PowerCommands.Core.Services;
 
 public class EnvironmentService : IEnvironmentService
 {

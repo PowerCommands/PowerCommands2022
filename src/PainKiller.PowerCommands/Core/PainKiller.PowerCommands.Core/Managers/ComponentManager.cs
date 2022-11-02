@@ -1,9 +1,4 @@
-﻿using PainKiller.PowerCommands.Core.Extensions;
-using PainKiller.PowerCommands.Security.DomainObjects;
-using PainKiller.PowerCommands.Security.Extensions;
-using PainKiller.PowerCommands.Shared.Contracts;
-
-namespace PainKiller.PowerCommands.Core.Managers;
+﻿namespace PainKiller.PowerCommands.Core.Managers;
 
 public class ComponentManager<TConfiguration> where TConfiguration : CommandsConfiguration
 {

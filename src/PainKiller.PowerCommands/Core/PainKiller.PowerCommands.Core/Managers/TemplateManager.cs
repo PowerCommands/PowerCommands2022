@@ -1,7 +1,4 @@
-﻿using PainKiller.PowerCommands.Configuration.DomainObjects;
-using PainKiller.PowerCommands.Shared.Contracts;
-
-namespace PainKiller.PowerCommands.Core.Managers;
+﻿namespace PainKiller.PowerCommands.Core.Managers;
 
 public class TemplateManager : ITemplateManager
 {

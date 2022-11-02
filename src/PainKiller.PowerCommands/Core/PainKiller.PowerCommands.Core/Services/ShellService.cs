@@ -1,9 +1,7 @@
 ﻿using System.Diagnostics;
 using Microsoft.Extensions.Logging;
-using PainKiller.PowerCommands.Shared.Contracts;
 
 namespace PainKiller.PowerCommands.Core.Services;
-
 public class ShellService : IShellService
 {
     private const int ImmediateReturn = 1000;
@@ -20,13 +18,11 @@ public class ShellService : IShellService
         if (!Directory.Exists(path)) return;
         Process.Start(new ProcessStartInfo { FileName = path, UseShellExecute = true, Verb = "open" });
     }
-
     public void OpenWithDefaultProgram(string uri)
     {
         _logger.LogInformation($"{nameof(ShellService)} {nameof(OpenDirectory)} {uri}");
         Process.Start(new ProcessStartInfo {FileName = uri, UseShellExecute = true, Verb = "open" });
     }
-
     public void Execute(string programName, string arguments, string workingDirectory, Action<string,bool> writeFunction, string fileExtension = "exe", bool waitForExit = false, bool useShellExecute = false)
     {
         var path = ReplaceCmdArguments(programName);
@@ -51,7 +47,6 @@ public class ShellService : IShellService
         }
         processAdd!.WaitForExit(waitForExit ? InfiniteWait : ImmediateReturn);
     }
-
     public void Execute(string programName, string arguments, string workingDirectory, string fileExtension = "exe", bool waitForExit = false, bool useShellExecute = false)
     {
         var path = ReplaceCmdArguments(programName);
@@ -75,6 +70,5 @@ public class ShellService : IShellService
         }
         processAdd!.WaitForExit(waitForExit ? InfiniteWait : ImmediateReturn);
     }
-
     private string ReplaceCmdArguments(string input) => input.Replace("%USERNAME%", Environment.UserName, StringComparison.CurrentCultureIgnoreCase);
 }

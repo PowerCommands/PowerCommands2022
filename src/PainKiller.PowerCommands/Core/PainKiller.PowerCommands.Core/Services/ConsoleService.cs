@@ -1,8 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
-using PainKiller.PowerCommands.Shared.Contracts;
 
 namespace PainKiller.PowerCommands.Core.Services;
-
 public static class ConsoleService
 {
     public static void WriteObjectDescription(string scope, string name, string description, bool writeLog = true)
@@ -40,7 +38,6 @@ public static class ConsoleService
         Console.ForegroundColor = currentColor;
         if (writeLog) WriteToLog(scope, $"{text}");
     }
-
     public static void WriteWarning(string scope, string text)
     {
         var currentColor = Console.ForegroundColor;
@@ -49,7 +46,6 @@ public static class ConsoleService
         Console.ForegroundColor = currentColor;
         WriteToLog(scope, $"{text}", LogLevel.Warning);
     }
-
     public static void WriteError(string scope, string text)
     {
         var currentColor = Console.ForegroundColor;
@@ -58,7 +54,6 @@ public static class ConsoleService
         Console.ForegroundColor = currentColor;
         WriteToLog(scope, $"{text}", LogLevel.Error);
     }
-
     public static void WriteCritical(string scope, string text)
     {
         var currentColor = Console.ForegroundColor;
@@ -67,7 +62,6 @@ public static class ConsoleService
         Console.ForegroundColor = currentColor;
         WriteToLog(scope, $"{text}", LogLevel.Critical);
     }
-
     private static void WriteToLog(string scope, string message, LogLevel level = LogLevel.Information)
     {
         var text = $"{scope} {message}";

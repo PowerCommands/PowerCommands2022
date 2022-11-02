@@ -1,8 +1,4 @@
-﻿using PainKiller.PowerCommands.Configuration;
-using PainKiller.PowerCommands.Core.Extensions;
-using PainKiller.PowerCommands.Core.Services;
-using PainKiller.PowerCommands.Security.Services;
-using PainKiller.PowerCommands.Shared.Contracts;
+﻿using PainKiller.PowerCommands.Security.Services;
 
 namespace PainKiller.PowerCommands.Core.Commands;
 [PowerCommand(description: "Get, creates, removes or view secrets, first you need to configure your encryption key with initialize argument",

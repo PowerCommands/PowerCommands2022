@@ -1,5 +1,4 @@
-﻿using PainKiller.PowerCommands.Core.Extensions;
-namespace PainKiller.PowerCommands.Core.Commands;
+﻿namespace PainKiller.PowerCommands.Core.Commands;
 
 [PowerCommand(       description: "View and manage the log",
                        arguments: "view|archive|list (default)",

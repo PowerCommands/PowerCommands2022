@@ -1,7 +1,5 @@
 ﻿using System.Text;
 using Microsoft.Extensions.Logging;
-using PainKiller.PowerCommands.Core.Services;
-using PainKiller.PowerCommands.Shared.Contracts;
 
 namespace PainKiller.PowerCommands.Core.BaseClasses;
 public abstract class CommandBase<TConfig> : IConsoleCommand where TConfig : new()

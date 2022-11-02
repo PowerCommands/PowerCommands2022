@@ -1,8 +1,4 @@
 ﻿using System.Net.Http.Json;
-using PainKiller.PowerCommands.Configuration.DomainObjects;
-using PainKiller.PowerCommands.Core.Services;
-using PainKiller.PowerCommands.Shared.Contracts;
-using PainKiller.PowerCommands.Shared.DomainObjects.Documentation;
 
 namespace PainKiller.PowerCommands.Core.Managers;
 
@@ -14,7 +10,6 @@ public class CliManager : ICliManager
     private readonly Action<string, bool> _logger;
     
     public bool DisplayAndWriteToLog = true;
-
     public CliManager(string name, string path, Action<string, bool> logger)
     {
         _name = name;
@@ -34,7 +29,6 @@ public class CliManager : ICliManager
         Directory.CreateDirectory(_srcCodeRootPath);
         _logger.Invoke($"Directory {_srcCodeRootPath} created", DisplayAndWriteToLog);
     }
-
     public void DeleteDownloadsDirectory()
     {
         if(!Directory.Exists(_srcCodeRootPath)) return;
@@ -49,7 +43,6 @@ public class CliManager : ICliManager
         }
         DeleteDir(_srcCodeRootPath);
     }
-
     public void CreateDownloadsDirectory()
     {
         if (Directory.Exists(_srcCodeRootPath)) return;
@@ -62,21 +55,18 @@ public class CliManager : ICliManager
         _logger.Invoke($"Directory {dirI.Attributes} created", DisplayAndWriteToLog);
     }
     public void CloneRepo(string repo) => ShellService.Service.Execute("git", $"clone {repo}", _srcCodeRootPath, _logger, waitForExit: true);
-
     public void DeleteDir(string directory)
     {
         var dirPath = GetPath(directory);
         _logger($"Delete directory {dirPath}", DisplayAndWriteToLog);
         if(Directory.Exists(dirPath)) Directory.Delete(dirPath, recursive: true);
     }
-
     public void DeleteFile(string fileName, bool repoFile)
     {
         var path = repoFile ? Path.Combine(_srcCodeRootPath, fileName) : Path.Combine(_path, fileName);
         _logger($"Delete file {path}", DisplayAndWriteToLog);
         if(File.Exists(path)) File.Delete(path);
     }
-
     public void RenameDirectory(string directory, string name)
     {
         var oldDirName = directory.Split('\\').Last();
@@ -113,7 +103,6 @@ public class CliManager : ICliManager
         _logger.Invoke($"to [{newFilePath}]", DisplayAndWriteToLog);
         _logger.Invoke("", false);
     }
-
     public string BackupDirectory(string dirctoryName)
     {
         var backupRoot = _srcCodeRootPath.Replace($"\\download\\{_name}", $"\\backup\\{_name}");
@@ -177,7 +166,6 @@ public class CliManager : ICliManager
         File.WriteAllLines(solutionFileName, validProjectsRows);
         _logger.Invoke($"New solution file [{solutionFileName}] created", DisplayAndWriteToLog);
     }
-
     public void ReplaceContentInFile(string fileName, string find, string replace)
     {
         var filePath = GetPath(fileName);
@@ -186,21 +174,18 @@ public class CliManager : ICliManager
         File.WriteAllText(filePath, content);
         _logger.Invoke($"Content replaced in file [{fileName}]", DisplayAndWriteToLog);
     }
-
     public static string GetLocalSolutionRoot()
     {
         var parts = AppContext.BaseDirectory.Split('\\');
         var endToRemove = $"\\{parts[^5]}\\{parts[^4]}\\{parts[^3]}\\{parts[^2]}";
         return AppContext.BaseDirectory.Replace(endToRemove, "");
     }
-
     public static string GetName()
     {
         var path = GetLocalSolutionRoot();
         var solutionFile = Directory.GetFileSystemEntries(path, "*.sln").FirstOrDefault() ?? Directory.GetFileSystemEntries(AppContext.BaseDirectory, "*.exe").First().Replace(".exe", "");
         return solutionFile.Split('\\').Last().Replace(".sln", "");
     }
-
     public void MergeDocsDB()
     {
         try

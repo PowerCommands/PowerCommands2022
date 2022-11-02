@@ -1,6 +1,4 @@
-﻿using PainKiller.PowerCommands.Core.Services;
-
-namespace PainKiller.PowerCommands.Core.Commands;
+﻿namespace PainKiller.PowerCommands.Core.Commands;
 
 [PowerCommand(       description: "Exit command exits the program",
                        arguments: "answer:y",

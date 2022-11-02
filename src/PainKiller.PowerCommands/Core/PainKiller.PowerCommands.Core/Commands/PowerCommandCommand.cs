@@ -1,7 +1,4 @@
-﻿using PainKiller.PowerCommands.Core.Extensions;
-using PainKiller.PowerCommands.Core.Managers;
-using PainKiller.PowerCommands.Core.Services;
-using PainKiller.PowerCommands.Shared.Contracts;
+﻿using PainKiller.PowerCommands.Core.Managers;
 using System.Reflection;
 
 namespace PainKiller.PowerCommands.Core.Commands;
