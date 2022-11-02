@@ -26,9 +26,9 @@ public class ConfigurationService : IConfigurationService
         }
         catch (Exception)
         {
-            Console.WriteLine("Could not deserialize the configuration file, default configuration will be loaded instead\nA template configuration file named default.yaml will be created in applicatin root.");
+            Console.WriteLine($"Could not deserialize the configuration file, default configuration will be loaded instead\nA template configuration file named default_{typeof(T).Name}.yaml will be created in application root.");
             var defaultConfig = new T();
-            SaveChanges(defaultConfig, "default.yaml");
+            SaveChanges(defaultConfig, $"default_{typeof(T).Name}.yaml");
             return new YamlContainer<T>();
         }
     }
