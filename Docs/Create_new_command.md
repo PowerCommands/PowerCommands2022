@@ -33,7 +33,7 @@ The PowerCommand Core finds your new Command class automatically, and can  there
 The PowerCommands framework has creation of new commands to your Visual Studio Solution built in, so you could just start your solution in Visual Studio and type:
 
 ```
-commands new --name HelloWorld
+powercommand new --command HelloWorld
 ```
 And a new command with the name HelloWorldCommand.cs is created in you Commands project.
 

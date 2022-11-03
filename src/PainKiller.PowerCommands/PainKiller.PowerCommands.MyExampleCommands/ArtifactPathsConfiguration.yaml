@@ -33,17 +33,17 @@ configuration:
     renamedCommandsProject: PowerCommands2022\src\PainKiller.PowerCommands\PainKiller.PowerCommands.{name}Commands
     bootstrapProject: PowerCommands2022\src\PainKiller.PowerCommands\PainKiller.PowerCommands.Bootstrap
     consoleProject: PowerCommands2022\src\PainKiller.PowerCommands\PainKiller.PowerCommands.PowerCommandsConsole    
-    template: '{_name}\PowerCommands2022\src\PainKiller.PowerCommands\PainKiller.PowerCommands.MyExampleCommands\Commands\Templates'
+    template: '{name}\PowerCommands2022\src\PainKiller.PowerCommands\PainKiller.PowerCommands.MyExampleCommands\Commands\Templates'
     backup: '\download\{_name}'
     core: PowerCommands2022\src\PainKiller.PowerCommands\Core
     thirdParty: PowerCommands2022\src\\PainKiller.PowerCommands\Third party components
   target:
     exampleProjectFile: PainKiller.PowerCommands.MyExampleCommands\PainKiller.PowerCommands.MyExampleCommands.csproj
-    solutionFileName: PowerCommands2022\src\PainKiller.PowerCommands\PowerCommands.{name}.sln
+    solutionFileName: PowerCommands.{name}.sln
     commandsProject: PainKiller.PowerCommands.{name}Commands
     bootstrapProject: PainKiller.PowerCommands.Bootstrap
     consoleProject: PainKiller.PowerCommands.PowerCommandsConsole    
     template: Commands
-    backup: '\backup\{_name}'
+    backup: '\backup\{name}'
     core: Core
     thirdParty: Third party components
