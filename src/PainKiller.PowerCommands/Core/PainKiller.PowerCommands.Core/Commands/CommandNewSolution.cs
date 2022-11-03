@@ -48,8 +48,7 @@ public class CommandNewSolution : PowerCommandCommand
   </ItemGroup>", $"");
             cli.ReplaceContentInFile($"{_artifact.GetPath(_artifact.Source.RenamedCommandsProject)}\\PainKiller.PowerCommands.MyExampleCommands.csproj", $@"<ItemGroup>
     <None Include=""Commands\Templates\{cmdName}Command.cs"" />
-  </ItemGroup>
-            ", $"");
+  </ItemGroup>", $"");
         }
 
         cli.MoveFile($"{_artifact.GetPath(_artifact.Source.RenamedCommandsProject)}\\PainKiller.PowerCommands.MyExampleCommands.csproj", $"{_artifact.GetPath(_artifact.Source.RenamedCommandsProject)}\\PainKiller.PowerCommands.{name}Commands.csproj");
