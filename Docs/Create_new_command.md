@@ -14,7 +14,7 @@ public class HelloWorldCommand : CommandBase<PowerCommandsConfiguration>
     public override RunResult Run()
     {
         WriteLine("Hello World!");
-        return CreateRunResult();
+        return Ok();
     }
 }
 ```

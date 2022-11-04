@@ -36,7 +36,7 @@ public class InputValidationManager
         {
             flagInfo.Value = _input.GetFlagValue(flagInfo.Name);
             if (!string.IsNullOrEmpty(flagInfo.Value)) continue;
-            _logger.Invoke($"{flagInfo.Name}", DisplayAndWriteToLog);
+            _logger.Invoke($"Flag [{flagInfo.Name}] is required to have a value.", DisplayAndWriteToLog);
             retVal.HasValidationError = true;
         }
 

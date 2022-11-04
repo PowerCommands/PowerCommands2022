@@ -7,6 +7,8 @@
 ## Commands development
 [Design your Command](Design_command.md)
 
+[Power Commands Design attribute](PowerCommandDesignAttribute.md)
+
 [Command base class](CommandBase.md)
 
 [Handling the Input](Input.md)
@@ -14,8 +16,6 @@
 [Using Flags](Flags.md)
 
 [Output to the Console guidline](ConsoleOutput.md)
-
-[Self documentation using attribute](PowerCommandAttribute.md)
 
 ## Core framework
 [PowerCommandsRuntime](PowerCommandsRuntime.md)

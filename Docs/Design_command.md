@@ -22,9 +22,9 @@ using PainKiller.PowerCommands.MyExampleCommands.Configuration;
 
 namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
-[PowerCommand(  description: "Converting yaml format to json or xml format",
-                flags: "path|format",
-                example: "//Convert to json format|convert --path \"c:\\temp\\test.yaml\" --format json|//Convert to xml format|convert --path \"c:\\temp\\test.yaml\" --format xml")]
+[PowerCommandDesign(  description: "Converting yaml format to json or xml format",
+                            flags: "path|format",
+                          example: "//Convert to json format|convert --path \"c:\\temp\\test.yaml\" --format json|//Convert to xml format|convert --path \"c:\\temp\\test.yaml\" --format xml")]
 public class ConvertCommand : CommandBase<PowerCommandsConfiguration>
 {
     public ConvertCommand(string identifier, PowerCommandsConfiguration configuration) : base(identifier, configuration) { }
@@ -32,28 +32,29 @@ public class ConvertCommand : CommandBase<PowerCommandsConfiguration>
     public override RunResult Run()
     {
         YamlFormatManger.Convert(Input.GetFlagValue("path"), Input.GetFlagValue("format"));
-        return CreateRunResult();
+        return Ok();
     }
 }
 ```
-Notice that the documentation for how this command will be used is created with the [PowerCommand](PowerCommandAttribute.md) attribute.
+Notice that the documentation for how this command will be used is created with the [PowerCommandDesign](PowerCommandDesignAttribute.md) attribute.
 
 ## The user input
 ![Alt text](images/Command_line_input_convert.png?raw=true "Describe convert command")
 
 This input will first be handled by the Core Framework, using the Identifier an instanse of the ConvertCommand will be created and the framework will also add the [Input](Input.md) instance to the ConvertCommand instans wich give your convert command two flags named **path** and **format** to handle progamatically to create a file on the given path with the given format.
 
-## But must I use the PowerCommand attribute on every command I create?
-No that is not mandatory but it is recommended, note that when you declare the flags, they will be available for code completion, wich means that when the consumer types - and hit the tab button the user will can se what flags there are that could be used. That is really nice, you could read more about design of good Command Line Inter fade design here:
+## Must I use the PowerCommandDesign attribute on every command I create?
+No that is not mandatory but it is recommended, note that when you declare the flags, they will be available for code completion, wich means that when the consumer types - and hit the tab button the user will can se what flags there are that could be used, with a simple ! character you tell that the argument, quote, flag or secret is required and then the Core runtime will validate that automatically for you. That is really nice, you could read more about design of good Command Line Inter fade design here:
+
+Next step is to understand the [Power Commands Design attribute](PowerCommandDesignAttribute.md)
 
 [10 design principles for delightful CLIs](https://blog.developer.atlassian.com/10-design-principles-for-delightful-clis/)
 
 Read more about:
 
+
 [Input](Input.md)
 
 [Flags](Flags.md)
-
-[PowerCommands Attribute](PowerCommandAttribute.md)
 
 [Back to start](https://github.com/PowerCommands/PowerCommands2022/blob/main/Docs/README.md)
