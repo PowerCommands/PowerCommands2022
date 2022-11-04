@@ -16,7 +16,7 @@ public class LogCommand : CommandBase<CommandsConfiguration>
         if (Input.SingleArgument == "view") View();
         if (Input.SingleArgument == "process") ProcessLog($"{Input.Quotes}");
         
-        return CreateRunResult();
+        return Ok();
     }
     private void List()
     {

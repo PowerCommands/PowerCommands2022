@@ -19,7 +19,7 @@ public class GitCommand : CommandBase<PowerCommandsConfiguration>
     {
         if(Input.SingleArgument == "commit") Commit(Input.SingleQuote);
         if(Input.SingleArgument == "push") Push();
-        return CreateRunResult();
+        return Ok();
     }
     public void Commit(string comment)
     {

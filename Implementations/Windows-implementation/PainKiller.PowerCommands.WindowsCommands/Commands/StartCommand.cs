@@ -20,12 +20,12 @@ public class StartCommand : CommandBase<PowerCommandsConfiguration>
         if (string.IsNullOrEmpty(Input.SingleArgument))
         {
             Show();
-            return CreateRunResult();
+            return Ok();
         }
 
         var favorite = FindFavorite(Input.SingleArgument);
         if (favorite != null) Start(favorite);
-        return CreateRunResult();
+        return Ok();
     }
     protected FavoriteConfiguration? FindFavorite(string name)
     {

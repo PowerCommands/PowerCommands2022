@@ -28,9 +28,9 @@ public class GitCommand : CommandBase<PowerCommandsConfiguration>
                 Repo();
                 break;
             default: 
-                return CreateBadParameterRunResult($"Parameter {Input.SingleArgument} not supported");
+                return BadParameterError($"Parameter {Input.SingleArgument} not supported");
         }
-        return CreateRunResult();
+        return Ok();
     }
     public void Commit(string comment)
     {

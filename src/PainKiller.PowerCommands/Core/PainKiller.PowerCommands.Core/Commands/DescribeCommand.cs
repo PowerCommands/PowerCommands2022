@@ -2,9 +2,8 @@
 
 [PowerCommand(       description: "With help command you will be shown the provided description or online documentation of the command or a PowerCommand feature.",
                        arguments: "<command name or feature you are interested of knowing more>",
-                      suggestion: "cls",
                            flags: "docs",
-                         example: "describe exit|describe cls|describe log")]
+                         example: "describe exit|describe cls|describe log|//Open documentation about flags (if any)|describe flags --doc")]
 public class DescribeCommand : CommandBase<CommandsConfiguration>
 {
     public DescribeCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
@@ -13,7 +12,7 @@ public class DescribeCommand : CommandBase<CommandsConfiguration>
     {
         if(Input.HasFlag("docs")) ShowDoc();
         else ShowCommand();
-        return CreateRunResult();
+        return Ok();
     }
 
     public void ShowDoc()

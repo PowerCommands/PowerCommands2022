@@ -16,6 +16,6 @@ public class InputCommand : CommandBase<PowerCommandsConfiguration>
         if (Input.Quotes.Length > 0) WriteLine($"Quotes: {string.Join(' ', Input.Quotes)}");
         if (Input.Arguments.Length > 0) WriteLine($"Flags: {string.Join(' ', Input.Flags)}");
         
-        return CreateRunResult();
+        return Ok();
     }
 }

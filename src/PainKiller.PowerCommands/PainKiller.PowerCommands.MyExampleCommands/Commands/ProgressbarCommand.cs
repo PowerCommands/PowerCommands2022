@@ -17,6 +17,6 @@ public class ProgressbarCommand : CommandBase<CommandsConfiguration>
             Thread.Sleep(1);
             progressbar.Show();
         }
-        return CreateRunResult();
+        return Ok();
     }
 }

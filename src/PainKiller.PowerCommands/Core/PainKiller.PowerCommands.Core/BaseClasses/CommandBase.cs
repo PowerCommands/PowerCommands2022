@@ -20,9 +20,10 @@ public abstract class CommandBase<TConfig> : IConsoleCommand where TConfig : new
     public virtual async Task<RunResult> RunAsync() => await Task.FromResult(new RunResult(this, Input,"",RunResultStatus.Initializing));
 
     #region helpers
-    protected RunResult CreateRunResult() => new(this, Input, _ouput.ToString(), RunResultStatus.Ok);
-    protected RunResult CreateQuitResult() => new(this, Input, _ouput.ToString(), RunResultStatus.Quit);
-    protected RunResult CreateBadParameterRunResult(string output) => new(this, Input, output, RunResultStatus.ArgumentError);
+    protected RunResult Ok() => new(this, Input, _ouput.ToString(), RunResultStatus.Ok);
+    protected RunResult Quit() => new(this, Input, _ouput.ToString(), RunResultStatus.Quit);
+    protected RunResult BadParameterError(string output) => new(this, Input, output, RunResultStatus.ArgumentError);
+    protected RunResult ExceptionError(string output) => new(this, Input, output, RunResultStatus.ExceptionThrown);
     protected void WriteLine(string output, bool addToOutput = true)
     {
         if(addToOutput && !string.IsNullOrEmpty(output.Trim())) _ouput.AppendLine(output);

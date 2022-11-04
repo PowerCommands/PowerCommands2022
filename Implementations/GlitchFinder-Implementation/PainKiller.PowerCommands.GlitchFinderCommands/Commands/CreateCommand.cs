@@ -19,8 +19,8 @@ public class CreateCommand : GlitchFinderBaseCommand
 
     public override RunResult Run()
     {
-        if(string.IsNullOrEmpty(Input.SingleArgument)) return CreateBadParameterRunResult("You must provide witch type of project to create, comparison or regression");
-        if (string.IsNullOrEmpty(Input.SingleQuote)) return CreateBadParameterRunResult("The project needs a name");
+        if(string.IsNullOrEmpty(Input.SingleArgument)) return BadParameterError("You must provide witch type of project to create, comparison or regression");
+        if (string.IsNullOrEmpty(Input.SingleQuote)) return BadParameterError("The project needs a name");
 
         var projectName = Input.SingleQuote;
         ProjectPath = Path.Combine(AppContext.BaseDirectory, Configuration.ProjectsRelativePath, projectName);
@@ -30,7 +30,7 @@ public class CreateCommand : GlitchFinderBaseCommand
         if(Input.SingleArgument == "comparison") NewComparison(projectName);
         if(Input.SingleArgument == "regression") NewRegressionTest(projectName);
         
-        return CreateRunResult();
+        return Ok();
     }
     public void NewComparison(string projectName)
     {

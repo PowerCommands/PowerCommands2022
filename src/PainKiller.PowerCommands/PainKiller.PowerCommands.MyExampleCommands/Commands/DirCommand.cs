@@ -16,9 +16,9 @@ public class DirCommand : CommandBase<CommandsConfiguration>
     public override RunResult Run()
     {
         var directory = string.IsNullOrEmpty(Input.Path) ? (Input.HasFlag("app") ? ConfigurationGlobals.ApplicationDataFolder : AppContext.BaseDirectory) : Input.Path;
-        if (!Directory.Exists(directory)) return CreateBadParameterRunResult($"Could not find directory \"{directory}\"");
+        if (!Directory.Exists(directory)) return BadParameterError($"Could not find directory \"{directory}\"");
         ShellService.Service.OpenDirectory(directory);
         WriteLine($"Open directory {directory}");
-        return CreateRunResult();
+        return Ok();
     }
 }

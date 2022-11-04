@@ -20,6 +20,6 @@ public class DemoCommand : CommandBase<PowerCommandsConfiguration>
         WriteLine("");
         WriteLine("This command could now be removed from your solution.");
         WriteLine("The commands [config] and [dir] could also be deleted (practical help commands only)");
-        return CreateRunResult();
+        return Ok();
     }
 }

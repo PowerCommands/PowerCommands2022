@@ -11,7 +11,7 @@ public class IterationCommand : CommandBase<CommandsConfiguration>
     public override async Task<RunResult> RunAsync()
     {
         await RunIterations(PowerCommandServices.Service.Runtime.Commands);
-        return CreateRunResult();
+        return Ok();
     }
     private async Task RunIterations(List<IConsoleCommand> runtimeCommands)
     {

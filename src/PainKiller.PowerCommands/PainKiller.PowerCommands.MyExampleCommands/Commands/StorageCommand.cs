@@ -19,7 +19,7 @@ public class StorageCommand : CommandBase<CommandsConfiguration>
         else if(mode == "backup") Backup();
         else if(mode == "delete") Delete();
         else Display();
-        return CreateRunResult();
+        return Ok();
     }
 
     private void Display()

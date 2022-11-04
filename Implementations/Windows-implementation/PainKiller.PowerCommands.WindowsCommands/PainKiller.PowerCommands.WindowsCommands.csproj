@@ -16,6 +16,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="ArtifactPathsConfiguration.yaml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="PowerCommandsConfiguration.yaml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

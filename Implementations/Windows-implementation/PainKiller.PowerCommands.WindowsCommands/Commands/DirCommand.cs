@@ -19,9 +19,9 @@ public class DirCommand : CommandBase<CommandsConfiguration>
         var directory = string.IsNullOrEmpty(Input.Path) ? AppContext.BaseDirectory : Input.Path;
         if (!string.IsNullOrEmpty(Input.SingleArgument)) directory = Input.SingleArgument;
         if (!string.IsNullOrEmpty(Input.SingleQuote)) directory = Input.SingleQuote;
-        if (!Directory.Exists(directory)) return CreateBadParameterRunResult($"Could not find directory \"{directory}\"");
+        if (!Directory.Exists(directory)) return BadParameterError($"Could not find directory \"{directory}\"");
         ShellService.Service.OpenDirectory(directory);
         WriteLine($"Open directory {directory}");
-        return CreateRunResult();
+        return Ok();
     }
 }

@@ -5,7 +5,7 @@ using PainKiller.PowerCommands.NistNvdCommands.DomainObjects;
 
 namespace PainKiller.PowerCommands.NistNvdCommands.Commands;
 
-[PowerCommand(description: "Search the NIST NATIONAL VULNERABILITY DATABASE",
+[PowerCommand(description: "Search the NIST national vulnerability database, requires that you have configured a secret named NistApiKey",
     useAsync: false,
     flags: "",
     example: "search")]
@@ -27,7 +27,7 @@ public class SearchCommand : CommandBase<PowerCommandsConfiguration>
             WriteLine("\nException Caught!");
             WriteLine($"Message :{e.Message}");
         }
-        return CreateRunResult();
+        return Ok();
     }
 
     public override async Task<RunResult> RunAsync()
@@ -43,6 +43,6 @@ public class SearchCommand : CommandBase<PowerCommandsConfiguration>
             WriteLine("\nException Caught!");
             WriteLine($"Message :{e.Message}");
         }
-        return CreateRunResult();
+        return Ok();
     }
 }

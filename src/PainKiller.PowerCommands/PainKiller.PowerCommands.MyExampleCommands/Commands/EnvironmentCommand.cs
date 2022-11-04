@@ -10,6 +10,6 @@ public class EnvironmentCommand : CommandBase<CommandsConfiguration>
     {
         WriteLine(Configuration.Environment.GetValue("KEY_VAULT_NAME"));
         WriteLine(Configuration.Environment.GetValue("AZURE_CLIENT_ID"));
-        return CreateRunResult();
+        return Ok();
     }
 }

@@ -73,6 +73,6 @@ public class CommandNewSolution : PowerCommandCommand
         WriteHeadLine("\nNow you are ready to add your commands, read more about that on github:\nhttps://github.com/PowerCommands/PowerCommands2022/blob/main/PowerCommands%20Design%20Principles%20And%20Guidlines.md");
 
         ShellService.Service.OpenDirectory(_path);
-        return CreateRunResult();
+        return Ok();
     }
 }

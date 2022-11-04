@@ -34,7 +34,7 @@ public class DocCommand : CommandBase<CommandsConfiguration>
         else if (Input.HasFlag("list")) List();
         else if (Input.HasFlag("backup")) Backup();
         else Add();
-        return CreateRunResult();
+        return Ok();
     }
 
     private void Backup()

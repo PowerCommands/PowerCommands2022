@@ -1,17 +1,9 @@
-using PainKiller.PowerCommands.Core.Extensions;
-using PainKiller.PowerCommands.Core.Services;
-using PainKiller.PowerCommands.KnowledgeDBCommands.Configuration;
-using PainKiller.PowerCommands.KnowledgeDBCommands.Contracts;
-using PainKiller.PowerCommands.KnowledgeDBCommands.DomainObjects;
-using PainKiller.PowerCommands.KnowledgeDBCommands.Managers;
-using PainKiller.PowerCommands.Shared.Contracts;
-
 namespace PainKiller.PowerCommands.KnowledgeDBCommands.Commands;
 
 [PowerCommand(  description: "Find a knowledge item, use the index value to open, edit or delete it",
                 arguments:"<SearchPhrase>",
                 flags: "latest|delete|edit|tags|name|source|view|append",
-                example: "/*Find something you are looking for, you can use two search arguments, the second argument is a filter on whats found with the first argument.*/|find mySearh|/*Find something you are looking for, you can use two search arguments, the second argument is a filter on whats found with the first argument.*/|find mySearch myFilter|/*Open a document from the latest search with the provided index*/|find 0|/*Delete a document from the latest search with the provided index*/|find 0 --delete|/*Append tag(s) for a document from the latest search with the provided index*/|find 0 --append --tags addMyTags|/*Edit the document from the latest search with the provided index*/|find 0 --edit --tags myNewTags --name myNewName --source MyNewSource-url-path-onenote| |/*Note that find is default command and could be omitted*/|/*So you could just write like this to open the second item listen in the latest search*/|1||/*If autostart is enabled and the search just find 1 item, that item will be opened automatically*/")]
+                example: "//Show the latest added documents|find --latest|//Show all documents|find --latest *|//Find something you are looking for, you can use two search arguments, the second argument is a filter on whats found with the first argument.|find mySearh|//Find something you are looking for, you can use two search arguments, the second argument is a filter on whats found with the first argument.|find mySearch myFilter|//Open a document from the latest search with the provided index|find 0|//Delete a document from the latest search with the provided index/|find 0 --delete|//Append tag(s) for a document from the latest search with the provided index|find 0 --append --tags addMyTags|//Edit the document from the latest search with the provided index|find 0 --edit --tags myNewTags --name myNewName --source MyNewSource-url-path-onenote|//Note that find is default command and could be omitted|//So you could just write like this to open the second item listen in the latest search|1|//If autostart is enabled and the search just find 1 item, that item will be opened automatically")]
 public class FindCommand : CommandBase<PowerCommandsConfiguration>
 {
     private List<KnowledgeItem> _items = new();
@@ -32,15 +24,19 @@ public class FindCommand : CommandBase<PowerCommandsConfiguration>
             else if (Input.HasFlag("append")) Append(_selectedItem, Input.GetFlagValue("tags"));
             else if (Input.HasFlag("view")) Details(_selectedItem);
             else Open(_selectedItem);
-            return CreateRunResult();
+            return Ok();
         }
 
         _items = _storage.GetObject().Items.Where(i => i.Name.ToLower().Contains(Input.SingleArgument.ToLower()) || i.Tags.ToLower().Contains(Input.SingleArgument.ToLower())).OrderByDescending(i => i.Created).ToList();
         if (Input.Arguments.Length > 1) _items = _items.Where(m => m.Name.ToLower().Contains(Input.Arguments[1].ToLower()) || m.Tags.ToLower().Contains(Input.Arguments[1].ToLower())).OrderByDescending(i => i.Created).ToList();
-        if (Input.HasFlag("latest")) _items = _storage.GetObject().Items.Where(i => i.Created > DateTime.Now.AddDays(-7)).ToList();
+        if (Input.HasFlag("latest"))
+        {
+            var latestDate = Input.GetFlagValue("latest") == "*" ? DateTime.Now.AddDays(-10000) : DateTime.Now.AddDays(-7);
+            _items = _storage.GetObject().Items.Where(i => i.Created > latestDate).ToList();
+        }
         Print();
         
-        return CreateRunResult();
+        return Ok();
     }
 
     private void Print()
@@ -98,7 +94,6 @@ public class FindCommand : CommandBase<PowerCommandsConfiguration>
         _storage.StoreObject(db);
         WriteLine($"Item {match.ItemID} {match.Name} updated.");
     }
-
     private void Append(KnowledgeItem item, string tags)
     {
         var db = _storage.GetObject();
@@ -110,7 +105,6 @@ public class FindCommand : CommandBase<PowerCommandsConfiguration>
         _storage.StoreObject(db);
         WriteLine($"Item {match.ItemID} {match.Name} updated.");
     }
-
     private void Details(KnowledgeItem item)
     {
         WriteHeadLine($"{item.Name} {item.ItemID}");

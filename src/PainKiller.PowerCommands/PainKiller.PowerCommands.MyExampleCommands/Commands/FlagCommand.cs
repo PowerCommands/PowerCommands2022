@@ -15,10 +15,10 @@ public class FlagCommand : CommandBase<CommandsConfiguration>
     public override RunResult Run()
     {
         var flag = Input.Flags.FirstOrDefault();
-        if (flag == null) return CreateBadParameterRunResult("Could not fine any flag in your input, a flag is an argument starting with --");
+        if (flag == null) return BadParameterError("Could not fine any flag in your input, a flag is an argument starting with --");
         WriteHeadLine("Flag demo, using only one flag");
         WriteLine($"Flag: {Input.Flags.First()}");
         WriteLine($"Flag value: {Input.GetFlagValue(flag)}");
-        return CreateRunResult();
+        return Ok();
     }
 }

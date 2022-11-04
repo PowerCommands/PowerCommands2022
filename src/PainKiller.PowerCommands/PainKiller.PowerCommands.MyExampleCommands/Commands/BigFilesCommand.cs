@@ -20,11 +20,11 @@ public class BigFilesCommand : CommandBase<CommandsConfiguration>
         var megaBytes = Input.GetFlagValue("megabytes");
         var path = Input.GetFlagValue("path");
 
-        if (string.IsNullOrEmpty(path) || !Directory.Exists(path)) return CreateBadParameterRunResult($"{path} must be a valid directory path");
+        if (string.IsNullOrEmpty(path) || !Directory.Exists(path)) return BadParameterError($"{path} must be a valid directory path");
         if (int.TryParse(megaBytes, out var number)) _minFileSize = number;
         var rootDirectory = new DirectoryInfo(path);
         await RunIterations(rootDirectory);
-        return CreateRunResult();
+        return Ok();
     }
     private async Task RunIterations(DirectoryInfo rootDirectory)
     {

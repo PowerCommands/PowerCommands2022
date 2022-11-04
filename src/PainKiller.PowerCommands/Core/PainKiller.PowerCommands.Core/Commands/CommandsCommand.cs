@@ -1,7 +1,7 @@
 ﻿namespace PainKiller.PowerCommands.Core.Commands;
 
 [PowerCommand( description:      "Shows commands, or filter commands by name, create a new command, show default command with flag --default",
-               qutes:            "//Search for a specific command with a filter that is using Contains to match loaded commands.|filter",
+               qutes:            "<filter>",
                flags:            "this|reserved|default",
                example:          "//Show all commands|commands|//Show your custom commands|commands --this|//Show reserved commands|commands --reserved|//Search for commands matching \"encrypt\"|commands \"encrypt\"|//Show default command|commands --default")]
 public class CommandsCommand : CommandBase<CommandsConfiguration>
@@ -31,31 +31,31 @@ public class CommandsCommand : CommandBase<CommandsConfiguration>
         Console.WriteLine("describe exit");
         WriteHeadLine($"You could also use the --help flag for the same thing, but the help flag could show something else if it is overriden by the Command author.");
         Console.WriteLine("exit --help");
-        return CreateRunResult();
+        return Ok();
     }
     private RunResult Reserved()
     {
         WriteHeadLine($"\n- Reserved commands:\n");
         foreach (var consoleCommand in IPowerCommandsRuntime.DefaultInstance?.Commands.Where(c => c.GetType().FullName!.StartsWith("PainKiller.PowerCommands.Core"))!) WriteLine(consoleCommand.Identifier, addToOutput: false);
         WriteHeadLine("\nReserved names should not be used for your custom commands.");
-        return CreateRunResult();
+        return Ok();
     }
     private RunResult Custom()
     {
         WriteHeadLine($"\n- custom commands:");
         foreach (var consoleCommand in IPowerCommandsRuntime.DefaultInstance?.Commands.Where(c => !c.GetType().FullName!.StartsWith("PainKiller.PowerCommands.Core"))!) WriteLine(consoleCommand.Identifier, addToOutput: false);
-        return CreateRunResult();
+        return Ok();
     }
     private RunResult FilterByName()
     {
         WriteHeadLine($"\n- Commands with name containing {Input.SingleQuote}:\n");
         foreach (var command in IPowerCommandsRuntime.DefaultInstance?.Commands.Where(c => c.Identifier.Contains(Input.SingleQuote))!) WriteLine(command.Identifier, addToOutput: false);
-        return CreateRunResult();
+        return Ok();
     }
     private RunResult Default()
     {
         WriteHeadLine($"\nDefault command:");
         WriteLine(Configuration.DefaultCommand);
-        return CreateRunResult();
+        return Ok();
     }
 }

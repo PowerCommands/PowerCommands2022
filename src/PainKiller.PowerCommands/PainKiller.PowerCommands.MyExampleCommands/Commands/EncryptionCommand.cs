@@ -14,6 +14,6 @@ public class EncryptionCommand : CommandBase<CommandsConfiguration>
     public override RunResult Run()
     {
         WriteLine(Input.HasFlag("decrypt") ? EncryptionService.Service.DecryptString(Input.GetFlagValue("decrypt")) : EncryptionService.Service.EncryptString(Input.SingleQuote));
-        return CreateRunResult();
+        return Ok();
     }
 }

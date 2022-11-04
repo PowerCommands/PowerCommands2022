@@ -22,17 +22,17 @@ public class ConfigCommand : CommandBase<PowerCommandsConfiguration>
             var fileName = ConfigurationService.Service.SaveChanges(configuration, inputFileName: "default.yaml");
 
             WriteLine($"A new default file named {fileName} has been created in the root directory");
-            return CreateRunResult();
+            return Ok();
         }
         if (Input.SingleArgument == "edit")
         {
             try { ShellService.Service.Execute(Configuration.CodeEditor, arguments: $"{Path.Combine(AppContext.BaseDirectory, $"{nameof(PowerCommandsConfiguration)}.yaml")}", workingDirectory: "", WriteLine, fileExtension: ""); }
-            catch (Exception) { return CreateBadParameterRunResult("Your editor must be included in Path environment variables"); }
+            catch (Exception) { return BadParameterError("Your editor must be included in Path environment variables"); }
         }
 
         var file = Path.Combine(AppContext.BaseDirectory, $"{nameof(PowerCommandsConfiguration)}.yaml");
         var configurationRows = File.ReadAllText(Path.Combine(AppContext.BaseDirectory, $"{nameof(PowerCommandsConfiguration)}.yaml")).Split('\n');
         foreach (var configurationRow in configurationRows) Console.WriteLine(configurationRow);
-        return CreateRunResult();
+        return Ok();
     }
 }

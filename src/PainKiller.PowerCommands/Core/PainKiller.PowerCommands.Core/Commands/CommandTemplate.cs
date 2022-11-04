@@ -6,6 +6,6 @@ public class CommandTemplate : CommandBase<CommandsConfiguration>
 
     public override RunResult Run()
     {
-        return CreateRunResult();
+        return Ok();
     }
 }

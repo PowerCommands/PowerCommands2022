@@ -1,8 +1,4 @@
-﻿using PainKiller.PowerCommands.Core.Services;
-using PainKiller.PowerCommands.KnowledgeDBCommands.Configuration;
-using PainKiller.PowerCommands.KnowledgeDBCommands.DomainObjects;
-
-namespace PainKiller.PowerCommands.KnowledgeDBCommands.Commands;
+﻿namespace PainKiller.PowerCommands.KnowledgeDBCommands.Commands;
 
 [PowerCommand(  description: "Add a new knowledge item",
                 flags: "onenote|url|path|name|tags",
@@ -15,18 +11,18 @@ public class AddCommand : CommandBase<PowerCommandsConfiguration>
     {
         var item = new KnowledgeItem(Input);
         Print(item);
-        if (!DialogService.YesNoDialog("Is this information correct?")) return CreateRunResult();
+        if (!DialogService.YesNoDialog("Is this information correct?")) return Ok();
 
         var db = StorageService<KnowledgeDatabase>.Service.GetObject();
         if (db.Items.Any(i => i.Name == item.Name && i.SourceType == i.SourceType))
         {
             WriteLine($"Warning, there is already a item with the same name and source stored in DB");
-            return CreateRunResult();
+            return Ok();
         }
         db.Items.Add(item);
         StorageService<KnowledgeDatabase>.Service.StoreObject(db);
         WriteLine($"Item {item.Name} has successfully been added.");
-        return CreateRunResult();
+        return Ok();
     }
 
     private void Print(KnowledgeItem item)

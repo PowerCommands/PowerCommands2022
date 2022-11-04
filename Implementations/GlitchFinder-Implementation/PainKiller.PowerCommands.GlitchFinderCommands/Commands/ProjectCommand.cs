@@ -18,18 +18,18 @@ public class ProjectCommand : CommandBase<PowerCommandsConfiguration>
         if (Input.SingleArgument == "log" && !string.IsNullOrEmpty(Input.SingleQuote))
         {
             ViewLog(Input.SingleQuote);
-            return CreateRunResult();
+            return Ok();
         }
         if (Input.SingleArgument == "delete" && !string.IsNullOrEmpty(Input.SingleQuote))
         {
             Delete(Input.SingleQuote);
-            return CreateRunResult();
+            return Ok();
         }
 
         WriteHeadLine("Projects");
         foreach (var c in Configuration.ComparisonProjects) ConsoleService.WriteObjectDescription(GetType().Name, "     Comparison", $"{c.Name}");
         foreach (var r in Configuration.RegressionProjects) ConsoleService.WriteObjectDescription(GetType().Name, "Regression test", $"{r.Name}");
-        return CreateRunResult();
+        return Ok();
     }
     private void ViewLog(string projectName)
     {

@@ -1,6 +1,4 @@
-﻿using PainKiller.PowerCommands.Core.Extensions;
-using PainKiller.PowerCommands.KnowledgeDBCommands.Extensions;
-using PainKiller.PowerCommands.Shared.Contracts;
+﻿using PainKiller.PowerCommands.KnowledgeDBCommands.Extensions;
 
 namespace PainKiller.PowerCommands.KnowledgeDBCommands.DomainObjects;
 

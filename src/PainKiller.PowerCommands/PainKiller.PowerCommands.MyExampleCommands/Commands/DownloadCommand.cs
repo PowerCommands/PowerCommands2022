@@ -26,7 +26,7 @@ public class DownloadCommand : CommandBase<CommandsConfiguration>
         
         var retVal =  DownloadWithProgressService.Service.Download(_downloadUrl, _fileName, ProgressChanged);
         await retVal;
-        return CreateRunResult();
+        return Ok();
     }
     private bool ProgressChanged(long? totalBytes, long totalBytesRead, double? percentage, string downloadUrl, string filePath)
     {

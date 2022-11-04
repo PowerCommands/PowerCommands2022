@@ -16,7 +16,7 @@ public class CommandUpdate : PowerCommandCommand
         {
             _path = Path.Combine(AppContext.BaseDirectory, "output");
             UpdateTemplates(new CliManager(CliManager.GetName(), _path, WriteLine), cloneRepo: true);
-            return CreateRunResult();
+            return Ok();
         }
         _path = CliManager.GetLocalSolutionRoot();
         var solutionFile = Directory.GetFileSystemEntries(_path, "*.sln").FirstOrDefault();
@@ -29,7 +29,7 @@ public class CommandUpdate : PowerCommandCommand
         {
             WriteLine("When running in application scope (outside VS Env) only the Documentation file will be updated...");
             cli.MergeDocsDB();
-            return CreateRunResult();
+            return Ok();
         }
 
         Console.WriteLine("Update will delete and replace everything in the [Core] and [Third party components] folder");
@@ -37,7 +37,7 @@ public class CommandUpdate : PowerCommandCommand
         Console.WriteLine("");
         Console.WriteLine("Do you want to continue with the update? y/n");
         var response = Console.ReadLine();
-        if ($"{response?.Trim()}" != "y") return CreateRunResult();
+        if ($"{response?.Trim()}" != "y") return Ok();
 
         cli.DeleteDownloadsDirectory();
         cli.CreateRootDirectory(onlyRepoSrcCodeRootPath: true);
@@ -64,6 +64,6 @@ public class CommandUpdate : PowerCommandCommand
 
         ShellService.Service.OpenDirectory(backupDirectory);
 
-        return CreateRunResult();
+        return Ok();
     }
 }

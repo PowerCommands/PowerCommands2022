@@ -1,8 +1,4 @@
-﻿using PainKiller.PowerCommands.Core.Services;
-using PainKiller.PowerCommands.KnowledgeDBCommands.Configuration;
-using PainKiller.PowerCommands.KnowledgeDBCommands.Contracts;
-
-namespace PainKiller.PowerCommands.KnowledgeDBCommands.Managers;
+﻿namespace PainKiller.PowerCommands.KnowledgeDBCommands.Managers;
 
 public class OpenFolderManager : IShellExecuteManager
 {

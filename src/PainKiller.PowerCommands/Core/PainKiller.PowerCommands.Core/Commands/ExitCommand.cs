@@ -1,7 +1,7 @@
 ﻿namespace PainKiller.PowerCommands.Core.Commands;
 
 [PowerCommand(       description: "Exit command exits the program",
-                       arguments: "answer:y",
+                       arguments: "<answer>(any answer starting with y will close the application)",
                       suggestion: "y",
                          example: "exit|exit y|exit Yes")]
 public class ExitCommand : CommandBase<CommandsConfiguration>

@@ -12,7 +12,7 @@ public class ZipCommand : CommandBase<CommandsConfiguration>
     public ZipCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
     public override RunResult Run()
     {
-        if (string.IsNullOrEmpty(Input.Path)) return CreateBadParameterRunResult("A valid path must be provided as argument");
+        if (string.IsNullOrEmpty(Input.Path)) return BadParameterError("A valid path must be provided as argument");
         WriteHeadLine($"Zipping files in directory: {Input.Path}...");
         var zipResult = ZipService.Service.ArchiveFilesInDirectory(Input.Path, "example", useTimestampSuffix: true, filter: string.IsNullOrEmpty(Input.SingleQuote) ? "*" : Input.SingleQuote);
         Console.WriteLine();
@@ -24,6 +24,6 @@ public class ZipCommand : CommandBase<CommandsConfiguration>
         ConsoleService.WriteObjectDescription($"{GetType().Name}", nameof(zipResult.Checksum),zipResult.Checksum!);
         if(zipResult.HasException) ConsoleService.WriteObjectDescription($"{GetType().Name}", nameof(zipResult.ExceptionMessage),zipResult.ExceptionMessage);
         
-        return CreateRunResult();
+        return Ok();
     }
 }

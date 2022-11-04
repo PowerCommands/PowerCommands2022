@@ -26,10 +26,10 @@ public class GameCommand : StartCommand
         if (ac != null) Start(ac);
         if (cheat != null) Start(cheat);
 
-        if (string.IsNullOrEmpty(Input.SingleQuote)) return CreateRunResult();
+        if (string.IsNullOrEmpty(Input.SingleQuote)) return Ok();
         
         var game = FindFavorite(Input.SingleQuote);
         if (game != null) Start(game);
-        return CreateRunResult();
+        return Ok();
     }
 }

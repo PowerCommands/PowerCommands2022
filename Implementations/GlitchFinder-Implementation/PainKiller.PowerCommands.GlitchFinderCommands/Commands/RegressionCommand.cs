@@ -20,10 +20,10 @@ public class RegressionCommand : GlitchFinderBaseCommand
 
     public override RunResult Run()
     {
-        if (string.IsNullOrEmpty(Input.SingleQuote)) return CreateBadParameterRunResult("A valid project name to existing configuration file must be provided");
+        if (string.IsNullOrEmpty(Input.SingleQuote)) return BadParameterError("A valid project name to existing configuration file must be provided");
         var projectName = Input.SingleQuote;
         
-        if (Configuration.RegressionProjects.FirstOrDefault(s => s.Name.ToLower() == projectName.ToLower()) == null) return CreateBadParameterRunResult($"No project with name {projectName} of the regression project type found, check that the project exist in {nameof(PowerCommandsConfiguration)}.yaml file.");
+        if (Configuration.RegressionProjects.FirstOrDefault(s => s.Name.ToLower() == projectName.ToLower()) == null) return BadParameterError($"No project with name {projectName} of the regression project type found, check that the project exist in {nameof(PowerCommandsConfiguration)}.yaml file.");
 
         ProjectPath = Path.Combine(AppContext.BaseDirectory, Configuration.ProjectsRelativePath, projectName);
         var config = ConfigurationService.Service.Get<RegressionTestSetting>(Path.Combine(ProjectPath, $"{RegressionTestConfigFileName}")).Configuration;
@@ -31,12 +31,12 @@ public class RegressionCommand : GlitchFinderBaseCommand
         if (Input.SingleArgument == "baseline")
         {
             SetBaseline(config, projectName);
-            return CreateRunResult();
+            return Ok();
         }
         var isEqual = RegressionTest(config, projectName);
         if (isEqual) WriteHeadLine("No glitches");
 
-        return CreateRunResult();
+        return Ok();
     }
     public bool SetBaseline(RegressionTestSetting config, string projectName)
     {

@@ -1,11 +1,11 @@
 ﻿namespace PainKiller.PowerCommands.Core.Commands;
 
 [PowerCommand(      description: "Create or update the Visual Studio Solution with all depended projects",
-                    arguments:"//Action could be new or update||action",
+                    arguments:"<action> (new or update)",
                     argumentMandatory: true,
                     flags:"command|solution|output|template|backup",
                     suggestion:"new",
-                    qutes: "Path: <path>",
+                    qutes: "<path>",
                     example: "//create new VS solution|powercommand new --solution testproject --output \"C:\\Temp\\\"|//Create new PowerCommand named Demo|powercommand new --command Demo|//Update powercommands core, this will first delete current Core projects and than apply the new Core projects|powercommand update|//Only update template(s)|powercommand update --templates|//Update with backup|powercommand update --backup|//Create a new command|powercommand new --command MyNewCommand")]
 public class PowerCommandCommand : CommandBase<CommandsConfiguration>
 {
@@ -28,17 +28,17 @@ public class PowerCommandCommand : CommandBase<CommandsConfiguration>
         }
         if (Input.HasFlag("template") && !string.IsNullOrEmpty(Input.GetFlagValue("template")))
         {
-            CreateBadParameterRunResult("Not implemented yet...");
+            BadParameterError("Not implemented yet...");
         }
         if (Input.SingleArgument == "new" && Input.HasFlag("command")) return CreateCommand(Input.GetFlagValue("command"));
-        return CreateBadParameterRunResult("Missing arguments");
+        return BadParameterError("Missing arguments");
     }
 
     private RunResult CreateCommand(string name)
     {
         var templateManager = new TemplateManager(name, WriteLine);
         templateManager.CreateCommand(templateName: "Default", name);
-        return CreateRunResult();
+        return Ok();
     }
 
     protected void UpdateTemplates(ICliManager cliManager, bool cloneRepo = false, string newProjectName = "")

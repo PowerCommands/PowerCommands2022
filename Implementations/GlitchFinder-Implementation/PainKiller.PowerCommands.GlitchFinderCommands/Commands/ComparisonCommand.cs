@@ -19,10 +19,10 @@ public class ComparisonCommand : GlitchFinderBaseCommand
 
     public override RunResult Run()
     {
-        if (string.IsNullOrEmpty(Input.SingleQuote)) return CreateBadParameterRunResult("You must provide a project name");
+        if (string.IsNullOrEmpty(Input.SingleQuote)) return BadParameterError("You must provide a project name");
         var isEqual = Compare(Input.SingleQuote);
         if(isEqual) WriteHeadLine("No glitches");
-        return CreateRunResult();
+        return Ok();
     }
 
     public bool Compare(string projectName)

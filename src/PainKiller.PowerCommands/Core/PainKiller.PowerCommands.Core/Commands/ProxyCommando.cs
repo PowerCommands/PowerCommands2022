@@ -1,6 +1,6 @@
 ﻿namespace PainKiller.PowerCommands.Core.Commands;
 
-[PowerCommand(description: "Proxy command, this command is executing a command outside this application, the functionallity is therefore unknown")]
+[PowerCommand(description: "Proxy command, this command is executing a command outside this application, the functionality is therefore unknown")]
 public class ProxyCommando : CommandBase<CommandsConfiguration>
 {
     private readonly string _name;
@@ -15,6 +15,6 @@ public class ProxyCommando : CommandBase<CommandsConfiguration>
     {
         WriteProcessLog("Proxy", $"{Input.Raw}");
         ShellService.Service.Execute(_name, Input.Raw, _workingDirctory, WriteLine, useShellExecute: true);
-        return CreateRunResult();
+        return Ok();
     }
 }

@@ -18,10 +18,10 @@ public class PathCommand : CommandBase<PowerCommandsConfiguration>
         if (Input.SingleArgument == "create")
         {
             CreatePath($"{Input.SingleQuote}");
-            return CreateRunResult();
+            return Ok();
         }
         ShowPaths();
-        return CreateRunResult();
+        return Ok();
     }
 
     private void ShowPaths()

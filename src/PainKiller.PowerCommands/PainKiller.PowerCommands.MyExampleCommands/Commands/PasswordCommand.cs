@@ -21,6 +21,6 @@ public class PasswordCommand : CommandBase<CommandsConfiguration>
         Console.Write("Do you want to see the password in clear text? y/? :");
         var response = Console.ReadLine();
         if (response != null && response.StartsWith('y')) Console.WriteLine(password);
-        return CreateRunResult();
+        return Ok();
     }
 }

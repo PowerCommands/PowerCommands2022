@@ -10,7 +10,7 @@ public class JobCommand : CommandBase<CommandsConfiguration>
     public override RunResult Run()
     {
         RunIterations(PowerCommandServices.Service.Runtime.Commands);
-        return CreateQuitResult();
+        return Quit();
     }
     private void RunIterations(List<IConsoleCommand> runtimeCommands)
     {

@@ -1,7 +1,4 @@
-﻿using PainKiller.PowerCommands.Core.Extensions;
-using PainKiller.PowerCommands.Shared.Contracts;
-
-namespace PainKiller.PowerCommands.KnowledgeDBCommands.Extensions;
+﻿namespace PainKiller.PowerCommands.KnowledgeDBCommands.Extensions;
 
 public static class FormatExtensions
 {

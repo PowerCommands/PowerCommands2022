@@ -1,6 +1,4 @@
-﻿using PainKiller.PowerCommands.KnowledgeDBCommands.Configuration;
-
-namespace PainKiller.PowerCommands.KnowledgeDBCommands.Contracts;
+﻿namespace PainKiller.PowerCommands.KnowledgeDBCommands.Contracts;
 
 public interface IShellExecuteManager
 {

@@ -18,7 +18,7 @@ public class SecretCommand : CommandBase<CommandsConfiguration>
         if ((Input.Arguments.Length + Input.Quotes.Length < 2) && Input.Arguments.Length > 0) throw new MissingFieldException("Two parameters must be provided");
         if (Input.Arguments.Length == 0 || Input.Arguments[0] == "view") return List();
 
-        return CreateBadParameterRunResult("No matching parameter");
+        return BadParameterError("No matching parameter");
     }
 
     private RunResult CheckEncryptConfiguration()
@@ -35,30 +35,30 @@ public class SecretCommand : CommandBase<CommandsConfiguration>
             Console.WriteLine("");
             WriteError("Encryption is not configured properly");
         }
-        return CreateRunResult();
+        return Ok();
     }
 
     private RunResult Salt()
     {
         Console.WriteLine(IEncryptionService.GetRandomSalt());
-        return CreateRunResult();
+        return Ok();
     }
     private RunResult List()
     {
-        if (Configuration.Secret.Secrets == null) return CreateRunResult();
+        if (Configuration.Secret.Secrets == null) return Ok();
         foreach (var secret in Configuration.Secret.Secrets) ConsoleService.WriteObjectDescription($"{GetType().Name}", secret.Name, $"{string.Join(',', secret.Options.Keys)}");
-        return CreateRunResult();
+        return Ok();
     }
     private RunResult Get()
     {
         var name = Input.SingleQuote;
         var secret = Configuration.Secret.Secrets.FirstOrDefault(s => s.Name.ToLower() == name.ToLower());
-        if (secret == null) return CreateBadParameterRunResult($"No secret with name \"{name}\" found.");
+        if (secret == null) return BadParameterError($"No secret with name \"{name}\" found.");
 
         var val = SecretService.Service.GetSecret(name, secret.Options, EncryptionService.Service.DecryptString);
         ConsoleService.WriteObjectDescription($"{GetType().Name}", name, val);
 
-        return CreateRunResult();
+        return Ok();
     }
     private RunResult Create()
     {
@@ -72,7 +72,7 @@ public class SecretCommand : CommandBase<CommandsConfiguration>
         if (password != passwordConfirm)
         {
             Console.WriteLine();
-            return CreateBadParameterRunResult("Passwords do not match");
+            return BadParameterError("Passwords do not match");
         }
 
         var secret = new SecretItemConfiguration { Name = name };
@@ -84,19 +84,19 @@ public class SecretCommand : CommandBase<CommandsConfiguration>
         WriteHeadLine("New secret created and stored in configuration file");
         ConsoleService.WriteObjectDescription($"{GetType().Name}", name, val);
 
-        return CreateRunResult();
+        return Ok();
     }
     private RunResult Remove()
     {
         var name = Input.SingleQuote;
 
         var secret = Configuration.Secret.Secrets.FirstOrDefault(s => s.Name.ToLower() == name.ToLower());
-        if (secret == null) return CreateBadParameterRunResult($"No secret with name \"{name}\" found.");
+        if (secret == null) return BadParameterError($"No secret with name \"{name}\" found.");
 
         Configuration.Secret.Secrets.Remove(secret);
         ConfigurationService.Service.SaveChanges(Configuration);
 
         WriteHeadLine("Secret removed from configuration file\nManually remove the secret key from environment variables or vault depending on how they are stored.");
-        return CreateRunResult();
+        return Ok();
     }
 }
