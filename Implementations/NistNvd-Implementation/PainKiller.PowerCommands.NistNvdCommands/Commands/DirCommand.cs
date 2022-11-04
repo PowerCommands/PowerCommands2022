@@ -1,7 +1,4 @@
 using PainKiller.PowerCommands.Configuration.DomainObjects;
-using PainKiller.PowerCommands.Core.Extensions;
-using PainKiller.PowerCommands.Core.Services;
-using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
 
 namespace PainKiller.PowerCommands.NistNvdCommands.Commands;
 

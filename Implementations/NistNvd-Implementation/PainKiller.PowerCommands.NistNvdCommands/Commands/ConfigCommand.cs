@@ -1,9 +1,3 @@
-using PainKiller.PowerCommands.Configuration;
-using PainKiller.PowerCommands.Core.Managers;
-using PainKiller.PowerCommands.Core.Services;
-using PainKiller.PowerCommands.NistNvdCommands.Configuration;
-using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
-
 namespace PainKiller.PowerCommands.NistNvdCommands.Commands;
 
 [PowerCommandDesign( description: "Config command is a util to help you build a default yaml configuration file, practical when you adding new configuration elements to the PowerCommandsConfiguration class",

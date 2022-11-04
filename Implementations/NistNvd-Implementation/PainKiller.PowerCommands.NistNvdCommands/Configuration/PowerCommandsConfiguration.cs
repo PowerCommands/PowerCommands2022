@@ -1,5 +1,3 @@
-using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
-
 namespace PainKiller.PowerCommands.NistNvdCommands.Configuration;
 
 public class PowerCommandsConfiguration : CommandsConfiguration
