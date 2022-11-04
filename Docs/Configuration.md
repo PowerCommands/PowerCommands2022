@@ -2,7 +2,7 @@
 
 ## PowerCommandsConfiguration.Yaml
 The content in these file has two parts, the first part is the core configuration, that part all PowerCommand application has.
-Second part is the extended configuration parts, this part is optional if you need custom configuration you need to implement this by your self. The conten of this part is then merged into one configuration file. 
+Second part is the extended configuration parts, this part is optional if you need custom configuration you need to implement this by your self. The content of this part is then merged into one configuration file. 
 
 ## The base configuration class diagram:
 
@@ -34,7 +34,7 @@ Description about your PowerCommand project.
 URL to this repsository, used internally to create new VS solutions and Commands using PowerCommands applikation.
 
 ## Secret
-Name of secrets that the application needs to be aware about.
+Name of secrets that the application needs to be aware about, each secret has an corrensponding environment value that is encrypted.
 
 ## ShowDiagnosticInformation
 Enable or disable the display of diagnostic output.

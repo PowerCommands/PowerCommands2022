@@ -1,7 +1,7 @@
 # Documentation Index DB
 
 The Core framework uses a very simple Documentation Index that is stored as an json file named **DocsDB.data** in the **%USERNAME%\AppData\Roaming\PowerCommands** directory.
-You could also add new entries to this index if you want, prefered way is to use the **DocCommand[DocCommand](https://github.com/PowerCommands/PowerCommands2022/blob/main/src/PainKiller.PowerCommands/PainKiller.PowerCommands.MyExampleCommands/Commands/DocCommand.cs)** and use this command.
+You could also add new entries to this index if you want, prefered way is to use the **[DocCommand](https://github.com/PowerCommands/PowerCommands2022/blob/main/src/PainKiller.PowerCommands/PainKiller.PowerCommands.MyExampleCommands/Commands/DocCommand.cs)** and use this command.
 
 The example adds a new Doc instans to the DocsDB with a link to google and some tags to it.
 ```

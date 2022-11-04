@@ -25,7 +25,7 @@ As you could see there are helper methods and the important properties Configura
 
 There are many use cases where it makes sense to create a base class for your other commands in your CLI applikation, lets say that you always need access to a keyvault and you do not want to repeat that code in every command you do. Here are som guidelines to help you.
  - The name should not end with Command, some examples on good naming could be VaultCommandBase or EntityFrameworkCommandBase
- - The class needs to be abstract otherwise the Core framework will try do use it just as any command it could find using reflection.
+ - If the class only is used to be inherited by other commands, it is good ide to declare it as an abstract class.
  - Let your base class implement CommandBase, that way you have all the helpers methods.
 
  Read more about:

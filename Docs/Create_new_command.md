@@ -27,7 +27,7 @@ This is what you get:
 
 ![Alt text](images/HelloWorld.png?raw=true "Hello World")
 
-The PowerCommand Core finds your new Command class automatically, and can  there fore hightligt the name of the command in blue color and of course execute the command.
+The PowerCommand Core finds your new Command classes automatically, and highlight the name of the command in blue color, you can cycle trough all available commands with the tab key.
 
 ## Use the PowerCommand CLI to create a new Command
 The PowerCommands framework has creation of new commands to your Visual Studio Solution built in, so you could just start your solution in Visual Studio and type:
