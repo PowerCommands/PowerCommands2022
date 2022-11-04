@@ -39,14 +39,14 @@ public static class ReflectionExtensions
         return propertyInfo == null ? new object() : propertyInfo.GetValue(instance)!;
     }
 
-    public static PowerCommandAttribute GetPowerCommandAttribute(this IConsoleCommand command)
+    public static PowerCommandDesignAttribute GetPowerCommandAttribute(this IConsoleCommand command)
     {
-        var attributes = command.GetType().GetCustomAttributes(typeof(PowerCommandAttribute), inherit: false);
-        return attributes.Length == 0 ? new PowerCommandAttribute(description:"Command have no description attribute") : (PowerCommandAttribute)attributes.First();
+        var attributes = command.GetType().GetCustomAttributes(typeof(PowerCommandDesignAttribute), inherit: false);
+        return attributes.Length == 0 ? new PowerCommandDesignAttribute(description:"Command have no description attribute") : (PowerCommandDesignAttribute)attributes.First();
     }
     public static string GetDefaultParameter(this IConsoleCommand command)
     {
-        var attribute = command.GetType().GetCustomAttributes(typeof(PowerCommandAttribute), inherit: false).FirstOrDefault() as PowerCommandAttribute;
+        var attribute = command.GetType().GetCustomAttributes(typeof(PowerCommandDesignAttribute), inherit: false).FirstOrDefault() as PowerCommandDesignAttribute;
         return attribute is null ? "" : attribute.Suggestion;
     }
     public static T DeepClone<T>(this T objSource) where T : class => CopyObject<T>(objSource);

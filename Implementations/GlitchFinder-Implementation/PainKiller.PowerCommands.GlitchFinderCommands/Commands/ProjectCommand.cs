@@ -5,9 +5,9 @@ using PainKiller.PowerCommands.GlitchFinderCommands.Configuration;
 
 namespace PainKiller.PowerCommands.GlitchFinderCommands.Commands;
 
-[PowerCommand( description: "Project management, no parameter lists all projects, with log could se the log for a named project",
+[PowerCommandDesign( description: "Project management, no parameter lists all projects, with log could se the log for a named project",
                  arguments: "log|delete",
-                     qutes: "<project name>",
+                    quotes: "<project name>",
                    example: $"project|project log \"my project\"|project delete \"my project\"")]
 public class ProjectCommand : CommandBase<PowerCommandsConfiguration>
 {

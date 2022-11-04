@@ -1,13 +1,12 @@
 ﻿using PainKiller.PowerCommands.Security.Services;
 
 namespace PainKiller.PowerCommands.Core.Commands;
-[PowerCommand(description: "Get, creates, removes or view secrets, first you need to configure your encryption key with initialize argument",
+[PowerCommandDesign(description: "Get, creates, removes or view secrets, first you need to configure your encryption key with initialize argument",
                     flags: "configuration|create|get|remove|salt",
                   example: "//View all declared secrets|secret|secret --get \"mycommand-pass\"|secret --create \"mycommand-pass\"|secret --remove \"mycommand-pass\"|Initialize your machine with a new encryption key (stops if this is already done)|secret --initialize")]
 public class SecretCommand : CommandBase<CommandsConfiguration>
 {
     public SecretCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
-
     public override RunResult Run()
     {
         if (Input.HasFlag("configuration")) return CheckEncryptConfiguration();
@@ -20,7 +19,6 @@ public class SecretCommand : CommandBase<CommandsConfiguration>
 
         return BadParameterError("No matching parameter");
     }
-
     private RunResult CheckEncryptConfiguration()
     {
         try
@@ -37,7 +35,6 @@ public class SecretCommand : CommandBase<CommandsConfiguration>
         }
         return Ok();
     }
-
     private RunResult Salt()
     {
         Console.WriteLine(IEncryptionService.GetRandomSalt());
@@ -74,10 +71,11 @@ public class SecretCommand : CommandBase<CommandsConfiguration>
             Console.WriteLine();
             return BadParameterError("Passwords do not match");
         }
-
         var secret = new SecretItemConfiguration { Name = name };
         var val = SecretService.Service.SetSecret(name, password, secret.Options, EncryptionService.Service.EncryptString);
 
+        Configuration.Secret ??= new();
+        Configuration.Secret.Secrets ??= new();
         Configuration.Secret.Secrets.Add(secret);
         ConfigurationService.Service.SaveChanges(Configuration);
         Console.WriteLine();

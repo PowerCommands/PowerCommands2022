@@ -2,10 +2,9 @@
 using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
 namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
-[PowerCommand(description: "Zip files of a given path, filter could be use to select only certain files that matches the filter",
-                arguments: "<directory>",
-        argumentMandatory: true,
-                    qutes: "<filter>",
+[PowerCommandDesign(description: "Zip files of a given path, filter could be use to select only certain files that matches the filter",
+                arguments: "!<directory>",
+                    quotes: "<filter>",
                   example: "zip c:\\temp|zip c:\\temp \"*.txt\"")]
 public class ZipCommand : CommandBase<CommandsConfiguration>
 {

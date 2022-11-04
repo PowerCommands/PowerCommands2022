@@ -3,7 +3,7 @@ using PainKiller.PowerCommands.Security.Services;
 using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
 namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
-[PowerCommand(description: "Encryption example, prompts you for a password an masks the input, displays it encrypted and gives you the option to show it in clear text",
+[PowerCommandDesign(description: "Encryption example, prompts you for a password an masks the input, displays it encrypted and gives you the option to show it in clear text",
                   example: "password|encrypt")]
 public class PasswordCommand : CommandBase<CommandsConfiguration>
 {

@@ -3,6 +3,7 @@ global using PainKiller.PowerCommands.Shared.Attributes;
 global using PainKiller.PowerCommands.Shared.DomainObjects.Core;
 global using PainKiller.PowerCommands.Shared.Enums;
 global using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
+using System.ComponentModel.DataAnnotations;
 using PainKiller.PowerCommands.Core.Commands;
 
 namespace PainKiller.PowerCommands.Core;
@@ -60,8 +61,11 @@ public class PowerCommandsRuntime<TConfig> : IPowerCommandsRuntime where TConfig
                 return new RunResult(command, input, "User prompted for help with --help flag", RunResultStatus.Ok);
             }
         }
-        command.InitializeRun(input);
-
+        if (command.InitializeAndValidateInput(input))
+        {
+            Latest = new RunResult(command, input, "Validation error", RunResultStatus.InputValidationError);
+            return Latest;
+        }
         if (command.GetPowerCommandAttribute().UseAsync) return ExecuteAsyncCommand(command, input);
         try { Latest = command.Run(); }
         catch (Exception e) { Latest = new RunResult(command, input, e.Message, RunResultStatus.ExceptionThrown); }

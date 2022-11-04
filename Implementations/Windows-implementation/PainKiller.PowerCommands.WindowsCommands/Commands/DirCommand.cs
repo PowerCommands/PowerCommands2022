@@ -6,9 +6,9 @@ using PainKiller.PowerCommands.Shared.DomainObjects.Core;
 
 namespace PainKiller.PowerCommands.WindowsCommands.Commands;
 
-[PowerCommand(description: "Open a given directory or current working folder if argument is omitted",
+[PowerCommandDesign(description: "Open a given directory or current working folder if argument is omitted",
     arguments: "<directory name>",
-    qutes: "<directory name>",
+    quotes: "<directory name>",
     example: "dir|dir C:\\repos|dir \"C:\\repos\"")]
 public class DirCommand : CommandBase<CommandsConfiguration>
 {

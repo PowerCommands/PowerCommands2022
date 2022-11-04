@@ -3,9 +3,9 @@ using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
 
 namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
-[PowerCommand(description: "Try out how flag and argument or quote parameter works together",
+[PowerCommandDesign(description: "Try out how flag and argument or quote parameter works together",
     arguments: "<value>",
-    qutes: "<value>",
+    quotes: "<value>",
     flags: "<value>",
     example: "flag --myFlag myArgument|flag --myFlag \"myQuote\"")]
 public class FlagCommand : CommandBase<CommandsConfiguration>

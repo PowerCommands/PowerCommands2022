@@ -4,7 +4,7 @@ using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
 
 namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
-[PowerCommand(  description: "Encrypt or decrypt your input", 
+[PowerCommandDesign(  description: "Encrypt or decrypt your input", 
                       flags: "decrypt",
                     example: "//Encrypt something|encryption \"my decrypted secret\"|//Decrypt your encrypted string|encryption --decrypt EAAAAPv9AsKo6nfHJoFBNmQw9nKZv9PCdLyYhWoJgbovqGQpwY7PmSAkSPO9aagX0kSQyQ==")]
 public class EncryptionCommand : CommandBase<CommandsConfiguration>

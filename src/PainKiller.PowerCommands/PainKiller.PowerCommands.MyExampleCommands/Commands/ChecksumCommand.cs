@@ -3,8 +3,8 @@ using PainKiller.PowerCommands.Security.DomainObjects;
 
 namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
-[PowerCommand(  description: "Calculate the checksum for a valid file, could be practical when you distribute your PowerCommands application",
-                qutes: "<Filename>",
+[PowerCommandDesign(  description: "Calculate the checksum for a valid file, could be practical when you distribute your PowerCommands application",
+                quotes: "<Filename>",
                 example: "checksum Painkiller.PowerCommands.Core")]
 public class ChecksumCommand : CommandBase<PowerCommandsConfiguration>
 {

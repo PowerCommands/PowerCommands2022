@@ -5,15 +5,14 @@ using PainKiller.PowerCommands.NistNvdCommands.DomainObjects;
 
 namespace PainKiller.PowerCommands.NistNvdCommands.Commands;
 
-[PowerCommand(description: "Search the NIST national vulnerability database, requires that you have configured a secret named NistApiKey",
+[PowerCommandDesign(description: "Search the NIST national vulnerability database, requires that you have configured a secret named NistApiKey",
     useAsync: false,
-    flags: "",
+    secrets: "NistApiKey",
     example: "search")]
 public class SearchCommand : CommandBase<PowerCommandsConfiguration>
 {
     static readonly HttpClient Client = new HttpClient();
     public SearchCommand(string identifier, PowerCommandsConfiguration configuration) : base(identifier, configuration) { }
-
     public override RunResult Run()
     {
         try
@@ -29,7 +28,6 @@ public class SearchCommand : CommandBase<PowerCommandsConfiguration>
         }
         return Ok();
     }
-
     public override async Task<RunResult> RunAsync()
     {
         try

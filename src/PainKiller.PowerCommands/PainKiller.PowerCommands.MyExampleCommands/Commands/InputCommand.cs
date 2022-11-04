@@ -2,9 +2,9 @@
 
 namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
-[PowerCommand(  description: "Demonstration command just to show your input of arguments, quotes and flags",
+[PowerCommandDesign(  description: "Demonstration command just to show your input of arguments, quotes and flags",
                 arguments: "<value>",
-                qutes:"<value>",
+                quotes:"<value>",
                 flags:"<value>",
                 example: "input myArgument \"myQuote\" --myFlag")]
 public class InputCommand : CommandBase<PowerCommandsConfiguration>

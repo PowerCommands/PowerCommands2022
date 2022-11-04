@@ -5,6 +5,7 @@ namespace PainKiller.PowerCommands.Core.BaseClasses;
 public abstract class CommandBase<TConfig> : IConsoleCommand where TConfig : new()
 {
     protected ICommandLineInput Input = new CommandLineInput();
+    protected List<PowerFlag> Flags = new();
     private readonly StringBuilder _ouput = new();
     protected CommandBase(string identifier, TConfig configuration)
     {
@@ -12,7 +13,14 @@ public abstract class CommandBase<TConfig> : IConsoleCommand where TConfig : new
         Configuration = configuration;
     }
     public string Identifier { get; }
-    public void InitializeRun(ICommandLineInput input) => Input = input;
+    public bool InitializeAndValidateInput(ICommandLineInput input)
+    {
+        Input = input;
+        var validationManager = new InputValidationManager(this, input, WriteError);
+        var result = validationManager.ValidateAndInitialize();
+        if(result.Flags.Count > 0) Flags.AddRange(result.Flags);
+        return result.HasValidationError;
+    }
 
     protected TConfig Configuration { get; set; }
 

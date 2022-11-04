@@ -7,7 +7,7 @@ using PainKiller.PowerCommands.Shared.DomainObjects.Documentation;
 namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
 
-[PowerCommand(  description: "Add a document to the DocDB that is used as an KnowledgeDB internally by PowerCommands, view document, append tags, edit and delete documents. Backup KnowledgeDB",
+[PowerCommandDesign(  description: "Add a document to the DocDB that is used as an KnowledgeDB internally by PowerCommands, view document, append tags, edit and delete documents. Backup KnowledgeDB",
                 flags: "view|delete|edit|append|list|backup",
                 example: "//Add a new document|doc \"https://www.google.se/\" --name Google-Search --tags tools,search,google|//List all documents|doc --list")]
 public class DocCommand : CommandBase<CommandsConfiguration>

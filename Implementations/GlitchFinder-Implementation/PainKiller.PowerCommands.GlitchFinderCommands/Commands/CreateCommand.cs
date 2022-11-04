@@ -7,12 +7,10 @@ using PainKiller.PowerCommands.GlitchFinderCommands.BaseClasses;
 using PainKiller.PowerCommands.GlitchFinderCommands.Configuration;
 namespace PainKiller.PowerCommands.GlitchFinderCommands.Commands;
 
-[PowerCommand(description: "Creates a new project in config file from a template.\nA folder with the given project name in the projects directory will be created.",
-                arguments: "comparison|regression",
-        argumentMandatory: true,
-                    qutes: "project name:<name>",
-           qutesMandatory: true,
-                  example: "create comparison \"My comparison project\"|create regression \"My regression test project\"")]
+[PowerCommandDesign(description: "Creates a new project in config file from a template.\nA folder with the given project name in the projects directory will be created.",
+                      arguments: "!comparison|regression",
+                         quotes: "!project name:<name>",
+                        example: "create comparison \"My comparison project\"|create regression \"My regression test project\"")]
 public class CreateCommand : GlitchFinderBaseCommand
 {
     public CreateCommand(string identifier, PowerCommandsConfiguration configuration) : base(identifier, configuration) { }

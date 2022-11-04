@@ -7,10 +7,9 @@ using PainKiller.PowerCommands.WindowsCommands.Configuration;
 namespace PainKiller.PowerCommands.WindowsCommands.Commands;
 
 
-[PowerCommand(description: "Shows how to execute a external program in combination with some custom configuration.\nFavorite must be defined in the favorites section in the PowerCommandsConfiguration.yaml file",
-    arguments: "<favorite name>",
-    argumentMandatory: true,
-    example: "start music|start games")]
+[PowerCommandDesign(  description: "Shows how to execute a external program in combination with some custom configuration.\nFavorite must be defined in the favorites section in the PowerCommandsConfiguration.yaml file",
+                        arguments: "!<favorite name>",
+                          example: "start music|start games")]
 public class StartCommand : CommandBase<PowerCommandsConfiguration>
 {
     public StartCommand(string identifier, PowerCommandsConfiguration configuration) : base(identifier, configuration) { }

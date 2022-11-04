@@ -3,7 +3,7 @@ using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
 
 namespace PainKiller.PowerCommands.KnowledgeDBCommands.Commands;
 
-[PowerCommand(description: "Open a given directory or current working folder if argument is omitted",
+[PowerCommandDesign(description: "Open a given directory or current working folder if argument is omitted",
     arguments: "<directory name>",
     flags: "app",
     example: "dir|dir C:\\repos")]

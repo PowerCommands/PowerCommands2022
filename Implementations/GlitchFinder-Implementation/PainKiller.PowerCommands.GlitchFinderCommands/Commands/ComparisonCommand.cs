@@ -9,10 +9,9 @@ using PainKiller.PowerCommands.GlitchFinderCommands.Configuration;
 
 namespace PainKiller.PowerCommands.GlitchFinderCommands.Commands;
 
-[PowerCommand(description: "Compare to datasources with each other, find glitches, if any...",
-                arguments: "project:<name>",
-        argumentMandatory: true,
-                  example: "comparison \"My sample project\"")]
+[PowerCommandDesign(description: "Compare to datasources with each other, find glitches, if any...",
+                      arguments: "!project:<name>",
+                        example: "comparison \"My sample project\"")]
 public class ComparisonCommand : GlitchFinderBaseCommand
 {
     public ComparisonCommand(string identifier, PowerCommandsConfiguration configuration) : base(identifier, configuration) { }

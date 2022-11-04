@@ -9,11 +9,10 @@ using PainKiller.PowerCommands.GlitchFinderCommands.Configuration;
 
 namespace PainKiller.PowerCommands.GlitchFinderCommands.Commands;
 
-[PowerCommand(description: "This is for tracking a single dataset/source over time.\nYou create a baseline, which is stored on file, and then later compare data towards this baseline.",
-                arguments: "baseline",
-                    qutes: "project:<name>",
-           qutesMandatory: true,
-                  example: "regression \"regression sample project\"|regression baseline \"regression sample project\"")]
+[PowerCommandDesign(description: "This is for tracking a single dataset/source over time.\nYou create a baseline, which is stored on file, and then later compare data towards this baseline.",
+                      arguments: "baseline",
+                         quotes: "!project:<name>",
+                        example: "regression \"regression sample project\"|regression baseline \"regression sample project\"")]
 public class RegressionCommand : GlitchFinderBaseCommand
 {
     public RegressionCommand(string identifier, PowerCommandsConfiguration configuration) : base(identifier, configuration) { }

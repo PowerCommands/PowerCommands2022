@@ -4,11 +4,9 @@ using PainKiller.PowerCommands.Security.DomainObjects;
 using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
 namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
-[PowerCommand(     description: "Download a file that is provides as an argument, after download you get a checksum of the downloaded file",
-                     arguments: "<url>",
-             argumentMandatory: true,
-                         qutes: "<local file path>", 
-                qutesMandatory: true,
+[PowerCommandDesign(     description: "Download a file that is provides as an argument, after download you get a checksum of the downloaded file",
+                     arguments: "!<url>",
+                         quotes: "!<local file path>",
                     suggestion: "https://downloadurl.com \"filename.txt\"",
                        example: "download https://downloadurl.com \"filename.txt\"",
                       useAsync: true)]

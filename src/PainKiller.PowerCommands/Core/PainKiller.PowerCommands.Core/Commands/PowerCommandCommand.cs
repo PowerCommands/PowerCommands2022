@@ -1,11 +1,10 @@
 ﻿namespace PainKiller.PowerCommands.Core.Commands;
 
-[PowerCommand(      description: "Create or update the Visual Studio Solution with all depended projects",
-                    arguments:"<action> (new or update)",
-                    argumentMandatory: true,
+[PowerCommandDesign(      description: "Create or update the Visual Studio Solution with all depended projects",
+                    arguments:"!<action> (new or update)",
                     flags:"command|solution|output|template|backup",
                     suggestion:"new",
-                    qutes: "<path>",
+                    quotes: "<path>",
                     example: "//create new VS solution|powercommand new --solution testproject --output \"C:\\Temp\\\"|//Create new PowerCommand named Demo|powercommand new --command Demo|//Update powercommands core, this will first delete current Core projects and than apply the new Core projects|powercommand update|//Only update template(s)|powercommand update --templates|//Update with backup|powercommand update --backup|//Create a new command|powercommand new --command MyNewCommand")]
 public class PowerCommandCommand : CommandBase<CommandsConfiguration>
 {

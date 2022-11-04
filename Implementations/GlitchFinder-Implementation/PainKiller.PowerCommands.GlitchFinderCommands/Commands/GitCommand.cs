@@ -2,11 +2,10 @@
 using PainKiller.PowerCommands.GlitchFinderCommands.Configuration;
 namespace PainKiller.PowerCommands.GlitchFinderCommands.Commands;
 
-[PowerCommand(description: "Example shows how to execute a external program, in this case git, commmit and push your repository, path to repository is in the configuratin file",
-    arguments: "commit|push",
-    argumentMandatory: true,
-    qutes: "\"<comment>\" defaults to \"refactoring\" if omitted, only used with commit.",
-    example: "git commit \"Bugfix\"|git push")]
+[PowerCommandDesign(  description: "Example shows how to execute a external program, in this case git, commmit and push your repository, path to repository is in the configuratin file",
+                        arguments: "!commit|push",
+                           quotes: "\"<comment>\" defaults to \"refactoring\" if omitted, only used with commit.",
+                          example: "git commit \"Bugfix\"|git push")]
 
 public class GitCommand : CommandBase<PowerCommandsConfiguration>
 {

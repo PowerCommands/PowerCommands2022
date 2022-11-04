@@ -1,6 +1,6 @@
 ﻿namespace PainKiller.PowerCommands.Core.Commands;
 
-[PowerCommand(       description: "With help command you will be shown the provided description or online documentation of the command or a PowerCommand feature.",
+[PowerCommandDesign(       description: "With help command you will be shown the provided description or online documentation of the command or a PowerCommand feature.",
                        arguments: "<command name or feature you are interested of knowing more>",
                            flags: "docs",
                          example: "describe exit|describe cls|describe log|//Open documentation about flags (if any)|describe flags --doc")]

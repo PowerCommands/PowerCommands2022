@@ -1,6 +1,4 @@
-﻿using System.Threading;
-
-namespace PainKiller.PowerCommands.Core.Services;
+﻿namespace PainKiller.PowerCommands.Core.Services;
 
 public class HelpService : IHelpService
 {
@@ -14,8 +12,9 @@ public class HelpService : IHelpService
         if(clearConsole) Console.Clear();
 
         var args = da.Arguments.Split('|');
-        var quotes = da.Qutes.Split('|');
+        var quotes = da.Quotes.Split('|');
         var flags = da.Flags.Split('|');
+        var secrets = da.Secrets.Split('|');
         var examples = da.Examples.Split('|');
 
         ConsoleService.WriteHeaderLine($"{GetType().Name}", "\nDescription", writeLog: WriteToLog);
@@ -27,13 +26,13 @@ public class HelpService : IHelpService
             ConsoleService.WriteObjectDescription($"{GetType().Name}", "Type        ", $"{typeDescription}", WriteToLog);
             ConsoleService.WriteObjectDescription($"{GetType().Name}", "Full name   ", $"{command.GetType().FullName}", WriteToLog);
             ConsoleService.WriteHeaderLine($"{GetType().Name}", $"{nameof(da.Arguments)}:", writeLog: WriteToLog);
-            foreach (var a in args) WriteItem(a);
-            ConsoleService.WriteObjectDescription($"{GetType().Name}", "Mandatory", da.ArgumentMandatory ? "Yes" : "No", WriteToLog);
-            ConsoleService.WriteHeaderLine($"{GetType().Name}", $"{nameof(da.Qutes)}:", writeLog: WriteToLog);
-            foreach (var q in quotes) WriteItem(q);
-            ConsoleService.WriteObjectDescription($"{GetType().Name}", "Mandatory", da.QutesMandatory ? "Yes" : "No", WriteToLog);
+            foreach (var a in args) WriteItem(a.Replace("!","Required: "));
+            ConsoleService.WriteHeaderLine($"{GetType().Name}", $"{nameof(da.Quotes)}:", writeLog: WriteToLog);
+            foreach (var q in quotes) WriteItem(q.Replace("!", "Required: "));
             ConsoleService.WriteHeaderLine($"{GetType().Name}", $"{nameof(da.Flags)}:");
-            foreach (var f in flags) WriteItem(f);
+            foreach (var f in flags) WriteItem(f.Replace("!", "Requires a value: "));
+            ConsoleService.WriteHeaderLine($"{GetType().Name}", $"{nameof(da.Secrets)}:");
+            foreach (var s in flags) WriteItem(s.Replace("!", "Required: "));
 
             if (!string.IsNullOrEmpty(da.Suggestion))
             {
@@ -43,6 +42,10 @@ public class HelpService : IHelpService
             }
 
         }
+        args = da.Arguments.Replace("!","").Split('|');
+        quotes = da.Quotes.Replace("!", "").Split('|');
+        flags = da.Flags.Replace("!", "").Split('|');
+
         Console.WriteLine();
         ConsoleService.Write(nameof(HelpService), $"{command.Identifier}", ConsoleColor.Blue, WriteToLog);
         ConsoleService.WriteLine(nameof(HelpService), $"{ToDescription(args," ")}{ToDescription(quotes, " ")}{ToDescription(flags, " --")}", null, WriteToLog);

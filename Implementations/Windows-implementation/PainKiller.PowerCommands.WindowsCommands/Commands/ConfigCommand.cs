@@ -9,7 +9,7 @@ using PainKiller.PowerCommands.WindowsCommands.Configuration;
 
 namespace PainKiller.PowerCommands.WindowsCommands.Commands;
 
-[PowerCommand( description: "Config command is a util to help you build a default yaml configuration file, practical when you adding new configuration elements to the PowerCommandsConfiguration class",
+[PowerCommandDesign( description: "Config command is a util to help you build a default yaml configuration file, practical when you adding new configuration elements to the PowerCommandsConfiguration class",
                  arguments: "create|edit",
                 suggestion: "edit",
                    example: "config|config create|config edit")]

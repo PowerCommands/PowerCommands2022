@@ -3,8 +3,11 @@ using PainKiller.PowerCommands.MyExampleCommands.Configuration;
 
 namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
-[PowerCommand(  description: "Demo command just to se that your solution is setup properly",
-                example: "demo")]
+[PowerCommandDesign(  description: "Demo command just to se that your solution is setup properly",
+                            flags: "!secretFlaggan",
+                        arguments: "This is not an argument",
+                          secrets: "babar",
+                          example: "demo")]
 public class DemoCommand : CommandBase<PowerCommandsConfiguration>
 {
     public DemoCommand(string identifier, PowerCommandsConfiguration configuration) : base(identifier, configuration) { }
