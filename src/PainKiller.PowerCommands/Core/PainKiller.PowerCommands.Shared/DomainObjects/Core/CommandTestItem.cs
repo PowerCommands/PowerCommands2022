@@ -4,7 +4,7 @@ namespace PainKiller.PowerCommands.Shared.DomainObjects.Core;
 
 public class CommandTestItem
 {
-    public string Identifier { get; set; } = "";
+    public string Identifier { get; set; } = "Missing PowerCommandTest attribute";
     public bool Disabled { get; set; }
     public string Test { get; set; } = "";
     public bool ExpectedResult { get; set; }

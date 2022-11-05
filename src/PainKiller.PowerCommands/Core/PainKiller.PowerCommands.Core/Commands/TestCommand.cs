@@ -28,15 +28,6 @@ public class TestCommand : CommandBase<CommandsConfiguration>
                     .Read(WriteFormat.Alternative).Split("\r\n");
 
                 foreach(var row in tableContent) WriteRow(row);
-
-                //var maxLength = items.Max(i => i.Test.Length) + command.Identifier.Length + 1;
-                //WriteHeadLine($"\nResults for {command.Identifier}");
-                //DisplayHeader(maxLength);
-                //foreach (var item in items)
-                //{
-                //    if (item.Disabled) WriteLine("Disabled".PadLeft(40));
-                //    else DisplayItem(item, maxLength);
-                //}
             }
             else WriteError($"Could not find a command with identity [{Input.GetFlagValue("command")}]");
         }
