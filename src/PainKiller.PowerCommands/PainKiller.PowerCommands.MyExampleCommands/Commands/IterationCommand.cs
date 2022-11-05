@@ -1,7 +1,4 @@
-﻿using PainKiller.PowerCommands.Configuration.DomainObjects;
-using PainKiller.PowerCommands.Shared.Contracts;
-using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
-namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
+﻿namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
 [PowerCommandDesign("A dummie iteration is running in async mode", example:"iteration", useAsync: true)]
 public class IterationCommand : CommandBase<CommandsConfiguration>

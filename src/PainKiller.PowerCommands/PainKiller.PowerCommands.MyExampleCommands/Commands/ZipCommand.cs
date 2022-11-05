@@ -1,6 +1,4 @@
-﻿using PainKiller.PowerCommands.Core.Services;
-using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
-namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
+﻿namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
 [PowerCommandDesign(description: "Zip files of a given path, filter could be use to select only certain files that matches the filter",
                 arguments: "!<directory>",

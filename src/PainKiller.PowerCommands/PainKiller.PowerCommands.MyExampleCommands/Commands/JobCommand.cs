@@ -1,7 +1,4 @@
-﻿using PainKiller.PowerCommands.Shared.Contracts;
-using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
-
-namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
+﻿namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
 [PowerCommandDesign("Start up the application with commandline argument job to run once and then quit the program", example: "job")]
 public class JobCommand : CommandBase<CommandsConfiguration>

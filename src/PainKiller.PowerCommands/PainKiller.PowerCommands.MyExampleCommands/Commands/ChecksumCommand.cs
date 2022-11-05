@@ -1,11 +1,10 @@
-﻿using PainKiller.PowerCommands.MyExampleCommands.Configuration;
-using PainKiller.PowerCommands.Security.DomainObjects;
+﻿using PainKiller.PowerCommands.Security.DomainObjects;
 
 namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
 [PowerCommandDesign(  description: "Calculate the checksum for a valid file, could be practical when you distribute your PowerCommands application",
-                quotes: "<Filename>",
-                example: "checksum Painkiller.PowerCommands.Core")]
+                           quotes: "!<Filename>",
+                          example: "checksum Painkiller.PowerCommands.Core.dll")]
 public class ChecksumCommand : CommandBase<PowerCommandsConfiguration>
 {
     public ChecksumCommand(string identifier, PowerCommandsConfiguration configuration) : base(identifier, configuration) { }

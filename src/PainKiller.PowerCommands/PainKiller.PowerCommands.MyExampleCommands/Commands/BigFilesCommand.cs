@@ -1,7 +1,4 @@
-﻿using PainKiller.PowerCommands.Configuration.DomainObjects;
-using PainKiller.PowerCommands.Core.Extensions;
-using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
-namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
+﻿namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
 [PowerCommandDesign(description: "Input a valid path to a directory and the commmand will analyse the directory and its subdirectories\nThis command showing the use of Path property on the input and how you could display a progress with overwriting one line in the iteration.\nSpaces in the path are allowed en will be merged to the Path property on the Input instance",
                     quotes: "!Path",

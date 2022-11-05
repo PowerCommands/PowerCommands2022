@@ -1,22 +1,13 @@
-﻿using PainKiller.PowerCommands.Core.Extensions;
-using PainKiller.PowerCommands.MyExampleCommands.Configuration;
+﻿namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
-namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
-
-[PowerCommandDesign(  description: "Demo command just to se that your solution is setup properly",
-                            flags: "!secretFlaggan",
-                        arguments: "This is not an argument",
-                          secrets: "babar",
-                          example: "demo")]
+[PowerCommandDesign( description: "Demo command just to se that your solution is setup properly", example: "demo")]
 public class DemoCommand : CommandBase<PowerCommandsConfiguration>
 {
     public DemoCommand(string identifier, PowerCommandsConfiguration configuration) : base(identifier, configuration) { }
 
     public override RunResult Run()
     {
-        if(Input.HasFlag("hello")) WriteLine("Hello World!");
-
-
+        WriteLine("Hello World!");
         WriteHeadLine("Congratulations! You have setup your PowerCommands solution correctly!");
         WriteLine("You may set up some things in your PowerCommandsConfiguration.yaml file, like the path to your favorite code editor");
         WriteLine("Just type dir and hit enter to open up this applications bin directory");

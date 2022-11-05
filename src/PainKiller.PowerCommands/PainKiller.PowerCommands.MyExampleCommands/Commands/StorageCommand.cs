@@ -1,7 +1,4 @@
-﻿using PainKiller.PowerCommands.Core.Services;
-using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
-
-namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
+﻿namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
 [PowerCommandDesign(description: "Store object with StorageService, create a backup, delete the object",
     arguments: "!<mode> (read,create,backup,delete)",

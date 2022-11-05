@@ -1,6 +1,4 @@
-﻿using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
-
-namespace PainKiller.PowerCommands.MyExampleCommands.Configuration;
+﻿namespace PainKiller.PowerCommands.MyExampleCommands.Configuration;
 
 public class PowerCommandsConfiguration : CommandsConfiguration
 {

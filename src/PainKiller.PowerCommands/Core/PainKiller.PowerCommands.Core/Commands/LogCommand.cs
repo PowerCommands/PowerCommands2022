@@ -1,8 +1,8 @@
 ﻿namespace PainKiller.PowerCommands.Core.Commands;
 
-[PowerCommandDesign(       description: "View and manage the log",
+[PowerCommandDesign( description: "View and manage the log",
                        arguments: "view|archive|list (default)",
-                           quotes: "process name:<name>",
+                          quotes: "process name:<name>",
                       suggestion: "view",
                          example: "//View a list with all the logfiles|log list|//Archive the logs into a zip file.|log archive|//View content of the current log|log view|//Filter the log show only posts matching the provided process tag, this requires that you are using process tags when logging in your command(s).|log process created")]
 public class LogCommand : CommandBase<CommandsConfiguration>

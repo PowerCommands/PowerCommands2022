@@ -1,15 +1,13 @@
-﻿using PainKiller.PowerCommands.Core.Managers;
-using PainKiller.PowerCommands.Core.Services;
-using PainKiller.PowerCommands.Security.DomainObjects;
-using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
+﻿using PainKiller.PowerCommands.Security.DomainObjects;
+
 namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
-[PowerCommandDesign(     description: "Download a file that is provides as an argument, after download you get a checksum of the downloaded file",
-                     arguments: "!<url>",
-                         quotes: "!<local file path>",
-                    suggestion: "https://downloadurl.com \"filename.txt\"",
-                       example: "download https://downloadurl.com \"filename.txt\"",
-                      useAsync: true)]
+[PowerCommandDesign(  description: "Download a file that is provides as an argument, after download you get a checksum of the downloaded file",
+                        arguments: "!<url>",
+                           quotes: "!<local file path>",
+                       suggestion: "https://downloadurl.com \"filename.txt\"",
+                          example: "download https://downloadurl.com \"filename.txt\"",
+                         useAsync: true)]
 public class DownloadCommand : CommandBase<CommandsConfiguration>
 {
     private ProgressBar? _progressbar;
@@ -35,7 +33,7 @@ public class DownloadCommand : CommandBase<CommandsConfiguration>
         
         var fileCheckSum = new FileChecksum(_fileName);
         WriteLine($"Download content from {_downloadUrl} to file {_fileName} completed. Checksum: {fileCheckSum.Mde5Hash}");
-        Console.Write($"\n{{ConfigurationConstants.Prompt}}");
+        Console.Write($"\n{ConfigurationGlobals.Prompt}");
         _progressbar = null;
         return false;
     }

@@ -27,4 +27,6 @@ configuration:
   secret:
     secrets:    
   environment:
-    variables:    
+    variables:
+    - name: OS
+      environmentVariableTarget: Machine

@@ -1,8 +1,4 @@
-﻿using PainKiller.PowerCommands.Core.Extensions;
-using PainKiller.PowerCommands.Core.Services;
-using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
-
-namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
+﻿namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
 [PowerCommandDesign(  description: "Encrypt or decrypt your input", 
                       flags: "decrypt",

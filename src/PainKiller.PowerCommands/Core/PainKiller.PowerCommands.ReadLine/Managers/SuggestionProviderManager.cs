@@ -8,7 +8,7 @@ public class SuggestionProviderManager
     public SuggestionProviderManager() => SuggestionProviderFunc = GetSuggestions;
     public static void AddContextBoundSuggestions(string contextId, string[] suggestions)
     {
-        var excludeComments = suggestions.Where(s => !s.StartsWith("--//")).ToArray();
+        var excludeComments = suggestions.Where(s => !s.StartsWith("--//")).Select(s => s.Replace("!","")).ToArray();
         if(!ContextBoundSuggestions.ContainsKey(contextId)) ContextBoundSuggestions.Add(contextId, excludeComments);
     }
 

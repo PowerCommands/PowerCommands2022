@@ -1,24 +1,16 @@
-﻿using PainKiller.PowerCommands.Core.Extensions;
-using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
+﻿namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
-namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
-
-[PowerCommandDesign(description: "Try out how flag and argument or quote parameter works together",
-    arguments: "<value>",
-    quotes: "<value>",
-    flags: "<value>",
-    example: "flag --myFlag myArgument|flag --myFlag \"myQuote\"")]
+[PowerCommandDesign(description: "Try out how flag works, first flag requires a value, second does not.",
+                          flags: "!mandatory|optional",
+                        example: "//This will work|flag --mandatory TheVal|//flag value could be an argument or a quote, but the quote should not include white space|flag --mandatory \"TheValue\"|//This is also ok|flag --mandatory value --optional|//This will not work|flag --mandatory|//This will work, --mandatory flag could be omitted|flag --optional|//This will work, --mandatory flag could be omitted and the --optional flag could have a value (but must not have it)|flag --optional theValue")]
 public class FlagCommand : CommandBase<CommandsConfiguration>
 {
     public FlagCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
 
     public override RunResult Run()
     {
-        var flag = Input.Flags.FirstOrDefault();
-        if (flag == null) return BadParameterError("Could not fine any flag in your input, a flag is an argument starting with --");
-        WriteHeadLine("Flag demo, using only one flag");
-        WriteLine($"Flag: {Input.Flags.First()}");
-        WriteLine($"Flag value: {Input.GetFlagValue(flag)}");
+        WriteLine($"mandatory: {Input.GetFlagValue("mandatory")}");
+        WriteLine($"optional: {Input.GetFlagValue("optional")}");
         return Ok();
     }
 }

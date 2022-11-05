@@ -1,15 +1,15 @@
-﻿using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
+﻿namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
-namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
-
+[PowerCommandDesign(description: "View environment variable or create environment variable",
+                          flags: "!get",
+                        example: "environment --get OS")]
 public class EnvironmentCommand : CommandBase<CommandsConfiguration>
 {
     public EnvironmentCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
 
     public override RunResult Run()
     {
-        WriteLine(Configuration.Environment.GetValue("KEY_VAULT_NAME"));
-        WriteLine(Configuration.Environment.GetValue("AZURE_CLIENT_ID"));
+        if(Input.HasFlag("get")) WriteLine(Configuration.Environment.GetValue(Input.GetFlagValue("get")));
         return Ok();
     }
 }

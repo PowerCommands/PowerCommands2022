@@ -3,14 +3,9 @@ global using PainKiller.PowerCommands.Shared.Attributes;
 global using PainKiller.PowerCommands.Shared.DomainObjects.Core;
 
 using Microsoft.Extensions.Logging;
-using PainKiller.PowerCommands.Configuration;
 using PainKiller.PowerCommands.Configuration.Extensions;
 using PainKiller.PowerCommands.Core;
-using PainKiller.PowerCommands.Core.Extensions;
-using PainKiller.PowerCommands.Core.Managers;
-using PainKiller.PowerCommands.MyExampleCommands.Configuration;
 using PainKiller.PowerCommands.ReadLine;
-using PainKiller.PowerCommands.Shared.Contracts;
 using PainKiller.SerilogExtensions.Managers;
 
 namespace PainKiller.PowerCommands.MyExampleCommands;

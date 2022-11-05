@@ -1,15 +1,9 @@
-﻿using PainKiller.PowerCommands.Configuration;
-using PainKiller.PowerCommands.Core.Managers;
-using PainKiller.PowerCommands.Core.Services;
-using PainKiller.PowerCommands.MyExampleCommands.Configuration;
-using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
-
-namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
+﻿namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
 [PowerCommandDesign( description: "Config command is a util to help you build a default yaml configuration file, practical when you adding new configuration elements to the PowerCommandsConfiguration class",
-                 arguments: "<action>(create or edit)",
-                suggestion: "edit",
-                   example: "//Show config|config|//Creates a default.yaml file in the application folder|config create|//Open the PowerCommandsConfiguration.yaml file with your configured editor.|config edit")]
+                       arguments: "<action>(create or edit)",
+                      suggestion: "edit",
+                         example: "//Show config|config|//Creates a default.yaml file in the application folder|config create|//Open the PowerCommandsConfiguration.yaml file with your configured editor.|config edit")]
 public class ConfigCommand : CommandBase<PowerCommandsConfiguration>
 {
     public ConfigCommand(string identifier, PowerCommandsConfiguration configuration) : base(identifier, configuration) { }

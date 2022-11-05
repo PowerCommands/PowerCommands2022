@@ -1,24 +1,14 @@
-﻿using PainKiller.PowerCommands.Core.Extensions;
-using PainKiller.PowerCommands.Core.Services;
-using PainKiller.PowerCommands.Shared.Contracts;
-using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
-using PainKiller.PowerCommands.Shared.DomainObjects.Documentation;
-
-namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
-
+﻿namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
 [PowerCommandDesign(  description: "Add a document to the DocDB that is used as an KnowledgeDB internally by PowerCommands, view document, append tags, edit and delete documents. Backup KnowledgeDB",
-                flags: "view|delete|edit|append|list|backup",
-                example: "//Add a new document|doc \"https://www.google.se/\" --name Google-Search --tags tools,search,google|//List all documents|doc --list")]
+                            flags: "view|delete|edit|append|list|backup",
+                          example: "//Add a new document|doc \"https://www.google.se/\" --name Google-Search --tags tools,search,google|//List all documents|doc --list")]
 public class DocCommand : CommandBase<CommandsConfiguration>
 {
     private List<Doc> _docs = new();
     private Doc? _selectedItem;
-
     private readonly IStorageService<DocsDB> _storage;
-
     public DocCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) => _storage = StorageService<DocsDB>.Service;
-
     public override RunResult Run()
     {
         //When first argument is a integer, the user want to open, edit or delete an item from a previous search, wrong index will throw an IndexOutOfRange exception and that is ok
@@ -33,20 +23,17 @@ public class DocCommand : CommandBase<CommandsConfiguration>
         else Add();
         return Ok();
     }
-
     private void Backup()
     {
         var fileName = _storage.Backup();
         WriteHeadLine($"A backup is created to file [{fileName}]");
     }
-
     private void List()
     {
         _docs = _storage.GetObject().Docs;
         var index = 0;
         foreach (var doc in _docs) Print(doc, index++); 
     }
-
     private void Delete()
     {
         if (!DialogService.YesNoDialog($"Are you sure you want to delete the item {_selectedItem!.Name} {_selectedItem.Uri} {_selectedItem.Tags}?")) return;
@@ -57,7 +44,6 @@ public class DocCommand : CommandBase<CommandsConfiguration>
         _docs = _storage.GetObject().Docs;
         WriteLine($"Item {_selectedItem.DocID} {_selectedItem.Name} removed.");
     }
-    
     private void Edit()
     {
         var db = _storage.GetObject();
@@ -73,7 +59,6 @@ public class DocCommand : CommandBase<CommandsConfiguration>
         _docs = _storage.GetObject().Docs;
         WriteLine($"Item {match.DocID} {match.Name} updated.");
     }
-
     private void Append()
     {
         var db = _storage.GetObject();
@@ -87,7 +72,6 @@ public class DocCommand : CommandBase<CommandsConfiguration>
         _docs = _storage.GetObject().Docs;
         WriteLine($"Item {match.DocID} {match.Name} updated.");
     }
-
     private void Details()
     {
         if (_selectedItem != null) Print(_selectedItem, 0);

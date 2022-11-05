@@ -37,7 +37,8 @@ public static class CommandLineInputInterpreterExtension
         short index = 0;
         var indexedInputs = input.Raw.Split(' ').Select(r => new IndexedInput{Index = index+=1,Value = r}).ToList();
         var flagIndex = indexedInputs.First(i => i.Value.ToLower() == flag.ToLower()).Index;
-        return flagIndex == indexedInputs.Count ? "" : indexedInputs.First(i => i.Index == flagIndex + 1).Value.Replace("\"","");
+        var retVal = flagIndex == indexedInputs.Count ? "" : indexedInputs.First(i => i.Index == flagIndex + 1).Value.Replace("\"","");
+        return retVal.StartsWith("--") ? "" : retVal;   //A flag could not have a flag as it´s value
     }
     public static bool HasFlag(this ICommandLineInput input, string flagName) => input.Flags.Any(f => f == $"--{flagName}");
     public static void DoBadFlagCheck(this ICommandLineInput input, IConsoleCommand command)

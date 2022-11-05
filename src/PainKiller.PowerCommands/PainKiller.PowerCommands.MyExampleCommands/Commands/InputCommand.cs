@@ -1,6 +1,4 @@
-﻿using PainKiller.PowerCommands.MyExampleCommands.Configuration;
-
-namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
+﻿namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
 [PowerCommandDesign(  description: "Demonstration command just to show your input of arguments, quotes and flags",
                 arguments: "<value>",

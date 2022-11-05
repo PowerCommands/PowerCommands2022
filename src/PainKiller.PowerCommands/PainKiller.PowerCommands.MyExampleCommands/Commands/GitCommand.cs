@@ -1,6 +1,4 @@
-﻿using PainKiller.PowerCommands.Core.Services;
-using PainKiller.PowerCommands.MyExampleCommands.Configuration;
-namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
+﻿namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
 [PowerCommandDesign(description: "Example shows how to execute a external program, in this case git, commit and push your repository, path to repository is in the configuration file",
                 arguments: "!commit|push|status",

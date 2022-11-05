@@ -1,6 +1,5 @@
-﻿using PainKiller.PowerCommands.Core.Services;
-using PainKiller.PowerCommands.Security.Services;
-using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
+﻿using PainKiller.PowerCommands.Security.Services;
+
 namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
 [PowerCommandDesign(description: "Encryption example, prompts you for a password an masks the input, displays it encrypted and gives you the option to show it in clear text",
