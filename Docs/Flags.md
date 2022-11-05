@@ -17,6 +17,11 @@ Sometimes you just want a flag without a value, you can solve that like this:
 
 ``` var mode = input.HasFlag("xml"); ```
 
+## The CommandBase class holds a list of the declared flags with the input value
+![Alt text](images/List_flags_commandBase.png?raw=true "Attributes")
+
+That is another way to programatically work with the flags.
+
 ### Do not use the help flag, unless you want to override it´s behaviour
 It will not harm anything but --help will trigger the Core frameowrk to display generic help (using the PowerCommands attriute).
 You can override this behaviour if you set the property **overrideHelpFlag** to true. Do not do that if your not intend to implement your own show help functionalllity for that command.

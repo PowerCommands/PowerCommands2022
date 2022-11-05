@@ -44,6 +44,12 @@ public static class ReflectionExtensions
         var attributes = command.GetType().GetCustomAttributes(typeof(PowerCommandDesignAttribute), inherit: false);
         return attributes.Length == 0 ? new PowerCommandDesignAttribute(description:"Command have no description attribute") : (PowerCommandDesignAttribute)attributes.First();
     }
+
+    public static TAttribute GetAttribute<TAttribute>(this IConsoleCommand command) where TAttribute : Attribute, new()
+    {
+        var attributes = command.GetType().GetCustomAttributes(typeof(TAttribute), inherit: false);
+        return attributes.Length == 0 ? new TAttribute() : (TAttribute)attributes.First();
+    }
     public static string GetDefaultParameter(this IConsoleCommand command)
     {
         var attribute = command.GetType().GetCustomAttributes(typeof(PowerCommandDesignAttribute), inherit: false).FirstOrDefault() as PowerCommandDesignAttribute;

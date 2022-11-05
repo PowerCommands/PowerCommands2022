@@ -3,6 +3,17 @@
 namespace PainKiller.PowerCommands.Core.Services;
 public static class ConsoleService
 {
+    private static bool _disableLog;
+    public static bool DisableLog
+    {
+        get => _disableLog;
+        set
+        {
+            if(value) WriteWarning(nameof(ConsoleService),"Log from ConsoleService is disabled");
+            else WriteLine(nameof(ConsoleService), "Log from ConsoleService is enabled", null);
+            _disableLog = value;
+        }
+    }
     public static void WriteObjectDescription(string scope, string name, string description, bool writeLog = true)
     {
         var currentColor = Console.ForegroundColor;
@@ -64,6 +75,7 @@ public static class ConsoleService
     }
     private static void WriteToLog(string scope, string message, LogLevel level = LogLevel.Information)
     {
+        if(DisableLog) return;
         var text = $"{scope} {message}";
         switch (level)
         {

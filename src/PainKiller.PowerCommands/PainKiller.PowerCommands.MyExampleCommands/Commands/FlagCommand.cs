@@ -1,5 +1,6 @@
 ﻿namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
+[PowerCommandTest(tests: "--mandatory foo|--mandatory \"A quoted value\"|--optional an-optional-flag-Value")]
 [PowerCommandDesign(description: "Try out how flag works, first flag requires a value, second does not.",
                           flags: "!mandatory|optional",
                         example: "//This will work|flag --mandatory TheVal|//flag value could be an argument or a quote, but the quote should not include white space|flag --mandatory \"TheValue\"|//This is also ok|flag --mandatory value --optional|//This will not work|flag --mandatory|//This will work, --mandatory flag could be omitted|flag --optional|//This will work, --mandatory flag could be omitted and the --optional flag could have a value (but must not have it)|flag --optional theValue")]

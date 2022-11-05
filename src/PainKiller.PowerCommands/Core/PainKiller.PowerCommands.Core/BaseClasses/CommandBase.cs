@@ -43,6 +43,12 @@ public abstract class CommandBase<TConfig> : IConsoleCommand where TConfig : new
         ConsoleService.WriteHeaderLine(GetType().Name, output);
     }
 
+    protected void WriteSuccess(string output, bool addToOutput = true)
+    {
+        if (addToOutput && string.IsNullOrEmpty(output.Trim())) _ouput.AppendLine(output);
+        ConsoleService.WriteLine(GetType().Name, output, ConsoleColor.Green);
+    }
+
     protected void WriteWarning(string output, bool addToOutput = true)
     {
         if (addToOutput && string.IsNullOrEmpty(output.Trim())) _ouput.AppendLine(output);
