@@ -32,6 +32,11 @@ public abstract class CommandBase<TConfig> : IConsoleCommand where TConfig : new
     protected RunResult Quit() => new(this, Input, _ouput.ToString(), RunResultStatus.Quit);
     protected RunResult BadParameterError(string output) => new(this, Input, output, RunResultStatus.ArgumentError);
     protected RunResult ExceptionError(string output) => new(this, Input, output, RunResultStatus.ExceptionThrown);
+    protected void Write(string output, bool addToOutput = true)
+    {
+        if (addToOutput && !string.IsNullOrEmpty(output.Trim())) _ouput.AppendLine(output);
+        ConsoleService.Write(GetType().Name, output, null);
+    }
     protected void WriteLine(string output, bool addToOutput = true)
     {
         if(addToOutput && !string.IsNullOrEmpty(output.Trim())) _ouput.AppendLine(output);
@@ -43,10 +48,28 @@ public abstract class CommandBase<TConfig> : IConsoleCommand where TConfig : new
         ConsoleService.WriteHeaderLine(GetType().Name, output);
     }
 
-    protected void WriteSuccess(string output, bool addToOutput = true)
+    protected void WriteSuccessLine(string output, bool addToOutput = true)
     {
         if (addToOutput && string.IsNullOrEmpty(output.Trim())) _ouput.AppendLine(output);
         ConsoleService.WriteLine(GetType().Name, output, ConsoleColor.Green);
+    }
+
+    protected void WriteSuccess(string output, bool addToOutput = true)
+    {
+        if (addToOutput && string.IsNullOrEmpty(output.Trim())) _ouput.AppendLine(output);
+        ConsoleService.Write(GetType().Name, output, ConsoleColor.Green);
+    }
+
+    protected void WriteFailureLine(string output, bool addToOutput = true)
+    {
+        if (addToOutput && string.IsNullOrEmpty(output.Trim())) _ouput.AppendLine(output);
+        ConsoleService.WriteLine(GetType().Name, output, ConsoleColor.DarkRed);
+    }
+
+    protected void WriteFailure(string output, bool addToOutput = true)
+    {
+        if (addToOutput && string.IsNullOrEmpty(output.Trim())) _ouput.AppendLine(output);
+        ConsoleService.Write(GetType().Name, output, ConsoleColor.DarkRed);
     }
 
     protected void WriteWarning(string output, bool addToOutput = true)

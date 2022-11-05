@@ -35,7 +35,8 @@ public class InputValidationManager
         foreach (var flagInfo in flagInfos.Where(f => f.IsRequired))
         {
             flagInfo.Value = _input.GetFlagValue(flagInfo.Name);
-            if (!string.IsNullOrEmpty(flagInfo.Value) || _input.HasFlag(flagInfo.Value)) continue;
+
+            if (!string.IsNullOrEmpty(flagInfo.Value) || !_input.HasFlag(flagInfo.Name)) continue;
             _logger.Invoke($"Flag [{flagInfo.Name}] is required to have a value or not used at all.", DisplayAndWriteToLog);
             retVal.HasValidationError = true;
         }
