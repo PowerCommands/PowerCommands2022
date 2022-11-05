@@ -11,6 +11,7 @@ public class FlagCommand : CommandBase<CommandsConfiguration>
     {
         WriteLine($"mandatory: {Input.GetFlagValue("mandatory")}");
         WriteLine($"optional: {Input.GetFlagValue("optional")}");
+        WriteLine($"Single Quote: {Input.SingleQuote}");
         return Ok();
     }
 }

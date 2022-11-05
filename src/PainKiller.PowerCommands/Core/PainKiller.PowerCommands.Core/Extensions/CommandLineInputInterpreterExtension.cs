@@ -34,6 +34,13 @@ public static class CommandLineInputInterpreterExtension
     {
         var flag = input.Flags.FirstOrDefault(f => f == $"--{flagName.ToLower()}" || f.ToLower().Substring(2,1)  == $"{flagName.ToLower()}".Substring(0,1));
         if (IsNullOrEmpty(flag)) return "";
+
+        if (input.Quotes.Length == 1)
+        {
+            //First lets find out if the next parameter after the flag is a surrounded by " characters
+            var lastIndexOfFlag = input.Raw.LastIndexOf($"--{flagName}") + $"--{flagName}".Length;
+            if (lastIndexOfFlag < input.Raw.Length + 2 && input.Raw.Substring(lastIndexOfFlag+1,1) == "\"") return input.SingleQuote;
+        }
         short index = 0;
         var indexedInputs = input.Raw.Split(' ').Select(r => new IndexedInput{Index = index+=1,Value = r}).ToList();
         var flagIndex = indexedInputs.First(i => i.Value.ToLower() == flag.ToLower()).Index;
