@@ -35,12 +35,9 @@ public static class CommandLineInputInterpreterExtension
         var flag = input.Flags.FirstOrDefault(f => f == $"--{flagName.ToLower()}" || f.ToLower().Substring(2,1)  == $"{flagName.ToLower()}".Substring(0,1));
         if (IsNullOrEmpty(flag)) return "";
 
-        if (input.Quotes.Length == 1)
-        {
-            //First lets find out if the next parameter after the flag is a surrounded by " characters
-            var lastIndexOfFlag = input.Raw.LastIndexOf($"--{flagName}") + $"--{flagName}".Length;
-            if (lastIndexOfFlag < input.Raw.Length + 2 && input.Raw.Substring(lastIndexOfFlag+1,1) == "\"") return input.SingleQuote;
-        }
+        var firstQuotedFlagValueIfAny = FindFirstQuotedFlagValueIfAny(input, flagName);
+        if (!string.IsNullOrEmpty(firstQuotedFlagValueIfAny)) return firstQuotedFlagValueIfAny;
+
         short index = 0;
         var indexedInputs = input.Raw.Split(' ').Select(r => new IndexedInput{Index = index+=1,Value = r}).ToList();
         var flagIndex = indexedInputs.First(i => i.Value.ToLower() == flag.ToLower()).Index;
@@ -52,5 +49,15 @@ public static class CommandLineInputInterpreterExtension
     {
         var dokumentedFlags = command.GetPowerCommandAttribute().Flags.Split('|');
         foreach (var flag in input.Flags) if(dokumentedFlags.All(f => $"--{f.ToLower()}" != flag.ToLower())) ConsoleService.WriteLine($"{input.Identifier}", $"Warning, flag [{flag}] is not declared and probably unhandled in command [{command.Identifier}]", ConsoleColor.DarkYellow);
+    }
+    private static string FindFirstQuotedFlagValueIfAny(ICommandLineInput input, string flagName)
+    {
+        if (input.Quotes.Length == 0) return "";
+        //First lets find out if the next parameter after the flag is a surrounded by " characters
+        var lastIndexOfFlag = input.Raw.LastIndexOf($"--{flagName}") + $"--{flagName}".Length;
+        var quotesAfterFlag = input.Quotes.Where(q => input.Raw.LastIndexOf(q) > lastIndexOfFlag).Select(q => new{Index = input.Raw.LastIndexOf(q), Quote = q }).ToList();
+        var firstQuoteAfterFlag = quotesAfterFlag.First(q => q.Index == quotesAfterFlag.Min(q => q.Index));
+        var diff = firstQuoteAfterFlag.Index - lastIndexOfFlag;
+        return diff > 1 ? "" : firstQuoteAfterFlag.Quote.Replace("\"","");
     }
 }
