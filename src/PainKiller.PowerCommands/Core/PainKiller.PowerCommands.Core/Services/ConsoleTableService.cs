@@ -89,23 +89,23 @@ public static class ConsoleTableService
                     break;
                 }
                 var colRender = renderCols[colIndex];
-                if (colIndex > 0) colRender = renderCols[colIndex - 1];
+                if (colIndex > 0) colRender = renderCols[colIndex];
                 colRender.Write(cols[colIndex]);
             }
         }
     }
     private static void WriteHeaderRow(string row, ColumnRenderOptionsAttribute[] columnRenderDefinitions, IConsoleWriter consoleWriter)
     {
-        var attribs = columnRenderDefinitions.ToList();
-        attribs.Insert(0, new ColumnRenderOptionsAttribute(caption:" ",renderFormat:ColumnRenderFormat.None));
-        attribs.Add(new ColumnRenderOptionsAttribute(caption: " ", renderFormat: ColumnRenderFormat.None));
-        
         var cols = row.Split('|');
         var render = new ColumnRenderHeader(consoleWriter);
         for (var colIndex = 0; colIndex < cols.Length; colIndex++)
         {
-            var colDef = attribs[colIndex];
-            render.Write(colDef.Caption);
+            if (colIndex == cols.Length - 1)
+            {
+                Console.WriteLine("");
+                break;
+            }
+            render.Write(cols[colIndex]);
         }
     }
     private static IEnumerable<IColumnRender> GetColumnRenders<T>(IEnumerable<ColumnRenderOptionsAttribute> columnRenderDefinitions, IConsoleWriter consoleWriter)

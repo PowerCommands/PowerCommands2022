@@ -16,17 +16,22 @@ public class TestCommand : CommandBase<CommandsConfiguration>
             var command = commands.FirstOrDefault(c => c.Identifier == Input.GetFlagValue("command"));
             if (command != null)
             {
-                var items = RunTest(command);
+                var items = GetTest(command);
                 if (!Input.HasFlag("trace")) Console.Clear();
 
                 ConsoleTableService.RenderConsoleCommandTable(items.ToArray(), this);
             }
             else WriteError($"Could not find a command with identity [{Input.GetFlagValue("command")}]");
         }
+        else if (Input.HasFlag("all"))
+        {
+            var reports = GetTestReports().Where(r => !r.TestDisabled);
+            if (!Input.HasFlag("trace")) Console.Clear();
+            ConsoleTableService.RenderConsoleCommandTable(reports.ToArray(), this);
+        }
         return Ok();
     }
-
-    private List<CommandTestItem> RunTest(IConsoleCommand command)
+    private List<CommandTestItem> GetTest(IConsoleCommand command)
     {
         try
         {
@@ -53,5 +58,17 @@ public class TestCommand : CommandBase<CommandsConfiguration>
             ConsoleService.DisableLog = false;
             throw;
         }
+    }
+    private List<CommandTestReport> GetTestReports()
+    {
+        var retVal = new List<CommandTestReport>();
+        var commands = IPowerCommandsRuntime.DefaultInstance?.Commands ?? new List<IConsoleCommand>();
+        foreach (var command in commands)
+        {
+            var tests = GetTest(command);
+            var report = new CommandTestReport { Command = command.Identifier, Failures = tests.Count(t => t.Success == "*NO*"), TestDisabled = tests.First().Disabled, Tests = tests.Count };
+            retVal.Add(report);
+        }
+        return retVal;
     }
 }
