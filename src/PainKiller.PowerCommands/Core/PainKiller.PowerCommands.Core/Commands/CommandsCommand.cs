@@ -1,9 +1,10 @@
 ﻿namespace PainKiller.PowerCommands.Core.Commands;
 
-[PowerCommandDesign( description:      "Shows commands, or filter commands by name, create a new command, show default command with flag --default",
-               quotes:            "<filter>",
-               flags:            "this|reserved|default",
-               example:          "//Show all commands|commands|//Show your custom commands|commands --this|//Show reserved commands|commands --reserved|//Search for commands matching \"encrypt\"|commands \"encrypt\"|//Show default command|commands --default")]
+[PowerCommandTest(tests: " |--this|--reserved|\"encrypt\"|--reserved")]
+[PowerCommandDesign( description: "Shows commands, or filter commands by name, create a new command, show default command with flag --default",
+                          quotes: "<filter>",
+                           flags: "this|reserved|default",
+                         example: "//Show all commands|commands|//Show your custom commands|commands --this|//Show reserved commands|commands --reserved|//Search for commands matching \"encrypt\"|commands \"encrypt\"|//Show default command|commands --default")]
 public class CommandsCommand : CommandBase<CommandsConfiguration>
 {
     public CommandsCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }

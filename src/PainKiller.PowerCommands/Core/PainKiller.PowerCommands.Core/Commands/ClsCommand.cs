@@ -1,5 +1,6 @@
 ﻿namespace PainKiller.PowerCommands.Core.Commands;
 
+[PowerCommandTest(tests: " ")]
 [PowerCommandDesign(description: "Clears the console")]
 public class ClsCommand : CommandBase<CommandsConfiguration>
 {

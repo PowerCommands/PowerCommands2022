@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using PainKiller.PowerCommands.Shared.Utils.DisplayTable;
+using System.ComponentModel;
 using System.Reflection;
 using System.Text.Json;
 
@@ -18,9 +19,15 @@ public static class ReflectionExtensions
     /// <typeparam name="T">The type to look for</typeparam>
     /// <param name="instanceType"></param>
     /// <returns></returns>
-    public static List<PropertyInfo> GetPropertiesOfT<T>(this Type instanceType) where T : new()
+    public static List<PropertyInfo> GetPropertiesOfT<T>(this Type instanceType)
     {
         var propertyInfos = instanceType.GetProperties().Where(t => t.PropertyType.BaseType == typeof(T)).ToList();
+        return propertyInfos;
+    }
+
+    public static List<PropertyInfo> GetProperties<T>(this Type instanceType)
+    {
+        var propertyInfos = instanceType.GetProperties(BindingFlags.Public | BindingFlags.Instance).ToList();
         return propertyInfos;
     }
 
@@ -49,6 +56,18 @@ public static class ReflectionExtensions
     {
         var attributes = command.GetType().GetCustomAttributes(typeof(TAttribute), inherit: false);
         return attributes.Length == 0 ? new TAttribute() : (TAttribute)attributes.First();
+    }
+    public static IEnumerable<ColumnRenderOptionsAttribute> GetColumnRenderOptionsAttribute<T>(this T table) where T : IConsoleCommandTable
+    {
+        var retVal = new List<ColumnRenderOptionsAttribute>();
+        var properties = GetProperties<T>(typeof(T));
+        foreach (var propertyInfo in properties)
+        {
+            var attributes = propertyInfo.GetCustomAttributes(typeof(ColumnRenderOptionsAttribute), inherit: false);
+            if(attributes.Length == 0) continue;
+            retVal.Add((ColumnRenderOptionsAttribute) attributes.First());
+        }
+        return retVal;
     }
     public static string GetDefaultParameter(this IConsoleCommand command)
     {
