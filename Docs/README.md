@@ -15,7 +15,7 @@
 
 [Using Flags](Flags.md)
 
-[Simple automated test](test.md)
+[Simple automated test](Test.md)
 
 [Output to the Console guidline](ConsoleOutput.md)
 
