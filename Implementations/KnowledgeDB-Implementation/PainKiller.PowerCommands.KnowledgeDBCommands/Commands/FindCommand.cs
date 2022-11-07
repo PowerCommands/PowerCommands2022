@@ -44,7 +44,7 @@ public class FindCommand : CommandBase<PowerCommandsConfiguration>
         var separator = Configuration.ShellConfiguration.DisplaySeparator.Replace(@"\t", "\t");
         if (_items.Count == 1 && Configuration.ShellConfiguration.Autostart) Open(_items.First());
         WriteHeadLine($"Found {_items.Count} matches.");
-        var table = _items.Select((i,index) => new KnowledgeTableItem(i.Uri) { Index = index++ ,Name = i.Name, SourceType = i.SourceType, Tags = i.Tags });
+        var table = _items.Select((i,index) => new KnowledgeTableItem { Index = index++ ,Name = i.Name, SourceType = i.SourceType, Uri = i.Uri, Tags = i.Tags });
         ConsoleTableService.RenderTable(table, this);
     }
     private void Open(KnowledgeItem match)
