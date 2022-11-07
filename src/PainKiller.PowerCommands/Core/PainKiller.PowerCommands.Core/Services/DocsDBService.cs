@@ -1,5 +1,4 @@
 ﻿using System.Net.Http.Json;
-
 namespace PainKiller.PowerCommands.Core.Services;
 public class DocsDBService : IDocsDBService
 {
@@ -58,5 +57,4 @@ public class DocsDBService : IDocsDBService
             ConsoleService.WriteError(nameof(DocsDBService), $"Error occurred, the status of the merge between the local {nameof(DocsDB)} and the latest one is unknown, you could delete the local one and try update again.");
         }
     }
-
 }

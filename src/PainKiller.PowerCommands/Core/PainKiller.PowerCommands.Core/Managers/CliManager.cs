@@ -121,24 +121,10 @@ public class CliManager : ICliManager
         _logger.Invoke("", false);
         return backupRoot;
     }
-    public void WriteNewSolutionFile()
+    public void WriteNewSolutionFile(string[] validProjectFiles)
     {
         var solutionFile = Path.Combine(_srcCodeRootPath, "PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.sln");
         var contentRows = File.ReadAllLines(solutionFile);
-        var validProjectFiles = new[]
-        {
-            "PainKiller.PowerCommands.Bootstrap\\PainKiller.PowerCommands.Bootstrap.csproj",
-            "PainKiller.PowerCommands.PowerCommandsConsole\\PainKiller.PowerCommands.PowerCommandsConsole.csproj",
-            "Core",
-            "Third party components",
-            "Third party components\\PainKiller.SerilogExtensions\\PainKiller.SerilogExtensions.csproj",
-            "Core\\PainKiller.PowerCommands.Configuration\\PainKiller.PowerCommands.Configuration.csproj",
-            "Core\\PainKiller.PowerCommands.Core\\PainKiller.PowerCommands.Core.csproj",
-            "Core\\PainKiller.PowerCommands.ReadLine\\PainKiller.PowerCommands.ReadLine.csproj",
-            "Core\\PainKiller.PowerCommands.Security\\PainKiller.PowerCommands.Security.csproj",
-            "Core\\PainKiller.PowerCommands.Shared\\PainKiller.PowerCommands.Shared.csproj",
-            "PainKiller.PowerCommands.MyExampleCommands\\PainKiller.PowerCommands.MyExampleCommands.csproj"
-        };
 
         var validProjectsRows = new List<string>();
         foreach (var row in contentRows)
@@ -185,23 +171,5 @@ public class CliManager : ICliManager
     }
     public void MergeDocsDB() => DocsDBService.Service.MergeDocsDB();
     private string GetPath(string path) => path.StartsWith("PowerCommands2022\\") ? Path.Combine(_srcCodeRootPath, path) : Path.Combine(_path, path);
-    private void CopyFolder(string sourceFolder, string destFolder)
-    {
-        if (!Directory.Exists(destFolder))
-            Directory.CreateDirectory(destFolder);
-        var files = Directory.GetFiles(sourceFolder);
-        foreach (var file in files)
-        {
-            var name = Path.GetFileName(file);
-            var dest = Path.Combine(destFolder, name);
-            File.Copy(file, dest);
-        }
-        var folders = Directory.GetDirectories(sourceFolder);
-        foreach (var folder in folders)
-        {
-            var name = Path.GetFileName(folder);
-            var dest = Path.Combine(destFolder, name);
-            CopyFolder(folder, dest);
-        }
-    }
+    private void CopyFolder(string sourceFolder, string destFolder) => IOService.CopyFolder(sourceFolder, destFolder);
 }

@@ -29,7 +29,7 @@ public class CommandNewSolution : PowerCommandCommand
 
         cli.RenameDirectory(_artifact.Source.CommandsProject, _artifact.GetPath(_artifact.Target.CommandsProject));
 
-        cli.WriteNewSolutionFile();
+        cli.WriteNewSolutionFile(_artifact.ValidProjectFiles);
 
         cli.ReplaceContentInFile($"{_artifact.Source.BootstrapProject}\\PainKiller.PowerCommands.Bootstrap.csproj", "MyExampleCommands", $"{name}Commands");
         cli.ReplaceContentInFile($"{_artifact.Source.ConsoleProject}\\PainKiller.PowerCommands.PowerCommandsConsole.csproj", "<AssemblyName>pc</AssemblyName>", $"<AssemblyName>{name}</AssemblyName>");
@@ -39,6 +39,7 @@ public class CommandNewSolution : PowerCommandCommand
         cli.ReplaceContentInFile($"{_artifact.GetPath(_artifact.Source.RenamedCommandsProject)}\\PowerCommandsConfiguration.yaml", "My Example Command", $"{name} Commands");
         cli.ReplaceContentInFile($"{_artifact.GetPath(_artifact.Source.RenamedCommandsProject)}\\PowerCommandsConfiguration.yaml", "MyExampleCommands", $"{name}Commands");
         cli.ReplaceContentInFile($"{_artifact.GetPath(_artifact.Source.RenamedCommandsProject)}\\Configuration\\PowerCommandsConfiguration.cs", "MyExampleCommands", $"{name}Commands");
+        cli.ReplaceContentInFile($"{_artifact.GetPath(_artifact.Source.RenamedCommandsProject)}\\GlobalUsings.cs", "MyExampleCommands", $"{name}Commands");
         cli.ReplaceContentInFile($"{_artifact.GetPath(_artifact.Source.RenamedCommandsProject)}\\PowerCommandServices.cs", "MyExampleCommands", $"{name}Commands");
         foreach (var cmdName in _artifact.Commands) cli.ReplaceContentInFile($"{_artifact.GetPath(_artifact.Source.RenamedCommandsProject)}\\Commands\\{cmdName}Command.cs", "MyExampleCommands", $"{name}Commands");
         foreach (var cmdName in _artifact.TemplateCommands)
