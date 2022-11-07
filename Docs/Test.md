@@ -45,7 +45,9 @@ The test reflecs that constraint, the second thest will run the flag command lik
 ```flag --optional someValue --mandatory```
 
 The mandatory flag has no value and validation will fail, wich the test also expects, this is the result when running the test command.
+
 ```test --command flag```
+
 ![Alt text](images/test_flag.png?raw=true "Test result")
 
 ## Run test for all commands
