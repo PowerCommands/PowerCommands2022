@@ -21,9 +21,7 @@ public abstract class CommandBase<TConfig> : IConsoleCommand, IConsoleWriter whe
         if(result.Flags.Count > 0) Flags.AddRange(result.Flags);
         return result.HasValidationError;
     }
-
     protected TConfig Configuration { get; set; }
-
     public virtual RunResult Run() => throw new NotImplementedException();
     public virtual async Task<RunResult> RunAsync() => await Task.FromResult(new RunResult(this, Input,"",RunResultStatus.Initializing));
 
@@ -32,7 +30,6 @@ public abstract class CommandBase<TConfig> : IConsoleCommand, IConsoleWriter whe
     protected RunResult Quit() => new(this, Input, _ouput.ToString(), RunResultStatus.Quit);
     protected RunResult BadParameterError(string output) => new(this, Input, output, RunResultStatus.ArgumentError);
     protected RunResult ExceptionError(string output) => new(this, Input, output, RunResultStatus.ExceptionThrown);
-
     public void Write(string output, bool addToOutput = true, ConsoleColor? color = null)
     {
         if (addToOutput && !string.IsNullOrEmpty(output.Trim())) _ouput.AppendLine(output);
@@ -43,55 +40,36 @@ public abstract class CommandBase<TConfig> : IConsoleCommand, IConsoleWriter whe
         if(addToOutput && !string.IsNullOrEmpty(output.Trim())) _ouput.AppendLine(output);
         ConsoleService.WriteLine(GetType().Name, output, null);
     }
-
     public void WriteHeadLine(string output, bool addToOutput = true)
     {
         if (addToOutput && string.IsNullOrEmpty(output.Trim())) _ouput.AppendLine(output);
         ConsoleService.WriteHeaderLine(GetType().Name, output);
     }
-
-    public void WriteSuccessLine(string output, bool addToOutput = true)
-    {
-        if (addToOutput && string.IsNullOrEmpty(output.Trim())) _ouput.AppendLine(output);
-        ConsoleService.WriteLine(GetType().Name, output, ConsoleColor.Green);
-    }
-
     public void WriteSuccess(string output, bool addToOutput = true)
     {
         if (addToOutput && string.IsNullOrEmpty(output.Trim())) _ouput.AppendLine(output);
         ConsoleService.Write(GetType().Name, output, ConsoleColor.Green);
     }
-
-    public void WriteFailureLine(string output, bool addToOutput = true)
-    {
-        if (addToOutput && string.IsNullOrEmpty(output.Trim())) _ouput.AppendLine(output);
-        ConsoleService.WriteLine(GetType().Name, output, ConsoleColor.DarkRed);
-    }
-
     public void WriteFailure(string output, bool addToOutput = true)
     {
         if (addToOutput && string.IsNullOrEmpty(output.Trim())) _ouput.AppendLine(output);
         ConsoleService.Write(GetType().Name, output, ConsoleColor.DarkRed);
     }
-
     public void WriteWarning(string output, bool addToOutput = true)
     {
         if (addToOutput && string.IsNullOrEmpty(output.Trim())) _ouput.AppendLine(output);
         ConsoleService.WriteWarning(GetType().Name, output);
     }
-
     public void WriteError(string output, bool addToOutput = true)
     {
         if (addToOutput && string.IsNullOrEmpty(output.Trim())) _ouput.AppendLine(output);
         ConsoleService.WriteError(GetType().Name, output);
     }
-
     public void WriteCritical(string output, bool addToOutput = true)
     {
         if (addToOutput && string.IsNullOrEmpty(output.Trim())) _ouput.AppendLine(output);
         ConsoleService.WriteCritical(GetType().Name, output);
     }
-
     protected void OverwritePreviousLine(string output)
     {
         Console.SetCursorPosition(Console.CursorLeft, Console.CursorTop - 1);

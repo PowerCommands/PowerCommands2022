@@ -5,7 +5,6 @@ public class InputValidationManager
     private readonly IConsoleCommand _command;
     private readonly Action<string, bool> _logger;
     public bool DisplayAndWriteToLog = true;
-
     public InputValidationManager(IConsoleCommand command, ICommandLineInput input, Action<string, bool> logger)
     {
         _input = input;

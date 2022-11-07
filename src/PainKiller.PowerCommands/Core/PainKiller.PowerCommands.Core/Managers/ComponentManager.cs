@@ -1,5 +1,4 @@
 ﻿namespace PainKiller.PowerCommands.Core.Managers;
-
 public class ComponentManager<TConfiguration> where TConfiguration : CommandsConfiguration
 {
     private readonly TConfiguration _configuration;

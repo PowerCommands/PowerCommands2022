@@ -1,5 +1,4 @@
 ﻿namespace PainKiller.PowerCommands.Core.Commands;
-
 public class CommandUpdate : PowerCommandCommand
 {
     private readonly ArtifactPathsConfiguration _artifact;

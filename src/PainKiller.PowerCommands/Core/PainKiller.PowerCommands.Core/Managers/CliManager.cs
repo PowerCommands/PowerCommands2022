@@ -1,7 +1,6 @@
 ﻿using System.Net.Http.Json;
 
 namespace PainKiller.PowerCommands.Core.Managers;
-
 public class CliManager : ICliManager
 {
     private readonly string _name;

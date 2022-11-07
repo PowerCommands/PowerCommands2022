@@ -1,12 +1,4 @@
-﻿global using PainKiller.PowerCommands.Core.BaseClasses;
-global using PainKiller.PowerCommands.Shared.Attributes;
-global using PainKiller.PowerCommands.Shared.DomainObjects.Core;
-global using PainKiller.PowerCommands.Shared.Enums;
-global using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
-using System.ComponentModel.DataAnnotations;
-using PainKiller.PowerCommands.Core.Commands;
-
-namespace PainKiller.PowerCommands.Core;
+﻿namespace PainKiller.PowerCommands.Core;
 
 public class PowerCommandsRuntime<TConfig> : IPowerCommandsRuntime where TConfig : CommandsConfiguration
 {
@@ -71,7 +63,6 @@ public class PowerCommandsRuntime<TConfig> : IPowerCommandsRuntime where TConfig
         catch (Exception e) { Latest = new RunResult(command, input, e.Message, RunResultStatus.ExceptionThrown); }
         return Latest;
     }
-
     public RunResult ExecuteAsyncCommand(IConsoleCommand command, CommandLineInput input)
     {
         try
