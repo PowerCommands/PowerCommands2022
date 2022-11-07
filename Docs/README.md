@@ -15,6 +15,8 @@
 
 [Using Flags](Flags.md)
 
+[Simple automated test](test.md)
+
 [Output to the Console guidline](ConsoleOutput.md)
 
 ## Core framework

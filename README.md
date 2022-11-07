@@ -20,4 +20,45 @@ You could se PowerCommands as an easy Create your CLI applikation starter kit. I
 
  ![Alt text](Docs/images/test_table.png?raw=true "Test table view")
 
- ## [Get started](https://github.com/PowerCommands/PowerCommands2022/blob/main/Docs/README.md)
+ ## Start your journey
+[Create a new VS Solution](Docs/Create_new_%20project.md)
+
+[Create a new Command](Docs/Create_new_command.md)
+
+## Commands development
+[Design your Command](Docs/Design_command.md)
+
+[Power Commands Design attribute](Docs/PowerCommandDesignAttribute.md)
+
+[Command base class](Docs/CommandBase.md)
+
+[Handling the Input](Docs/Input.md)
+
+[Using Flags](Docs/Flags.md)
+
+[Simple automated test](Docs/test.md)
+
+[Output to the Console guidline](Docs/ConsoleOutput.md)
+
+## Core framework
+[PowerCommandsRuntime](Docs/PowerCommandsRuntime.md)
+
+## Configuration and documentation
+[Basic application configuration](Docs/Configuration.md)
+
+[Extend your configuration](Docs/ExtendYourConfiguration.md)
+
+[Configure your environment to use encrypt/decrypt secrets](Docs/Secrets.md)
+
+[Documentation index](Docs/DocumentationIndexDB.md)
+
+## Architecture
+[Design principles and guidlines](Docs/PowerCommands%20Design%20Principles%20And%20Guidlines.md)
+
+[Customize your project](Docs/Customize.md)
+
+## Implementations
+[Glitchfinder and KnowledgedDB](Docs/Implementations.md)
+
+## Links
+[10 design principles for delightful CLIs](https://blog.developer.atlassian.com/10-design-principles-for-delightful-clis/)
