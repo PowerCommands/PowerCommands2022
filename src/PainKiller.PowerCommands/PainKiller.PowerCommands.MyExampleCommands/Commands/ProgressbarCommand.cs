@@ -1,5 +1,6 @@
 ﻿namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
+[PowerCommandTest(tests: " ")]
 [PowerCommandDesign(description: "Sample command just to show how ProgressBar looks", example:"progressbar")]
 public class ProgressbarCommand : CommandBase<CommandsConfiguration>
 {

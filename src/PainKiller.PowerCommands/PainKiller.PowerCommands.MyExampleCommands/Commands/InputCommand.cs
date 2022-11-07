@@ -1,5 +1,6 @@
 ﻿namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
+[PowerCommandTest(tests: "myArgument \"myQuote\" --myFlag")]
 [PowerCommandDesign(  description: "Demonstration command just to show your input of arguments, quotes and flags",
                 arguments: "<value>",
                 quotes:"<value>",

@@ -2,6 +2,7 @@
 
 namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
+[PowerCommandTest(tests: "\"Painkiller.PowerCommands.Core.dll\"")]
 [PowerCommandDesign(  description: "Calculate the checksum for a valid file, could be practical when you distribute your PowerCommands application",
                            quotes: "!<Filename>",
                           example: "checksum Painkiller.PowerCommands.Core.dll")]

@@ -1,5 +1,6 @@
 ﻿namespace PainKiller.PowerCommands.Core.Commands;
 
+[PowerCommandTest(tests: "list|view")]
 [PowerCommandDesign( description: "View and manage the log",
                        arguments: "view|archive|list (default)",
                           quotes: "process name:<name>",

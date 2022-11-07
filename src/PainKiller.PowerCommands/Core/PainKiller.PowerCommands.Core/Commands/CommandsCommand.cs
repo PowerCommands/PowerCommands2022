@@ -1,6 +1,6 @@
 ﻿namespace PainKiller.PowerCommands.Core.Commands;
 
-[PowerCommandTest(tests: " |--this|--reserved|\"encrypt\"|--reserved")]
+[PowerCommandTest(tests: " |--this|--reserved|\"encrypt\"|--default")]
 [PowerCommandDesign( description: "Shows commands, or filter commands by name, create a new command, show default command with flag --default",
                           quotes: "<filter>",
                            flags: "this|reserved|default",

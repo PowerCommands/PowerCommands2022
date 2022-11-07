@@ -37,6 +37,11 @@ public class GitCommand : CommandBase<PowerCommandsConfiguration>
     }
     public void Push() => ShellService.Service.Execute("git", "push", Configuration.DefaultGitRepositoryPath, WriteLine, waitForExit: true);
 
-    public void Status() => ShellService.Service.Execute("git", "status", Configuration.DefaultGitRepositoryPath, WriteLine, waitForExit: true);
+    public void Status()
+    { 
+        WriteHeadLine($"Current Git repository: {Configuration.DefaultGitRepositoryPath}\n");
+        ShellService.Service.Execute("git", "status", Configuration.DefaultGitRepositoryPath, WriteLine, waitForExit: true);
+    }
+
     public void Repo() => WriteLine($"Local repo path: {Configuration.DefaultGitRepositoryPath}");
 }

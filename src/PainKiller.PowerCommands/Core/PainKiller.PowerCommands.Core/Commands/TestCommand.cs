@@ -1,7 +1,7 @@
 ﻿namespace PainKiller.PowerCommands.Core.Commands;
 
 [PowerCommandDesign( description: "Run test on specific command or all commands, the must have a PowerCommandTest attribute declared on class level.",
-                           flags: "!command|all|trace",
+                           flags: "all|!command|trace",
                          example: "//Test a specific command|test --command commandName|//Test all commands (default) flag could be omitted|test --all")]
 public class TestCommand : CommandBase<CommandsConfiguration>
 {

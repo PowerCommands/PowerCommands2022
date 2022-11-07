@@ -1,6 +1,8 @@
 ﻿using System.Reflection;
 
 namespace PainKiller.PowerCommands.Core.Commands;
+
+[PowerCommandTest(tests: " ")]
 [PowerCommandDesign(description:"Shows current version for the Core components.")]
 public class VersionCommand : CommandBase<CommandsConfiguration>
 {

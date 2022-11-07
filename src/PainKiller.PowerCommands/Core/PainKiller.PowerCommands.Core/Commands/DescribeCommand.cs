@@ -1,5 +1,6 @@
 ﻿namespace PainKiller.PowerCommands.Core.Commands;
 
+[PowerCommandTest(tests: "exit|start --docs")]
 [PowerCommandDesign(       description: "With help command you will be shown the provided description or online documentation of the command or a PowerCommand feature.",
                        arguments: "<command name or feature you are interested of knowing more>",
                            flags: "docs",
