@@ -21,6 +21,6 @@ public class KnowledgeTableItem
     public string Tags
     {
         get => _tags;
-        set => _tags = value.Length > 70 ? $"{value.Substring(0, 70).Length}..." : value;;
+        set => _tags = value.Length > 70 ? $"{value.Substring(0, 70).Length}..." : value;
     }
 }
