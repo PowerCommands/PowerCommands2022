@@ -1,6 +1,6 @@
 ﻿namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
-[PowerCommandTest(tests: "--list")]
+[PowerCommandTest(          tests: "--list")]
 [PowerCommandDesign(  description: "Add a document to the DocDB that is used as an KnowledgeDB internally by PowerCommands, view document, append tags, edit and delete documents. Backup KnowledgeDB",
                             flags: "view|delete|edit|append|list|backup",
                           example: "//Add a new document|doc \"https://www.google.se/\" --name Google-Search --tags tools,search,google|//List all documents|doc --list")]
@@ -32,8 +32,8 @@ public class DocCommand : CommandBase<CommandsConfiguration>
     private void List()
     {
         _docs = _storage.GetObject().Docs;
-        var index = 0;
-        foreach (var doc in _docs) Print(doc, index++); 
+        var table = _docs.Select((i, index) => new DocView { ID = index++, Name = i.Name, Tags = i.Tags });
+        ConsoleTableService.RenderTable(table, this);
     }
     private void Delete()
     {

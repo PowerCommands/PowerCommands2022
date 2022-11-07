@@ -24,7 +24,7 @@ public static class ConsoleService
         Console.ForegroundColor = currentColor;
         if(writeLog) WriteToLog(scope, $"{name} {description}");
     }
-    public static void Write(string scope, string text, ConsoleColor? color, bool writeLog = true)
+    public static void Write(string scope, string text, ConsoleColor? color = null, bool writeLog = true)
     {
         var currentColor = Console.ForegroundColor;
         if (color != null) Console.ForegroundColor = color.Value;
@@ -33,7 +33,7 @@ public static class ConsoleService
         if (writeLog) WriteToLog(scope, $"{text}");
     }
 
-    public static void WriteLine(string scope, string text, ConsoleColor? color, bool writeLog = true)
+    public static void WriteLine(string scope, string text, ConsoleColor? color = null, bool writeLog = true)
     {
         var currentColor = Console.ForegroundColor;
         if(color != null) Console.ForegroundColor = color.Value;
