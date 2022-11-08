@@ -56,7 +56,8 @@ public static class CommandLineInputInterpreterExtension
         //First lets find out if the next parameter after the flag is a surrounded by " characters
         var lastIndexOfFlag = input.Raw.LastIndexOf($"--{flagName}") + $"--{flagName}".Length;
         var quotesAfterFlag = input.Quotes.Where(q => input.Raw.LastIndexOf(q) > lastIndexOfFlag).Select(q => new{Index = input.Raw.LastIndexOf(q), Quote = q }).ToList();
-        var firstQuoteAfterFlag = quotesAfterFlag.First(q => q.Index == quotesAfterFlag.Min(q => q.Index));
+        var firstQuoteAfterFlag = quotesAfterFlag.FirstOrDefault(q => q.Index == quotesAfterFlag.Min(q => q.Index));
+        if (firstQuoteAfterFlag == null) return "";
         var diff = firstQuoteAfterFlag.Index - lastIndexOfFlag;
         return diff > 1 ? "" : firstQuoteAfterFlag.Quote.Replace("\"","");
     }
