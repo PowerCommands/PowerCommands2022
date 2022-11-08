@@ -38,6 +38,7 @@ public class CommandNewSolution : PowerCommandCommand
         cli.ReplaceContentInFile($"{_artifact.Source.ConsoleProject}\\Program.cs", "Power Commands 1.0", $"{name} Commands 1.0");
         cli.ReplaceContentInFile($"{_artifact.GetPath(_artifact.Source.RenamedCommandsProject)}\\PowerCommandsConfiguration.yaml", "My Example Command", $"{name} Commands");
         cli.ReplaceContentInFile($"{_artifact.GetPath(_artifact.Source.RenamedCommandsProject)}\\PowerCommandsConfiguration.yaml", "MyExampleCommands", $"{name}Commands");
+        cli.ReplaceContentInFile($"{_artifact.GetPath(_artifact.Source.RenamedCommandsProject)}\\ArtifactPathsConfiguration.yaml", "name: MyExample", $"name: {name}");
         cli.ReplaceContentInFile($"{_artifact.GetPath(_artifact.Source.RenamedCommandsProject)}\\Configuration\\PowerCommandsConfiguration.cs", "MyExampleCommands", $"{name}Commands");
         cli.ReplaceContentInFile($"{_artifact.GetPath(_artifact.Source.RenamedCommandsProject)}\\GlobalUsings.cs", "MyExampleCommands", $"{name}Commands");
         cli.ReplaceContentInFile($"{_artifact.GetPath(_artifact.Source.RenamedCommandsProject)}\\PowerCommandServices.cs", "MyExampleCommands", $"{name}Commands");

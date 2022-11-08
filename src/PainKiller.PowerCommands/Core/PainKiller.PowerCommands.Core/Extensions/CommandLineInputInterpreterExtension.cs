@@ -48,7 +48,7 @@ public static class CommandLineInputInterpreterExtension
     public static void DoBadFlagCheck(this ICommandLineInput input, IConsoleCommand command)
     {
         var dokumentedFlags = command.GetPowerCommandAttribute().Flags.Split('|');
-        foreach (var flag in input.Flags) if(dokumentedFlags.All(f => $"--{f.ToLower()}" != flag.ToLower())) ConsoleService.WriteLine($"{input.Identifier}", $"Warning, flag [{flag}] is not declared and probably unhandled in command [{command.Identifier}]", ConsoleColor.DarkYellow);
+        foreach (var flag in input.Flags) if(dokumentedFlags.All(f => $"--{f.ToLower().Replace("!","")}" != flag.ToLower())) ConsoleService.WriteLine($"{input.Identifier}", $"Warning, flag [{flag}] is not declared and probably unhandled in command [{command.Identifier}]", ConsoleColor.DarkYellow);
     }
     private static string FindFirstQuotedFlagValueIfAny(ICommandLineInput input, string flagName)
     {

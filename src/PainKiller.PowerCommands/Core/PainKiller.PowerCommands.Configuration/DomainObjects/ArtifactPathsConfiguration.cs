@@ -25,6 +25,7 @@ public class ArtifactPathsConfiguration
     public string CustomComponents { get; set; } = "PowerCommands2022\\src\\PainKiller.PowerCommands\\Custom Components\\";
     public string DocsDbFile { get; set; } = "PowerCommands2022\\src\\PainKiller.PowerCommands\\Core\\PainKiller.PowerCommands.Core\\DocsDB.data";
     public string DocsDbGithub { get; set; } = "https://raw.githubusercontent.com/PowerCommands/PowerCommands2022/main/src/PainKiller.PowerCommands/Core/PainKiller.PowerCommands.Core/DocsDB.data";
+    public string GithubRoot { get; set; } = "https://raw.githubusercontent.com/PowerCommands/PowerCommands2022/main/src/PainKiller.PowerCommands";
     public ArtifactSourcePaths Source { get; set; } = new();
     public ArtifactTargetPaths Target { get; set; } = new();
 }

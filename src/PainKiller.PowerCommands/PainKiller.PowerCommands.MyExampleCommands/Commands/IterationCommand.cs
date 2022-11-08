@@ -1,4 +1,4 @@
-﻿namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
+namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
 [PowerCommandDesign("A dummie iteration is running in async mode", example:"iteration", useAsync: true)]
 public class IterationCommand : CommandBase<CommandsConfiguration>

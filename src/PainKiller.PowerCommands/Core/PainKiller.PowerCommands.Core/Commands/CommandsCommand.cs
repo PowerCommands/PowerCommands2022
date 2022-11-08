@@ -3,7 +3,7 @@
 [PowerCommandTest(tests: " |--this|--reserved|\"encrypt\"|--default")]
 [PowerCommandDesign( description: "Shows commands, or filter commands by name, create a new command, show default command with flag --default",
                           quotes: "<filter>",
-                           flags: "this|reserved|default",
+                           flags: "this|reserved|default|!update",
                          example: "//Show all commands|commands|//Show your custom commands|commands --this|//Show reserved commands|commands --reserved|//Search for commands matching \"encrypt\"|commands \"encrypt\"|//Show default command|commands --default")]
 public class CommandsCommand : CommandBase<CommandsConfiguration>
 {
@@ -15,8 +15,17 @@ public class CommandsCommand : CommandBase<CommandsConfiguration>
         if (Input.HasFlag("this")) return Custom();
         if (Input.HasFlag("default")) return Default();
         if (Input.HasFlag("reserved")) return Reserved();
+        if (Input.HasFlag("update")) return Update();
         if (!string.IsNullOrEmpty(Input.SingleQuote)) return FilterByName();
         return NoFilter();
+    }
+
+    private RunResult Update()
+    {
+        var commandName = Input.GetFlagValue("update");
+        if (!DialogService.YesNoDialog($"The command [{commandName}] will be overwritten, continue with update?")) return Ok();
+        GithubService.Service.DownloadCommand(commandName);
+        return Ok();
     }
     private RunResult NoFilter()
     {

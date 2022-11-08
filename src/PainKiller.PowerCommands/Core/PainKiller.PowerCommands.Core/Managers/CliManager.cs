@@ -169,7 +169,7 @@ public class CliManager : ICliManager
         var solutionFile = Directory.GetFileSystemEntries(path, "*.sln").FirstOrDefault() ?? Directory.GetFileSystemEntries(AppContext.BaseDirectory, "*.exe").First().Replace(".exe", "");
         return solutionFile.Split('\\').Last().Replace(".sln", "");
     }
-    public void MergeDocsDB() => DocsDBService.Service.MergeDocsDB();
+    public void MergeDocsDB() => GithubService.Service.MergeDocsDB();
     private string GetPath(string path) => path.StartsWith("PowerCommands2022\\") ? Path.Combine(_srcCodeRootPath, path) : Path.Combine(_path, path);
     private void CopyFolder(string sourceFolder, string destFolder) => IOService.CopyFolder(sourceFolder, destFolder);
 }
