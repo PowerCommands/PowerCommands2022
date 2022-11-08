@@ -3,7 +3,7 @@
 [PowerCommandTest(tests: "exit|start --docs")]
 [PowerCommandDesign(       description: "With help command you will be shown the provided description or online documentation of the command or a PowerCommand feature.",
                        arguments: "<command name or feature you are interested of knowing more>",
-                           flags: "docs",
+                           flags: "docs|clear",
                          example: "describe exit|describe cls|describe log|//Open documentation about flags (if any)|describe flags --doc")]
 public class DescribeCommand : CommandBase<CommandsConfiguration>
 {
@@ -50,7 +50,7 @@ public class DescribeCommand : CommandBase<CommandsConfiguration>
             ShowDoc();
             return;
         }
-        HelpService.Service.ShowHelp(command);
+        HelpService.Service.ShowHelp(command, Input.HasFlag("clear"));
         Console.WriteLine();
     }
 }

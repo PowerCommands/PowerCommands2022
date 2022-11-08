@@ -9,4 +9,9 @@ public static class StringExtensions
         var retVal = $"{firstLetter}{input.Substring(1, input.Length - 1).ToLower()}";
         return retVal;
     }
+    public static string ToFlagDescription(this string flag)
+    {
+        var required = flag.StartsWith('!') ? " (required)" : "";
+        return $"--{flag.Replace("!", "")}{required}";
+    }
 }

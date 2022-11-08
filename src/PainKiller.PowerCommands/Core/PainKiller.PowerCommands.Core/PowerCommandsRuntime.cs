@@ -49,7 +49,7 @@ public class PowerCommandsRuntime<TConfig> : IPowerCommandsRuntime where TConfig
         {
             if (!command.GetPowerCommandAttribute().OverrideHelpFlag)
             {
-                HelpService.Service.ShowHelp(command, clearConsole: false);
+                HelpService.Service.ShowHelp(command, clearConsole: true);
                 return new RunResult(command, input, "User prompted for help with --help flag", RunResultStatus.Ok);
             }
         }
