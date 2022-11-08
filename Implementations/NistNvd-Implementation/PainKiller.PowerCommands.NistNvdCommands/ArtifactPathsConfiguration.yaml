@@ -1,6 +1,6 @@
 version: 1.0
 configuration:
-  name: Name
+  name: NistNvd
   download: '{appdata}|download|{name}'
   templates: '{appdata}|templates'
   validProjectFiles:
@@ -26,6 +26,7 @@ configuration:
   customComponents: PowerCommands2022\src\PainKiller.PowerCommands\Custom Components\
   docsDbFile: PowerCommands2022\src\PainKiller.PowerCommands\Core\PainKiller.PowerCommands.Core\DocsDB.data
   docsDbGithub: https://raw.githubusercontent.com/PowerCommands/PowerCommands2022/main/src/PainKiller.PowerCommands/Core/PainKiller.PowerCommands.Core/DocsDB.data
+  githubRoot: https://raw.githubusercontent.com/PowerCommands/PowerCommands2022/main/src/PainKiller.PowerCommands
   source:
     exampleProjectFile: PowerCommands2022\src\PainKiller.PowerCommands\PainKiller.PowerCommands.{name}Commands\PainKiller.PowerCommands.MyExampleCommands.csproj
     solutionFileName: PowerCommands2022\src\PainKiller.PowerCommands\PowerCommands.{name}.sln
