@@ -1,7 +1,7 @@
 ﻿namespace PainKiller.PowerCommands.KnowledgeDBCommands.Commands;
 
 [PowerCommandDesign(  description: "Add a new knowledge item",
-                flags: "onenote|!url|path|!name|!tags",
+                flags: "!onenote|!url|path|!file|!name|!tags",
                 example: "/*Add url*/|add --url \"https://wiki/wikis?pagePath=%2FMain&wikiVersion=GBwikiMaster&pageId=1\" --name WikiStart --tags wiki,start|/*Add path*/|add --path \"C:\\Repos\\github\" --name GithubRepo --tags repo,github|/*Add link to one note document*/|add --onenote \"onenote:///\\\\scb.intra\\users\\H\\USERNAME\\Mina%20Dokument\\OneNote-anteckningsböcker\\möten.one#Mötesanteckningar-id={AC139D67-12D1-485E-AEFA-8B101A4C4F8B}&page-id={9EEDC531-8CB9-4E5E-9A81-F65F98390F1B}&end\" --name Arkitekturmöten --tags arkitektur,teknik")]
 public class AddCommand : CommandBase<PowerCommandsConfiguration>
 {
@@ -14,7 +14,7 @@ public class AddCommand : CommandBase<PowerCommandsConfiguration>
         if (!DialogService.YesNoDialog("Is this information correct?")) return Ok();
 
         var db = StorageService<KnowledgeDatabase>.Service.GetObject();
-        if (db.Items.Any(i => i.Name == item.Name && i.SourceType == i.SourceType))
+        if (db.Items.Any(i => i.Name == item.Name && i.SourceType == item.SourceType))
         {
             WriteLine($"Warning, there is already a item with the same name and source stored in DB");
             return Ok();

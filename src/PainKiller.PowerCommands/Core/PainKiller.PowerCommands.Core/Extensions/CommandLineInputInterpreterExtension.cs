@@ -30,6 +30,11 @@ public static class CommandLineInputInterpreterExtension
         foreach (Match match in matches) retVal.Add(match.ToString());
         return retVal.ToArray();
     }
+    public static string GetFlagValue(this ICommandLineInput input, string[] flags)
+    {
+        foreach (var inputFlag in input.Flags) if (flags.Any(f => $"--{f}" == inputFlag)) return inputFlag.Replace("--", "");
+        return "";
+    }
     public static string GetFlagValue(this ICommandLineInput input, string flagName)
     {
         var flag = input.Flags.FirstOrDefault(f => f == $"--{flagName.ToLower()}" || f.ToLower().Substring(2,1)  == $"{flagName.ToLower()}".Substring(0,1));

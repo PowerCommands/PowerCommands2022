@@ -11,5 +11,6 @@ public enum RunResultStatus
     InputValidationError,
     Initializing,
     Async,
-    Help
+    Help,
+    Continue
 }
