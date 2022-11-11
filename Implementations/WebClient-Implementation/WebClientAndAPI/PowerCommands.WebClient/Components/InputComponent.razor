@@ -1,0 +1,24 @@
+﻿@using PowerCommands.WebShared.Models
+@inject ICommandsService CommandsService
+
+<h3>Input</h3>
+<MudTextField @bind-Value="Input" Label="Input your command..." Variant="Variant.Text"></MudTextField><br/>
+<MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="ExecuteCommand">Execute command</MudButton>
+<br />
+<br />
+<h3>Output</h3>
+<MudTextField T="string" Label="Output" Variant="Variant.Filled" Text="@Output" Lines="20" />
+
+@code {
+
+    public string? Input { get; set; }
+    public string Output { get; set; } = "";
+
+
+    private async Task ExecuteCommand()
+    {
+        var response = await CommandsService.GetRunResultModel(new InputModel{Raw = $"{Input}" });
+        Output = response.Output;
+        StateHasChanged();
+    }
+}
