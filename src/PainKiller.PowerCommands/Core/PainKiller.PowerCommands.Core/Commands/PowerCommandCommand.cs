@@ -35,26 +35,26 @@ public class PowerCommandCommand : CommandBase<CommandsConfiguration>
 
     private RunResult CreateCommand(string name)
     {
-        var templateManager = new TemplateManager(name, WriteLine);
+        ITemplateManager templateManager = new TemplateManager(name, WriteLine);
         templateManager.CreateCommand(templateName: "Default", name);
         return Ok();
     }
 
-    protected void UpdateTemplates(ICliManager cliManager, bool cloneRepo = false, string newProjectName = "")
+    protected void UpdateTemplates(IVisualStudioManager vsm, bool cloneRepo = false, string newProjectName = "")
     {
         if (cloneRepo)
         {
-            cliManager.DeleteDownloadsDirectory();
-            cliManager.CreateDownloadsDirectory();
-            cliManager.CloneRepo(Configuration.Repository);
+            vsm.DeleteDownloadsDirectory();
+            vsm.CreateDownloadsDirectory();
+            vsm.CloneRepo(Configuration.Repository);
         }
 
-        var name = string.IsNullOrEmpty(newProjectName) ? CliManager.GetName() : newProjectName;
+        var name = string.IsNullOrEmpty(newProjectName) ? VisualStudioManager.GetName() : newProjectName;
         var templateManager = new TemplateManager(name, WriteLine);
         templateManager.InitializeTemplatesDirectory();
         templateManager.CopyTemplates();
         
-        cliManager.MergeDocsDB();
-        cliManager.DeleteFile(_artifact.DocsDbFile, repoFile:true);
+        vsm.MergeDocsDB();
+        vsm.DeleteFile(_artifact.DocsDbFile, repoFile:true);
     }
 }

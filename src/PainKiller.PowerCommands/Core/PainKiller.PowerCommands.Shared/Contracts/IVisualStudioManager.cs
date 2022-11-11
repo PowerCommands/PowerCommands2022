@@ -1,6 +1,6 @@
 ﻿namespace PainKiller.PowerCommands.Shared.Contracts;
 
-public interface ICliManager
+public interface IVisualStudioManager
 {
     void CreateRootDirectory(bool onlyRepoSrcCodeRootPath = false);
     void CreateDirectory(string name);

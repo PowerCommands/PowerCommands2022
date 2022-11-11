@@ -66,7 +66,7 @@ public class GithubService : IGithubService
         var uri = $"{_artifact.GithubRoot}/PainKiller.PowerCommands.{_artifact.Name}Commands/Commands/{commandFileName}";
         ConsoleService.WriteLine(nameof(GithubService), $"Downloading file [{uri}]...");
         var fileContent = httpClient.GetStringAsync(uri).Result;
-        var solutionRoot = CliManager.GetLocalSolutionRoot();
+        var solutionRoot = SolutionFileManager.GetLocalSolutionRoot();
 
         File.WriteAllText(Path.Combine(solutionRoot, $"PainKiller.PowerCommands.{_artifact.Name}Commands","Commands", $"{commandFileName}"), fileContent);
         ConsoleService.WriteLine(nameof(GithubService), $"File [{commandFileName}] updated...");

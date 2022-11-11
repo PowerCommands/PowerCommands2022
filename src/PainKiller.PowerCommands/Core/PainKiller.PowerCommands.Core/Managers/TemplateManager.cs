@@ -40,6 +40,6 @@ public class TemplateManager : ITemplateManager
         _logger.Invoke($"File [{copyFilePath}] created", DisplayAndWriteToLog);
     }
     private string GetSrcCodeDownloadPath() => _path.Replace("\\templates", "\\download");
-    private string FindCommandsProjectDirectory() => Directory.GetDirectories(CliManager.GetLocalSolutionRoot()).First(c => c.EndsWith("Commands"));
+    private string FindCommandsProjectDirectory() => Directory.GetDirectories(SolutionFileManager.GetLocalSolutionRoot()).First(c => c.EndsWith("Commands"));
     private string FindProjectName() => FindCommandsProjectDirectory().Split('\\').Last().Split('.').Last().Replace("Commands","");
 }

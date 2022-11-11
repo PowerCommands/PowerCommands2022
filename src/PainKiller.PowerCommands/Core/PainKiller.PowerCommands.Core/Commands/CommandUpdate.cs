@@ -14,20 +14,20 @@ public class CommandUpdate : PowerCommandCommand
         if (template)
         {
             _path = Path.Combine(AppContext.BaseDirectory, "output");
-            UpdateTemplates(new CliManager(CliManager.GetName(), _path, WriteLine), cloneRepo: true);
+            UpdateTemplates(new VisualStudioManager(VisualStudioManager.GetName(), _path, WriteLine), cloneRepo: true);
             return Ok();
         }
-        _path = CliManager.GetLocalSolutionRoot();
+        _path = SolutionFileManager.GetLocalSolutionRoot();
         var solutionFile = Directory.GetFileSystemEntries(_path, "*.sln").FirstOrDefault();
-        var existingName = CliManager.GetName();
+        var existingName = VisualStudioManager.GetName();
         var backup = Input.HasFlag("backup");
 
-        var cli = new CliManager(existingName, _path, WriteLine);
+        IVisualStudioManager vsm = new VisualStudioManager(existingName, _path, WriteLine);
 
         if (solutionFile == null)
         {
             WriteLine("When running in application scope (outside VS Env) only the Documentation file will be updated...");
-            cli.MergeDocsDB();
+            vsm.MergeDocsDB();
             return Ok();
         }
 
@@ -38,24 +38,24 @@ public class CommandUpdate : PowerCommandCommand
         var response = Console.ReadLine();
         if ($"{response?.Trim()}" != "y") return Ok();
 
-        cli.DeleteDownloadsDirectory();
-        cli.CreateRootDirectory(onlyRepoSrcCodeRootPath: true);
+        vsm.DeleteDownloadsDirectory();
+        vsm.CreateRootDirectory(onlyRepoSrcCodeRootPath: true);
 
         var backupDirectory = "";
-        if (backup) backupDirectory = cli.BackupDirectory(_artifact.Target.Core);
+        if (backup) backupDirectory = vsm.BackupDirectory(_artifact.Target.Core);
 
-        cli.CloneRepo(Configuration.Repository);
+        vsm.CloneRepo(Configuration.Repository);
         WriteLine("Fetching repo from Github...");
 
-        UpdateTemplates(cli);
+        UpdateTemplates(vsm);
 
-        cli.DeleteDir(_artifact.VsCode);
-        cli.DeleteDir(_artifact.CustomComponents);
+        vsm.DeleteDir(_artifact.VsCode);
+        vsm.DeleteDir(_artifact.CustomComponents);
 
-        cli.DeleteDir(_artifact.Target.Core);
-        cli.MoveDirectory(_artifact.Source.Core, _artifact.Target.Core);
+        vsm.DeleteDir(_artifact.Target.Core);
+        vsm.MoveDirectory(_artifact.Source.Core, _artifact.Target.Core);
 
-        cli.DeleteDownloadsDirectory();
+        vsm.DeleteDownloadsDirectory();
 
         WriteLine("Your PowerCommands Core component is now up to date with latest code from github!");
         WriteLine("if you started this from Visual Studio you probably need to restart Visual Studio to reload all dependencies");

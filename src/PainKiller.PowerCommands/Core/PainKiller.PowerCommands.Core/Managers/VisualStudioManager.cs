@@ -1,5 +1,5 @@
 ﻿namespace PainKiller.PowerCommands.Core.Managers;
-public class CliManager : ICliManager
+public class VisualStudioManager : IVisualStudioManager
 {
     private readonly string _name;
     private readonly string _path;
@@ -7,7 +7,7 @@ public class CliManager : ICliManager
     private readonly Action<string, bool> _logger;
     
     public bool DisplayAndWriteToLog = true;
-    public CliManager(string name, string path, Action<string, bool> logger)
+    public VisualStudioManager(string name, string path, Action<string, bool> logger)
     {
         _name = name;
         _path = path;
@@ -123,31 +123,15 @@ public class CliManager : ICliManager
     }
     public void WriteNewSolutionFile(string[] validProjectFiles)
     {
-        var solutionFile = Path.Combine(_srcCodeRootPath, "PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.sln");
-        var contentRows = File.ReadAllLines(solutionFile);
-
-        var validProjectsRows = new List<string>();
-        foreach (var row in contentRows)
-        {
-            if(row.Trim().StartsWith("EndProject")) continue;
-            if (row.Trim().StartsWith("Project("))
-            {
-                var vssProjectRef = new VSSolutionProjectReference(row);
-                if (validProjectFiles.All(p => p != vssProjectRef.ProjectFilePath)) continue;
-                if (vssProjectRef.ProjectFilePath == "PainKiller.PowerCommands.MyExampleCommands\\PainKiller.PowerCommands.MyExampleCommands.csproj")
-                {
-                    var newProjectRow = row.Replace("MyExample", _name);
-                    validProjectsRows.Add($"{newProjectRow}\nEndProject\n");
-                    continue;
-                }
-                validProjectsRows.Add($"{row}\nEndProject\n");
-                continue;
-            }
-            validProjectsRows.Add(row);
-        }
-        var solutionFileName = Path.Combine(_srcCodeRootPath, $"PowerCommands2022\\src\\PainKiller.PowerCommands\\PowerCommands.{_name}.sln");
-        File.WriteAllLines(solutionFileName, validProjectsRows);
-        _logger.Invoke($"New solution file [{solutionFileName}] created", DisplayAndWriteToLog);
+        var solutionFileSource = Path.Combine(_srcCodeRootPath, "PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.sln");
+        var solutionFileNameTarget = Path.Combine(_srcCodeRootPath, $"PowerCommands2022\\src\\PainKiller.PowerCommands\\PowerCommands.{_name}.sln");
+        
+        var solutionFileManger = new SolutionFileManager(solutionFileSource);
+        
+        solutionFileManger.WriteValidProjectFiles(_name ,validProjectFiles, solutionFileNameTarget);
+        solutionFileManger.RemoveGlobalSectionNestedProjects(_name, solutionFileNameTarget);
+        
+        _logger.Invoke($"New solution file [{solutionFileNameTarget}] created", DisplayAndWriteToLog);
     }
     public void ReplaceContentInFile(string fileName, string find, string replace)
     {
@@ -157,15 +141,9 @@ public class CliManager : ICliManager
         File.WriteAllText(filePath, content);
         _logger.Invoke($"Content replaced in file [{fileName}]", DisplayAndWriteToLog);
     }
-    public static string GetLocalSolutionRoot()
-    {
-        var parts = AppContext.BaseDirectory.Split('\\');
-        var endToRemove = $"\\{parts[^5]}\\{parts[^4]}\\{parts[^3]}\\{parts[^2]}";
-        return AppContext.BaseDirectory.Replace(endToRemove, "");
-    }
     public static string GetName()
     {
-        var path = GetLocalSolutionRoot();
+        var path = SolutionFileManager.GetLocalSolutionRoot();
         var solutionFile = Directory.GetFileSystemEntries(path, "*.sln").FirstOrDefault() ?? Directory.GetFileSystemEntries(AppContext.BaseDirectory, "*.exe").First().Replace(".exe", "");
         return solutionFile.Split('\\').Last().Replace(".sln", "");
     }
