@@ -1,7 +1,7 @@
 version: 1.0
 configuration:
   name: KnowledgeDB
-  download: '{appdata}|download|{name}'
+  download: PainKiller.PowerCommands.MyExampleCommands
   templates: '{appdata}|templates'
   validProjectFiles:
   - PainKiller.PowerCommands.Bootstrap\PainKiller.PowerCommands.Bootstrap.csproj
