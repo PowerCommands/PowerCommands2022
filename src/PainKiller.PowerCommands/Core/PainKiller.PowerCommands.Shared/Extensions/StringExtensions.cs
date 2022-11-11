@@ -12,6 +12,6 @@ public static class StringExtensions
     public static string ToFlagDescription(this string flag)
     {
         var required = flag.StartsWith('!') ? " (required)" : "";
-        return $"--{flag.Replace("!", "")}{required}";
+        return string.IsNullOrEmpty(flag) ? "" : $"--{flag.Replace("!", "")}{required}";
     }
 }

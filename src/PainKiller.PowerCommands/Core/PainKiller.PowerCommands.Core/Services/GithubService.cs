@@ -54,7 +54,7 @@ public class GithubService : IGithubService
             }
             ConsoleService.WriteLine(nameof(GithubService), $"Your local {nameof(DocsDB)} is already up to date with the latest version, no changes made.");
         }
-        catch (Exception e)
+        catch
         {
             ConsoleService.WriteError(nameof(GithubService), $"Error occurred, the status of the merge between the local {nameof(DocsDB)} and the latest one is unknown, you could delete the local one and try update again.");
         }

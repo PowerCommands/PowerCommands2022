@@ -62,6 +62,7 @@ public class DocCommand : CommandBase<CommandsConfiguration>
     }
     private void Append()
     {
+        if(_selectedItem == null) return;
         var db = _storage.GetObject();
         var match = db.Docs.First(i => i.DocID == _selectedItem.DocID);
         db.Docs.Remove(match);

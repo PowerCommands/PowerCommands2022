@@ -12,9 +12,9 @@ public class ConsoleTable
     public IList<object[]> Rows { get; protected set; }
 
     public ConsoleTableOptions Options { get; protected set; }
-    public Type[] ColumnTypes { get; private init; }
+    public Type[]? ColumnTypes { get; private init; }
 
-    public static HashSet<Type> NumericTypes = new HashSet<Type>
+    public static HashSet<Type> NumericTypes = new()
     {
         typeof(int),  typeof(double),  typeof(decimal),
         typeof(long), typeof(short),   typeof(sbyte),
@@ -67,7 +67,7 @@ public class ConsoleTable
 
         foreach (
             var propertyValues
-            in values.Select(value => columns.Select(column => GetColumnValue<T>(value, column)))
+            in values.Select(value => columns.Select(column => GetColumnValue<T>((value ?? default(T)) ?? throw new InvalidOperationException() , column)))
         ) table.AddRow(propertyValues.ToArray());
 
         return table;
@@ -213,7 +213,7 @@ public class ConsoleTable
             .Select((t, i) => Rows.Select(x => x[i])
                 .Union(new[] { Columns[i] })
                 .Where(x => x != null)
-                .Select(x => x.ToString().Length).Max())
+                .Select(x => x.ToString()!.Length).Max())
             .ToList();
         return columnLengths;
     }
@@ -260,7 +260,7 @@ public class ConsoleTable
 
     private static object GetColumnValue<T>(object target, string column)
     {
-        return typeof(T).GetProperty(column).GetValue(target, null);
+        return typeof(T).GetProperty(column)?.GetValue(target, null) ?? "NULL";
     }
 
     private static IEnumerable<Type> GetColumnsType<T>()
