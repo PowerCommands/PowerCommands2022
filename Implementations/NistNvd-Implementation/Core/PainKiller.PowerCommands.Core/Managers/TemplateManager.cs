@@ -1,11 +1,9 @@
-﻿using PainKiller.PowerCommands.Configuration.DomainObjects;
-using PainKiller.PowerCommands.Shared.Contracts;
-
-namespace PainKiller.PowerCommands.Core.Managers;
+﻿namespace PainKiller.PowerCommands.Core.Managers;
 
 public class TemplateManager : ITemplateManager
 {
-    private readonly string _name;
+    private readonly ArtifactPathsConfiguration _artifact = ConfigurationService.Service.Get<ArtifactPathsConfiguration>().Configuration;
+
     private readonly string _path = Path.Combine(ConfigurationGlobals.ApplicationDataFolder, "templates"); 
     private readonly Action<string, bool> _logger;
 
@@ -13,7 +11,7 @@ public class TemplateManager : ITemplateManager
 
     public TemplateManager(string name, Action<string, bool> logger)
     {
-        _name = name;
+        _artifact.Name = name;
         _logger = logger;
     }
     public void InitializeTemplatesDirectory()
@@ -22,7 +20,8 @@ public class TemplateManager : ITemplateManager
         Directory.CreateDirectory(_path);
         _logger.Invoke($"Template directory {_path} initialized", DisplayAndWriteToLog);
     }
-    public void CopyTemplates() => Directory.Move(Path.Combine(GetSrcCodeDownloadPath(), $"{_name}\\PowerCommands2022\\src\\PainKiller.PowerCommands\\PainKiller.PowerCommands.MyExampleCommands\\Commands\\Templates"), Path.Combine(_path,"Commands"));
+
+    public void CopyTemplates() => Directory.Move(Path.Combine(GetSrcCodeDownloadPath(), _artifact.GetPath(_artifact.Source.Template)), Path.Combine(_path, _artifact.Target.Template));
 
     public void CreateCommand(string templateName, string commandName)
     {
@@ -37,9 +36,10 @@ public class TemplateManager : ITemplateManager
         var copyFilePath = $"{commandsFolder}\\Commands\\{commandName}Command.cs";
 
         File.WriteAllText(copyFilePath, content);
+        Console.WriteLine("");
         _logger.Invoke($"File [{copyFilePath}] created", DisplayAndWriteToLog);
     }
     private string GetSrcCodeDownloadPath() => _path.Replace("\\templates", "\\download");
-    private string FindCommandsProjectDirectory() => Directory.GetDirectories(CliManager.GetLocalSolutionRoot()).First(c => c.EndsWith("Commands"));
+    private string FindCommandsProjectDirectory() => Directory.GetDirectories(SolutionFileManager.GetLocalSolutionRoot()).First(c => c.EndsWith("Commands"));
     private string FindProjectName() => FindCommandsProjectDirectory().Split('\\').Last().Split('.').Last().Replace("Commands","");
 }

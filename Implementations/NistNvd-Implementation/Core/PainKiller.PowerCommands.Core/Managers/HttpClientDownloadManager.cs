@@ -8,7 +8,7 @@ public class HttpClientDownloadManager
     private readonly HttpClient _httpClient;
     private readonly string _destinationFilePath;
     private readonly Func<HttpRequestMessage> _requestMessageBuilder;
-    private int _bufferSize = 8192;
+    private readonly int _bufferSize = 8192;
 
     public event DownloadProgressHandler? ProgressChanged;
 
@@ -32,8 +32,8 @@ public class HttpClientDownloadManager
 
         var totalBytes = response.Content.Headers.ContentLength;
 
-        using (var contentStream = await response.Content.ReadAsStreamAsync())
-            await ProcessContentStream(totalBytes, contentStream);
+        await using var contentStream = await response.Content.ReadAsStreamAsync();
+        await ProcessContentStream(totalBytes, contentStream);
     }
 
     private async Task ProcessContentStream(long? totalDownloadSize, Stream contentStream)
@@ -43,7 +43,7 @@ public class HttpClientDownloadManager
         var buffer = ArrayPool<byte>.Shared.Rent(_bufferSize);
         var isMoreToRead = true;
 
-        using (var fileStream = new FileStream(_destinationFilePath, FileMode.Create, FileAccess.Write, FileShare.None, _bufferSize, true))
+        await using (var fileStream = new FileStream(_destinationFilePath, FileMode.Create, FileAccess.Write, FileShare.None, _bufferSize, true))
         {
             do
             {
@@ -65,7 +65,6 @@ public class HttpClientDownloadManager
             }
             while (isMoreToRead);
         }
-
         ArrayPool<byte>.Shared.Return(buffer);
     }
     private void ReportProgress(long? totalDownloadSize, long totalBytesRead)

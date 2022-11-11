@@ -1,11 +1,12 @@
-﻿using PainKiller.PowerCommands.Shared.DomainObjects.Core;
+﻿using PainKiller.PowerCommands.Shared.Attributes;
+using PainKiller.PowerCommands.Shared.DomainObjects.Core;
 
 namespace PainKiller.PowerCommands.Shared.Contracts;
 
 public interface IConsoleCommand
 {
     string Identifier { get; }
-    void InitializeRun(ICommandLineInput input);
+    bool InitializeAndValidateInput(ICommandLineInput input);   
     RunResult Run();
     Task<RunResult> RunAsync();
 }

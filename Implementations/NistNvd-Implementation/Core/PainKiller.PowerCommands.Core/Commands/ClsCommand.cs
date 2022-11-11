@@ -1,13 +1,13 @@
 ﻿namespace PainKiller.PowerCommands.Core.Commands;
 
-[PowerCommand(description: "Clears the console",
-                  example: "//Clear the console|cls")]
+[PowerCommandTest(tests: " ")]
+[PowerCommandDesign(description: "Clears the console")]
 public class ClsCommand : CommandBase<CommandsConfiguration>
 {
     public ClsCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
     public override RunResult Run()
     {
         Console.Clear();
-        return CreateRunResult();
+        return Ok();
     }
 }

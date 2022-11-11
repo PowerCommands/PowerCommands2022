@@ -1,10 +1,7 @@
 ﻿using System.Text;
 using System.Text.Json;
-using PainKiller.PowerCommands.Configuration.DomainObjects;
-using PainKiller.PowerCommands.Shared.Contracts;
 
 namespace PainKiller.PowerCommands.Core.Services;
-
 public class StorageService<T> : IStorageService<T> where T : new()
 {
     private StorageService() { }

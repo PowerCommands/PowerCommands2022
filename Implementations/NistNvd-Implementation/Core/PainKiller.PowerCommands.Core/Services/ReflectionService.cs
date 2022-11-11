@@ -1,10 +1,6 @@
 ﻿using System.Reflection;
-using PainKiller.PowerCommands.Core.Extensions;
-using PainKiller.PowerCommands.ReadLine.Managers;
-using PainKiller.PowerCommands.Shared.Contracts;
 
 namespace PainKiller.PowerCommands.Core.Services;
-
 public class ReflectionService : IReflectionService
 {
     private ReflectionService() { }
@@ -15,7 +11,6 @@ public class ReflectionService : IReflectionService
         var currentAssembly = Assembly.Load($"{pluginInfo.Component}".Replace(".dll",""));
         return GetCommands(currentAssembly, configuration);
     }
-
     public List<IConsoleCommand> GetCommands<TConfiguration>(Assembly assembly, TConfiguration configuration) where TConfiguration : CommandsConfiguration
     {
         var retVal = new List<IConsoleCommand>();

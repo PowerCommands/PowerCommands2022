@@ -1,6 +1,5 @@
 ﻿using System.IO.Compression;
 using System.Text;
-using PainKiller.PowerCommands.Shared.Contracts;
 using static System.DateTime;
 namespace PainKiller.PowerCommands.Core.Extensions;
 

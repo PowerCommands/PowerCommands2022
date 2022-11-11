@@ -1,5 +1,4 @@
-﻿using PainKiller.PowerCommands.Core.Extensions;
-using PainKiller.PowerCommands.Shared.Contracts;
+﻿using PainKiller.PowerCommands.Shared.Extensions;
 
 namespace PainKiller.PowerCommands.Core.Services;
 
@@ -13,44 +12,50 @@ public class HelpService : IHelpService
     {
         var da = command.GetPowerCommandAttribute();
         if(clearConsole) Console.Clear();
-        ConsoleService.WriteObjectDescription($"{GetType().Name}", "PowerCommand", command.Identifier, WriteToLog);
-        var typeDescription = command.GetType().FullName!.StartsWith("PainKiller.PowerCommands.Core.Commands") ? "Core command (reserved name, not for use as custom command name)" : "Custom command";
-        ConsoleService.WriteObjectDescription($"{GetType().Name}", "Type        ", $"{ typeDescription }", WriteToLog);
-        ConsoleService.WriteObjectDescription($"{GetType().Name}", "Full name   ", $"{command.GetType().FullName}", WriteToLog);
-        Console.WriteLine($"{da.Description}", WriteToLog);
 
         var args = da.Arguments.Split('|');
-        var qutes = da.Qutes.Split('|');
+        var quotes = da.Quotes.Split('|');
         var flags = da.Flags.Split('|');
         var examples = da.Examples.Split('|');
 
-        ConsoleService.WriteHeaderLine($"{GetType().Name}", $"{nameof(da.Arguments)}:",writeLog: WriteToLog);
-        foreach (var a in args) WriteItem(a);
-        ConsoleService.WriteObjectDescription($"{GetType().Name}", "Mandatory", da.ArgumentMandatory ? "Yes" : "No", WriteToLog);
-        ConsoleService.WriteHeaderLine($"{GetType().Name}", $"{nameof(da.Qutes)}:",writeLog: WriteToLog);
-        foreach (var q in qutes) WriteItem(q);
-        ConsoleService.WriteObjectDescription($"{GetType().Name}", "Mandatory", da.QutesMandatory ? "Yes" : "No", WriteToLog);
-        ConsoleService.WriteHeaderLine($"{GetType().Name}", $"{nameof(da.Flags)}:");
-        foreach (var f in flags) WriteItem(f);
-
-        if (!string.IsNullOrEmpty(da.Suggestion))
-        {
-            ConsoleService.WriteHeaderLine($"{GetType().Name}", $"{nameof(da.Suggestion)}:", writeLog: WriteToLog);
-            ConsoleService.WriteLine(GetType().Name, da.Suggestion, null, writeLog: WriteToLog);
-            Console.WriteLine();
-        }
+        ConsoleService.WriteHeaderLine($"{GetType().Name}", "\nDescription", writeLog: WriteToLog);
+        Console.WriteLine($"{da.Description}", WriteToLog);
         Console.WriteLine();
-        ConsoleService.WriteHeaderLine($"{GetType().Name}", $"{nameof(da.Examples)}:", writeLog: WriteToLog);
-        foreach (var e in examples) WriteItem(e);
-    }
 
-    private void WriteItem(string description)
+        args = da.Arguments.Replace("!","").Split('|');
+        quotes = da.Quotes.Replace("!", "").Split('|');
+        var parameters = new List<string>();
+        parameters.AddRange(args);
+        parameters.AddRange(quotes);
+        flags = da.Flags.Replace("!", "").Split('|');
+        
+        ConsoleService.WriteHeaderLine(nameof(HelpService), "Usage");
+
+        var argsMarkup = args.Any(a => !string.IsNullOrEmpty(a)) ? "[arguments]" : "";
+        var quotesMarkup = quotes.Any(q => !string.IsNullOrEmpty(q)) ? "[quotes]" : "";
+        var flagsMarkup = flags.Any(f => !string.IsNullOrEmpty(f)) ? "[flags]" : "";
+
+        ConsoleService.Write(nameof(HelpService), command.Identifier, ConsoleColor.Blue);
+        Console.WriteLine($" {argsMarkup} {quotesMarkup} {flagsMarkup}");
+        Console.WriteLine("");
+        ConsoleService.WriteHeaderLine(nameof(HelpService),"Flag options:");
+        var flagDescriptions = flags.Select(f => f.ToFlagDescription());
+        Console.WriteLine( string.Join(',',flagDescriptions));
+        Console.WriteLine("");
+        if (string.IsNullOrEmpty(da.Examples)) return;
+        
+        ConsoleService.WriteHeaderLine($"{GetType().Name}", $"{nameof(da.Examples)} Commands:", writeLog: WriteToLog);
+        foreach (var e in examples) WriteItem(e, command.Identifier);
+    }
+    private void WriteItem(string description, string identifier = "")
     {
         if (description.StartsWith("//"))
         {
             ConsoleService.WriteHeaderLine($"{GetType().Name}", $"\n{description}", ConsoleColor.Green);
             return;
         }
-        ConsoleService.WriteLine(GetType().Name, description, null, WriteToLog);
+        ConsoleService.Write(GetType().Name, $"{identifier} ", ConsoleColor.Blue, WriteToLog);
+        ConsoleService.WriteLine(GetType().Name, description.Replace(identifier,"").Trim(), null, WriteToLog);
     }
+    private string ToDescription(string[] parameters, string separator) => parameters.Length == 0 || (parameters.Length == 1 && string.IsNullOrEmpty(parameters[0])) ? "" : $"{separator}{string.Join(separator, parameters)}";
 }

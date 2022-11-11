@@ -1,6 +1,6 @@
 ﻿namespace PainKiller.PowerCommands.Shared.Contracts;
 
-public interface ICliManager
+public interface IVisualStudioManager
 {
     void CreateRootDirectory(bool onlyRepoSrcCodeRootPath = false);
     void CreateDirectory(string name);
@@ -13,7 +13,7 @@ public interface ICliManager
     void MoveDirectory(string dirctoryName, string toDirctoryName);
     string BackupDirectory(string dirctoryName);
     void MoveFile(string fileName, string toFileName);
-    void WriteNewSolutionFile();
+    void WriteNewSolutionFile(string[] validProjectFiles);
     void ReplaceContentInFile(string fileName, string find, string replace);
     void MergeDocsDB();
 }
