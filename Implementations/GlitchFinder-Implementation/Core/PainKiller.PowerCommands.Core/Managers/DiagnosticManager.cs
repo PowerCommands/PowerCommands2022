@@ -1,7 +1,5 @@
 ﻿using System.Diagnostics;
 using System.Reflection;
-using PainKiller.PowerCommands.Core.Services;
-using PainKiller.PowerCommands.Shared.Contracts;
 
 namespace PainKiller.PowerCommands.Core.Managers;
 

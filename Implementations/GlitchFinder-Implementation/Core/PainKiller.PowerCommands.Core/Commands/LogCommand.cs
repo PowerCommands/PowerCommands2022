@@ -1,9 +1,9 @@
-﻿using PainKiller.PowerCommands.Core.Extensions;
-namespace PainKiller.PowerCommands.Core.Commands;
+﻿namespace PainKiller.PowerCommands.Core.Commands;
 
-[PowerCommand(       description: "View and manage the log",
+[PowerCommandTest(tests: "list|view")]
+[PowerCommandDesign( description: "View and manage the log",
                        arguments: "view|archive|list (default)",
-                           qutes: "process name:<name>",
+                          quotes: "process name:<name>",
                       suggestion: "view",
                          example: "//View a list with all the logfiles|log list|//Archive the logs into a zip file.|log archive|//View content of the current log|log view|//Filter the log show only posts matching the provided process tag, this requires that you are using process tags when logging in your command(s).|log process created")]
 public class LogCommand : CommandBase<CommandsConfiguration>
@@ -17,7 +17,7 @@ public class LogCommand : CommandBase<CommandsConfiguration>
         if (Input.SingleArgument == "view") View();
         if (Input.SingleArgument == "process") ProcessLog($"{Input.Quotes}");
         
-        return CreateRunResult();
+        return Ok();
     }
     private void List()
     {

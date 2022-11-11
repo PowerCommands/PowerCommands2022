@@ -11,13 +11,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\src\PainKiller.PowerCommands\Core\PainKiller.PowerCommands.Configuration\PainKiller.PowerCommands.Configuration.csproj" />
-    <ProjectReference Include="..\..\..\src\PainKiller.PowerCommands\Core\PainKiller.PowerCommands.Core\PainKiller.PowerCommands.Core.csproj" />
-    <ProjectReference Include="..\..\..\src\PainKiller.PowerCommands\Core\PainKiller.PowerCommands.ReadLine\PainKiller.PowerCommands.ReadLine.csproj" />
-    <ProjectReference Include="..\..\..\src\PainKiller.PowerCommands\Core\PainKiller.PowerCommands.Security\PainKiller.PowerCommands.Security.csproj" />
-    <ProjectReference Include="..\..\..\src\PainKiller.PowerCommands\Core\PainKiller.PowerCommands.Shared\PainKiller.PowerCommands.Shared.csproj" />
-    <ProjectReference Include="..\..\..\src\PainKiller.PowerCommands\Third party components\PainKiller.SerilogExtensions\PainKiller.SerilogExtensions.csproj" />
+    <ProjectReference Include="..\Core\PainKiller.PowerCommands.Configuration\PainKiller.PowerCommands.Configuration.csproj" />
+    <ProjectReference Include="..\Core\PainKiller.PowerCommands.Core\PainKiller.PowerCommands.Core.csproj" />
+    <ProjectReference Include="..\Core\PainKiller.PowerCommands.ReadLine\PainKiller.PowerCommands.ReadLine.csproj" />
+    <ProjectReference Include="..\Core\PainKiller.PowerCommands.Security\PainKiller.PowerCommands.Security.csproj" />
+    <ProjectReference Include="..\Core\PainKiller.PowerCommands.Shared\PainKiller.PowerCommands.Shared.csproj" />
     <ProjectReference Include="..\Custom Components\Jooachim.GitchFinder\GlitchFinder\GlitchFinder.csproj" />
+    <ProjectReference Include="..\Third party components\PainKiller.SerilogExtensions\PainKiller.SerilogExtensions.csproj" />
   </ItemGroup>
 
   <ItemGroup>

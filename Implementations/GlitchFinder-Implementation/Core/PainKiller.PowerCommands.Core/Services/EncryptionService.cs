@@ -1,19 +1,13 @@
-﻿using System.Security.Cryptography;
-using PainKiller.PowerCommands.Configuration;
-using PainKiller.PowerCommands.Configuration.DomainObjects;
-using PainKiller.PowerCommands.Security.Contracts;
-using PainKiller.PowerCommands.Security.Managers;
-using PainKiller.PowerCommands.Shared.Contracts;
-
-namespace PainKiller.PowerCommands.Core.Services;
+﻿namespace PainKiller.PowerCommands.Core.Services;
 
 public class EncryptionService : IEncryptionService
 {
-    private EncryptionService() 
+    private EncryptionService()
     {
-        var securityConfiguration = ConfigurationService.Service.GetAppDataConfiguration(new SecurityConfiguration { Encryption = new EncryptionConfiguration { SharedSecretEnvironmentKey = nameof(_encryptionManager), SharedSecretSalt = GetRandomSalt() } }, ConfigurationGlobals.SecurityFileName).Configuration;
+        var securityConfiguration = ConfigurationService.Service.GetAppDataConfiguration(new SecurityConfiguration { Encryption = new EncryptionConfiguration { SharedSecretEnvironmentKey = nameof(_encryptionManager), SharedSecretSalt = IEncryptionService.GetRandomSalt() } }, ConfigurationGlobals.SecurityFileName).Configuration;
         _salt = securityConfiguration.Encryption.SharedSecretSalt;
         _sharedSecret = Environment.GetEnvironmentVariable(securityConfiguration.Encryption.SharedSecretEnvironmentKey, EnvironmentVariableTarget.User) ?? string.Empty;
+        if (string.IsNullOrEmpty(_sharedSecret)) ConsoleService.WriteWarning(nameof(EncryptionService),$"The environment variable [{securityConfiguration.Encryption.SharedSecretEnvironmentKey}] is missing, you should generate a salt with secret --salt\nAnd then create the environment variable with the salt as value with user scope, before you create secrets (otherwise you need to re-create them again)");
         _encryptionManager = new AESEncryptionManager(_salt);
     }
 
@@ -33,13 +27,6 @@ public class EncryptionService : IEncryptionService
     {
         var encryptionManager = new AESEncryptionManager(_salt);
         var retVal = encryptionManager.DecryptString(plainText, _sharedSecret);
-        return retVal;
-    }
-    private string GetRandomSalt()
-    {
-        var data = new byte[32];
-        for (var i = 0; i < 10; i++) RandomNumberGenerator.Fill(data);
-        var retVal = Convert.ToBase64String(data);
         return retVal;
     }
 }

@@ -1,14 +1,4 @@
-﻿global using PainKiller.PowerCommands.Core.BaseClasses;
-global using PainKiller.PowerCommands.Shared.Attributes;
-global using PainKiller.PowerCommands.Shared.DomainObjects.Core;
-global using PainKiller.PowerCommands.Shared.Enums;
-global using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
-
-using PainKiller.PowerCommands.Core.Extensions;
-using PainKiller.PowerCommands.Core.Services;
-using PainKiller.PowerCommands.Shared.Contracts;
-
-namespace PainKiller.PowerCommands.Core;
+﻿namespace PainKiller.PowerCommands.Core;
 
 public class PowerCommandsRuntime<TConfig> : IPowerCommandsRuntime where TConfig : CommandsConfiguration
 {
@@ -30,6 +20,17 @@ public class PowerCommandsRuntime<TConfig> : IPowerCommandsRuntime where TConfig
             _diagnostic.Header($"\nFound commands in component: {component.Name}");
             foreach (var consoleCommand in Commands) _diagnostic.Message(consoleCommand.Identifier);
         }
+
+        foreach (var proxyCommand in _configuration.ProxyCommands)
+        {
+            foreach (var command in proxyCommand.Commands)
+            {
+                ConsoleService.WriteLine("PowerCommandsRuntime", $"Proxy command [{command}] added", null);
+                var powerCommand = new ProxyCommando(command, _configuration, proxyCommand.Name, proxyCommand.WorkingDirctory);
+                if(Commands.All(c => c.Identifier != powerCommand.Identifier)) Commands.Add(powerCommand);
+                else ConsoleService.WriteWarning("PowerCommandsRuntime", $"A command with the same identifier [{command}] already exist, proxy command not added.");
+            }
+        }
         IPowerCommandsRuntime.DefaultInstance = this;
     }
     public string[] CommandIDs => Commands.Select(c => c.Identifier).ToArray();
@@ -48,18 +49,20 @@ public class PowerCommandsRuntime<TConfig> : IPowerCommandsRuntime where TConfig
         {
             if (!command.GetPowerCommandAttribute().OverrideHelpFlag)
             {
-                HelpService.Service.ShowHelp(command, clearConsole: false);
+                HelpService.Service.ShowHelp(command, clearConsole: true);
                 return new RunResult(command, input, "User prompted for help with --help flag", RunResultStatus.Ok);
             }
         }
-        command.InitializeRun(input);
-
+        if (command.InitializeAndValidateInput(input))
+        {
+            Latest = new RunResult(command, input, "Validation error", RunResultStatus.InputValidationError);
+            return Latest;
+        }
         if (command.GetPowerCommandAttribute().UseAsync) return ExecuteAsyncCommand(command, input);
         try { Latest = command.Run(); }
         catch (Exception e) { Latest = new RunResult(command, input, e.Message, RunResultStatus.ExceptionThrown); }
         return Latest;
     }
-
     public RunResult ExecuteAsyncCommand(IConsoleCommand command, CommandLineInput input)
     {
         try

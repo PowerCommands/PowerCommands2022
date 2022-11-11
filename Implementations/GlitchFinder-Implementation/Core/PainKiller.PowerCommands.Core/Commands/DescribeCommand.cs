@@ -1,15 +1,10 @@
-﻿using PainKiller.PowerCommands.Core.Extensions;
-using PainKiller.PowerCommands.Core.Services;
-using PainKiller.PowerCommands.Shared.Contracts;
-using PainKiller.PowerCommands.Shared.DomainObjects.Documentation;
+﻿namespace PainKiller.PowerCommands.Core.Commands;
 
-namespace PainKiller.PowerCommands.Core.Commands;
-
-[PowerCommand(       description: "With help command you will be shown the provided description or online documentation of the command or a PowerCommand feature.",
+[PowerCommandTest(tests: "exit|start --docs")]
+[PowerCommandDesign(       description: "With help command you will be shown the provided description or online documentation of the command or a PowerCommand feature.",
                        arguments: "<command name or feature you are interested of knowing more>",
-                      suggestion: "cls",
-                           flags: "docs",
-                         example: "describe exit|describe cls|describe log")]
+                           flags: "docs|clear",
+                         example: "describe exit|describe cls|describe log|//Open documentation about flags (if any)|describe flags --doc")]
 public class DescribeCommand : CommandBase<CommandsConfiguration>
 {
     public DescribeCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
@@ -18,7 +13,7 @@ public class DescribeCommand : CommandBase<CommandsConfiguration>
     {
         if(Input.HasFlag("docs")) ShowDoc();
         else ShowCommand();
-        return CreateRunResult();
+        return Ok();
     }
 
     public void ShowDoc()
@@ -55,7 +50,7 @@ public class DescribeCommand : CommandBase<CommandsConfiguration>
             ShowDoc();
             return;
         }
-        HelpService.Service.ShowHelp(command);
+        HelpService.Service.ShowHelp(command, Input.HasFlag("clear"));
         Console.WriteLine();
     }
 }

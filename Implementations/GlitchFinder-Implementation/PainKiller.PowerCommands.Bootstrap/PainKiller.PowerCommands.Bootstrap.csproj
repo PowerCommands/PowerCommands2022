@@ -11,10 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\src\PainKiller.PowerCommands\Core\PainKiller.PowerCommands.Configuration\PainKiller.PowerCommands.Configuration.csproj" />
-    <ProjectReference Include="..\..\..\src\PainKiller.PowerCommands\Core\PainKiller.PowerCommands.Core\PainKiller.PowerCommands.Core.csproj" />
-    <ProjectReference Include="..\..\..\src\PainKiller.PowerCommands\Core\PainKiller.PowerCommands.Security\PainKiller.PowerCommands.Security.csproj" />
-    <ProjectReference Include="..\..\..\src\PainKiller.PowerCommands\Core\PainKiller.PowerCommands.Shared\PainKiller.PowerCommands.Shared.csproj" />
     <ProjectReference Include="..\PainKiller.PowerCommands.GlitchFinderCommands\PainKiller.PowerCommands.GlitchFinderCommands.csproj" />
   </ItemGroup>
 

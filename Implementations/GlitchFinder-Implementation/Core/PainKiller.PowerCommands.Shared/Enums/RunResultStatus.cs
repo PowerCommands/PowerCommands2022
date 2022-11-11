@@ -8,7 +8,9 @@ public enum RunResultStatus
     ArgumentError,
     SyntaxError,
     RunExternalPowerCommand,
+    InputValidationError,
     Initializing,
     Async,
-    Help
+    Help,
+    Continue
 }

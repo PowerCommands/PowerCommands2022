@@ -7,11 +7,18 @@ public class ReleaseCommand : CommandBase<PowerCommandsConfiguration>
 
     public override RunResult Run()
     {
+        WriteHeadLine("Windows-implementation...");
         var solutionPath = SolutionFileManager.GetLocalSolutionRoot().Replace("src\\PainKiller.PowerCommands\\", "Implementations\\Windows-implementation");
         UpdateCoreDirectory(solutionPath);
         Build(solutionPath);
 
+        WriteHeadLine("KnowledgeDB-implementation...");
         solutionPath = SolutionFileManager.GetLocalSolutionRoot().Replace("src\\PainKiller.PowerCommands\\", "Implementations\\KnowledgeDB-Implementation");
+        UpdateCoreDirectory(solutionPath);
+        Build(solutionPath);
+
+        WriteHeadLine("GlitchFinder-implementation...");
+        solutionPath = SolutionFileManager.GetLocalSolutionRoot().Replace("src\\PainKiller.PowerCommands\\", "Implementations\\GlitchFinder-Implementation");
         UpdateCoreDirectory(solutionPath);
         Build(solutionPath);
 
@@ -20,17 +27,17 @@ public class ReleaseCommand : CommandBase<PowerCommandsConfiguration>
     private void UpdateCoreDirectory(string solutionPath)
     {
         var coreImplementationDirectory = Path.Combine(solutionPath, "Core");
-        WriteSuccess($"Delete {coreImplementationDirectory}");
+        WriteSuccessLine($"Delete {coreImplementationDirectory}");
         if(Directory.Exists(coreImplementationDirectory)) Directory.Delete(coreImplementationDirectory, recursive: true);
 
         var coreDirectory = Path.Combine(SolutionFileManager.GetLocalSolutionRoot(), "Core");
-        WriteSuccess($"Copy {coreDirectory} to {coreImplementationDirectory}");
+        WriteSuccessLine($"Copy {coreDirectory} to {coreImplementationDirectory}");
         IOService.CopyFolder(coreDirectory, coreImplementationDirectory);
         
     }
     private void Build(string solutionPath)
     {
         ShellService.Service.Execute("dotnet", "build", solutionPath, WriteLine, "", waitForExit: true);
-        WriteSuccess($"Build {solutionPath} OK");
+        WriteSuccessLine($"Build {solutionPath} OK");
     }
 }

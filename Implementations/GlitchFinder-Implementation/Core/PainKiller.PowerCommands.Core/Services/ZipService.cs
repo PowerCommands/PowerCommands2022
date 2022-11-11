@@ -1,10 +1,6 @@
 ﻿using System.IO.Compression;
-using PainKiller.PowerCommands.Core.Extensions;
-using PainKiller.PowerCommands.Security.DomainObjects;
-using PainKiller.PowerCommands.Shared.Contracts;
 
 namespace PainKiller.PowerCommands.Core.Services;
-
 public class ZipService : IZipService
 {
     private ZipService() { }

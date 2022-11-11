@@ -11,8 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DomainObjects\Core\" />
-    <Folder Include="Attributes\" />
+    <Folder Include="Extensions\" />
   </ItemGroup>
 
 </Project>

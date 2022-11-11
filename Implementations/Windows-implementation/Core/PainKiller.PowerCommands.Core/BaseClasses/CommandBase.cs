@@ -51,6 +51,12 @@ public abstract class CommandBase<TConfig> : IConsoleCommand, IConsoleWriter whe
         if (addToOutput && string.IsNullOrEmpty(output.Trim())) _ouput.AppendLine(output);
         ConsoleService.Write(GetType().Name, output, ConsoleColor.Green);
     }
+
+    public void WriteSuccessLine(string output, bool addToOutput = true)
+    {
+        if (addToOutput && string.IsNullOrEmpty(output.Trim())) _ouput.AppendLine(output);
+        ConsoleService.WriteLine(GetType().Name, output, ConsoleColor.Green);
+    }
     public void WriteFailure(string output, bool addToOutput = true)
     {
         if (addToOutput && string.IsNullOrEmpty(output.Trim())) _ouput.AppendLine(output);
