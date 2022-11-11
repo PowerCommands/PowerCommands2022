@@ -1,4 +1,4 @@
-﻿namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
+namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
 [PowerCommandDesign( description: "Demo command just to se that your solution is setup properly", example: "demo")]
 public class DemoCommand : CommandBase<PowerCommandsConfiguration>

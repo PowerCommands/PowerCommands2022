@@ -3,7 +3,7 @@
 public class ArtifactPathsConfiguration
 {
     public string Name { get; set; } = "Name";
-    public string Download { get; set; } = "{appdata}|download|{name}";
+    public string Download { get; set; } = "PainKiller.PowerCommands.MyExampleCommands";
     public string Templates { get; set; } = "{appdata}|templates";
     public string[] ValidProjectFiles { get; set; } = {
         "PainKiller.PowerCommands.Bootstrap\\PainKiller.PowerCommands.Bootstrap.csproj",

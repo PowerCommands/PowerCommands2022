@@ -63,7 +63,7 @@ public class GithubService : IGithubService
     {
         var commandFileName = $"{name.ToFirstLetterUpper()}Command.cs";
         var httpClient = new HttpClient();
-        var uri = $"{_artifact.GithubRoot}/PainKiller.PowerCommands.{_artifact.Name}Commands/Commands/{commandFileName}";
+        var uri = $"{_artifact.GithubRoot}/{_artifact.Download}/Commands/{commandFileName}";
         ConsoleService.WriteLine(nameof(GithubService), $"Downloading file [{uri}]...");
         var fileContent = httpClient.GetStringAsync(uri).Result;
         var solutionRoot = SolutionFileManager.GetLocalSolutionRoot();
