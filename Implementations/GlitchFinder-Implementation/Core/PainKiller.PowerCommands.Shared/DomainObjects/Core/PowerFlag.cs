@@ -9,5 +9,6 @@ public class PowerFlag
     }
     public string Name { get; set; }
     public string Value { get; set; } = "";
+    public string Raw => $"--{Name}";
     public bool IsRequired { get; set; }
 }

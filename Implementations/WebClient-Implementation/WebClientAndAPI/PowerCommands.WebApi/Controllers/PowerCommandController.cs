@@ -25,4 +25,22 @@ public class PowerCommandController : ControllerBase
         }
         return new ActionResult<RunResultModel>(new RunResultModel());
     }
+
+    [HttpGet("metadata")]
+    public ActionResult<List<CommandMetadata>> GetMetadata()
+    {
+        var retVal = new List<CommandMetadata>();
+        var commands = IPowerCommandsRuntime.DefaultInstance?.Commands ?? new List<IConsoleCommand>();
+        foreach (var command in commands)
+        {
+            var pcAttrib = command.GetPowerCommandAttribute();
+            var metadata = new CommandMetadata { Identifier = command.Identifier };
+            if (!string.IsNullOrEmpty(pcAttrib.Arguments)) metadata.Parameters.AddRange(pcAttrib.Arguments.Split('|'));
+            if (!string.IsNullOrEmpty(pcAttrib.Quotes)) metadata.Parameters.AddRange(pcAttrib.Quotes.Split('|'));
+            if (!string.IsNullOrEmpty(pcAttrib.Flags)) metadata.Flags.AddRange(pcAttrib.Flags.Split('|').Select(f => new PowerFlag(f)));
+            if (!string.IsNullOrEmpty(pcAttrib.Examples)) metadata.Examples.AddRange(pcAttrib.Examples.Split('|'));
+            retVal.Add(metadata);
+        }
+        return new ActionResult<List<CommandMetadata>>(retVal);
+    }
 }
