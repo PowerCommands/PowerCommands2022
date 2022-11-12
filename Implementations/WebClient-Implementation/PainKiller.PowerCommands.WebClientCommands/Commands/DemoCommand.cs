@@ -1,7 +1,7 @@
 namespace PainKiller.PowerCommands.WebClientCommands.Commands;
 
 [PowerCommandDesign( description: "Demo command just to se that your solution is setup properly", example: "demo")]
-public class DemoCommand : WebCommandBase<PowerCommandsConfiguration>
+public class DemoCommand : CommandBase<PowerCommandsConfiguration>
 {
     public DemoCommand(string identifier, PowerCommandsConfiguration configuration) : base(identifier, configuration) { }
 

@@ -14,7 +14,7 @@ public class PasswordCommand : CommandBase<CommandsConfiguration>
         var password = PasswordPromptService.Service.ReadPassword();
         var encrypted = EncryptionService.Service.EncryptString(password);
         Console.WriteLine();
-        WriteHeadLine("Encrypted password", false);
+        WriteHeadLine("Encrypted password");
         WriteLine(encrypted);
 
         Console.Write("Do you want to see the password in clear text? y/? :");

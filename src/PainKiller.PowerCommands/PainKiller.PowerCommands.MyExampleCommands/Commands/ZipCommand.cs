@@ -13,7 +13,7 @@ public class ZipCommand : CommandBase<CommandsConfiguration>
         WriteHeadLine($"Zipping files in directory: {Input.Path}...");
         var zipResult = ZipService.Service.ArchiveFilesInDirectory(Input.Path, "example", useTimestampSuffix: true, filter: string.IsNullOrEmpty(Input.SingleQuote) ? "*" : Input.SingleQuote);
         Console.WriteLine();
-        WriteHeadLine("Result", addToOutput: false);
+        WriteHeadLine("Result");
         ConsoleService.Service.WriteObjectDescription($"{GetType().Name}", nameof(zipResult.Path),zipResult.Path!);
         ConsoleService.Service.WriteObjectDescription($"{GetType().Name}",nameof(zipResult.FileCount),zipResult.FileCount.ToString());
         ConsoleService.Service.WriteObjectDescription($"{GetType().Name}",nameof(zipResult.FileSizeUncompressedInKb),zipResult.FileSizeUncompressedInKb.ToString());

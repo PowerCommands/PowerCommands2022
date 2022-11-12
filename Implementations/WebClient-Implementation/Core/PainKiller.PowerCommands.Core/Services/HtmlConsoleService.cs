@@ -1,94 +1,76 @@
 ﻿using Microsoft.Extensions.Logging;
-
 namespace PainKiller.PowerCommands.Core.Services;
-public class ConsoleService : IConsoleService
+public class HtmlConsoleService : IConsoleService
 {
+    private readonly string _colorStyleStandard = "style=\"color:white \"";
+    private readonly string _colorStyleHeader = "style=\"color:cornflowerblue \"";
+    private readonly string _colorStyleSuccess = "style=\"color:chartreuse \"";
+    private readonly string _colorStyleFailure = "style=\"color:crimson \"";
+    private readonly string _colorStyleCritical = "style=\"color:red \"";
+    private readonly string _colorStyleWarning = "style=\"color:gold \"";
+
     private bool _disableLog;
-    private static readonly Lazy<IConsoleService> Lazy = new(() => new ConsoleService());
+    private static readonly Lazy<IConsoleService> Lazy = new(() => new HtmlConsoleService());
     public static IConsoleService Service => Lazy.Value;
     public event OnWrite? WriteToOutput;
-
     public bool DisableLog
     {
         get => _disableLog;
         set
         {
-            if(value) WriteWarning(nameof(ConsoleService),"Log from ConsoleService is disabled");
+            if (value) WriteWarning(nameof(ConsoleService), "Log from ConsoleService is disabled");
             else WriteLine(nameof(ConsoleService), "Log from ConsoleService is enabled", null);
             _disableLog = value;
         }
     }
     public void WriteObjectDescription(string scope, string name, string description, bool writeLog = true)
     {
-        var currentColor = Console.ForegroundColor;
-        Console.ForegroundColor = ConsoleColor.White;
-        Console.Write($"{name}: ");
-        Console.ForegroundColor = ConsoleColor.Blue;
-        Console.WriteLine($"{description}");
-        Console.ForegroundColor = currentColor;
-        if(writeLog) WriteToLog(scope, $"{name} {description}");
-        OnWriteToOutput($"{name}: {description}\n");
+        if (writeLog) WriteToLog(scope, $"{name} {description}");
+        OnWriteToOutput($"<p><span {_colorStyleHeader}>{name}:</span><span {_colorStyleStandard}>{description}</span></p>\n");
     }
     public void Write(string scope, string text, ConsoleColor? color = null, bool writeLog = true)
     {
-        var currentColor = Console.ForegroundColor;
-        if (color != null) Console.ForegroundColor = color.Value;
-        Console.Write(text);
-        Console.ForegroundColor = currentColor;
         if (writeLog) WriteToLog(scope, $"{text}");
-        OnWriteToOutput($"{text}");
+        OnWriteToOutput($"<span {_colorStyleStandard}>{text}</span>");
     }
-
+    public void WriteSuccess(string scope, string text, bool writeLog = true)
+    {
+        if (writeLog) WriteToLog(scope, $"{text}");
+        OnWriteToOutput($"<span {_colorStyleSuccess}>{text}</span>");
+    }
+    public void WriteSuccessLine(string scope, string text, bool writeLog = true)
+    {
+        if (writeLog) WriteToLog(scope, $"{text}");
+        OnWriteToOutput($"<p {_colorStyleSuccess}>{text}</p>\n");
+    }
     public void WriteLine(string scope, string text, ConsoleColor? color = null, bool writeLog = true)
     {
-        var currentColor = Console.ForegroundColor;
-        if(color != null) Console.ForegroundColor = color.Value;
-        Console.WriteLine(text);
-        Console.ForegroundColor = currentColor;
         if (writeLog) WriteToLog(scope, $"{text}");
-        OnWriteToOutput($"{text}\n");
+        OnWriteToOutput($"<p {_colorStyleStandard}>{text}</p>\n");
     }
     public void WriteHeaderLine(string scope, string text, ConsoleColor color = ConsoleColor.DarkCyan, bool writeLog = true)
     {
-        var currentColor = Console.ForegroundColor;
-        Console.ForegroundColor = color;
-        Console.WriteLine(text);
-        Console.ForegroundColor = currentColor;
         if (writeLog) WriteToLog(scope, $"{text}");
-        OnWriteToOutput($"{text}\n");
+        OnWriteToOutput($"<p {_colorStyleHeader}>{text}</p>\n");
     }
     public void WriteWarning(string scope, string text)
     {
-        var currentColor = Console.ForegroundColor;
-        Console.ForegroundColor = ConsoleColor.DarkYellow;
-        Console.WriteLine(text);
-        Console.ForegroundColor = currentColor;
         WriteToLog(scope, $"{text}", LogLevel.Warning);
-        OnWriteToOutput($"{text}");
+        OnWriteToOutput($"<p {_colorStyleWarning}>{text}</p>\n");
     }
     public void WriteError(string scope, string text)
     {
-        var currentColor = Console.ForegroundColor;
-        Console.ForegroundColor = ConsoleColor.Red;
-        Console.WriteLine(text);
-        Console.ForegroundColor = currentColor;
         WriteToLog(scope, $"{text}", LogLevel.Error);
-        OnWriteToOutput($"{text}");
+        OnWriteToOutput($"<p {_colorStyleFailure}>{text}</p>\n");
     }
     public void WriteCritical(string scope, string text)
     {
-        var currentColor = Console.ForegroundColor;
-        Console.ForegroundColor = ConsoleColor.DarkRed;
-        Console.WriteLine(text);
-        Console.ForegroundColor = currentColor;
         WriteToLog(scope, $"{text}", LogLevel.Critical);
-        OnWriteToOutput($"{text}");
+        OnWriteToOutput($"<p {_colorStyleCritical}>{text}</p>\n");
     }
-    public void WriteSuccessLine(string scope, string text, bool writeLog = true) => WriteLine(scope, text, ConsoleColor.Green, writeLog);
-    public void WriteSuccess(string scope, string text, bool writeLog = true) => Write(scope, text, ConsoleColor.Green, writeLog);
     private void WriteToLog(string scope, string message, LogLevel level = LogLevel.Information)
     {
-        if(DisableLog) return;
+        if (DisableLog) return;
         var text = $"{scope} {message}";
         switch (level)
         {

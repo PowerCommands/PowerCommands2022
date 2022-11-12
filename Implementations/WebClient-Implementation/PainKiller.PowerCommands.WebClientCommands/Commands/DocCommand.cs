@@ -4,7 +4,7 @@ namespace PainKiller.PowerCommands.WebClientCommands.Commands;
 [PowerCommandDesign(  description: "Add a document to the DocDB that is used as an KnowledgeDB internally by PowerCommands, view document, append tags, edit and delete documents. Backup KnowledgeDB",
                             flags: "view|delete|edit|append|list|backup",
                           example: "//Add a new document|doc \"https://www.google.se/\" --name Google-Search --tags tools,search,google|//List all documents|doc --list")]
-public class DocCommand : WebCommandBase<CommandsConfiguration>
+public class DocCommand : CommandBase<CommandsConfiguration>
 {
     private List<Doc> _docs = new();
     private Doc? _selectedItem;

@@ -61,6 +61,7 @@ public class PowerCommandsRuntime<TConfig> : IPowerCommandsRuntime where TConfig
         if (command.GetPowerCommandAttribute().UseAsync) return ExecuteAsyncCommand(command, input);
         try { Latest = command.Run(); }
         catch (Exception e) { Latest = new RunResult(command, input, e.Message, RunResultStatus.ExceptionThrown); }
+        finally{command.RunCompleted();}
         return Latest;
     }
     public RunResult ExecuteAsyncCommand(IConsoleCommand command, CommandLineInput input)

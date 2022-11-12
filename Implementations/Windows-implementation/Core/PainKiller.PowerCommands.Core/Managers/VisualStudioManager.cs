@@ -4,10 +4,10 @@ public class VisualStudioManager : IVisualStudioManager
     private readonly string _name;
     private readonly string _path;
     private readonly string _srcCodeRootPath;
-    private readonly Action<string, bool> _logger;
+    private readonly Action<string> _logger;
     
     public bool DisplayAndWriteToLog = true;
-    public VisualStudioManager(string name, string path, Action<string, bool> logger)
+    public VisualStudioManager(string name, string path, Action<string> logger)
     {
         _name = name;
         _path = path;
@@ -20,11 +20,11 @@ public class VisualStudioManager : IVisualStudioManager
         {
             var dirI = new DirectoryInfo(_path);
             Directory.CreateDirectory(dirI.FullName);
-            _logger.Invoke($"Directory {dirI.Attributes} created", DisplayAndWriteToLog);
+            _logger.Invoke($"Directory {dirI.Attributes} created");
         }
 
         Directory.CreateDirectory(_srcCodeRootPath);
-        _logger.Invoke($"Directory {_srcCodeRootPath} created", DisplayAndWriteToLog);
+        _logger.Invoke($"Directory {_srcCodeRootPath} created");
     }
     public void DeleteDownloadsDirectory()
     {
@@ -49,19 +49,19 @@ public class VisualStudioManager : IVisualStudioManager
     {
         var dirI = new DirectoryInfo(Path.Combine(_path, name));
         Directory.CreateDirectory(dirI.FullName);
-        _logger.Invoke($"Directory {dirI.Attributes} created", DisplayAndWriteToLog);
+        _logger.Invoke($"Directory {dirI.Attributes} created");
     }
     public void CloneRepo(string repo) => ShellService.Service.Execute("git", $"clone {repo}", _srcCodeRootPath, _logger, waitForExit: true);
     public void DeleteDir(string directory)
     {
         var dirPath = GetPath(directory);
-        _logger($"Delete directory {dirPath}", DisplayAndWriteToLog);
+        _logger($"Delete directory {dirPath}");
         if(Directory.Exists(dirPath)) Directory.Delete(dirPath, recursive: true);
     }
     public void DeleteFile(string fileName, bool repoFile)
     {
         var path = repoFile ? Path.Combine(_srcCodeRootPath, fileName) : Path.Combine(_path, fileName);
-        _logger($"Delete file {path}", DisplayAndWriteToLog);
+        _logger($"Delete file {path}");
         if(File.Exists(path)) File.Delete(path);
     }
     public void RenameDirectory(string directory, string name)
@@ -73,10 +73,10 @@ public class VisualStudioManager : IVisualStudioManager
         var newDirPath = GetPath(newDirName);
         Directory.Move(oldDirPath, newDirPath);
         
-        _logger.Invoke("", false);
-        _logger.Invoke($"Directory moved from [{directory}]", DisplayAndWriteToLog);
-        _logger.Invoke($"to [{newDirPath}]", DisplayAndWriteToLog);
-        _logger.Invoke("", false);
+        _logger.Invoke("");
+        _logger.Invoke($"Directory moved from [{directory}]");
+        _logger.Invoke($"to [{newDirPath}]");
+        _logger.Invoke("");
     }
     public void MoveFile(string fileName, string toFileName)
     {
@@ -84,10 +84,10 @@ public class VisualStudioManager : IVisualStudioManager
         var newFilePath = GetPath(toFileName);
 
         File.Move(oldFilePath, newFilePath);
-        _logger.Invoke("", false);
-        _logger.Invoke($"File moved from [{oldFilePath}]", DisplayAndWriteToLog);
-        _logger.Invoke($"to [{newFilePath}]", DisplayAndWriteToLog);
-        _logger.Invoke("", false);
+        _logger.Invoke("");
+        _logger.Invoke($"File moved from [{oldFilePath}]");
+        _logger.Invoke($"to [{newFilePath}]");
+        _logger.Invoke("");
     }
     public void MoveDirectory(string dirctoryName, string toDirctoryName)
     {
@@ -95,10 +95,10 @@ public class VisualStudioManager : IVisualStudioManager
         var newFilePath = GetPath(toDirctoryName);
         
         Directory.Move(oldFilePath, newFilePath);
-        _logger.Invoke("", false);
-        _logger.Invoke($"Directory moved from [{oldFilePath}]", DisplayAndWriteToLog);
-        _logger.Invoke($"to [{newFilePath}]", DisplayAndWriteToLog);
-        _logger.Invoke("", false);
+        _logger.Invoke("");
+        _logger.Invoke($"Directory moved from [{oldFilePath}]");
+        _logger.Invoke($"to [{newFilePath}]");
+        _logger.Invoke("");
     }
     public string BackupDirectory(string dirctoryName)
     {
@@ -115,10 +115,10 @@ public class VisualStudioManager : IVisualStudioManager
 
         CopyFolder(fullPathSource, fullPathTarget);
 
-        _logger.Invoke("", false);
-        _logger.Invoke($"Directory [{fullPathSource}]", DisplayAndWriteToLog);
-        _logger.Invoke($"Backed up to [{fullPathTarget}]", DisplayAndWriteToLog);
-        _logger.Invoke("", false);
+        _logger.Invoke("");
+        _logger.Invoke($"Directory [{fullPathSource}]");
+        _logger.Invoke($"Backed up to [{fullPathTarget}]");
+        _logger.Invoke("");
         return backupRoot;
     }
     public void WriteNewSolutionFile(string[] validProjectFiles)
@@ -131,7 +131,7 @@ public class VisualStudioManager : IVisualStudioManager
         solutionFileManger.WriteValidProjectFiles(_name ,validProjectFiles, solutionFileNameTarget);
         solutionFileManger.RemoveGlobalSectionNestedProjects(_name, solutionFileNameTarget);
         
-        _logger.Invoke($"New solution file [{solutionFileNameTarget}] created", DisplayAndWriteToLog);
+        _logger.Invoke($"New solution file [{solutionFileNameTarget}] created");
     }
     public void ReplaceContentInFile(string fileName, string find, string replace)
     {
@@ -139,7 +139,7 @@ public class VisualStudioManager : IVisualStudioManager
         var content = File.ReadAllText(filePath);
         content = content.Replace(find, replace);
         File.WriteAllText(filePath, content);
-        _logger.Invoke($"Content replaced in file [{fileName}]", DisplayAndWriteToLog);
+        _logger.Invoke($"Content replaced in file [{fileName}]");
     }
     public static string GetName()
     {

@@ -30,8 +30,7 @@ public class CommandsCommand : CommandBase<CommandsConfiguration>
     private RunResult NoFilter()
     {
         WriteHeadLine($"\n- All commands:\n");
-        foreach (var consoleCommand in IPowerCommandsRuntime.DefaultInstance?.Commands!) WriteLine(consoleCommand.Identifier, addToOutput: false);
-        WriteHeadLine($"\nUse --custom flag to only show your custom commands.");
+        foreach (var consoleCommand in IPowerCommandsRuntime.DefaultInstance?.Commands!) WriteLine(consoleCommand.Identifier);
         Console.WriteLine("commands --custom");
         WriteHeadLine($"\nUse --reserved to only show core commands.");
         Console.WriteLine("commands --reserved");
@@ -46,20 +45,22 @@ public class CommandsCommand : CommandBase<CommandsConfiguration>
     private RunResult Reserved()
     {
         WriteHeadLine($"\n- Reserved commands:\n");
-        foreach (var consoleCommand in IPowerCommandsRuntime.DefaultInstance?.Commands.Where(c => c.GetType().FullName!.StartsWith("PainKiller.PowerCommands.Core"))!) WriteLine(consoleCommand.Identifier, addToOutput: false);
+        foreach (var consoleCommand in IPowerCommandsRuntime.DefaultInstance?.Commands.Where(c => c.GetType().FullName!.StartsWith("PainKiller.PowerCommands.Core"))!) WriteLine(consoleCommand.Identifier);
         WriteHeadLine("\nReserved names should not be used for your custom commands.");
         return Ok();
     }
     private RunResult Custom()
     {
         WriteHeadLine($"\n- custom commands:");
-        foreach (var consoleCommand in IPowerCommandsRuntime.DefaultInstance?.Commands.Where(c => !c.GetType().FullName!.StartsWith("PainKiller.PowerCommands.Core"))!) WriteLine(consoleCommand.Identifier, addToOutput: false);
+        foreach (var consoleCommand in IPowerCommandsRuntime.DefaultInstance?.Commands.Where(c => !c.GetType().FullName!.StartsWith("PainKiller.PowerCommands.Core"))!) WriteLine(consoleCommand.Identifier);
         return Ok();
     }
     private RunResult FilterByName()
     {
         WriteHeadLine($"\n- Commands with name containing {Input.SingleQuote}:\n");
-        foreach (var command in IPowerCommandsRuntime.DefaultInstance?.Commands.Where(c => c.Identifier.Contains(Input.SingleQuote))!) WriteLine(command.Identifier, addToOutput: false);
+        AppendToOutput = false;
+        foreach (var command in IPowerCommandsRuntime.DefaultInstance?.Commands.Where(c => c.Identifier.Contains(Input.SingleQuote))!) WriteLine(command.Identifier);
+        AppendToOutput = true;
         return Ok();
     }
     private RunResult Default()

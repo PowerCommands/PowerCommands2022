@@ -4,92 +4,70 @@ using Microsoft.Extensions.Logging;
 namespace PainKiller.PowerCommands.Core.BaseClasses;
 public abstract class CommandBase<TConfig> : IConsoleCommand, IConsoleWriter where TConfig : new()
 {
+    private IConsoleService _console;
     protected ICommandLineInput Input = new CommandLineInput();
     protected List<PowerFlag> Flags = new();
     private readonly StringBuilder _ouput = new();
-    protected CommandBase(string identifier, TConfig configuration)
+    protected CommandBase(string identifier, TConfig configuration, IConsoleService? console = null)
     {
         Identifier = identifier;
         Configuration = configuration;
+        _console = console ?? ConsoleService.Service;
+    }
+    protected virtual void ConsoleWriteToOutput(string output)
+    {
+        if (AppendToOutput) _ouput.Append(output);
     }
     public string Identifier { get; }
-    public bool InitializeAndValidateInput(ICommandLineInput input)
+    protected bool AppendToOutput { get; set; } = true;
+    public virtual bool InitializeAndValidateInput(ICommandLineInput input)
     {
+        if (IPowerCommandServices.DefaultInstance!.DefaultConsoleService.GetType().Name != _console.GetType().Name) _console = IPowerCommandServices.DefaultInstance.DefaultConsoleService;
         Input = input;
         var validationManager = new InputValidationManager(this, input, WriteError);
         var result = validationManager.ValidateAndInitialize();
-        if(result.Flags.Count > 0) Flags.AddRange(result.Flags);
+        if (result.Flags.Count > 0) Flags.AddRange(result.Flags);
+        _console.WriteToOutput += ConsoleWriteToOutput;
         return result.HasValidationError;
     }
+    public virtual void RunCompleted()
+    {
+        _console.WriteToOutput -= ConsoleWriteToOutput;
+        if (IPowerCommandServices.DefaultInstance!.DefaultConsoleService.GetType().Name != ConsoleService.Service.GetType().Name) Console.WriteLine(_ouput.ToString());
+        _ouput.Clear();
+    }
+    protected void DisableOutput() => AppendToOutput = false;
+    protected void EnableOutput() => AppendToOutput = true;
+    protected void DisplayOutput() => Console.WriteLine(_ouput.ToString());
     protected void ClearOutput() => _ouput.Clear();
     protected bool FindInOutput(string findPhrase) => _ouput.ToString().Contains(findPhrase);
     protected TConfig Configuration { get; set; }
     public virtual RunResult Run() => throw new NotImplementedException();
-    public virtual async Task<RunResult> RunAsync() => await Task.FromResult(new RunResult(this, Input,"",RunResultStatus.Initializing));
+    public virtual async Task<RunResult> RunAsync() => await Task.FromResult(new RunResult(this, Input, "", RunResultStatus.Initializing));
     protected RunResult Ok() => new(this, Input, _ouput.ToString(), RunResultStatus.Ok);
     protected RunResult Quit() => new(this, Input, _ouput.ToString(), RunResultStatus.Quit);
     protected RunResult Continue() => new(this, Input, _ouput.ToString(), RunResultStatus.Continue);
     protected RunResult BadParameterError(string output) => new(this, Input, output, RunResultStatus.ArgumentError);
     protected RunResult ExceptionError(string output) => new(this, Input, output, RunResultStatus.ExceptionThrown);
-    
     #region Write helpers
-    public void Write(string output, bool addToOutput = true, ConsoleColor? color = null)
-    {
-        if (addToOutput && !string.IsNullOrEmpty(output.Trim())) _ouput.AppendLine(output);
-        ConsoleService.Service.Write(GetType().Name, output, color);
-    }
-    public void WriteLine(string output, bool addToOutput = true)
-    {
-        if(addToOutput && !string.IsNullOrEmpty(output.Trim())) _ouput.AppendLine(output);
-        ConsoleService.Service.WriteLine(GetType().Name, output, null);
-    }
-    public void WriteHeadLine(string output, bool addToOutput = true)
-    {
-        if (addToOutput && string.IsNullOrEmpty(output.Trim())) _ouput.AppendLine(output);
-        ConsoleService.Service.WriteHeaderLine(GetType().Name, output);
-    }
-    public void WriteSuccess(string output, bool addToOutput = true)
-    {
-        if (addToOutput && string.IsNullOrEmpty(output.Trim())) _ouput.AppendLine(output);
-        ConsoleService.Service.Write(GetType().Name, output, ConsoleColor.Green);
-    }
-
-    public void WriteSuccessLine(string output, bool addToOutput = true)
-    {
-        if (addToOutput && string.IsNullOrEmpty(output.Trim())) _ouput.AppendLine(output);
-        ConsoleService.Service.WriteLine(GetType().Name, output, ConsoleColor.Green);
-    }
-    public void WriteFailure(string output, bool addToOutput = true)
-    {
-        if (addToOutput && string.IsNullOrEmpty(output.Trim())) _ouput.AppendLine(output);
-        ConsoleService.Service.Write(GetType().Name, output, ConsoleColor.DarkRed);
-    }
-    public void WriteFailureLine(string output, bool addToOutput = true)
-    {
-        if (addToOutput && string.IsNullOrEmpty(output.Trim())) _ouput.AppendLine(output);
-        ConsoleService.Service.WriteLine(GetType().Name, output, ConsoleColor.DarkRed);
-    }
-    public void WriteWarning(string output, bool addToOutput = true)
-    {
-        if (addToOutput && string.IsNullOrEmpty(output.Trim())) _ouput.AppendLine(output);
-        ConsoleService.Service.WriteWarning(GetType().Name, output);
-    }
-    public void WriteError(string output, bool addToOutput = true)
-    {
-        if (addToOutput && string.IsNullOrEmpty(output.Trim())) _ouput.AppendLine(output);
-        ConsoleService.Service.WriteError(GetType().Name, output);
-    }
-    public void WriteCritical(string output, bool addToOutput = true)
-    {
-        if (addToOutput && string.IsNullOrEmpty(output.Trim())) _ouput.AppendLine(output);
-        ConsoleService.Service.WriteCritical(GetType().Name, output);
-    }
+    public void Write(string output, ConsoleColor? color = null) => _console.Write(GetType().Name, output, color);
+    public void WriteLine(string output) => _console.WriteLine(GetType().Name, output, null);
+    public void WriteHeadLine(string output) => _console.WriteHeaderLine(GetType().Name, output);
+    public void WriteSuccess(string output) => _console.WriteSuccess(GetType().Name, output);
+    public void WriteSuccessLine(string output) => _console.WriteSuccessLine(GetType().Name, output);
+    public void WriteFailure(string output) => _console.Write(GetType().Name, output, ConsoleColor.DarkRed);
+    public void WriteFailureLine(string output) => _console.WriteLine(GetType().Name, output, ConsoleColor.DarkRed);
+    public void WriteWarning(string output) => _console.WriteWarning(GetType().Name, output);
+    public void WriteError(string output) => _console.WriteError(GetType().Name, output);
+    public void WriteCritical(string output) => _console.WriteCritical(GetType().Name, output);
     protected void OverwritePreviousLine(string output)
     {
         Console.SetCursorPosition(Console.CursorLeft, Console.CursorTop - 1);
         var padRight = Console.BufferWidth - output.Length;
-        WriteLine(output.PadRight(padRight > 0 ? padRight : 0), false);
+        AppendToOutput = false;
+        WriteLine(output.PadRight(padRight > 0 ? padRight : 0));
+        AppendToOutput = true;
     }
-    protected void WriteProcessLog(string processTag, string processDescription) => IPowerCommandServices.DefaultInstance?.Logger.LogInformation($"#{processTag}# {processDescription}");
     #endregion
+    protected void WriteProcessLog(string processTag, string processDescription) => IPowerCommandServices.DefaultInstance?.Logger.LogInformation($"#{processTag}# {processDescription}");
 }

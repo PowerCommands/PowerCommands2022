@@ -23,7 +23,7 @@ public class ShellService : IShellService
         _logger.LogInformation($"{nameof(ShellService)} {nameof(OpenDirectory)} {uri}");
         Process.Start(new ProcessStartInfo {FileName = uri, UseShellExecute = true, Verb = "open" });
     }
-    public void Execute(string programName, string arguments, string workingDirectory, Action<string,bool> writeFunction, string fileExtension = "exe", bool waitForExit = false, bool useShellExecute = false)
+    public void Execute(string programName, string arguments, string workingDirectory, Action<string> writeFunction, string fileExtension = "exe", bool waitForExit = false, bool useShellExecute = false)
     {
         var path = ReplaceCmdArguments(programName);
         var workingDirPath = ReplaceCmdArguments(workingDirectory);
@@ -42,7 +42,7 @@ public class ShellService : IShellService
         if (waitForExit)
         {
             var outputAdd = processAdd!.StandardOutput.ReadToEnd();
-            writeFunction(outputAdd, true);
+            writeFunction(outputAdd);
             _logger.LogInformation($"{nameof(ShellService)} output: {outputAdd}");
         }
         processAdd!.WaitForExit(waitForExit ? InfiniteWait : ImmediateReturn);

@@ -18,6 +18,7 @@ public class PowerCommandServices : IExtendedPowerCommandServices<PowerCommandsC
         Diagnostic = new DiagnosticManager(ExtendedConfiguration.ShowDiagnosticInformation);
         Runtime = new PowerCommandsRuntime<PowerCommandsConfiguration>(ExtendedConfiguration, Diagnostic); 
         Logger = GetLoggerManager.GetFileLogger(ExtendedConfiguration.Log.FileName.GetSafePathRegardlessHowApplicationStarted(ExtendedConfiguration.Log.FilePath),ExtendedConfiguration.Log.RollingIntervall,ExtendedConfiguration.Log.RestrictedToMinimumLevel);
+        DefaultConsoleService = ConsoleService.Service;
         
         var suggestions = new List<string>(Runtime.CommandIDs);
         suggestions.AddRange(Runtime.CommandIDs.Select(s => $"describe {s}").ToList());
@@ -34,4 +35,5 @@ public class PowerCommandServices : IExtendedPowerCommandServices<PowerCommandsC
     public PowerCommandsConfiguration ExtendedConfiguration { get; }
     public ILogger Logger { get; }
     public IDiagnosticManager Diagnostic { get; }
+    public IConsoleService DefaultConsoleService { get; }
 }

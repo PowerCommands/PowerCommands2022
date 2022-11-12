@@ -9,6 +9,6 @@ public class NameCommand : CommandBase<CommandsConfiguration>
     public override RunResult Run()
     {
         //insert your code here
-        return CreateRunResult();
+        return Ok();
     }
 }
