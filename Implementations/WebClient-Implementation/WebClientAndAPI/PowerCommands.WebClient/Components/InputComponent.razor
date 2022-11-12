@@ -1,13 +1,14 @@
 ﻿@using PowerCommands.WebShared.Models
 @inject ICommandsService CommandsService
 
-<h3>Input</h3>
-<MudTextField @bind-Value="Input" Label="Input your command..." Variant="Variant.Text"></MudTextField><br/>
-<MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="ExecuteCommand">Execute command</MudButton>
+<h3 style="color:cornflowerblue ">Input</h3>
+<MudTextField @bind-Value="Input" Label="Input your command..." Variant="Variant.Text" Style="@($"color:{Colors.Grey.Darken1}; background:{Colors.Grey.Darken4};")"></MudTextField>
+<br />
+<MudButton Variant="Variant.Filled" Color="Color.Dark" OnClick="ExecuteCommand">Execute command</MudButton>
 <br />
 <br />
 <h3>Output</h3>
-<MudTextField T="string" Label="Output" Variant="Variant.Filled" Text="@Output" Lines="20" />
+<MudText Typo="Typo.body2" Style="@($"color:{Colors.Grey.Darken1}; background:{Colors.Grey.Darken4}; margin: 5px;")">@((MarkupString)Output)</MudText>
 
 @code {
 

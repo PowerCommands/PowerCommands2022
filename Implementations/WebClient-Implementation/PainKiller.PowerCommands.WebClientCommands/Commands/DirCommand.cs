@@ -4,7 +4,7 @@ namespace PainKiller.PowerCommands.WebClientCommands.Commands;
                       arguments: "<directory name>",
                           flags: "app",
                         example: "//Open the bin directory where this program resides|dir|//Open a path, you can use code completion with tab, just begin with a valid path first like C:|dir C:\\repos|//Open the AppData roaming directory|dir --app")]
-public class DirCommand : CommandBase<CommandsConfiguration>
+public class DirCommand : WebCommandBase<CommandsConfiguration>
 {
     public DirCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
 

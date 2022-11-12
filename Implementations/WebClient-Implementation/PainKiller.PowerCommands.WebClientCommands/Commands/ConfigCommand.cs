@@ -5,7 +5,7 @@ namespace PainKiller.PowerCommands.WebClientCommands.Commands;
                        arguments: "<action>(create or edit)",
                       suggestion: "edit",
                          example: "//Show config|config|//Creates a default.yaml file in the application folder|config create|//Open the PowerCommandsConfiguration.yaml file with your configured editor.|config edit")]
-public class ConfigCommand : CommandBase<PowerCommandsConfiguration>
+public class ConfigCommand : WebCommandBase<PowerCommandsConfiguration>
 {
     public ConfigCommand(string identifier, PowerCommandsConfiguration configuration) : base(identifier, configuration) { }
     public override RunResult Run()
@@ -29,7 +29,7 @@ public class ConfigCommand : CommandBase<PowerCommandsConfiguration>
         }
         Console.Clear();
         var configurationRows = File.ReadAllText(Path.Combine(AppContext.BaseDirectory, $"{nameof(PowerCommandsConfiguration)}.yaml")).Split('\n');
-        foreach (var configurationRow in configurationRows) Console.WriteLine(configurationRow);
+        foreach (var configurationRow in configurationRows) WriteLine(configurationRow);
         return Ok();
     }
 }
