@@ -30,9 +30,9 @@ public class PowerCommandsManager : IPowerCommandsManager
                 if (runAutomatedAtStartup)
                 {
                     Services.Diagnostic.Message($"Started up with args: {interpretedInput.Raw}");
-                    ConsoleService.Write($"{nameof(PowerCommandsManager)}", ConfigurationGlobals.Prompt, null);
-                    ConsoleService.Write($"{nameof(PowerCommandsManager)} automated startup", $"{interpretedInput.Identifier}", ConsoleColor.Blue);
-                    ConsoleService.WriteLine($"{nameof(PowerCommandsManager)} automated startup", interpretedInput.Raw.Replace($"{interpretedInput.Identifier}", ""), null);
+                    ConsoleService.Service.Write($"{nameof(PowerCommandsManager)}", ConfigurationGlobals.Prompt, null);
+                    ConsoleService.Service.Write($"{nameof(PowerCommandsManager)} automated startup", $"{interpretedInput.Identifier}", ConsoleColor.Blue);
+                    ConsoleService.Service.WriteLine($"{nameof(PowerCommandsManager)} automated startup", interpretedInput.Raw.Replace($"{interpretedInput.Identifier}", ""), null);
                 }
                 runAutomatedAtStartup = false;
                 Services.Logger.LogInformation($"Console input Identifier:{interpretedInput.Identifier} raw:{interpretedInput.Raw}");
@@ -46,7 +46,7 @@ public class PowerCommandsManager : IPowerCommandsManager
             {
                 var commandsCommand = new CommandsCommand("commands", (Services.Configuration as CommandsConfiguration)!);
                 var interpretedInput = input.Interpret();
-                ConsoleService.WriteError(GetType().Name, $"Could not found any commands with a matching Id: {interpretedInput.Raw} and there is no defaultCommand defined in configuration or the defined defaultCommand does not exist.");
+                ConsoleService.Service.WriteError(GetType().Name, $"Could not found any commands with a matching Id: {interpretedInput.Raw} and there is no defaultCommand defined in configuration or the defined defaultCommand does not exist.");
                 commandsCommand.InitializeAndValidateInput(interpretedInput);
                 commandsCommand.Run();
                 Services.Logger.LogError(ex, "Could not found any commands with a matching Id");
@@ -54,7 +54,7 @@ public class PowerCommandsManager : IPowerCommandsManager
             catch (Exception e)
             {
                 Services.Logger.LogError(e, "Unknown error");
-                ConsoleService.WriteError(GetType().Name, "Unknown error occurred, please try again");
+                ConsoleService.Service.WriteError(GetType().Name, "Unknown error occurred, please try again");
             }
         }
     }
@@ -73,7 +73,7 @@ public class PowerCommandsManager : IPowerCommandsManager
             case RunResultStatus.SyntaxError:
                 var message = $"Error occurred of type {runResult.Status}";
                 Services.Logger.LogError(message);
-                ConsoleService.WriteError(GetType().Name, $"{message} {runResult.Output}");
+                ConsoleService.Service.WriteError(GetType().Name, $"{message} {runResult.Output}");
                 HelpService.Service.ShowHelp(runResult.ExecutingCommand, clearConsole: false);
                 break;
             case RunResultStatus.RunExternalPowerCommand:

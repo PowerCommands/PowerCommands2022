@@ -43,7 +43,7 @@ public class SecretCommand : CommandBase<CommandsConfiguration>
     private RunResult List()
     {
         if (Configuration.Secret.Secrets == null) return Ok();
-        foreach (var secret in Configuration.Secret.Secrets) ConsoleService.WriteObjectDescription($"{GetType().Name}", secret.Name, $"{string.Join(',', secret.Options.Keys)}");
+        foreach (var secret in Configuration.Secret.Secrets) ConsoleService.Service.WriteObjectDescription($"{GetType().Name}", secret.Name, $"{string.Join(',', secret.Options.Keys)}");
         return Ok();
     }
     private RunResult Get()
@@ -53,7 +53,7 @@ public class SecretCommand : CommandBase<CommandsConfiguration>
         if (secret == null) return BadParameterError($"No secret with name \"{name}\" found.");
 
         var val = SecretService.Service.GetSecret(name, secret.Options, EncryptionService.Service.DecryptString);
-        ConsoleService.WriteObjectDescription($"{GetType().Name}", name, val);
+        ConsoleService.Service.WriteObjectDescription($"{GetType().Name}", name, val);
 
         return Ok();
     }
@@ -80,7 +80,7 @@ public class SecretCommand : CommandBase<CommandsConfiguration>
         ConfigurationService.Service.SaveChanges(Configuration);
         Console.WriteLine();
         WriteHeadLine("New secret created and stored in configuration file");
-        ConsoleService.WriteObjectDescription($"{GetType().Name}", name, val);
+        ConsoleService.Service.WriteObjectDescription($"{GetType().Name}", name, val);
 
         return Ok();
     }

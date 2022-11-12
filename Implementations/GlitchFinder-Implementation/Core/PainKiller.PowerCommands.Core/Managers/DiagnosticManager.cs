@@ -16,19 +16,19 @@ public class DiagnosticManager : IDiagnosticManager
     public void Message(string diagnostic)
     {
         if (!ShowDiagnostic) return;
-        ConsoleService.WriteLine(GetType().Name, diagnostic, null);
+        ConsoleService.Service.WriteLine(GetType().Name, diagnostic, null);
     }
 
     public void Header(string header)
     {
         if (!ShowDiagnostic) return;
-        ConsoleService.WriteHeaderLine(GetType().Name, header);
+        ConsoleService.Service.WriteHeaderLine(GetType().Name, header);
     }
 
     public void Warning(string warning)
     {
         if (!ShowDiagnostic) return;
-        ConsoleService.WriteWarning(GetType().Name, warning);
+        ConsoleService.Service.WriteWarning(GetType().Name, warning);
     }
     public void Start()
     {

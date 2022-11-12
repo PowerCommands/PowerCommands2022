@@ -25,10 +25,10 @@ public class PowerCommandsRuntime<TConfig> : IPowerCommandsRuntime where TConfig
         {
             foreach (var command in proxyCommand.Commands)
             {
-                ConsoleService.WriteLine("PowerCommandsRuntime", $"Proxy command [{command}] added", null);
+                ConsoleService.Service.WriteLine("PowerCommandsRuntime", $"Proxy command [{command}] added", null);
                 var powerCommand = new ProxyCommando(command, _configuration, proxyCommand.Name, proxyCommand.WorkingDirctory);
                 if(Commands.All(c => c.Identifier != powerCommand.Identifier)) Commands.Add(powerCommand);
-                else ConsoleService.WriteWarning("PowerCommandsRuntime", $"A command with the same identifier [{command}] already exist, proxy command not added.");
+                else ConsoleService.Service.WriteWarning("PowerCommandsRuntime", $"A command with the same identifier [{command}] already exist, proxy command not added.");
             }
         }
         IPowerCommandsRuntime.DefaultInstance = this;

@@ -20,10 +20,10 @@ public static class ConsoleTableService
             var row = rows[rowIndex];
             if (rowIndex < 3)
             {
-                ConsoleService.WriteHeaderLine(nameof(ConsoleTableService), row);
+                ConsoleService.Service.WriteHeaderLine(nameof(ConsoleTableService), row);
                 continue;
             }
-            ConsoleService.WriteLine(nameof(ConsoleTableService), row, null);
+            ConsoleService.Service.WriteLine(nameof(ConsoleTableService), row, null);
         }
     }
 
@@ -47,10 +47,10 @@ public static class ConsoleTableService
             var row = rows[rowIndex];
             if (rowIndex < 3)
             {
-                ConsoleService.WriteHeaderLine(nameof(ConsoleTableService), row);
+                ConsoleService.Service.WriteHeaderLine(nameof(ConsoleTableService), row);
                 continue;
             }
-            ConsoleService.WriteLine(nameof(ConsoleTableService), row, null);
+            ConsoleService.Service.WriteLine(nameof(ConsoleTableService), row, null);
         }
     }
     public static void AddTableColumnRenderDefinitions(string name, IEnumerable<IColumnRender> columnRenderDefinitions)
@@ -65,9 +65,9 @@ public static class ConsoleTableService
             .Configure(o => o.NumberAlignment = Alignment.Right)
             .Read(WriteFormat.Alternative).Split("\r\n");
 
-        ConsoleService.WriteHeaderLine(nameof(ConsoleTableService), rows[0]);
-        ConsoleService.WriteHeaderLine(nameof(ConsoleTableService), rows[1]);
-        ConsoleService.WriteHeaderLine(nameof(ConsoleTableService), rows[2]);
+        ConsoleService.Service.WriteHeaderLine(nameof(ConsoleTableService), rows[0]);
+        ConsoleService.Service.WriteHeaderLine(nameof(ConsoleTableService), rows[1]);
+        ConsoleService.Service.WriteHeaderLine(nameof(ConsoleTableService), rows[2]);
 
         var renderCols = GetColumnRenders<T>(columnRenderDefinitions, consoleWriter).ToList();
 
@@ -77,7 +77,7 @@ public static class ConsoleTableService
             var row = rows[index];
             if (row.StartsWith("+-"))
             {
-                ConsoleService.WriteLine(nameof(ConsoleTableService), row, null);
+                ConsoleService.Service.WriteLine(nameof(ConsoleTableService), row, null);
                 continue;
             }
             var cols = row.Split('|');

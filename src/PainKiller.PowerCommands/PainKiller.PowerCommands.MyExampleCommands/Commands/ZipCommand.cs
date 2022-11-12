@@ -14,12 +14,12 @@ public class ZipCommand : CommandBase<CommandsConfiguration>
         var zipResult = ZipService.Service.ArchiveFilesInDirectory(Input.Path, "example", useTimestampSuffix: true, filter: string.IsNullOrEmpty(Input.SingleQuote) ? "*" : Input.SingleQuote);
         Console.WriteLine();
         WriteHeadLine("Result", addToOutput: false);
-        ConsoleService.WriteObjectDescription($"{GetType().Name}", nameof(zipResult.Path),zipResult.Path!);
-        ConsoleService.WriteObjectDescription($"{GetType().Name}",nameof(zipResult.FileCount),zipResult.FileCount.ToString());
-        ConsoleService.WriteObjectDescription($"{GetType().Name}",nameof(zipResult.FileSizeUncompressedInKb),zipResult.FileSizeUncompressedInKb.ToString());
-        ConsoleService.WriteObjectDescription($"{GetType().Name}",nameof(zipResult.FileSizeCompressedInKb),zipResult.FileSizeCompressedInKb.ToString());
-        ConsoleService.WriteObjectDescription($"{GetType().Name}", nameof(zipResult.Checksum),zipResult.Checksum!);
-        if(zipResult.HasException) ConsoleService.WriteObjectDescription($"{GetType().Name}", nameof(zipResult.ExceptionMessage),zipResult.ExceptionMessage);
+        ConsoleService.Service.WriteObjectDescription($"{GetType().Name}", nameof(zipResult.Path),zipResult.Path!);
+        ConsoleService.Service.WriteObjectDescription($"{GetType().Name}",nameof(zipResult.FileCount),zipResult.FileCount.ToString());
+        ConsoleService.Service.WriteObjectDescription($"{GetType().Name}",nameof(zipResult.FileSizeUncompressedInKb),zipResult.FileSizeUncompressedInKb.ToString());
+        ConsoleService.Service.WriteObjectDescription($"{GetType().Name}",nameof(zipResult.FileSizeCompressedInKb),zipResult.FileSizeCompressedInKb.ToString());
+        ConsoleService.Service.WriteObjectDescription($"{GetType().Name}", nameof(zipResult.Checksum),zipResult.Checksum!);
+        if(zipResult.HasException) ConsoleService.Service.WriteObjectDescription($"{GetType().Name}", nameof(zipResult.ExceptionMessage),zipResult.ExceptionMessage);
         
         return Ok();
     }

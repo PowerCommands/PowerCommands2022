@@ -38,6 +38,6 @@ public class StartCommand : CommandBase<PowerCommandsConfiguration>
     private void Show()
     {
         WriteHeadLine("Favorites\n");
-        foreach (var favorite in Configuration.Favorites) ConsoleService.WriteObjectDescription(GetType().Name, favorite.Name, $"Shell executes: {favorite.NameOfExecutable}");
+        foreach (var favorite in Configuration.Favorites) ConsoleService.Service.WriteObjectDescription(GetType().Name, favorite.Name, $"Shell executes: {favorite.NameOfExecutable}");
     }
 }

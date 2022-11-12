@@ -1,5 +1,4 @@
-﻿using PainKiller.PowerCommands.Shared.Attributes;
-using PainKiller.PowerCommands.Shared.DomainObjects.Core;
+﻿using PainKiller.PowerCommands.Shared.DomainObjects.Core;
 
 namespace PainKiller.PowerCommands.Shared.Contracts;
 

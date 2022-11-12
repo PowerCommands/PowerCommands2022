@@ -1,10 +1,12 @@
 ﻿using Microsoft.Extensions.Logging;
 
 namespace PainKiller.PowerCommands.Core.Services;
-public static class ConsoleService
+public class ConsoleService : IConsoleService
 {
-    private static bool _disableLog;
-    public static bool DisableLog
+    private bool _disableLog;
+    private static readonly Lazy<IConsoleService> Lazy = new(() => new ConsoleService());
+    public static IConsoleService Service => Lazy.Value;
+    public bool DisableLog
     {
         get => _disableLog;
         set
@@ -14,7 +16,7 @@ public static class ConsoleService
             _disableLog = value;
         }
     }
-    public static void WriteObjectDescription(string scope, string name, string description, bool writeLog = true)
+    public void WriteObjectDescription(string scope, string name, string description, bool writeLog = true)
     {
         var currentColor = Console.ForegroundColor;
         Console.ForegroundColor = ConsoleColor.White;
@@ -24,7 +26,7 @@ public static class ConsoleService
         Console.ForegroundColor = currentColor;
         if(writeLog) WriteToLog(scope, $"{name} {description}");
     }
-    public static void Write(string scope, string text, ConsoleColor? color = null, bool writeLog = true)
+    public void Write(string scope, string text, ConsoleColor? color = null, bool writeLog = true)
     {
         var currentColor = Console.ForegroundColor;
         if (color != null) Console.ForegroundColor = color.Value;
@@ -33,7 +35,7 @@ public static class ConsoleService
         if (writeLog) WriteToLog(scope, $"{text}");
     }
 
-    public static void WriteLine(string scope, string text, ConsoleColor? color = null, bool writeLog = true)
+    public void WriteLine(string scope, string text, ConsoleColor? color = null, bool writeLog = true)
     {
         var currentColor = Console.ForegroundColor;
         if(color != null) Console.ForegroundColor = color.Value;
@@ -41,7 +43,7 @@ public static class ConsoleService
         Console.ForegroundColor = currentColor;
         if (writeLog) WriteToLog(scope, $"{text}");
     }
-    public static void WriteHeaderLine(string scope, string text, ConsoleColor color = ConsoleColor.DarkCyan, bool writeLog = true)
+    public void WriteHeaderLine(string scope, string text, ConsoleColor color = ConsoleColor.DarkCyan, bool writeLog = true)
     {
         var currentColor = Console.ForegroundColor;
         Console.ForegroundColor = color;
@@ -49,7 +51,7 @@ public static class ConsoleService
         Console.ForegroundColor = currentColor;
         if (writeLog) WriteToLog(scope, $"{text}");
     }
-    public static void WriteWarning(string scope, string text)
+    public void WriteWarning(string scope, string text)
     {
         var currentColor = Console.ForegroundColor;
         Console.ForegroundColor = ConsoleColor.DarkYellow;
@@ -57,7 +59,7 @@ public static class ConsoleService
         Console.ForegroundColor = currentColor;
         WriteToLog(scope, $"{text}", LogLevel.Warning);
     }
-    public static void WriteError(string scope, string text)
+    public void WriteError(string scope, string text)
     {
         var currentColor = Console.ForegroundColor;
         Console.ForegroundColor = ConsoleColor.Red;
@@ -65,7 +67,7 @@ public static class ConsoleService
         Console.ForegroundColor = currentColor;
         WriteToLog(scope, $"{text}", LogLevel.Error);
     }
-    public static void WriteCritical(string scope, string text)
+    public void WriteCritical(string scope, string text)
     {
         var currentColor = Console.ForegroundColor;
         Console.ForegroundColor = ConsoleColor.DarkRed;
@@ -73,7 +75,7 @@ public static class ConsoleService
         Console.ForegroundColor = currentColor;
         WriteToLog(scope, $"{text}", LogLevel.Critical);
     }
-    private static void WriteToLog(string scope, string message, LogLevel level = LogLevel.Information)
+    private void WriteToLog(string scope, string message, LogLevel level = LogLevel.Information)
     {
         if(DisableLog) return;
         var text = $"{scope} {message}";

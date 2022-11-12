@@ -41,7 +41,7 @@ public class TestCommand : CommandBase<CommandsConfiguration>
                 WriteLine("Test for this command is not declared or disabled");
                 return new List<CommandTestItem>{ new CommandTestItem { Disabled = true } };
             }
-            ConsoleService.DisableLog = true;
+            ConsoleService.Service.DisableLog = true;
             var retVal = new List<CommandTestItem>();
             var runtime = IPowerCommandServices.DefaultInstance!.Runtime;
             foreach (var test in attribute.Tests.Split("|"))
@@ -50,12 +50,12 @@ public class TestCommand : CommandBase<CommandsConfiguration>
                 var testItem = new CommandTestItem { ExpectedResult = !test.StartsWith("!"), Status = result.Status, Command = command.Identifier, Test = test };
                 retVal.Add(testItem);
             }
-            ConsoleService.DisableLog = false;
+            ConsoleService.Service.DisableLog = false;
             return retVal;
         }
         catch
         {
-            ConsoleService.DisableLog = false;
+            ConsoleService.Service.DisableLog = false;
             throw;
         }
     }

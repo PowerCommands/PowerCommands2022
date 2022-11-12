@@ -27,8 +27,8 @@ public class ProjectCommand : CommandBase<PowerCommandsConfiguration>
         }
 
         WriteHeadLine("Projects");
-        foreach (var c in Configuration.ComparisonProjects) ConsoleService.WriteObjectDescription(GetType().Name, "     Comparison", $"{c.Name}");
-        foreach (var r in Configuration.RegressionProjects) ConsoleService.WriteObjectDescription(GetType().Name, "Regression test", $"{r.Name}");
+        foreach (var c in Configuration.ComparisonProjects) ConsoleService.Service.WriteObjectDescription(GetType().Name, "     Comparison", $"{c.Name}");
+        foreach (var r in Configuration.RegressionProjects) ConsoleService.Service.WriteObjectDescription(GetType().Name, "Regression test", $"{r.Name}");
         return Ok();
     }
     private void ViewLog(string projectName)

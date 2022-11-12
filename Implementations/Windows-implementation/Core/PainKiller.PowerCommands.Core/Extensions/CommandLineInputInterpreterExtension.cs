@@ -50,11 +50,12 @@ public static class CommandLineInputInterpreterExtension
         return retVal.StartsWith("--") ? "" : retVal;   //A flag could not have a flag as it´s value
     }
     public static bool HasFlag(this ICommandLineInput input, string flagName) => input.Flags.Any(f => f == $"--{flagName}");
+    public static bool NoFlag(this ICommandLineInput input, string flagName) => !HasFlag(input, flagName);
     public static bool MustOnOfTheseFlagsCheck(this ICommandLineInput input, string[] flagNames) => flagNames.Any(flagName => flagName.ToLower() == flagName);
     public static void DoBadFlagCheck(this ICommandLineInput input, IConsoleCommand command)
     {
         var dokumentedFlags = command.GetPowerCommandAttribute().Flags.Split('|');
-        foreach (var flag in input.Flags) if(dokumentedFlags.All(f => $"--{f.ToLower().Replace("!","")}" != flag.ToLower())) ConsoleService.WriteLine($"{input.Identifier}", $"Warning, flag [{flag}] is not declared and probably unhandled in command [{command.Identifier}]", ConsoleColor.DarkYellow);
+        foreach (var flag in input.Flags) if(dokumentedFlags.All(f => $"--{f.ToLower().Replace("!","")}" != flag.ToLower())) ConsoleService.Service.WriteLine($"{input.Identifier}", $"Warning, flag [{flag}] is not declared and probably unhandled in command [{command.Identifier}]", ConsoleColor.DarkYellow);
     }
     private static string FindFirstQuotedFlagValueIfAny(ICommandLineInput input, string flagName)
     {

@@ -29,8 +29,8 @@ public static class Startup
             services.Logger.LogCritical(ex, "Critical error, program could not start");
             throw;
         }
-        ConsoleService.WriteLine(nameof(Startup), "\nUse the tab key to cycle trough available commands, use <command name> --help or describe <search phrase> to display documentation.", null);
-        ConsoleService.WriteLine(nameof(Startup), "\nUse up or down key  to cycle trough command history.", null);
+        ConsoleService.Service.WriteLine(nameof(Startup), "\nUse the tab key to cycle trough available commands, use <command name> --help or describe <search phrase> to display documentation.", null);
+        ConsoleService.Service.WriteLine(nameof(Startup), "\nUse up or down key  to cycle trough command history.", null);
         return new PowerCommandsManager(services);
     }
 }
