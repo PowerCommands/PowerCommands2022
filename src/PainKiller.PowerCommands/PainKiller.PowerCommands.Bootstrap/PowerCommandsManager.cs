@@ -61,7 +61,8 @@ public class PowerCommandsManager : IPowerCommandsManager
     }
     private void RunResultHandler(RunResult runResult)
     {
-        Services.Logger.LogInformation($"Command {runResult.ExecutingCommand.Identifier} run with input: [{runResult.Input.Raw}] output: [{runResult.Output.Trim()}] status: [{runResult.Status}]");
+        if(Services.Configuration.ShowDiagnosticInformation) Services.Logger.LogInformation($"Command {runResult.ExecutingCommand.Identifier} run with input: [{runResult.Input.Raw}] output: [{runResult.Output.Trim()}] status: [{runResult.Status}]");
+        else Services.Logger.LogTrace($"Command {runResult.ExecutingCommand.Identifier} run with input: [{runResult.Input.Raw}] output: [{runResult.Output.Trim()}] status: [{runResult.Status}]");
         Services.Diagnostic.Message($"Input: {runResult.Input.Raw} Output: {runResult.Output} Status: {runResult.Status}");
         switch (runResult.Status)
         {

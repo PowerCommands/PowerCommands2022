@@ -1,21 +1,19 @@
 ﻿namespace PainKiller.PowerCommands.Core.Commands;
 
-[PowerCommandTest(tests: "list|view")]
+[PowerCommandTest(tests: "--list|--view|--process git")]
 [PowerCommandDesign( description: "View and manage the log",
-                       arguments: "view|archive|list (default)",
-                          quotes: "process name:<name>",
-                      suggestion: "view",
-                         example: "//View a list with all the logfiles|log list|//Archive the logs into a zip file.|log archive|//View content of the current log|log view|//Filter the log show only posts matching the provided process tag, this requires that you are using process tags when logging in your command(s).|log process created")]
+                          flags: "view|archive|!process",
+                          example: "//View a list with all the logfiles|log|//Archive the logs into a zip file.|log --archive|//View content of the current log|log --view|//Filter the log show only posts matching the provided process tag, this requires that you are using process tags when logging in your command(s).|log --process created")]
 public class LogCommand : CommandBase<CommandsConfiguration>
 {
     public LogCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
 
     public override RunResult Run()
     {
-        if (string.IsNullOrEmpty(Input.SingleArgument) || Input.SingleArgument == "list") List();
-        if (Input.SingleArgument == "archive") Archive();
-        if (Input.SingleArgument == "view") View();
-        if (Input.SingleArgument == "process") ProcessLog($"{Input.Quotes}");
+        if (Input.Flags.Length == 0) List();
+        if (Input.HasFlag("archive")) Archive();
+        if (Input.HasFlag("view")) View();
+        if (Input.HasFlag("process")) ProcessLog($"{Input.GetFlagValue("process")}");
         
         return Ok();
     }
@@ -26,20 +24,20 @@ public class LogCommand : CommandBase<CommandsConfiguration>
         Console.WriteLine();
         WriteHeadLine("To view current logfile type log view");
         WriteHeadLine("Example");
-        Console.WriteLine("log view");
+        ConsoleService.Service.WriteLine(nameof(LogCommand), "log view");
 
         Console.WriteLine();
         WriteHeadLine("To archive the logs into a zip file type log archive");
         WriteHeadLine("Example");
-        Console.WriteLine("log archive");
+        ConsoleService.Service.WriteLine(nameof(LogCommand), "log archive");
     }
     private void Archive() => WriteLine(Configuration.Log.ArchiveLogFiles());
     private void View()
     {
-        foreach (var line in Configuration.Log.ToLines()) Console.WriteLine(line);
+        foreach (var line in Configuration.Log.ToLines()) ConsoleService.Service.WriteLine(nameof(LogCommand), line);
     }
     private void ProcessLog(string processTag)
     {
-        foreach (var line in Configuration.Log.GetProcessLog(processTag)) Console.WriteLine(line);
+        foreach (var line in Configuration.Log.GetProcessLog(processTag)) ConsoleService.Service.WriteLine(nameof(LogCommand), line);
     }
 }

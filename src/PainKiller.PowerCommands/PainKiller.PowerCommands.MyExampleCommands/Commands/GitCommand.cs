@@ -33,15 +33,25 @@ public class GitCommand : CommandBase<PowerCommandsConfiguration>
     {
         if (string.IsNullOrEmpty(comment)) comment = "\"refactoring\"";
         ShellService.Service.Execute("git", "add .", Configuration.DefaultGitRepositoryPath, WriteLine, waitForExit: true);
+        WriteProcessLog("GIT", $"add . \"{comment}\"");
         ShellService.Service.Execute("git", $"commit -m \"{comment}\"", Configuration.DefaultGitRepositoryPath, WriteLine, waitForExit: true);
+        WriteProcessLog("GIT", $"commit m \"{comment}\"");
     }
-    public void Push() => ShellService.Service.Execute("git", "push", Configuration.DefaultGitRepositoryPath, WriteLine, waitForExit: true);
+    public void Push()
+    {
+        ShellService.Service.Execute("git", "push", Configuration.DefaultGitRepositoryPath, WriteLine, waitForExit: true);
+        WriteProcessLog("GIT", "push");
+    }
 
     public void Status()
     { 
         WriteHeadLine($"Current Git repository: {Configuration.DefaultGitRepositoryPath}\n");
         ShellService.Service.Execute("git", "status", Configuration.DefaultGitRepositoryPath, WriteLine, waitForExit: true);
-    }
+        WriteProcessLog("GIT", $"status"); }
 
-    public void Repo() => WriteLine($"Local repo path: {Configuration.DefaultGitRepositoryPath}");
+    public void Repo()
+    {
+        WriteLine($"Local repo path: {Configuration.DefaultGitRepositoryPath}");
+        WriteProcessLog("GIT", $"Local repo path: {Configuration.DefaultGitRepositoryPath}");
+    }
 }

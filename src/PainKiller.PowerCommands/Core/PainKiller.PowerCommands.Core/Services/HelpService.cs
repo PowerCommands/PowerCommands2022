@@ -13,18 +13,15 @@ public class HelpService : IHelpService
         var da = command.GetPowerCommandAttribute();
         if(clearConsole) Console.Clear();
 
-        var args = da.Arguments.Split('|');
-        var quotes = da.Quotes.Split('|');
-        var flags = da.Flags.Split('|');
         var examples = da.Examples.Split('|');
 
         ConsoleService.Service.WriteHeaderLine($"{GetType().Name}", "\nDescription", writeLog: WriteToLog);
-        Console.WriteLine($"{da.Description}", WriteToLog);
+        ConsoleService.Service.WriteLine(nameof(HelpService),$"{da.Description}");
         Console.WriteLine();
 
-        args = da.Arguments.Replace("!","").Split('|');
-        quotes = da.Quotes.Replace("!", "").Split('|');
-        flags = da.Flags.Replace("!", "").Split('|');
+        var args = da.Arguments.Replace("!","").Split('|');
+        var quotes = da.Quotes.Replace("!", "").Split('|');
+        var flags = da.Flags.Replace("!", "").Split('|');
         
         ConsoleService.Service.WriteHeaderLine(nameof(HelpService), "Usage");
 
@@ -33,11 +30,11 @@ public class HelpService : IHelpService
         var flagsMarkup = flags.Any(f => !string.IsNullOrEmpty(f)) ? "[flags]" : "";
 
         ConsoleService.Service.Write(nameof(HelpService), command.Identifier, ConsoleColor.Blue);
-        Console.WriteLine($" {argsMarkup} {quotesMarkup} {flagsMarkup}");
-        Console.WriteLine("");
+        ConsoleService.Service.WriteLine(nameof(HelpService), $" {argsMarkup} {quotesMarkup} {flagsMarkup}");
+        ConsoleService.Service.WriteLine(nameof(HelpService), "");
         ConsoleService.Service.WriteHeaderLine(nameof(HelpService),"Flag options:");
         var flagDescriptions = flags.Select(f => f.ToFlagDescription());
-        Console.WriteLine( string.Join(',',flagDescriptions));
+        ConsoleService.Service.WriteLine(nameof(HelpService), string.Join(',',flagDescriptions));
         Console.WriteLine("");
         if (string.IsNullOrEmpty(da.Examples)) return;
         
@@ -54,5 +51,4 @@ public class HelpService : IHelpService
         ConsoleService.Service.Write(GetType().Name, $"{identifier} ", ConsoleColor.Blue, WriteToLog);
         ConsoleService.Service.WriteLine(GetType().Name, description.Replace(identifier,"").Trim(), null, WriteToLog);
     }
-    private string ToDescription(string[] parameters, string separator) => parameters.Length == 0 || (parameters.Length == 1 && string.IsNullOrEmpty(parameters[0])) ? "" : $"{separator}{string.Join(separator, parameters)}";
 }
