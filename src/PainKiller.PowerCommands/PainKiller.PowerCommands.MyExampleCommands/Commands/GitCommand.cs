@@ -3,7 +3,7 @@
 [PowerCommandDesign(description: "Example shows how to execute a external program, in this case git, commit and push your repository, path to repository is in the configuration file",
                 arguments: "!commit|push|status",
                     quotes: "\"<comment>\" defaults to \"refactoring\" if omitted, only used with commit.",
-                  example: "/*Add and commit*/|git commit \"Bugfix\"|/*Performs a push to Git repo*/|git push|/*Git status of the configured git repo*/|git status|/*Show local path to repo*/|git repo")]
+                  example: "//Add and commit|git commit \"Bugfix\"|//Performs a push to Git repo|git push|//Git status of the configured git repo|git status|//Show local path to repo|git repo")]
 
 public class GitCommand : CommandBase<PowerCommandsConfiguration>
 {
