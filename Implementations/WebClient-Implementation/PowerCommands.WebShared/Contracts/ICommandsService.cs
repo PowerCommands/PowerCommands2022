@@ -5,4 +5,5 @@ namespace PowerCommands.WebShared.Contracts;
 public interface ICommandsService
 {
     Task<RunResultModel> GetRunResultModel(InputModel input);
+    Task<List<CommandMetadata>> GetMetadata();
 }

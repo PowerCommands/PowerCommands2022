@@ -7,4 +7,5 @@ public class CommandsService : HttpService, ICommandsService
 {
     public CommandsService(HttpClient httpClient, NavigationManager navigationManager, IConfiguration configuration) : base(httpClient, navigationManager, configuration) { }
     public async Task<RunResultModel> GetRunResultModel(InputModel input) => await Post<RunResultModel>($"{Configuration.ApiBaseAddress}/powercommand/", input);
+    public async Task<List<CommandMetadata>> GetMetadata() => await Get<List<CommandMetadata>>($"{Configuration.ApiBaseAddress}/powercommand/metadata");
 }

@@ -2,7 +2,13 @@
 @inject ICommandsService CommandsService
 
 <h3 style="color:cornflowerblue ">Input</h3>
-<MudTextField @bind-Value="Input" Label="Input your command..." Variant="Variant.Text" Style="@($"color:{Colors.Grey.Darken1}; background:{Colors.Grey.Darken4};")"></MudTextField>
+<MudSelect T="string" Label="Select command" AdornmentIcon="@Icons.Material.Filled.Code" CloseIcon="@Icons.Material.Filled.SouthWest" Adornment="Adornment.Start" AdornmentColor="Color.Info" @bind-Value="SelectedCommand">
+    @foreach (var commandIdentifier in Commands)
+    {
+        <MudSelectItem Value="commandIdentifier" Style="@($"color:{Colors.Grey.Darken1}; background:{Colors.Grey.Darken4};")">@commandIdentifier</MudSelectItem>
+    }
+</MudSelect>
+<MudTextField @bind-Value="Input" Label="Input parameters..." Variant="Variant.Text" Style="@($"color:{Colors.Grey.Darken1}; background:{Colors.Grey.Darken4};")"></MudTextField>
 <br />
 <MudButton Variant="Variant.Filled" Color="Color.Dark" OnClick="ExecuteCommand">Execute command</MudButton>
 <br />
@@ -14,7 +20,15 @@
 
     public string? Input { get; set; }
     public string Output { get; set; } = "";
+    public string SelectedCommand { get; set; } = "";
+    public List<string> Commands { get; set; } = new();
 
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await CommandsService.GetMetadata();
+        Commands.AddRange(response.Select(c => c.Identifier));
+        StateHasChanged();
+    }
 
     private async Task ExecuteCommand()
     {
@@ -22,4 +36,6 @@
         Output = response.Output;
         StateHasChanged();
     }
+
+
 }
