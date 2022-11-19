@@ -34,7 +34,7 @@ You could se PowerCommands as an easy Create your CLI applikation starter kit. I
 
 [Handling the Input](Docs/Input.md)
 
-[Using Flags](Docs/Flags.md)
+[Using Options](Docs/Options.md)
 
 [Simple automated test](Docs/Test.md)
 
