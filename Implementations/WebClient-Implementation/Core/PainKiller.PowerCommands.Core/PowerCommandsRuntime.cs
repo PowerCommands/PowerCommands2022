@@ -45,12 +45,12 @@ public class PowerCommandsRuntime<TConfig> : IPowerCommandsRuntime where TConfig
         }
         if (command == null) throw new ArgumentOutOfRangeException($"Could not identify any Commmand with identy {input.Identifier} and there is no defaultCommand defined in configuration file either.");
         
-        if (input.Flags.Any(f => f == "--help"))
+        if (input.Options.Any(f => f == "--help"))
         {
-            if (!command.GetPowerCommandAttribute().OverrideHelpFlag)
+            if (!command.GetPowerCommandAttribute().OverrideHelpOption)
             {
                 HelpService.Service.ShowHelp(command, clearConsole: true);
-                return new RunResult(command, input, "User prompted for help with --help flag", RunResultStatus.Ok);
+                return new RunResult(command, input, "User prompted for help with --help option", RunResultStatus.Ok);
             }
         }
         if (command.InitializeAndValidateInput(input))

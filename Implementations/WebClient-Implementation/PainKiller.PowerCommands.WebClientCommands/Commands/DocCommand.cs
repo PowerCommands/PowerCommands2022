@@ -1,8 +1,8 @@
 namespace PainKiller.PowerCommands.WebClientCommands.Commands;
 
-[PowerCommandTest(          tests: "--list")]
-[PowerCommandDesign(  description: "Add a document to the DocDB that is used as an KnowledgeDB internally by PowerCommands, view document, append tags, edit and delete documents. Backup KnowledgeDB",
-                            flags: "view|delete|edit|append|list|backup",
+[PowerCommandTest(tests: "--list")]
+[PowerCommandDesign(description: "Add a document to the DocDB that is used as an KnowledgeDB internally by PowerCommands, view document, append tags, edit and delete documents. Backup KnowledgeDB",
+                            options: "view|delete|edit|append|list|backup",
                           example: "//Add a new document|doc \"https://www.google.se/\" --name Google-Search --tags tools,search,google|//List all documents|doc --list")]
 public class DocCommand : CommandBase<CommandsConfiguration>
 {
@@ -15,12 +15,12 @@ public class DocCommand : CommandBase<CommandsConfiguration>
         //When first argument is a integer, the user want to open, edit or delete an item from a previous search, wrong index will throw an IndexOutOfRange exception and that is ok
         _selectedItem = (int.TryParse(Input.SingleArgument, out var index) ? _docs[index] : null)!;
 
-        if (Input.HasFlag("delete") && _selectedItem != null) Delete();
-        else if (Input.HasFlag("edit") && _selectedItem != null) Edit();
-        else if (Input.HasFlag("append") && _selectedItem != null) Append();
-        else if (Input.HasFlag("view") && _selectedItem != null) Details();
-        else if (Input.HasFlag("list")) List();
-        else if (Input.HasFlag("backup")) Backup();
+        if (Input.HasOption("delete") && _selectedItem != null) Delete();
+        else if (Input.HasOption("edit") && _selectedItem != null) Edit();
+        else if (Input.HasOption("append") && _selectedItem != null) Append();
+        else if (Input.HasOption("view") && _selectedItem != null) Details();
+        else if (Input.HasOption("list")) List();
+        else if (Input.HasOption("backup")) Backup();
         else Add();
         return Ok();
     }
@@ -51,8 +51,8 @@ public class DocCommand : CommandBase<CommandsConfiguration>
         var match = db.Docs.First(i => i.DocID == _selectedItem!.DocID);
         db.Docs.Remove(match);
 
-        if (!string.IsNullOrEmpty(Input.GetFlagValue("name"))) match.Name = Input.GetFlagValue("name");
-        if (!string.IsNullOrEmpty(Input.GetFlagValue("tags"))) match.Tags = Input.GetFlagValue("tags");
+        if (!string.IsNullOrEmpty(Input.GetOptionValue("name"))) match.Name = Input.GetOptionValue("name");
+        if (!string.IsNullOrEmpty(Input.GetOptionValue("tags"))) match.Tags = Input.GetOptionValue("tags");
         if (!DialogService.YesNoDialog($"Are this update ok? {match.Name} {match.Tags}?")) return;
         match.Version += 1;
         db.Docs.Add(match);
@@ -62,11 +62,11 @@ public class DocCommand : CommandBase<CommandsConfiguration>
     }
     private void Append()
     {
-        if(_selectedItem == null) return;
+        if (_selectedItem == null) return;
         var db = _storage.GetObject();
         var match = db.Docs.First(i => i.DocID == _selectedItem.DocID);
         db.Docs.Remove(match);
-        match.Tags = $"{match.Tags},{Input.GetFlagValue("tags")}";
+        match.Tags = $"{match.Tags},{Input.GetOptionValue("tags")}";
         if (!DialogService.YesNoDialog($"Are this update ok? {match.Name} {match.Tags}?")) return;
         match.Version += 1;
         db.Docs.Add(match);
@@ -80,7 +80,7 @@ public class DocCommand : CommandBase<CommandsConfiguration>
     }
     private void Add()
     {
-        var item = new Doc { DocID = _docs.Count > 0 ? _docs.Max(d => d.DocID) + 1 : 1, Name = Input.GetFlagValue("name"), Version = 1, Tags = Input.GetFlagValue("tags"), Updated = DateTime.Now, Uri = Input.SingleQuote };
+        var item = new Doc { DocID = _docs.Count > 0 ? _docs.Max(d => d.DocID) + 1 : 1, Name = Input.GetOptionValue("name"), Version = 1, Tags = Input.GetOptionValue("tags"), Updated = DateTime.Now, Uri = Input.SingleQuote };
         Print(item, 0);
         if (!DialogService.YesNoDialog("Is this information correct?")) return;
         var db = _storage.GetObject();

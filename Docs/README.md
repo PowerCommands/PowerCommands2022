@@ -13,7 +13,7 @@
 
 [Handling the Input](Input.md)
 
-[Using Flags](Flags.md)
+[Using Options](Options.md)
 
 [Simple automated test](Test.md)
 

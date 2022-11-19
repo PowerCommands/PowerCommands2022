@@ -27,15 +27,15 @@ public class InputValidationManager
             retVal.HasValidationError = true;
         }
 
-        var flagInfos = attribute.Flags.Split('|').Select(f => new PowerFlag(f)).ToList();
-        retVal.Flags.AddRange(flagInfos);
+        var optionInfos = attribute.Options.Split('|').Select(f => new PowerOption(f)).ToList();
+        retVal.Options.AddRange(optionInfos);
         
-        foreach (var flagInfo in flagInfos.Where(f => f.IsRequired))
+        foreach (var optionInfo in optionInfos.Where(f => f.IsRequired))
         {
-            flagInfo.Value = _input.GetFlagValue(flagInfo.Name);
+            optionInfo.Value = _input.GetOptionValue(optionInfo.Name);
 
-            if (!string.IsNullOrEmpty(flagInfo.Value) || !_input.HasFlag(flagInfo.Name)) continue;
-            _logger.Invoke($"Flag [{flagInfo.Name}] is required to have a value or not used at all.");
+            if (!string.IsNullOrEmpty(optionInfo.Value) || !_input.HasOption(optionInfo.Name)) continue;
+            _logger.Invoke($"Option [{optionInfo.Name}] is required to have a value or not used at all.");
             retVal.HasValidationError = true;
         }
 

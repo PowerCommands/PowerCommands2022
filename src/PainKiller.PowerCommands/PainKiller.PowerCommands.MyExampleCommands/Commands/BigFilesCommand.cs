@@ -2,7 +2,7 @@
 
 [PowerCommandDesign(description: "Input a valid path to a directory and the commmand will analyse the directory and its subdirectories\nThis command showing the use of Path property on the input and how you could display a progress with overwriting one line in the iteration.\nSpaces in the path are allowed en will be merged to the Path property on the Input instance",
                     quotes: "!Path",
-                    flags: "megabytes|path",
+                    options: "megabytes|path",
                   example: "bigfiles --path \"C:\\Repos|bigfiles\"|bigfiles \"C:\\Repos\" --megabytes 1024",
                  useAsync: true)]
 public class BigFilesCommand : CommandBase<CommandsConfiguration>
@@ -13,8 +13,8 @@ public class BigFilesCommand : CommandBase<CommandsConfiguration>
     public BigFilesCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
     public override async Task<RunResult> RunAsync()
     {
-        var megaBytes = Input.GetFlagValue("megabytes");
-        var path = Input.GetFlagValue("path");
+        var megaBytes = Input.GetOptionValue("megabytes");
+        var path = Input.GetOptionValue("path");
 
         if (string.IsNullOrEmpty(path) || !Directory.Exists(path)) return BadParameterError($"{path} must be a valid directory path");
         if (int.TryParse(megaBytes, out var number)) _minFileSize = number;

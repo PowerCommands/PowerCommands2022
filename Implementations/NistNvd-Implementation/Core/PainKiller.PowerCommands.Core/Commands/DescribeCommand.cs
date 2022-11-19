@@ -3,22 +3,22 @@
 [PowerCommandTest(tests: "exit|start --docs")]
 [PowerCommandDesign(       description: "With help command you will be shown the provided description or online documentation of the command or a PowerCommand feature.",
                        arguments: "<command name or feature you are interested of knowing more>",
-                           flags: "docs|clear",
-                         example: "describe exit|describe cls|describe log|//Open documentation about flags (if any)|describe flags --doc")]
+                           options: "docs|clear",
+                         example: "describe exit|describe cls|describe log|//Open documentation about options (if any)|describe options --doc")]
 public class DescribeCommand : CommandBase<CommandsConfiguration>
 {
     public DescribeCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
 
     public override RunResult Run()
     {
-        if(Input.HasFlag("docs")) ShowDoc();
+        if(Input.HasOption("docs")) ShowDoc();
         else ShowCommand();
         return Ok();
     }
 
     public void ShowDoc()
     {
-        var docSearch = Input.HasFlag("docs") ? Input.GetFlagValue("docs").ToLower() : Input.SingleArgument.ToLower();
+        var docSearch = Input.HasOption("docs") ? Input.GetOptionValue("docs").ToLower() : Input.SingleArgument.ToLower();
         var docs = StorageService<DocsDB>.Service.GetObject().Docs;
         var matchDocs = docs.Where(d => d.DocID.ToString().PadLeft(4, '0') == docSearch || d.Name.ToLower().Contains(docSearch) || d.Tags.ToLower().Contains(docSearch)).ToArray();
         if (matchDocs.Length == 1)
@@ -50,7 +50,7 @@ public class DescribeCommand : CommandBase<CommandsConfiguration>
             ShowDoc();
             return;
         }
-        HelpService.Service.ShowHelp(command, Input.HasFlag("clear"));
+        HelpService.Service.ShowHelp(command, Input.HasOption("clear"));
         Console.WriteLine();
     }
 }

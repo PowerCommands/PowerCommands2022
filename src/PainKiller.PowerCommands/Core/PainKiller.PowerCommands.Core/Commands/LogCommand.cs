@@ -2,7 +2,7 @@
 
 [PowerCommandTest(tests: "--list|--view|--process git")]
 [PowerCommandDesign( description: "View and manage the log",
-                          flags: "view|archive|!process",
+                          options: "view|archive|!process",
                           example: "//View a list with all the logfiles|log|//Archive the logs into a zip file.|log --archive|//View content of the current log|log --view|//Filter the log show only posts matching the provided process tag, this requires that you are using process tags when logging in your command(s).|log --process created")]
 public class LogCommand : CommandBase<CommandsConfiguration>
 {
@@ -10,10 +10,10 @@ public class LogCommand : CommandBase<CommandsConfiguration>
 
     public override RunResult Run()
     {
-        if (Input.Flags.Length == 0) List();
-        if (Input.HasFlag("archive")) Archive();
-        if (Input.HasFlag("view")) View();
-        if (Input.HasFlag("process")) ProcessLog($"{Input.GetFlagValue("process")}");
+        if (Input.Options.Length == 0) List();
+        if (Input.HasOption("archive")) Archive();
+        if (Input.HasOption("view")) View();
+        if (Input.HasOption("process")) ProcessLog($"{Input.GetOptionValue("process")}");
         
         return Ok();
     }

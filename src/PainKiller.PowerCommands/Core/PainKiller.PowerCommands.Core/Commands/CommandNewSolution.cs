@@ -11,8 +11,8 @@ public class CommandNewSolution : PowerCommandCommand
     }
     public override RunResult Run()
     {
-        var name = Input.GetFlagValue("solution");
-        var output = Input.GetFlagValue("output");
+        var name = Input.GetOptionValue("solution");
+        var output = Input.GetOptionValue("output");
 
         _path = string.IsNullOrEmpty(output) ? Path.Combine(AppContext.BaseDirectory, "output", name) : Path.Combine(output, name);
         IVisualStudioManager vsm = new VisualStudioManager(name, _path, WriteLine);

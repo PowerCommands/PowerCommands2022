@@ -4,6 +4,6 @@ public enum ParameterType
 {
     Argument,
     Quote,
-    Flag,
+    Option,
     Secret
 }

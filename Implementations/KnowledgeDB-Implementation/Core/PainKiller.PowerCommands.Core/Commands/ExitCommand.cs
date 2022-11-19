@@ -11,6 +11,6 @@ public class ExitCommand : CommandBase<CommandsConfiguration>
     public override RunResult Run()
     {
         if (Input.Arguments.Length > 0 && Input.Arguments.First().ToLower().StartsWith("y")) return new RunResult(this, Input, output: "exit program", RunResultStatus.Quit);
-        return DialogService.YesNoDialog("Do you wanna quit the program?") ? new RunResult(this, Input, output: "exit program", RunResultStatus.Quit) : new RunResult(this, Input, output: "No, dont exit the program", RunResultStatus.Ok);
+        return DialogService.YesNoDialog("Do you wanna quit the program?") ? new RunResult(this, Input, output: "exit program", RunResultStatus.Quit) : new RunResult(this, Input, output: "No, do not exit the program", RunResultStatus.Ok);
     }
 }

@@ -2,18 +2,18 @@
 
 namespace PainKiller.PowerCommands.Core.Commands;
 [PowerCommandDesign(description: "Get, creates, removes or view secrets, first you need to configure your encryption key with initialize argument",
-                    flags: "configuration|create|get|remove|salt",
+                    options: "configuration|create|get|remove|salt",
                   example: "//View all declared secrets|secret|//Get the decrypted value of named secret|secret --get \"mycommand-pass\"|secret --create \"mycommand-pass\"|secret --remove \"mycommand-pass\"|//Initialize your machine with a new encryption key (stops if this is already done)|secret --initialize")]
 public class SecretCommand : CommandBase<CommandsConfiguration>
 {
     public SecretCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
     public override RunResult Run()
     {
-        if (Input.HasFlag("configuration")) return CheckEncryptConfiguration();
-        if (Input.HasFlag("salt")) return Salt();
-        if (Input.HasFlag("get")) return Get();
-        if (Input.HasFlag("create")) return Create();
-        if (Input.HasFlag("remove")) return Remove();
+        if (Input.HasOption("configuration")) return CheckEncryptConfiguration();
+        if (Input.HasOption("salt")) return Salt();
+        if (Input.HasOption("get")) return Get();
+        if (Input.HasOption("create")) return Create();
+        if (Input.HasOption("remove")) return Remove();
         if ((Input.Arguments.Length + Input.Quotes.Length < 2) && Input.Arguments.Length > 0) throw new MissingFieldException("Two parameters must be provided");
         if (Input.Arguments.Length == 0 || Input.Arguments[0] == "view") return List();
 

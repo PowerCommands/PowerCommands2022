@@ -1,9 +1,9 @@
 ﻿namespace PainKiller.PowerCommands.Core.Commands;
 
 [PowerCommandTest(tests: " |--this|--reserved|\"encrypt\"|--default")]
-[PowerCommandDesign( description: "Shows commands, or filter commands by name, create a new command, show default command with flag --default",
+[PowerCommandDesign( description: "Shows commands, or filter commands by name, create a new command, show default command with option --default",
                           quotes: "<filter>",
-                           flags: "this|reserved|default|!update",
+                           options: "this|reserved|default|!update",
                          example: "//Show all commands|commands|//Show your custom commands|commands --this|//Show reserved commands|commands --reserved|//Search for commands matching \"encrypt\"|commands \"encrypt\"|//Show default command|commands --default|//Update the dir command (command must exist in the configured PowerCommands project)|commands --update dir")]
 public class CommandsCommand : CommandBase<CommandsConfiguration>
 {
@@ -11,18 +11,18 @@ public class CommandsCommand : CommandBase<CommandsConfiguration>
 
     public override RunResult Run()
     {
-        Input.DoBadFlagCheck(this);
-        if (Input.HasFlag("this")) return Custom();
-        if (Input.HasFlag("default")) return Default();
-        if (Input.HasFlag("reserved")) return Reserved();
-        if (Input.HasFlag("update")) return Update();
+        Input.DoBadOptionCheck(this);
+        if (Input.HasOption("this")) return Custom();
+        if (Input.HasOption("default")) return Default();
+        if (Input.HasOption("reserved")) return Reserved();
+        if (Input.HasOption("update")) return Update();
         if (!string.IsNullOrEmpty(Input.SingleQuote)) return FilterByName();
         return NoFilter();
     }
 
     private RunResult Update()
     {
-        var commandName = Input.GetFlagValue("update");
+        var commandName = Input.GetOptionValue("update");
         if (!DialogService.YesNoDialog($"The command [{commandName}] will be overwritten, continue with update?")) return Ok();
         GithubService.Service.DownloadCommand(commandName);
         return Ok();
@@ -38,7 +38,7 @@ public class CommandsCommand : CommandBase<CommandsConfiguration>
 
         WriteHeadLine($"\nUse describe command to display details about a specific command, for example");
         Console.WriteLine("describe exit");
-        WriteHeadLine($"You could also use the --help flag for the same thing, but the help flag could show something else if it is overriden by the Command author.");
+        WriteHeadLine($"You could also use the --help option for the same thing, but the help option could show something else if it is overriden by the Command author.");
         Console.WriteLine("exit --help");
         return Ok();
     }

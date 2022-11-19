@@ -1,8 +1,8 @@
 ﻿namespace PainKiller.PowerCommands.Shared.DomainObjects.Core;
 
-public class PowerFlag
+public class PowerOption
 {
-    public PowerFlag(string attributeValue)
+    public PowerOption(string attributeValue)
     {
         IsRequired = attributeValue.StartsWith("!");
         Name = attributeValue.Replace("!", "");

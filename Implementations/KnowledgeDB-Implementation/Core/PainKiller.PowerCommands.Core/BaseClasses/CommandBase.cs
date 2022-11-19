@@ -6,7 +6,7 @@ public abstract class CommandBase<TConfig> : IConsoleCommand, IConsoleWriter whe
 {
     private IConsoleService _console;
     protected ICommandLineInput Input = new CommandLineInput();
-    protected List<PowerFlag> Flags = new();
+    protected List<PowerOption> Options = new();
     private readonly StringBuilder _ouput = new();
     protected CommandBase(string identifier, TConfig configuration, IConsoleService? console = null)
     {
@@ -26,7 +26,7 @@ public abstract class CommandBase<TConfig> : IConsoleCommand, IConsoleWriter whe
         Input = input;
         var validationManager = new InputValidationManager(this, input, WriteError);
         var result = validationManager.ValidateAndInitialize();
-        if (result.Flags.Count > 0) Flags.AddRange(result.Flags);
+        if (result.Options.Count > 0) Options.AddRange(result.Options);
         _console.WriteToOutput += ConsoleWriteToOutput;
         return result.HasValidationError;
     }

@@ -26,8 +26,8 @@
     },
     {
       "DocID": 5,
-      "Name": "Flags",
-      "Uri": "https://github.com/PowerCommands/PowerCommands2022/blob/main/Docs/Flags.md",
+      "Name": "Options",
+      "Uri": "https://github.com/PowerCommands/PowerCommands2022/blob/main/Docs/Options.md",
       "Updated": "2022-10-27T23:35:11.2412905+02:00",
       "Tags": "Description,Attribute,Command",
       "Version": 1

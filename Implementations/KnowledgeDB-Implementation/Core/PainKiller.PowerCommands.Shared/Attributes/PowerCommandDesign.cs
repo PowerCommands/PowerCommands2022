@@ -11,23 +11,23 @@ public class PowerCommandDesignAttribute : Attribute
     [Description("Separate items with | character, if required begin with a ! character")]
     public string Quotes { get; }
     [Description("Separate items with | character, if required begin with a ! character")] 
-    public string Flags { get; }
+    public string Options { get; }
     [Description("Separate items with | character, if required begin with a ! character")]
     public string Secrets { get; }
     [Description("The command will exexute the RunAsync instead of Run method")]
     public bool UseAsync { get; }
     [Description("This mean that the command itself will handle the --help in any way")]
-    public bool OverrideHelpFlag { get; }
+    public bool OverrideHelpOption { get; }
     [Description("Separate items with |, if you begin with // the value will be displayed as an comment row in help view.")]
     public string Examples { get; }
     public string Suggestion { get; }
-    public PowerCommandDesignAttribute(string description, bool overrideHelpFlag = false, string arguments = "", string quotes = "", string example = "", string flags = "", string secrets = "", string suggestion = "", bool useAsync = false)
+    public PowerCommandDesignAttribute(string description, bool overrideHelpOption = false, string arguments = "", string quotes = "", string example = "", string options = "", string secrets = "", string suggestion = "", bool useAsync = false)
     {
         Description = description;
-        OverrideHelpFlag = overrideHelpFlag;
+        OverrideHelpOption = overrideHelpOption;
         Arguments = arguments;
         Quotes = quotes;
-        Flags = flags;
+        Options = options;
         Examples = example;
         Suggestion = suggestion;
         UseAsync = useAsync;

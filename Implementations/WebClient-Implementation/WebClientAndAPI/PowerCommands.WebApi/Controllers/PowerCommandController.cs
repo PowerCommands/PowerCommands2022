@@ -37,7 +37,7 @@ public class PowerCommandController : ControllerBase
             var metadata = new CommandMetadata { Identifier = command.Identifier };
             if (!string.IsNullOrEmpty(pcAttrib.Arguments)) metadata.Parameters.AddRange(pcAttrib.Arguments.Split('|'));
             if (!string.IsNullOrEmpty(pcAttrib.Quotes)) metadata.Parameters.AddRange(pcAttrib.Quotes.Split('|'));
-            if (!string.IsNullOrEmpty(pcAttrib.Flags)) metadata.Flags.AddRange(pcAttrib.Flags.Split('|').Select(f => new PowerFlag(f)));
+            if (!string.IsNullOrEmpty(pcAttrib.Options)) metadata.Options.AddRange(pcAttrib.Options.Split('|').Select(f => new PowerOption(f)));
             if (!string.IsNullOrEmpty(pcAttrib.Examples)) metadata.Examples.AddRange(pcAttrib.Examples.Split('|'));
             retVal.Add(metadata);
         }

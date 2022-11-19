@@ -9,10 +9,10 @@ public class KnowledgeItem
     public KnowledgeItem(ICommandLineInput input)
     {
         ItemID = Guid.NewGuid();
-        Name = input.GetFlagValue(nameof(Name).ToLower());
+        Name = input.GetOptionValue(nameof(Name).ToLower());
         SourceType = input.ToSourceType();
         Uri = input.SingleQuote;
-        Tags = input.GetFlagValue(nameof(Tags).ToLower());
+        Tags = input.GetOptionValue(nameof(Tags).ToLower());
     }
     public Guid? ItemID { get; set; }
     public string Name { get; set; } = "";

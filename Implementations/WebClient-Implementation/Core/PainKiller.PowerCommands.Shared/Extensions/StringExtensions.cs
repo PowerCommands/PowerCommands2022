@@ -9,9 +9,9 @@ public static class StringExtensions
         var retVal = $"{firstLetter}{input.Substring(1, input.Length - 1).ToLower()}";
         return retVal;
     }
-    public static string ToFlagDescription(this string flag)
+    public static string ToOptionDescription(this string option)
     {
-        var required = flag.StartsWith('!') ? " (required)" : "";
-        return string.IsNullOrEmpty(flag) ? "" : $"--{flag.Replace("!", "")}{required}";
+        var required = option.StartsWith('!') ? " (required)" : "";
+        return string.IsNullOrEmpty(option) ? "" : $"--{option.Replace("!", "")}{required}";
     }
 }

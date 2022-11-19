@@ -2,5 +2,5 @@
 
 public static class FormatExtensions
 {
-    public static string ToSourceType(this ICommandLineInput input) => input.GetFlagValue(new[] { "onenote","url","path","file" });
+    public static string ToSourceType(this ICommandLineInput input) => input.GetOptionValue(new[] { "onenote","url","path","file" });
 }

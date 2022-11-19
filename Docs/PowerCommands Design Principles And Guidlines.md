@@ -341,24 +341,24 @@ regression --help
 
 But it is just not for displaying the help, the flag property and the suggestion property of the PowerCommandAttribute controls suggestions provided by intellisense, you should really take advantage of that.
 
-## <a name='Flags'></a>Flags
-In the example image showing usage of the attributes you could se that the flags: property is set to **"mode|name"**, that means that this command has two flags one named **mode** and the other one is **name**. This will give the user autocomplete feedback when typing - and using the [Tab] tangent.
+## <a name='Options'></a>Options
+In the example image showing usage of the attributes you could se that the options: property is set to **"mode|name"**, that means that this command has two option one named **mode** and the other one is **name**. This will give the user autocomplete feedback when typing - and using the [Tab] tangent.
 
-Programatically you can use Flags in two ways, you could grab the value, wich is the parameter typed after the flag, like this (using the RegressionCommand as example, it is a user created command).
+Programatically you can use Options in two ways, you could grab the value, wich is the parameter typed after the option, like this (using the RegressionCommand as example, it is a user created command).
 
 ``` regression --mode normal --name "My sample project" ```
 
-To get the value of the **mode** flag you code like this:
+To get the value of the **mode** option you code like this:
 
-``` var mode = input.GetFlagValue("mode"); ```
+``` var mode = input.GetOptionValue("mode"); ```
 
-Sometimes you just want a flag without a value, you can solve that like this:
+Sometimes you just want a option without a value, you can solve that like this:
 
-``` var mode = input.HasFlag("xml"); ```
+``` var mode = input.HasOption("xml"); ```
 
-### Do not use the help flag, unless you want to override it´s behaviour
-It will not harm anything but --help will trigger the Core frameowrk to display generic help (using the PowerCommands attriute).
-You can override this behaviour if you set the property **overrideHelpFlag** to true. Do not do that if your not intend to implement your own show help functionalllity for that command.
+### Do not use the help option, unless you want to override it´s behaviour
+It will not harm anything but --help will trigger the Core frameowrk to display generic help (using the PowerCommandDesign attriute).
+You can override this behaviour if you set the property **overrideHelpOption** to true. Do not do that if your not intend to implement your own show help functionalllity for that command.
 
 
 # ARCHITECTURE

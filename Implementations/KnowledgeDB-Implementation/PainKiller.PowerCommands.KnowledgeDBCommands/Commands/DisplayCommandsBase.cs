@@ -14,10 +14,10 @@ public abstract class DisplayCommandsBase : CommandBase<PowerCommandsConfigurati
         SelectedItem = (int.TryParse(Input.SingleArgument, out var index) ? Items[index] : null)!;
         if (SelectedItem != null)
         {
-            if (Input.HasFlag("delete")) Remove(SelectedItem);
-            else if (Input.HasFlag("edit")) Edit(SelectedItem, Input.GetFlagValue("name"), Input.GetFlagValue("source"), Input.GetFlagValue("tags"));
-            else if (Input.HasFlag("append")) Append(SelectedItem, Input.GetFlagValue("tags"));
-            else if (Input.HasFlag("view")) Details(SelectedItem);
+            if (Input.HasOption("delete")) Remove(SelectedItem);
+            else if (Input.HasOption("edit")) Edit(SelectedItem, Input.GetOptionValue("name"), Input.GetOptionValue("source"), Input.GetOptionValue("tags"));
+            else if (Input.HasOption("append")) Append(SelectedItem, Input.GetOptionValue("tags"));
+            else if (Input.HasOption("view")) Details(SelectedItem);
             else Open(SelectedItem);
             return Ok();
         }

@@ -1,7 +1,7 @@
 ﻿namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
 [PowerCommandDesign(description: "View environment variable or create environment variable",
-                          flags: "!get",
+                          options: "!get",
                         example: "environment --get OS")]
 public class EnvironmentCommand : CommandBase<CommandsConfiguration>
 {
@@ -9,7 +9,7 @@ public class EnvironmentCommand : CommandBase<CommandsConfiguration>
 
     public override RunResult Run()
     {
-        if(Input.HasFlag("get")) WriteLine(Configuration.Environment.GetValue(Input.GetFlagValue("get")));
+        if(Input.HasOption("get")) WriteLine(Configuration.Environment.GetValue(Input.GetOptionValue("get")));
         return Ok();
     }
 }

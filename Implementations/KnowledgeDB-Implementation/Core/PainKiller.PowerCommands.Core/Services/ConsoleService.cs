@@ -92,6 +92,9 @@ public class ConsoleService : IConsoleService
         var text = $"{scope} {message}";
         switch (level)
         {
+            case LogLevel.Trace:
+                IPowerCommandServices.DefaultInstance?.Logger.LogTrace(text);
+                break;
             case LogLevel.Information:
                 IPowerCommandServices.DefaultInstance?.Logger.LogInformation(text);
                 break;

@@ -11,11 +11,11 @@ public static class CommandLineInputInterpreterExtension
         var raw = commandLineInput.Trim();
         var quotes = Regex.Matches(raw, "\\\"(.*?)\\\"").ToStringArray();
         var arguments = raw.Split(' ').Where(r => !r.Contains('\"') && !r.StartsWith("--")).ToList();
-        var flags = raw.Split(' ').Where(r => !r.Contains('\"') && r.StartsWith("--")).ToArray();
+        var options = raw.Split(' ').Where(r => !r.Contains('\"') && r.StartsWith("--")).ToArray();
         var identifier = arguments.Count == 0 ? defaultCommand : $"{arguments[0].ToLower()}";
         if(arguments.Count > 0) arguments.RemoveAt(0);  //Remove identifier from arguments
 
-        var retVal = new CommandLineInput {Arguments = arguments.ToArray(), Identifier = identifier, Quotes = quotes, Flags = flags, Raw = raw, Path = arguments.ToArray().ToPath()};
+        var retVal = new CommandLineInput {Arguments = arguments.ToArray(), Identifier = identifier, Quotes = quotes, Options = options, Raw = raw, Path = arguments.ToArray().ToPath()};
         return retVal;
     }
     public static string ToPath(this string[] inputArray)
@@ -30,42 +30,42 @@ public static class CommandLineInputInterpreterExtension
         foreach (Match match in matches) retVal.Add(match.ToString());
         return retVal.ToArray();
     }
-    public static string GetFlagValue(this ICommandLineInput input, string[] flags)
+    public static string GetOptionValue(this ICommandLineInput input, string[] options)
     {
-        foreach (var inputFlag in input.Flags) if (flags.Any(f => $"--{f}" == inputFlag)) return inputFlag.Replace("--", "");
+        foreach (var inputOption in input.Options) if (options.Any(f => $"--{f}" == inputOption)) return inputOption.Replace("--", "");
         return "";
     }
-    public static string GetFlagValue(this ICommandLineInput input, string flagName)
+    public static string GetOptionValue(this ICommandLineInput input, string optionName)
     {
-        var flag = input.Flags.FirstOrDefault(f => f == $"--{flagName.ToLower()}" || f.ToLower().Substring(2,1)  == $"{flagName.ToLower()}".Substring(0,1));
-        if (IsNullOrEmpty(flag)) return "";
+        var option = input.Options.FirstOrDefault(f => f == $"--{optionName.ToLower()}" || f.ToLower().Substring(2,1)  == $"{optionName.ToLower()}".Substring(0,1));
+        if (IsNullOrEmpty(option)) return "";
 
-        var firstQuotedFlagValueIfAny = FindFirstQuotedFlagValueIfAny(input, flagName);
-        if (!string.IsNullOrEmpty(firstQuotedFlagValueIfAny)) return firstQuotedFlagValueIfAny;
+        var firstQuotedOptionValueIfAny = FindFirstQuotedOptionValueIfAny(input, optionName);
+        if (!string.IsNullOrEmpty(firstQuotedOptionValueIfAny)) return firstQuotedOptionValueIfAny;
 
         short index = 0;
         var indexedInputs = input.Raw.Split(' ').Select(r => new IndexedInput{Index = index+=1,Value = r}).ToList();
-        var flagIndex = indexedInputs.First(i => i.Value.ToLower() == flag.ToLower()).Index;
-        var retVal = flagIndex == indexedInputs.Count ? "" : indexedInputs.First(i => i.Index == flagIndex + 1).Value.Replace("\"","");
-        return retVal.StartsWith("--") ? "" : retVal;   //A flag could not have a flag as it´s value
+        var optionIndex = indexedInputs.First(i => i.Value.ToLower() == option.ToLower()).Index;
+        var retVal = optionIndex == indexedInputs.Count ? "" : indexedInputs.First(i => i.Index == optionIndex + 1).Value.Replace("\"","");
+        return retVal.StartsWith("--") ? "" : retVal;   //A option could not have a option as it´s value
     }
-    public static bool HasFlag(this ICommandLineInput input, string flagName) => input.Flags.Any(f => f == $"--{flagName}");
-    public static bool NoFlag(this ICommandLineInput input, string flagName) => !HasFlag(input, flagName);
-    public static bool MustOnOfTheseFlagsCheck(this ICommandLineInput input, string[] flagNames) => flagNames.Any(flagName => flagName.ToLower() == flagName);
-    public static void DoBadFlagCheck(this ICommandLineInput input, IConsoleCommand command)
+    public static bool HasOption(this ICommandLineInput input, string optionName) => input.Options.Any(f => f == $"--{optionName}");
+    public static bool NoOption(this ICommandLineInput input, string optionName) => !HasOption(input, optionName);
+    public static bool MustHaveOneOfTheseOptionCheck(this ICommandLineInput input, string[] optionNames) => optionNames.Any(optionName => optionName.ToLower() == optionName);
+    public static void DoBadOptionCheck(this ICommandLineInput input, IConsoleCommand command)
     {
-        var dokumentedFlags = command.GetPowerCommandAttribute().Flags.Split('|');
-        foreach (var flag in input.Flags) if(dokumentedFlags.All(f => $"--{f.ToLower().Replace("!","")}" != flag.ToLower())) ConsoleService.Service.WriteLine($"{input.Identifier}", $"Warning, flag [{flag}] is not declared and probably unhandled in command [{command.Identifier}]", ConsoleColor.DarkYellow);
+        var dokumentedOptions = command.GetPowerCommandAttribute().Options.Split('|');
+        foreach (var option in input.Options) if(dokumentedOptions.All(f => $"--{f.ToLower().Replace("!","")}" != option.ToLower())) ConsoleService.Service.WriteLine($"{input.Identifier}", $"Warning, option  [{option}] is not declared and probably unhandled in command [{command.Identifier}]", ConsoleColor.DarkYellow);
     }
-    private static string FindFirstQuotedFlagValueIfAny(ICommandLineInput input, string flagName)
+    private static string FindFirstQuotedOptionValueIfAny(ICommandLineInput input, string optionName)
     {
         if (input.Quotes.Length == 0) return "";
-        //First lets find out if the next parameter after the flag is a surrounded by " characters
-        var lastIndexOfFlag = input.Raw.LastIndexOf($"--{flagName}") + $"--{flagName}".Length;
-        var quotesAfterFlag = input.Quotes.Where(q => input.Raw.LastIndexOf(q) > lastIndexOfFlag).Select(q => new{Index = input.Raw.LastIndexOf(q), Quote = q }).ToList();
-        var firstQuoteAfterFlag = quotesAfterFlag.FirstOrDefault(q => q.Index == quotesAfterFlag.Min(q => q.Index));
-        if (firstQuoteAfterFlag == null) return "";
-        var diff = firstQuoteAfterFlag.Index - lastIndexOfFlag;
-        return diff > 1 ? "" : firstQuoteAfterFlag.Quote.Replace("\"","");
+        //First lets find out if the next parameter after the option is a surrounded by " characters
+        var lastIndexOfOption = input.Raw.LastIndexOf($"--{optionName}") + $"--{optionName}".Length;
+        var quotesAfterOption = input.Quotes.Where(q => input.Raw.LastIndexOf(q) > lastIndexOfOption).Select(q => new{Index = input.Raw.LastIndexOf(q), Quote = q }).ToList();
+        var firstQuoteAfterOption = quotesAfterOption.FirstOrDefault(q => q.Index == quotesAfterOption.Min(q => q.Index));
+        if (firstQuoteAfterOption == null) return "";
+        var diff = firstQuoteAfterOption.Index - lastIndexOfOption;
+        return diff > 1 ? "" : firstQuoteAfterOption.Quote.Replace("\"","");
     }
 }

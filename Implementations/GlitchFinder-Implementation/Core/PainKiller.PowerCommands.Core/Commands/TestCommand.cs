@@ -1,8 +1,8 @@
 ﻿namespace PainKiller.PowerCommands.Core.Commands;
 
 [PowerCommandDesign( description: "Run test on specific command or all commands, the must have a PowerCommandTest attribute declared on class level.",
-                           flags: "all|!command|trace",
-                         example: "//Test a specific command|test --command commandName|//Test all commands (default) flag could be omitted|test --all")]
+                           options: "all|!command|trace",
+                         example: "//Test a specific command|test --command commandName|//Test all commands (default) option could be omitted|test --all")]
 public class TestCommand : CommandBase<CommandsConfiguration>
 {
     public TestCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
@@ -11,22 +11,22 @@ public class TestCommand : CommandBase<CommandsConfiguration>
     {
         Console.Clear();
         var commands = IPowerCommandsRuntime.DefaultInstance?.Commands ?? new List<IConsoleCommand>();
-        if (Input.HasFlag("command"))
+        if (Input.HasOption("command"))
         {
-            var command = commands.FirstOrDefault(c => c.Identifier == Input.GetFlagValue("command"));
+            var command = commands.FirstOrDefault(c => c.Identifier == Input.GetOptionValue("command"));
             if (command != null)
             {
                 var items = GetTest(command);
-                if (!Input.HasFlag("trace")) Console.Clear();
+                if (!Input.HasOption("trace")) Console.Clear();
 
                 ConsoleTableService.RenderConsoleCommandTable(items.ToArray(), this);
             }
-            else WriteError($"Could not find a command with identity [{Input.GetFlagValue("command")}]");
+            else WriteError($"Could not find a command with identity [{Input.GetOptionValue("command")}]");
         }
-        else if (Input.HasFlag("all"))
+        else if (Input.HasOption("all"))
         {
             var reports = GetTestReports().Where(r => !r.TestDisabled);
-            if (!Input.HasFlag("trace")) Console.Clear();
+            if (!Input.HasOption("trace")) Console.Clear();
             ConsoleTableService.RenderConsoleCommandTable(reports.ToArray(), this);
         }
         return Ok();

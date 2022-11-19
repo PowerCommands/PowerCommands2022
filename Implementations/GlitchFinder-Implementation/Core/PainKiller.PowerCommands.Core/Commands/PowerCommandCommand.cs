@@ -2,7 +2,7 @@
 
 [PowerCommandDesign(      description: "Create or update the Visual Studio Solution with all depended projects",
                     arguments:"!<action> (new or update)",
-                    flags:"command|solution|output|template|backup",
+                    options:"command|solution|output|template|backup",
                     suggestion:"new",
                     quotes: "<path>",
                     example: "//create new VS solution|powercommand new --solution testproject --output \"C:\\Temp\\\"|//Create new PowerCommand named Demo|powercommand new --command Demo|//Update powercommands core, this will first delete current Core projects and than apply the new Core projects|powercommand update|//Only update template(s)|powercommand update --templates|//Update with backup|powercommand update --backup|//Create a new command|powercommand new --command MyNewCommand")]
@@ -12,10 +12,10 @@ public class PowerCommandCommand : CommandBase<CommandsConfiguration>
     public PowerCommandCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
     public override RunResult Run()
     {
-        var name = Input.HasFlag("solution") ? Input.GetFlagValue("solution") : Input.GetFlagValue("template");
+        var name = Input.HasOption("solution") ? Input.GetOptionValue("solution") : Input.GetOptionValue("template");
         _artifact.Name = name;
 
-        if (Input.SingleArgument == "new" && Input.HasFlag("solution") && !string.IsNullOrEmpty(Input.GetFlagValue("solution")) && Input.HasFlag("output") && !string.IsNullOrEmpty(Input.GetFlagValue("output")))
+        if (Input.SingleArgument == "new" && Input.HasOption("solution") && !string.IsNullOrEmpty(Input.GetOptionValue("solution")) && Input.HasOption("output") && !string.IsNullOrEmpty(Input.GetOptionValue("output")))
         {
             var cmdNew = new CommandNewSolution(Identifier, Configuration, _artifact, Input);
             return cmdNew.Run();
@@ -25,11 +25,11 @@ public class PowerCommandCommand : CommandBase<CommandsConfiguration>
             var cmdUpdate = new CommandUpdate(Identifier, Configuration, _artifact, Input);
             return cmdUpdate.Run();
         }
-        if (Input.HasFlag("template") && !string.IsNullOrEmpty(Input.GetFlagValue("template")))
+        if (Input.HasOption("template") && !string.IsNullOrEmpty(Input.GetOptionValue("template")))
         {
             BadParameterError("Not implemented yet...");
         }
-        if (Input.SingleArgument == "new" && Input.HasFlag("command")) return CreateCommand(Input.GetFlagValue("command"));
+        if (Input.SingleArgument == "new" && Input.HasOption("command")) return CreateCommand(Input.GetOptionValue("command"));
         return BadParameterError("Missing arguments");
     }
 

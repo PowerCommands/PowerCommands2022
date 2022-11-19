@@ -1,11 +1,11 @@
 ﻿namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
-[PowerCommandTest(tests: "myArgument \"myQuote\" --myFlag")]
-[PowerCommandDesign(  description: "Demonstration command just to show your input of arguments, quotes and flags",
+[PowerCommandTest(tests: "myArgument \"myQuote\" --myOption")]
+[PowerCommandDesign(  description: "Demonstration command just to show your input of arguments, quotes and options",
                 arguments: "<value>",
                 quotes:"<value>",
-                flags:"<value>",
-                example: "input myArgument \"myQuote\" --myFlag")]
+                options:"<value>",
+                example: "input myArgument \"myQuote\" --myOption")]
 public class InputCommand : CommandBase<PowerCommandsConfiguration>
 {
     public InputCommand(string identifier, PowerCommandsConfiguration configuration) : base(identifier, configuration) { }
@@ -13,7 +13,7 @@ public class InputCommand : CommandBase<PowerCommandsConfiguration>
     {
         if (Input.Arguments.Length > 0) WriteLine($"Arguments: {string.Join(' ', Input.Arguments)}");
         if (Input.Quotes.Length > 0) WriteLine($"Quotes: {string.Join(' ', Input.Quotes)}");
-        if (Input.Arguments.Length > 0) WriteLine($"Flags: {string.Join(' ', Input.Flags)}");
+        if (Input.Arguments.Length > 0) WriteLine($"Options: {string.Join(' ', Input.Options)}");
         
         return Ok();
     }

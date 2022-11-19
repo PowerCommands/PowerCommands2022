@@ -15,30 +15,30 @@ public class HelpService : IHelpService
 
         var examples = da.Examples.Split('|');
 
-        ConsoleService.Service.WriteHeaderLine($"{GetType().Name}", "\nDescription", writeLog: WriteToLog);
+        ConsoleService.Service.WriteHeaderLine($"{GetType().Name}", $"{command.Identifier}\n\nDescription", writeLog: WriteToLog);
         ConsoleService.Service.WriteLine(nameof(HelpService),$"{da.Description}");
         Console.WriteLine();
 
         var args = da.Arguments.Replace("!","").Split('|');
         var quotes = da.Quotes.Replace("!", "").Split('|');
-        var flags = da.Flags.Replace("!", "").Split('|');
+        var options = da.Options.Replace("!", "").Split('|');
         
         ConsoleService.Service.WriteHeaderLine(nameof(HelpService), "Usage");
 
         var argsMarkup = args.Any(a => !string.IsNullOrEmpty(a)) ? "[arguments]" : "";
         var quotesMarkup = quotes.Any(q => !string.IsNullOrEmpty(q)) ? "[quotes]" : "";
-        var flagsMarkup = flags.Any(f => !string.IsNullOrEmpty(f)) ? "[flags]" : "";
+        var optionMarkup = options.Any(f => !string.IsNullOrEmpty(f)) ? "[options]" : "";
 
         ConsoleService.Service.Write(nameof(HelpService), command.Identifier, ConsoleColor.Blue);
-        ConsoleService.Service.WriteLine(nameof(HelpService), $" {argsMarkup} {quotesMarkup} {flagsMarkup}");
+        ConsoleService.Service.WriteLine(nameof(HelpService), $" {argsMarkup} {quotesMarkup} {optionMarkup}");
         ConsoleService.Service.WriteLine(nameof(HelpService), "");
-        ConsoleService.Service.WriteHeaderLine(nameof(HelpService),"Flag options:");
-        var flagDescriptions = flags.Select(f => f.ToFlagDescription());
-        ConsoleService.Service.WriteLine(nameof(HelpService), string.Join(',',flagDescriptions));
+        ConsoleService.Service.WriteHeaderLine(nameof(HelpService),"Options:");
+        var optionDescriptions = options.Select(f => f.ToOptionDescription());
+        ConsoleService.Service.WriteLine(nameof(HelpService), string.Join(',', optionDescriptions));
         Console.WriteLine("");
         if (string.IsNullOrEmpty(da.Examples)) return;
         
-        ConsoleService.Service.WriteHeaderLine($"{GetType().Name}", $"{nameof(da.Examples)} Commands:", writeLog: WriteToLog);
+        ConsoleService.Service.WriteHeaderLine($"{GetType().Name}", $"{nameof(da.Examples)}:", writeLog: WriteToLog);
         foreach (var e in examples) WriteItem(e, command.Identifier);
     }
     private void WriteItem(string description, string identifier = "")

@@ -6,6 +6,6 @@ public class CommandMetadata
 {
     public string Identifier { get; set; } = "";
     public List<string> Parameters { get; } = new();
-    public List<PowerFlag> Flags { get; } = new();
+    public List<PowerOption> Options { get; } = new();
     public List<string> Examples { get; } = new();
 }

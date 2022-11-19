@@ -2,7 +2,7 @@
 
 [PowerCommandTest(tests: "\"my decrypted secret\"|--decrypt EAAAAPv9AsKo6nfHJoFBNmQw9nKZv9PCdLyYhWoJgbovqGQpwY7PmSAkSPO9aagX0kSQyQ==")]
 [PowerCommandDesign(  description: "Encrypt or decrypt your input", 
-                      flags: "decrypt",
+                      options: "decrypt",
                     example: "//Encrypt something|encryption \"my decrypted secret\"|//Decrypt your encrypted string|encryption --decrypt EAAAAPv9AsKo6nfHJoFBNmQw9nKZv9PCdLyYhWoJgbovqGQpwY7PmSAkSPO9aagX0kSQyQ==")]
 public class EncryptionCommand : CommandBase<CommandsConfiguration>
 {
@@ -10,7 +10,7 @@ public class EncryptionCommand : CommandBase<CommandsConfiguration>
 
     public override RunResult Run()
     {
-        WriteLine(Input.HasFlag("decrypt") ? EncryptionService.Service.DecryptString(Input.GetFlagValue("decrypt")) : EncryptionService.Service.EncryptString(Input.SingleQuote));
+        WriteLine(Input.HasOption("decrypt") ? EncryptionService.Service.DecryptString(Input.GetOptionValue("decrypt")) : EncryptionService.Service.EncryptString(Input.SingleQuote));
         return Ok();
     }
 }

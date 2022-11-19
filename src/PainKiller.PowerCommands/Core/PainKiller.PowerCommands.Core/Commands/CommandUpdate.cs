@@ -10,7 +10,7 @@ public class CommandUpdate : PowerCommandCommand
     }
     public override RunResult Run()
     {
-        var template = Input.HasFlag("template");
+        var template = Input.HasOption("template");
         if (template)
         {
             _path = Path.Combine(AppContext.BaseDirectory, "output");
@@ -20,7 +20,7 @@ public class CommandUpdate : PowerCommandCommand
         _path = SolutionFileManager.GetLocalSolutionRoot();
         var solutionFile = Directory.GetFileSystemEntries(_path, "*.sln").FirstOrDefault();
         var existingName = VisualStudioManager.GetName();
-        var backup = Input.HasFlag("backup");
+        var backup = Input.HasOption("backup");
 
         IVisualStudioManager vsm = new VisualStudioManager(existingName, _path, WriteLine);
 
