@@ -29,7 +29,7 @@
 * [Use Markdown format](#UseMarkdownformat)
 * [Always describe your PowerCommands](#AlwaysdescribeyourPowerCommands)
 * [Use PowerCommand attribute](#UsePowerCommandattribute)
-* [Flags](#Flags)
+* [options](#options)
 
 <!-- vscode-markdown-toc-config
 	numbering=false
@@ -192,13 +192,13 @@ You have two options
  ```powercommand update``` and then reload the solution
 
 ## <a name='DesignofyourCommands'></a>Design of your Commands
- Think of your command as an one line command with some parameters in a cmd prompt environment, it should do a single isolated task, for example lets say you want to convert yaml file to json or xml. A good name could be **ConvertCommand**, as parameters you have a path to the input file, and a flag for the format and a value to that flag. That is a pretty good design for one Command. 
+ Think of your command as an one line command with some parameters in a cmd prompt environment, it should do a single isolated task, for example lets say you want to convert yaml file to json or xml. A good name could be **ConvertCommand**, as parameters you have a path to the input file, and a option for the format and a value to that option. That is a pretty good design for one Command. 
  
  The usage of this command will look like this if I want to convert my yaml fil to json.
 
 ```convert "C:\temp\myYaml.yaml" --format json```
 
-If you want the input to be more self described, which the framework encourages you to do for clarity, you can choose to add a flag for the filepath like this:
+If you want the input to be more self described, which the framework encourages you to do for clarity, you can choose to add a option for the filepath like this:
 
 ```convert --file "C:\temp\myYaml.yaml" --format json```
  
@@ -332,14 +332,14 @@ In such cases they should support the identical configuration structure otherwis
 This is an example where every property of the attributes is used
 
 ![Alt text](images/attributes.png?raw=true "Attributes")
-Attributes is used to show a nice description of the command with the built in --help flag. 
+Attributes is used to show a nice description of the command with the built in --help option. 
 
 ```
 regression --help
 ```
-![Alt text](images/power_command_attribute.png?raw=true "Usage of help flag")
+![Alt text](images/power_command_attribute.png?raw=true "Usage of help option")
 
-But it is just not for displaying the help, the flag property and the suggestion property of the PowerCommandAttribute controls suggestions provided by intellisense, you should really take advantage of that.
+But it is just not for displaying the help, the option property and the suggestion property of the PowerCommandAttribute controls suggestions provided by intellisense, you should really take advantage of that.
 
 ## <a name='Options'></a>Options
 In the example image showing usage of the attributes you could se that the options: property is set to **"mode|name"**, that means that this command has two option one named **mode** and the other one is **name**. This will give the user autocomplete feedback when typing - and using the [Tab] tangent.

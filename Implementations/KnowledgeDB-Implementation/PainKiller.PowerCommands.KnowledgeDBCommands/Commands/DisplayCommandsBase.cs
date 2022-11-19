@@ -47,7 +47,7 @@ public abstract class DisplayCommandsBase : CommandBase<PowerCommandsConfigurati
                 shellExecuteManager = new BrowserManager();
                 break;
             default:
-                WriteLine($"The source type {match.SourceType} is not supported, only onenote path or url is valid, you can change that with --edit --source flag on the object, see examples");
+                WriteLine($"The source type {match.SourceType} is not supported, only onenote path or url is valid, you can change that with --edit --source option on the object, see examples");
                 break;
         }
         WriteHeadLine($"Opening [{match.Uri}] with [{shellExecuteManager?.GetType().Name}]");

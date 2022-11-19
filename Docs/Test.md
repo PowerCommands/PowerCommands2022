@@ -29,26 +29,26 @@ And this will be the result:
 
 ## Test bad result
 
-That was happy path testing but sometimes you want to test for expected bad results also. Lets say that you have a flag that must have a value if it is used and you want test that this validation really work, you want to trigger a error. If a error occurs you are happy, the test is a success. 
+That was happy path testing but sometimes you want to test for expected bad results also. Lets say that you have a option that must have a value if it is used and you want test that this validation really work, you want to trigger a error. If a error occurs you are happy, the test is a success. 
 
 How do you do that?
 
-That is simple, you youst put a **!** character first, like in this example that is used on the **Flag** command.
+That is simple, you youst put a **!** character first, like in this example that is used on the **option** command.
 ```
 [PowerCommandTest(        tests: "--mandatory value|!--optional someValue --mandatory")]
-[PowerCommandDesign(description: "Try out how flag works, first flag requires a value, second does not.",
-                          flags: "!mandatory|optional")]
+[PowerCommandDesign(description: "Try out how option works, first option requires a value, second does not.",
+                          options: "!mandatory|optional")]
 ```
-Notice that the first flag mandatory has a trailing **!** character wich means that if this flag is used it must have a value otherwise the validation will fail.
-The test reflecs that constraint, the second thest will run the flag command like this:
+Notice that the first option mandatory has a trailing **!** character wich means that if this option is used it must have a value otherwise the validation will fail.
+The test reflecs that constraint, the second thest will run the option command like this:
 
-```flag --optional someValue --mandatory```
+```option --optional someValue --mandatory```
 
-The mandatory flag has no value and validation will fail, wich the test also expects, this is the result when running the test command.
+The mandatory option has no value and validation will fail, wich the test also expects, this is the result when running the test command.
 
-```test --command flag```
+```test --command option```
 
-![Alt text](images/test_flag.png?raw=true "Test result")
+![Alt text](images/test_option.png?raw=true "Test result")
 
 ## Run test for all commands
 Usually I think you want to run through all your commands that has declared as testable using the PowerCommandTest attribute, just run this command:

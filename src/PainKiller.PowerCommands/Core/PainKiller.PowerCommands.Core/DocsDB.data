@@ -45,7 +45,7 @@
       "Name": "PowerCommandsDesignAttribute",
       "Uri": "https://github.com/PowerCommands/PowerCommands2022/blob/main/Docs/PowerCommandDesignAttribute.md",
       "Updated": "2022-10-27T23:38:02.4488661+02:00",
-      "Tags": "describe,help,flag,required,mandatory",
+      "Tags": "describe,help,option,required,mandatory",
       "Version": 1
     },
     {

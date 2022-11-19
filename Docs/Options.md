@@ -5,7 +5,7 @@ Options is what the name implies, options for your command, lets have a look at 
 
 You could also se that this Command has two options separated with pipe **"mode|name"**, first one named **mode** and the other one is **name**. This will give the user autocomplete feedback when typing - and using the [Tab] tangent.
 
-Programatically you can use Options in two ways, you could grab the value, wich is the parameter typed after the flag, like this (using the RegressionCommand as example, it is a user created command).
+Programatically you can use Options in two ways, you could grab the value, wich is the parameter typed after the option, like this (using the RegressionCommand as example, it is a user created command).
 
 ``` regression --mode normal --name "My sample project" ```
 
