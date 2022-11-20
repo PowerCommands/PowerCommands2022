@@ -6,7 +6,7 @@ public static class ConsoleTableService
 {
     private static readonly Dictionary<string, IEnumerable<IColumnRender>> TableColumnRenderDefinitions = new();
 
-    public static void RenderTable<T>(IEnumerable<T> items, IConsoleWriter consoleWriter) where T : class, new()
+    public static void RenderTable<T>(IEnumerable<T> items, IConsoleWriter consoleWriter) where T : new()
     {
         var tableITems = items.ToArray();
         if (!tableITems.Any()) return;

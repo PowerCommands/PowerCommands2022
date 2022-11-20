@@ -41,6 +41,9 @@ public class ProgressBar
     private long _count;
     // Total item number that to be processed.
     private readonly long _total;
+
+    private readonly ConsoleColor _color;
+
     // The text width on the left side of the progress bar.
     private const int TextWidth = 6;
 
@@ -50,7 +53,7 @@ public class ProgressBar
     /// <remarks>
     /// The progress bar created this way can only updated by percent.
     /// </remarks>
-    public ProgressBar() { }
+    public ProgressBar() => _color = Console.ForegroundColor;
 
     /// <summary>
     /// Create a progress bar with specified total number.
@@ -58,7 +61,19 @@ public class ProgressBar
     /// <param name="total">Total number which indicates the 100% progress.</param>
     public ProgressBar(long total)
     {
-        this._total = total;
+        _total = total;
+        _color = Console.ForegroundColor;
+    }
+
+    /// <summary>
+    /// Create a progress bar with specified total number and a specified color.
+    /// </summary>
+    /// <param name="total">Total number which indicates the 100% progress.</param>
+    /// <param name="color">The color used for the progressbar</param>
+    public ProgressBar(long total, ConsoleColor color)
+    {
+        _total = total;
+        _color = color;
     }
 
     /// <summary>
@@ -107,10 +122,10 @@ public class ProgressBar
         {
             return;
         }
-        int originCursorTop = Console.CursorTop;
-        int originCursorLeft = Console.CursorLeft;
-        ConsoleColor originBackgroundColor = Console.BackgroundColor;
-        ConsoleColor originForegroundColor = Console.ForegroundColor;
+        var originCursorTop = Console.CursorTop;
+        var originCursorLeft = Console.CursorLeft;
+        var originBackgroundColor = Console.BackgroundColor;
+        var originForegroundColor = Console.ForegroundColor;
 
         int width = Console.WindowWidth - TextWidth;
         _percentage = (int)Math.Round(percent * 100);
@@ -122,9 +137,9 @@ public class ProgressBar
         Console.Write($"{_percentage}%");
 
         // Print progress bar.
-        Console.BackgroundColor = originForegroundColor;
-        int newCursorLeft = (int)Math.Round(percent * width);
-        for (int cursor = _cursorLeft; cursor < newCursorLeft; cursor++)
+        Console.BackgroundColor = _color;
+        var newCursorLeft = (int)Math.Round(percent * width);
+        for (var cursor = _cursorLeft; cursor < newCursorLeft; cursor++)
         {
             Console.SetCursorPosition(TextWidth + cursor, _cursorTop);
             Console.Write(' ');

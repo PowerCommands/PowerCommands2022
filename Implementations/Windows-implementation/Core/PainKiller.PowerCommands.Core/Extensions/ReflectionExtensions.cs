@@ -4,7 +4,6 @@ using System.Reflection;
 using System.Text.Json;
 
 namespace PainKiller.PowerCommands.Core.Extensions;
-
 public static class ReflectionExtensions
 {
     public static string GetDescription(this Type type)
@@ -74,5 +73,18 @@ public static class ReflectionExtensions
         using MemoryStream stream = new MemoryStream();
         var jsonString = JsonSerializer.Serialize(objSource);
         return JsonSerializer.Deserialize<T>(jsonString)!;
+    }
+    public static string ToUsingDescription(this IConsoleCommand command)
+    {
+        var da = command.GetPowerCommandAttribute();
+        var args = da.Arguments.Replace("!", "").Split('|');
+        var quotes = da.Quotes.Replace("!", "").Split('|');
+        var options = da.Options.Replace("!", "").Split('|');
+        
+        var argsMarkup = args.Any(a => !string.IsNullOrEmpty(a)) ?      "[arguments]" : "";
+        var quotesMarkup = quotes.Any(q => !string.IsNullOrEmpty(q)) ?  "[quotes]" : "";
+        var optionMarkup = options.Any(f => !string.IsNullOrEmpty(f)) ? "[options]" : "";
+
+        return $" {argsMarkup} {quotesMarkup} {optionMarkup}".PadRight(38);
     }
 }

@@ -16,7 +16,7 @@ public class HelpService : IHelpService
         var examples = da.Examples.Split('|');
 
         ConsoleService.Service.WriteHeaderLine($"{GetType().Name}", $"{command.Identifier}\n\nDescription", writeLog: WriteToLog);
-        ConsoleService.Service.WriteLine(nameof(HelpService),$"{da.Description}");
+        ConsoleService.Service.WriteLine(nameof(HelpService),$" {da.Description}");
         Console.WriteLine();
 
         var args = da.Arguments.Replace("!","").Split('|');
@@ -29,12 +29,12 @@ public class HelpService : IHelpService
         var quotesMarkup = quotes.Any(q => !string.IsNullOrEmpty(q)) ? "[quotes]" : "";
         var optionMarkup = options.Any(f => !string.IsNullOrEmpty(f)) ? "[options]" : "";
 
-        ConsoleService.Service.Write(nameof(HelpService), command.Identifier, ConsoleColor.Blue);
+        ConsoleService.Service.Write(nameof(HelpService), $" {command.Identifier}", ConsoleColor.Blue);
         ConsoleService.Service.WriteLine(nameof(HelpService), $" {argsMarkup} {quotesMarkup} {optionMarkup}");
         ConsoleService.Service.WriteLine(nameof(HelpService), "");
         ConsoleService.Service.WriteHeaderLine(nameof(HelpService),"Options:");
         var optionDescriptions = options.Select(f => f.ToOptionDescription());
-        ConsoleService.Service.WriteLine(nameof(HelpService), string.Join(',', optionDescriptions));
+        ConsoleService.Service.WriteLine(nameof(HelpService), $" {string.Join(',', optionDescriptions)}");
         Console.WriteLine("");
         if (string.IsNullOrEmpty(da.Examples)) return;
         
@@ -45,10 +45,10 @@ public class HelpService : IHelpService
     {
         if (description.StartsWith("//"))
         {
-            ConsoleService.Service.WriteHeaderLine($"{GetType().Name}", $"\n{description}", ConsoleColor.Green);
+            ConsoleService.Service.WriteHeaderLine($"{GetType().Name}", $"\n{description.Replace("//","")}", ConsoleColor.White);
             return;
         }
-        ConsoleService.Service.Write(GetType().Name, $"{identifier} ", ConsoleColor.Blue, WriteToLog);
+        ConsoleService.Service.Write(GetType().Name, $" {identifier} ", ConsoleColor.Blue, WriteToLog);
         ConsoleService.Service.WriteLine(GetType().Name, description.Replace(identifier,"").Trim(), null, WriteToLog);
     }
 }

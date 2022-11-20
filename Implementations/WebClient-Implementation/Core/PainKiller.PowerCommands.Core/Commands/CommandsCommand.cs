@@ -1,4 +1,6 @@
-﻿namespace PainKiller.PowerCommands.Core.Commands;
+﻿using PainKiller.PowerCommands.Shared.Contracts;
+
+namespace PainKiller.PowerCommands.Core.Commands;
 
 [PowerCommandTest(tests: " |--this|--reserved|\"encrypt\"|--default")]
 [PowerCommandDesign( description: "Shows commands, or filter commands by name, create a new command, show default command with option --default",
@@ -19,7 +21,6 @@ public class CommandsCommand : CommandBase<CommandsConfiguration>
         if (!string.IsNullOrEmpty(Input.SingleQuote)) return FilterByName();
         return NoFilter();
     }
-
     private RunResult Update()
     {
         var commandName = Input.GetOptionValue("update");
@@ -30,36 +31,31 @@ public class CommandsCommand : CommandBase<CommandsConfiguration>
     private RunResult NoFilter()
     {
         WriteHeadLine($"\n- All commands:\n");
-        foreach (var consoleCommand in IPowerCommandsRuntime.DefaultInstance?.Commands!) WriteLine(consoleCommand.Identifier);
-        Console.WriteLine("commands --custom");
-        WriteHeadLine($"\nUse --reserved to only show core commands.");
-        Console.WriteLine("commands --reserved");
-        Console.WriteLine();
-
-        WriteHeadLine($"\nUse describe command to display details about a specific command, for example");
-        Console.WriteLine("describe exit");
-        WriteHeadLine($"You could also use the --help option for the same thing, but the help option could show something else if it is overriden by the Command author.");
-        Console.WriteLine("exit --help");
+        DisplayTable(IPowerCommandsRuntime.DefaultInstance?.Commands!);
+        WriteHeadLine($"\n\nUse describe command to display details about a specific command, for example:");
+        Console.WriteLine("describe commands");
+        WriteHeadLine($"\n\nOr like this just to show your custom created commands:");
+        Console.WriteLine("commands --this");
         return Ok();
     }
     private RunResult Reserved()
     {
         WriteHeadLine($"\n- Reserved commands:\n");
-        foreach (var consoleCommand in IPowerCommandsRuntime.DefaultInstance?.Commands.Where(c => c.GetType().FullName!.StartsWith("PainKiller.PowerCommands.Core"))!) WriteLine(consoleCommand.Identifier);
+        DisplayTable(IPowerCommandsRuntime.DefaultInstance?.Commands.Where(c => c.GetType().FullName!.StartsWith("PainKiller.PowerCommands.Core"))!);
         WriteHeadLine("\nReserved names should not be used for your custom commands.");
         return Ok();
     }
     private RunResult Custom()
     {
         WriteHeadLine($"\n- custom commands:");
-        foreach (var consoleCommand in IPowerCommandsRuntime.DefaultInstance?.Commands.Where(c => !c.GetType().FullName!.StartsWith("PainKiller.PowerCommands.Core"))!) WriteLine(consoleCommand.Identifier);
+        DisplayTable(IPowerCommandsRuntime.DefaultInstance?.Commands.Where(c => !c.GetType().FullName!.StartsWith("PainKiller.PowerCommands.Core"))!);
         return Ok();
     }
     private RunResult FilterByName()
     {
         WriteHeadLine($"\n- Commands with name containing {Input.SingleQuote}:\n");
         AppendToOutput = false;
-        foreach (var command in IPowerCommandsRuntime.DefaultInstance?.Commands.Where(c => c.Identifier.Contains(Input.SingleQuote))!) WriteLine(command.Identifier);
+        DisplayTable(IPowerCommandsRuntime.DefaultInstance?.Commands.Where(c => c.Identifier.Contains(Input.SingleQuote))!);
         AppendToOutput = true;
         return Ok();
     }
@@ -69,4 +65,10 @@ public class CommandsCommand : CommandBase<CommandsConfiguration>
         WriteLine(Configuration.DefaultCommand);
         return Ok();
     }
+    private void DisplayTable(IEnumerable<IConsoleCommand> commands)
+    {
+        var items = commands.Select(c => new CommandTableItem{ Identifier = c.Identifier, Using = c.ToUsingDescription() }).ToList();
+        ConsoleTableService.RenderTable(items, this);
+    }
+    class CommandTableItem{ public string? Identifier { get; set; } public string? Using { get; set; } }
 }

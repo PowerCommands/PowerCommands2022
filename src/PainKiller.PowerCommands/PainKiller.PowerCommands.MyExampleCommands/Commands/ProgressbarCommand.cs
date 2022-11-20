@@ -9,7 +9,7 @@ public class ProgressbarCommand : CommandBase<CommandsConfiguration>
     public override RunResult Run()
     {
         var itemCount = 100;
-        var progressbar = new ProgressBar(itemCount);
+        var progressbar = new ProgressBar(itemCount, ConsoleColor.DarkGreen);
         for (int i = 0; i < itemCount; i++)
         {
             progressbar.Update(i);

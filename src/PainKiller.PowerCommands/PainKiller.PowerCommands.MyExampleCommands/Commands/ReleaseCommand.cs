@@ -1,4 +1,5 @@
 ﻿using PainKiller.PowerCommands.Shared.Utils.DisplayTable;
+using System.Reflection;
 
 namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
@@ -34,7 +35,11 @@ public class ReleaseCommand : CommandBase<PowerCommandsConfiguration>
         }
         var projectPath = SolutionFileManager.GetLocalSolutionRoot().Replace("src\\PainKiller.PowerCommands\\", $"Implementations\\KnowledgeDB-Implementation\\PainKiller.PowerCommands.PowerCommandsConsole");
         if (Input.HasOption("publish")) Publish(projectPath);
-
+        foreach (var buildSummary in _summary)
+        {
+            var fileName = Path.Combine(buildSummary.Path, "PainKiller.PowerCommands.PowerCommandsConsole\\bin\\Debug\\net6.0", "PainKiller.PowerCommands.Core.dll");
+            if(File.Exists(fileName)) buildSummary.Version = ReflectionService.Service.GetVersion(Assembly.LoadFile(fileName));
+        }
         ConsoleTableService.RenderConsoleCommandTable(_summary, this);
         return Ok();
     }
@@ -79,5 +84,7 @@ public class ReleaseCommand : CommandBase<PowerCommandsConfiguration>
         public string BuildStatus { get; set; } = "";
         [ColumnRenderOptions(caption: "Published", order: 4, renderFormat: ColumnRenderFormat.SucessOrFailure, trigger1: "*OK*", trigger2: "*FAILED*", mark: "*")]
         public string Publish { get; set; } = "Disabled";
+        [ColumnRenderOptions(caption: "Published", order: 5, renderFormat: ColumnRenderFormat.SucessOrFailure, trigger1: "*OK*", trigger2: "*FAILED*", mark: "*")]
+        public string Version { get; set; } = "";
     }
 }
