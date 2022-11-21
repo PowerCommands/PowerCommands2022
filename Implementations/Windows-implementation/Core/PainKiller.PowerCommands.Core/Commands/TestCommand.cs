@@ -1,8 +1,9 @@
 ﻿namespace PainKiller.PowerCommands.Core.Commands;
 
-[PowerCommandDesign( description: "Run test on specific command or all commands, the must have a PowerCommandTest attribute declared on class level.",
+[PowerCommandDesign(   description: "Run test on specific command or all commands, the must have a PowerCommandTest attribute declared on class level.",
                            options: "all|!command|trace",
-                         example: "//Test a specific command|test --command commandName|//Test all commands (default) option could be omitted|test --all")]
+                disableProxyOutput: true,
+                           example: "//Test a specific command|test --command commandName|//Test all commands (default) option could be omitted|test --all")]
 public class TestCommand : CommandBase<CommandsConfiguration>
 {
     public TestCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }

@@ -2,8 +2,9 @@
 
 namespace PainKiller.PowerCommands.Core.Commands;
 [PowerCommandDesign(description: "Get, creates, removes or view secrets, first you need to configure your encryption key with initialize argument",
-                    options: "configuration|create|get|remove|salt",
-                  example: "//View all declared secrets|secret|//Get the decrypted value of named secret|secret --get \"mycommand-pass\"|secret --create \"mycommand-pass\"|secret --remove \"mycommand-pass\"|//Initialize your machine with a new encryption key (stops if this is already done)|secret --initialize")]
+                        options: "configuration|create|get|remove|salt",
+             disableProxyOutput: true,
+                        example: "//View all declared secrets|secret|//Get the decrypted value of named secret|secret --get \"mycommand-pass\"|secret --create \"mycommand-pass\"|secret --remove \"mycommand-pass\"|//Initialize your machine with a new encryption key (stops if this is already done)|secret --initialize")]
 public class SecretCommand : CommandBase<CommandsConfiguration>
 {
     public SecretCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }

@@ -5,7 +5,8 @@ namespace PainKiller.PowerCommands.Core.Commands;
 [PowerCommandTest(tests: " |--this|--reserved|\"encrypt\"|--default")]
 [PowerCommandDesign( description: "Shows commands, or filter commands by name, create a new command, show default command with option --default",
                           quotes: "<filter>",
-                           options: "this|reserved|default|!update",
+                         options: "this|reserved|default|!update",
+              disableProxyOutput: true,
                          example: "//Show all commands|commands|//Show your custom commands|commands --this|//Show reserved commands|commands --reserved|//Search for commands matching \"encrypt\"|commands \"encrypt\"|//Show default command|commands --default|//Update the dir command (command must exist in the configured PowerCommands project)|commands --update dir")]
 public class CommandsCommand : CommandBase<CommandsConfiguration>
 {

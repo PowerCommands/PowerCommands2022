@@ -3,7 +3,8 @@
 namespace PainKiller.PowerCommands.Core.Commands;
 
 [PowerCommandTest(tests: " ")]
-[PowerCommandDesign(description:"Shows current version for the Core components.")]
+[PowerCommandDesign(description:"Shows current version for the Core components.",
+             disableProxyOutput: true)]
 public class VersionCommand : CommandBase<CommandsConfiguration>
 {
     public VersionCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }

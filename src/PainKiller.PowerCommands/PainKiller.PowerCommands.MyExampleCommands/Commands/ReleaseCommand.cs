@@ -3,9 +3,10 @@ using System.Reflection;
 
 namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
-[PowerCommandDesign(description: "Command that prepares the implementation VS solutions with the new Core projects and then builds them to verify that the changes did not break anything",
+[PowerCommandDesign(  description: "Command that prepares the implementation VS solutions with the new Core projects and then builds them to verify that the changes did not break anything",
                           options: "all|no-build|build-only|publish|windows|knowledge|glitch|nist|web",
-                        example: "//Release and build all|release --all|//Release and build Glitchfinder and NistNvd|release --glitch --nist|//Just replace Core without build|release --all --no-build|//Just build the implementations|release --all --build-only|//Publish KnowledgeDB|release --publish")]
+               disableProxyOutput: true,
+                          example: "//Release and build all|release --all|//Release and build Glitchfinder and NistNvd|release --glitch --nist|//Just replace Core without build|release --all --no-build|//Just build the implementations|release --all --build-only|//Publish KnowledgeDB|release --publish")]
 public class ReleaseCommand : CommandBase<PowerCommandsConfiguration>
 {
     private readonly List<BuildSummary> _summary = new();

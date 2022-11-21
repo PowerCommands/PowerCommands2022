@@ -51,8 +51,8 @@ public static class CommandLineInputInterpreterExtension
     }
     public static bool HasOption(this ICommandLineInput input, string optionName) => input.Options.Any(f => f == $"--{optionName}");
     public static bool NoOption(this ICommandLineInput input, string optionName) => !HasOption(input, optionName);
-    public static string FirstOptionWithValue(this ICommandLineInput input) => $"{input.Options.FirstOrDefault(o => !IsNullOrEmpty(o))}".Replace("!", "").Replace("--", "");
     public static bool MustHaveOneOfTheseOptionCheck(this ICommandLineInput input, string[] optionNames) => optionNames.Any(optionName => optionName.ToLower() == optionName);
+    public static string FirstOptionWithValue(this ICommandLineInput input) => $"{input.Options.FirstOrDefault(o => !IsNullOrEmpty(o))}".Replace("!", "").Replace("--", "");
     public static void DoBadOptionCheck(this ICommandLineInput input, IConsoleCommand command)
     {
         var dokumentedOptions = command.GetPowerCommandAttribute().Options.Split('|');

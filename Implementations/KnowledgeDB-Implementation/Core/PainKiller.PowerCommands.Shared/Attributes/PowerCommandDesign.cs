@@ -21,7 +21,9 @@ public class PowerCommandDesignAttribute : Attribute
     [Description("Separate items with |, if you begin with // the value will be displayed as an comment row in help view.")]
     public string Examples { get; }
     public string Suggestion { get; }
-    public PowerCommandDesignAttribute(string description, bool overrideHelpOption = false, string arguments = "", string quotes = "", string example = "", string options = "", string secrets = "", string suggestion = "", bool useAsync = false)
+    [Description("If enabled another powercommands projekt could pickup the output, helpfull if your project is used with the ProxyCommand.")]
+    public bool DisableProxyOutput { get; }
+    public PowerCommandDesignAttribute(string description, bool overrideHelpOption = false, string arguments = "", string quotes = "", string example = "", string options = "", string secrets = "", string suggestion = "", bool useAsync = false, bool disableProxyOutput = false)
     {
         Description = description;
         OverrideHelpOption = overrideHelpOption;
@@ -32,5 +34,6 @@ public class PowerCommandDesignAttribute : Attribute
         Suggestion = suggestion;
         UseAsync = useAsync;
         Secrets = secrets;
+        DisableProxyOutput = disableProxyOutput;
     }
 }

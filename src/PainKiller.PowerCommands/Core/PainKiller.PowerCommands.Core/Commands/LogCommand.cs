@@ -3,6 +3,7 @@
 [PowerCommandTest(tests: "--list|--view|--process git")]
 [PowerCommandDesign( description: "View and manage the log",
                           options: "view|archive|!process",
+               disableProxyOutput: true,
                           example: "//View a list with all the logfiles|log|//Archive the logs into a zip file.|log --archive|//View content of the current log|log --view|//Filter the log show only posts matching the provided process tag, this requires that you are using process tags when logging in your command(s).|log --process created")]
 public class LogCommand : CommandBase<CommandsConfiguration>
 {

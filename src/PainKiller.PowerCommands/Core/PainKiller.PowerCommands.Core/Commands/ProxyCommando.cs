@@ -1,6 +1,7 @@
 ﻿namespace PainKiller.PowerCommands.Core.Commands;
 
-[PowerCommandDesign(description: "Proxy command, this command is executing a command outside this application, the functionality is therefore unknown")]
+[PowerCommandDesign(      description: "Proxy command, this command is executing a command outside this application, the functionality is therefore unknown",
+                   disableProxyOutput: true)]
 public class ProxyCommando : CommandBase<CommandsConfiguration>
 {
     private readonly string _name;

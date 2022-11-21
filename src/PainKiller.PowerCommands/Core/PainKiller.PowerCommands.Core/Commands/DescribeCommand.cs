@@ -4,6 +4,7 @@
 [PowerCommandDesign( description: "With help command you will be shown the provided description or online documentation of the command or a PowerCommand feature.",
                        arguments: "<command name or feature you are interested of knowing more>",
                          options: "docs|clear",
+              disableProxyOutput: true,
                          example: "describe exit|describe cls|describe log|//Open documentation about options (if any)|describe options --doc")]
 public class DescribeCommand : CommandBase<CommandsConfiguration>
 {

@@ -1,11 +1,12 @@
 ﻿namespace PainKiller.PowerCommands.Core.Commands;
 
-[PowerCommandDesign(      description: "Create or update the Visual Studio Solution with all depended projects",
-                    arguments:"!<action> (new or update)",
-                    options:"command|solution|output|template|backup",
-                    suggestion:"new",
-                    quotes: "<path>",
-                    example: "//create new VS solution|powercommand new --solution testproject --output \"C:\\Temp\\\"|//Create new PowerCommand named Demo|powercommand new --command Demo|//Update powercommands core, this will first delete current Core projects and than apply the new Core projects|powercommand update|//Only update template(s)|powercommand update --templates|//Update with backup|powercommand update --backup|//Create a new command|powercommand new --command MyNewCommand")]
+[PowerCommandDesign(  description: "Create or update the Visual Studio Solution with all depended projects",
+                        arguments: "!<action> (new or update)",
+                          options: "command|solution|output|template|backup",
+                       suggestion: "new",
+                           quotes: "<path>",
+               disableProxyOutput: true,
+                          example: "//create new VS solution|powercommand new --solution testproject --output \"C:\\Temp\\\"|//Create new PowerCommand named Demo|powercommand new --command Demo|//Update powercommands core, this will first delete current Core projects and than apply the new Core projects|powercommand update|//Only update template(s)|powercommand update --templates|//Update with backup|powercommand update --backup|//Create a new command|powercommand new --command MyNewCommand")]
 public class PowerCommandCommand : CommandBase<CommandsConfiguration>
 {
     private readonly ArtifactPathsConfiguration _artifact = ConfigurationService.Service.Get<ArtifactPathsConfiguration>().Configuration;

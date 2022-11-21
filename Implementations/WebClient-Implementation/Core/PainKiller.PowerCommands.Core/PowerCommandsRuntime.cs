@@ -45,9 +45,10 @@ public class PowerCommandsRuntime<TConfig> : IPowerCommandsRuntime where TConfig
         }
         if (command == null) throw new ArgumentOutOfRangeException($"Could not identify any Commmand with identy {input.Identifier} and there is no defaultCommand defined in configuration file either.");
         
+        var attrib = command.GetPowerCommandAttribute();
         if (input.Options.Any(f => f == "--help"))
         {
-            if (!command.GetPowerCommandAttribute().OverrideHelpOption)
+            if (!attrib.OverrideHelpOption)
             {
                 HelpService.Service.ShowHelp(command, clearConsole: true);
                 return new RunResult(command, input, "User prompted for help with --help option", RunResultStatus.Ok);
@@ -59,7 +60,11 @@ public class PowerCommandsRuntime<TConfig> : IPowerCommandsRuntime where TConfig
             return Latest;
         }
         if (command.GetPowerCommandAttribute().UseAsync) return ExecuteAsyncCommand(command, input);
-        try { Latest = command.Run(); }
+        try
+        {
+            Latest = command.Run();
+            if(!attrib.DisableProxyOutput) StorageService<ProxyResult>.Service.StoreObject(new ProxyResult { Identifier = Latest.Input.Identifier, Raw = Latest.Input.Raw, Output = Latest.Output, Status = Latest.Status }, Path.Combine(ConfigurationGlobals.ApplicationDataFolder, $"proxy_{Latest.Input.Identifier}.data"));
+        }
         catch (Exception e) { Latest = new RunResult(command, input, e.Message, RunResultStatus.ExceptionThrown); }
         finally{command.RunCompleted();}
         return Latest;
