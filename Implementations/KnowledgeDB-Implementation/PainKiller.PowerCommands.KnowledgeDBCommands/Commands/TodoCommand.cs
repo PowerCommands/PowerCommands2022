@@ -1,7 +1,7 @@
 namespace PainKiller.PowerCommands.KnowledgeDBCommands.Commands;
 
 [PowerCommandTest(         tests: " ")]
-[PowerCommandDesign( description: "Description of your command...",
+[PowerCommandDesign( description: "Add, remove or view your items tagged with todo",
                          options: "add|remove",
                          example: "//Show all todo:s|todo|//Add selected index to todo list|todo <index> add|//Remove selected index from todo list|todo <index> remove")]
 public class TodoCommand : DisplayCommandsBase

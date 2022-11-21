@@ -73,7 +73,7 @@ public class ReleaseCommand : CommandBase<PowerCommandsConfiguration>
         if (existing != null) existing.BuildStatus = summary.BuildStatus;
         else _summary.Add(summary);
     }
-    class Release { public string? Option { get; set; } public string? Name { get; set; } }
+    class Release { public string? Option { get; init; } public string? Name { get; init; } }
     class BuildSummary : IConsoleCommandTable
     {
         [ColumnRenderOptions(caption: "Solution path", order: 1)]
