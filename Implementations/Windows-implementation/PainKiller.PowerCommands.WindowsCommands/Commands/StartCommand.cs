@@ -1,4 +1,5 @@
 ﻿using PainKiller.PowerCommands.Core.BaseClasses;
+using PainKiller.PowerCommands.Core.Extensions;
 using PainKiller.PowerCommands.Core.Services;
 using PainKiller.PowerCommands.Shared.Attributes;
 using PainKiller.PowerCommands.Shared.DomainObjects.Core;
@@ -9,6 +10,7 @@ namespace PainKiller.PowerCommands.WindowsCommands.Commands;
 
 [PowerCommandDesign(  description: "Shows how to execute a external program in combination with some custom configuration.\nFavorite must be defined in the favorites section in the PowerCommandsConfiguration.yaml file",
                         arguments: "!<favorite name>",
+                          options: "exit",
                           example: "start music|start games")]
 public class StartCommand : CommandBase<PowerCommandsConfiguration>
 {
@@ -24,6 +26,7 @@ public class StartCommand : CommandBase<PowerCommandsConfiguration>
 
         var favorite = FindFavorite(Input.SingleArgument);
         if (favorite != null) Start(favorite);
+        if (Input.HasOption("exit")) return Quit();
         return Ok();
     }
     protected FavoriteConfiguration? FindFavorite(string name)
