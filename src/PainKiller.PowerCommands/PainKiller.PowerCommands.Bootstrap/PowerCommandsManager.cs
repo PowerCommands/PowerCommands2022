@@ -18,6 +18,7 @@ public class PowerCommandsManager : IPowerCommandsManager
     public void Run(string[] args)
     {
         var runAutomatedAtStartup = args.Length > 0;
+        var justRunOnceThenQuitPowerCommand = false;
         var runResultStatus = RunResultStatus.Initializing;
         var input = "";
         while (runResultStatus is not RunResultStatus.Quit)
@@ -34,6 +35,12 @@ public class PowerCommandsManager : IPowerCommandsManager
                     ConsoleService.Service.Write($"{nameof(PowerCommandsManager)}", ConfigurationGlobals.Prompt, null);
                     ConsoleService.Service.Write($"{nameof(PowerCommandsManager)} automated startup", $"{interpretedInput.Identifier}", ConsoleColor.Blue);
                     ConsoleService.Service.WriteLine($"{nameof(PowerCommandsManager)} automated startup", interpretedInput.Raw.Replace($"{interpretedInput.Identifier}",""), null);
+                    justRunOnceThenQuitPowerCommand = interpretedInput.HasOption("justRunOnceThenQuitPowerCommand");
+                    if (justRunOnceThenQuitPowerCommand)    //Remove the option that is triggering a shutdown when application is starting up with a proxy command.
+                    {
+                        input = input.Replace(" --justRunOnceThenQuitPowerCommand", "");
+                        interpretedInput = input.Interpret();
+                    }
                 }
                 runAutomatedAtStartup = false;
                 Services.Logger.LogInformation($"Console input Identifier:{interpretedInput.Identifier} raw:{interpretedInput.Raw}");
@@ -42,6 +49,7 @@ public class PowerCommandsManager : IPowerCommandsManager
                 runResultStatus = runResult.Status;
                 RunResultHandler(runResult);
                 Services.Diagnostic.Stop();
+                if (justRunOnceThenQuitPowerCommand) runResultStatus = RunResultStatus.Quit;
             }
             catch (ArgumentOutOfRangeException ex)
             {

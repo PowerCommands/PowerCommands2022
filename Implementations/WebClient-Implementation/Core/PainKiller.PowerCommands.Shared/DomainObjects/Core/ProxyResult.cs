@@ -8,4 +8,5 @@ public class ProxyResult
     public string Raw { get; set; } = "";
     public string Output { get; set; } = "";
     public RunResultStatus Status { get; set; }
+    public DateTime Created { get; set; } = DateTime.Now;
 }

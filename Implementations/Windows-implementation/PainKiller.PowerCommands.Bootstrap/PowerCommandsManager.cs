@@ -18,6 +18,7 @@ public class PowerCommandsManager : IPowerCommandsManager
     public void Run(string[] args)
     {
         var runAutomatedAtStartup = args.Length > 0;
+        var justRunOnceThenQuitPowerCommand = false;
         var runResultStatus = RunResultStatus.Initializing;
         var input = "";
         while (runResultStatus is not RunResultStatus.Quit)
@@ -33,7 +34,13 @@ public class PowerCommandsManager : IPowerCommandsManager
                     Services.Diagnostic.Message($"Started up with args: {interpretedInput.Raw}");
                     ConsoleService.Service.Write($"{nameof(PowerCommandsManager)}", ConfigurationGlobals.Prompt, null);
                     ConsoleService.Service.Write($"{nameof(PowerCommandsManager)} automated startup", $"{interpretedInput.Identifier}", ConsoleColor.Blue);
-                    ConsoleService.Service.WriteLine($"{nameof(PowerCommandsManager)} automated startup", interpretedInput.Raw.Replace($"{interpretedInput.Identifier}", ""), null);
+                    ConsoleService.Service.WriteLine($"{nameof(PowerCommandsManager)} automated startup", interpretedInput.Raw.Replace($"{interpretedInput.Identifier}",""), null);
+                    justRunOnceThenQuitPowerCommand = interpretedInput.HasOption("justRunOnceThenQuitPowerCommand");
+                    if (justRunOnceThenQuitPowerCommand)    //Remove the option that is triggering a shutdown when application is starting up with a proxy command.
+                    {
+                        input = input.Replace(" --justRunOnceThenQuitPowerCommand", "");
+                        interpretedInput = input.Interpret();
+                    }
                 }
                 runAutomatedAtStartup = false;
                 Services.Logger.LogInformation($"Console input Identifier:{interpretedInput.Identifier} raw:{interpretedInput.Raw}");
@@ -42,6 +49,7 @@ public class PowerCommandsManager : IPowerCommandsManager
                 runResultStatus = runResult.Status;
                 RunResultHandler(runResult);
                 Services.Diagnostic.Stop();
+                if (justRunOnceThenQuitPowerCommand) runResultStatus = RunResultStatus.Quit;
             }
             catch (ArgumentOutOfRangeException ex)
             {
@@ -54,14 +62,14 @@ public class PowerCommandsManager : IPowerCommandsManager
             }
             catch (Exception e)
             {
-                Services.Logger.LogError(e, "Unknown error");
+                Services.Logger.LogError(e,"Unknown error");
                 ConsoleService.Service.WriteError(GetType().Name, "Unknown error occurred, please try again");
             }
         }
     }
     private void RunResultHandler(RunResult runResult)
     {
-        if (Services.Configuration.ShowDiagnosticInformation) Services.Logger.LogInformation($"Command {runResult.ExecutingCommand.Identifier} run with input: [{runResult.Input.Raw}] output: [{runResult.Output.Trim()}] status: [{runResult.Status}]");
+        if(Services.Configuration.ShowDiagnosticInformation) Services.Logger.LogInformation($"Command {runResult.ExecutingCommand.Identifier} run with input: [{runResult.Input.Raw}] output: [{runResult.Output.Trim()}] status: [{runResult.Status}]");
         else Services.Logger.LogTrace($"Command {runResult.ExecutingCommand.Identifier} run with input: [{runResult.Input.Raw}] output: [{runResult.Output.Trim()}] status: [{runResult.Status}]");
         Services.Diagnostic.Message($"Input: {runResult.Input.Raw} Output: {runResult.Output} Status: {runResult.Status}");
         switch (runResult.Status)

@@ -63,7 +63,7 @@ public class PowerCommandsRuntime<TConfig> : IPowerCommandsRuntime where TConfig
         try
         {
             Latest = command.Run();
-            if(!attrib.DisableProxyOutput) StorageService<ProxyResult>.Service.StoreObject(new ProxyResult { Identifier = Latest.Input.Identifier, Raw = Latest.Input.Raw, Output = Latest.Output, Status = Latest.Status }, Path.Combine(ConfigurationGlobals.ApplicationDataFolder, $"proxy_{Latest.Input.Identifier}.data"));
+            if(!attrib.DisableProxyOutput) StorageService<ProxyResult>.Service.StoreObject(new ProxyResult { Identifier = Latest.Input.Identifier, Raw = Latest.Input.Raw, Output = Latest.Output, Status = Latest.Status }, command.GetOutputFilename());
         }
         catch (Exception e) { Latest = new RunResult(command, input, e.Message, RunResultStatus.ExceptionThrown); }
         finally{command.RunCompleted();}
