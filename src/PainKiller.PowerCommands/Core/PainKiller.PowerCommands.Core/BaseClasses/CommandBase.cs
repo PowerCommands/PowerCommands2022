@@ -36,19 +36,35 @@ public abstract class CommandBase<TConfig> : IConsoleCommand, IConsoleWriter whe
         if (IPowerCommandServices.DefaultInstance!.DefaultConsoleService.GetType().Name != ConsoleService.Service.GetType().Name) Console.WriteLine(_ouput.ToString());
         _ouput.Clear();
     }
+    public virtual RunResult Run() => throw new NotImplementedException();
+    public virtual async Task<RunResult> RunAsync() => await Task.FromResult(new RunResult(this, Input, "", RunResultStatus.Initializing));
+    protected TConfig Configuration { get; set; }
+
+    #region Options
+    protected string GetOptionValue(string optionName) => Input.GetOptionValue(optionName);
+    protected void DoBadOptionCheck() => Input.DoBadOptionCheck(this);
+    protected bool HasOption(string optionName) => Input.HasOption(optionName);
+    protected string FirstOptionWithValue() => Input.FirstOptionWithValue();
+    protected bool MustHaveOneOfTheseOptionCheck(string[] optionNames) => Input.MustHaveOneOfTheseOptionCheck(optionNames);
+    protected bool NoOption(string optionName) => Input.NoOption(optionName);
+    #endregion
+
+    #region output
     protected void DisableOutput() => AppendToOutput = false;
     protected void EnableOutput() => AppendToOutput = true;
     protected void DisplayOutput() => Console.WriteLine(_ouput.ToString());
     protected void ClearOutput() => _ouput.Clear();
     protected bool FindInOutput(string findPhrase) => _ouput.ToString().Contains(findPhrase);
-    protected TConfig Configuration { get; set; }
-    public virtual RunResult Run() => throw new NotImplementedException();
-    public virtual async Task<RunResult> RunAsync() => await Task.FromResult(new RunResult(this, Input, "", RunResultStatus.Initializing));
+    #endregion
+
+    #region RunResult
     protected RunResult Ok() => new(this, Input, _ouput.ToString(), RunResultStatus.Ok);
     protected RunResult Quit() => new(this, Input, _ouput.ToString(), RunResultStatus.Quit);
     protected RunResult Continue() => new(this, Input, _ouput.ToString(), RunResultStatus.Continue);
     protected RunResult BadParameterError(string output) => new(this, Input, output, RunResultStatus.ArgumentError);
     protected RunResult ExceptionError(string output) => new(this, Input, output, RunResultStatus.ExceptionThrown);
+    #endregion
+
     #region Write helpers
     public void Write(string output, ConsoleColor? color = null) => _console.Write(GetType().Name, output, color);
     public void WriteLine(string output) => _console.WriteLine(GetType().Name, output, null);

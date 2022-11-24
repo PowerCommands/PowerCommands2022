@@ -1,7 +1,8 @@
 ﻿namespace PainKiller.PowerCommands.Core.Commands;
 
-[PowerCommandDesign(      description: "Proxy command, this command is executing a command outside this application, the functionality is therefore unknown",
-                              options: "retry-interval-seconds",
+[PowerCommandDesign(      description: "Proxy command, this command is executing a command outside this application, the functionality is therefore unknown, you can however use options if you want, to control how the proxy should behave.",
+                              options: "retry-interval-seconds|no-quit",
+                              example: "//Use the retry-interval-seconds option to decide how long pause it should be between retries|//\nUse the --no-quit option to tell the proxy application to not quit after the command is run.",
                    disableProxyOutput: true)]
 public class ProxyCommando : CommandBase<CommandsConfiguration>
 {
@@ -18,7 +19,8 @@ public class ProxyCommando : CommandBase<CommandsConfiguration>
         WriteProcessLog("Proxy", $"{Input.Raw}");
         var input = Input.Raw.Interpret();
         var start = DateTime.Now;
-        ShellService.Service.Execute(_name, $"{Input.Raw} --justRunOnceThenQuitPowerCommand", _workingDirctory, WriteLine, useShellExecute: true);
+        var quitOption = Input.HasOption("no-quit") ? "" : " --justRunOnceThenQuitPowerCommand";
+        ShellService.Service.Execute(_name, $"{Input.Raw}{quitOption}", _workingDirctory, WriteLine, useShellExecute: true);
         
         var retries = 0;
         var maxRetries = 9;
