@@ -48,6 +48,13 @@ public class HtmlConsoleService : IConsoleService
         if (writeLog) WriteToLog(scope, $"{text}");
         OnWriteToOutput($"<p {_colorStyleStandard}>{text}</p>\n");
     }
+
+    public void WriteCodeExample(string scope, string commandName, string text, ConsoleColor? color = null, bool writeLog = true)
+    {
+        if (writeLog) WriteToLog(scope, $" {commandName} {text}");
+        OnWriteToOutput($"<p{_colorStyleHeader}>{commandName} <span></span> <span {_colorStyleStandard}>{text}</span></p>\n");
+    }
+
     public void WriteHeaderLine(string scope, string text, ConsoleColor color = ConsoleColor.DarkCyan, bool writeLog = true)
     {
         if (writeLog) WriteToLog(scope, $"{text}");

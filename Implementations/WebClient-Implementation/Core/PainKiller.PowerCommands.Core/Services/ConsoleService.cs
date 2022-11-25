@@ -48,6 +48,18 @@ public class ConsoleService : IConsoleService
         if (writeLog) WriteToLog(scope, $"{text}");
         OnWriteToOutput($"{text}\n");
     }
+
+    public void WriteCodeExample(string scope, string commandName, string text, ConsoleColor? color = null, bool writeLog = true)
+    {
+        var currentColor = Console.ForegroundColor;
+        Console.ForegroundColor = ConsoleColor.Blue;
+        Console.Write($" {commandName} ");
+        Console.ForegroundColor = currentColor;
+        Console.WriteLine(text);
+
+        if (writeLog) WriteToLog(scope, $" {commandName} {text}");
+        OnWriteToOutput($" {commandName} {text}\n");
+    }
     public void WriteHeaderLine(string scope, string text, ConsoleColor color = ConsoleColor.DarkCyan, bool writeLog = true)
     {
         var currentColor = Console.ForegroundColor;

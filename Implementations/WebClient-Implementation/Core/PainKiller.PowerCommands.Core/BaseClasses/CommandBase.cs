@@ -68,6 +68,7 @@ public abstract class CommandBase<TConfig> : IConsoleCommand, IConsoleWriter whe
     #region Write helpers
     public void Write(string output, ConsoleColor? color = null) => _console.Write(GetType().Name, output, color);
     public void WriteLine(string output) => _console.WriteLine(GetType().Name, output, null);
+    public void WriteCodeExample(string commandName, string text) => _console.WriteCodeExample(GetType().Name, commandName, text);
     public void WriteHeadLine(string output) => _console.WriteHeaderLine(GetType().Name, output);
     public void WriteSuccess(string output) => _console.WriteSuccess(GetType().Name, output);
     public void WriteSuccessLine(string output) => _console.WriteSuccessLine(GetType().Name, output);
