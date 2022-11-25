@@ -20,10 +20,14 @@ public abstract class CommandBase<TConfig> : IConsoleCommand, IConsoleWriter whe
     }
     public string Identifier { get; }
     protected bool AppendToOutput { get; set; } = true;
-    public virtual bool InitializeAndValidateInput(ICommandLineInput input)
+    protected PowerCommandDesignAttribute? DesignAttribute { get; private set; }
+    public virtual bool InitializeAndValidateInput(ICommandLineInput input, PowerCommandDesignAttribute? designAttribute = null)
     {
+        designAttribute ??= new PowerCommandDesignAttribute("This command has no design attribute");
         if (IPowerCommandServices.DefaultInstance!.DefaultConsoleService.GetType().Name != _console.GetType().Name) _console = IPowerCommandServices.DefaultInstance.DefaultConsoleService;
         Input = input;
+        DesignAttribute = designAttribute;
+        IPowerCommandServices.DefaultInstance.Diagnostic.ShowElapsedTime = DesignAttribute.ShowElapsedTime;
         var validationManager = new InputValidationManager(this, input, WriteError);
         var result = validationManager.ValidateAndInitialize();
         if (result.Options.Count > 0) Options.AddRange(result.Options);

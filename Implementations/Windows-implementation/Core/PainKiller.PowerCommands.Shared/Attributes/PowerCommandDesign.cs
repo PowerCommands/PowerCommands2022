@@ -23,7 +23,9 @@ public class PowerCommandDesignAttribute : Attribute
     public string Suggestion { get; }
     [Description("If enabled another powercommands projekt could pickup the output, helpfull if your project is used with the ProxyCommand.")]
     public bool DisableProxyOutput { get; }
-    public PowerCommandDesignAttribute(string description, bool overrideHelpOption = false, string arguments = "", string quotes = "", string example = "", string options = "", string secrets = "", string suggestion = "", bool useAsync = false, bool disableProxyOutput = false)
+    [Description("Show the .")]
+    public bool ShowElapsedTime { get; }
+    public PowerCommandDesignAttribute(string description, bool overrideHelpOption = false, string arguments = "", string quotes = "", string example = "", string options = "", string secrets = "", string suggestion = "", bool useAsync = false, bool disableProxyOutput = false, bool showElapsedTime = false)
     {
         Description = description;
         OverrideHelpOption = overrideHelpOption;
@@ -35,5 +37,6 @@ public class PowerCommandDesignAttribute : Attribute
         UseAsync = useAsync;
         Secrets = secrets;
         DisableProxyOutput = disableProxyOutput;
+        ShowElapsedTime = showElapsedTime;
     }
 }

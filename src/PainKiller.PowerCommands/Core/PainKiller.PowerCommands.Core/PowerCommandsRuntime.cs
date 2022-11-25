@@ -54,7 +54,7 @@ public class PowerCommandsRuntime<TConfig> : IPowerCommandsRuntime where TConfig
                 return new RunResult(command, input, "User prompted for help with --help option", RunResultStatus.Ok);
             }
         }
-        if (command.InitializeAndValidateInput(input))
+        if (command.InitializeAndValidateInput(input, attrib))
         {
             Latest = new RunResult(command, input, "Validation error", RunResultStatus.InputValidationError);
             return Latest;

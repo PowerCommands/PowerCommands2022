@@ -7,11 +7,13 @@ public class DiagnosticManager : IDiagnosticManager
 {    
     private readonly Stopwatch _stopWatch = new();
 
-    public DiagnosticManager(bool showDiagnostic)
+    public DiagnosticManager(bool showDiagnostic, bool showElapsedTime = false)
     {
         ShowDiagnostic = showDiagnostic;
+        ShowElapsedTime = showElapsedTime;
     }
     public bool ShowDiagnostic { get; set; }
+    public bool ShowElapsedTime { get; set; }
 
     public void Message(string diagnostic)
     {
@@ -32,12 +34,15 @@ public class DiagnosticManager : IDiagnosticManager
     }
     public void Start()
     {
-        if (!ShowDiagnostic) return;
         _stopWatch.Start();
     }
     public void Stop()
     {
-        if (!ShowDiagnostic) return;
+        if (!ShowDiagnostic && !ShowElapsedTime)
+        {
+            _stopWatch.Reset();
+            return;
+        }
         var ts = _stopWatch.Elapsed;
         _stopWatch.Reset();
         var elapsedTime = $"{ts.Hours:00}hh:{ts.Minutes:00}mm:{ts.Seconds:00}ss.{ts.Milliseconds / 10:00}ms";
