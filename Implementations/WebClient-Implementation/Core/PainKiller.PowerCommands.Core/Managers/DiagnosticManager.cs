@@ -46,7 +46,7 @@ public class DiagnosticManager : IDiagnosticManager
         var ts = _stopWatch.Elapsed;
         _stopWatch.Reset();
         var elapsedTime = $"{ts.Hours:00}hh:{ts.Minutes:00}mm:{ts.Seconds:00}ss.{ts.Milliseconds / 10:00}ms";
-        Console.WriteLine($"RunTime:{elapsedTime}");
+        Console.WriteLine($"\nRunTime:{elapsedTime}\n");
     }
     public string RootPath()
     {
