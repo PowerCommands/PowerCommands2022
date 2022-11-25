@@ -1,6 +1,4 @@
-﻿using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
-
-namespace PainKiller.PowerCommands.MyExampleCommands.Commands.Templates;
+﻿namespace PainKiller.PowerCommands.MyExampleCommands.Commands.Templates;
 
 [PowerCommandTest(         tests: " ")]
 [PowerCommandDesign( description: "Description of your command...",
