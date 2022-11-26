@@ -20,10 +20,10 @@ public static class ConsoleTableService
             var row = rows[rowIndex];
             if (rowIndex < 3)
             {
-                ConsoleService.Service.WriteHeaderLine(nameof(ConsoleTableService), row);
+                consoleWriter.WriteHeadLine(row);
                 continue;
             }
-            ConsoleService.Service.WriteLine(nameof(ConsoleTableService), row, null);
+            consoleWriter.WriteLine(row);
         }
     }
 
@@ -47,10 +47,10 @@ public static class ConsoleTableService
             var row = rows[rowIndex];
             if (rowIndex < 3)
             {
-                ConsoleService.Service.WriteHeaderLine(nameof(ConsoleTableService), row);
+                consoleWriter.WriteHeadLine(row);
                 continue;
             }
-            ConsoleService.Service.WriteLine(nameof(ConsoleTableService), row, null);
+            consoleWriter.WriteLine(row);
         }
     }
     public static void AddTableColumnRenderDefinitions(string name, IEnumerable<IColumnRender> columnRenderDefinitions)
@@ -65,9 +65,9 @@ public static class ConsoleTableService
             .Configure(o => o.NumberAlignment = Alignment.Right)
             .Read(WriteFormat.Alternative).Split("\r\n");
 
-        ConsoleService.Service.WriteHeaderLine(nameof(ConsoleTableService), rows[0]);
-        ConsoleService.Service.WriteHeaderLine(nameof(ConsoleTableService), rows[1]);
-        ConsoleService.Service.WriteHeaderLine(nameof(ConsoleTableService), rows[2]);
+        consoleWriter.WriteHeadLine(rows[0]);
+        consoleWriter.WriteHeadLine(rows[1]);
+        consoleWriter.WriteHeadLine(rows[2]);
 
         var renderCols = GetColumnRenders<T>(columnRenderDefinitions, consoleWriter).ToList();
 
@@ -77,7 +77,7 @@ public static class ConsoleTableService
             var row = rows[index];
             if (row.StartsWith("+-"))
             {
-                ConsoleService.Service.WriteLine(nameof(ConsoleTableService), row, null);
+                consoleWriter.WriteLine(row);
                 continue;
             }
             var cols = row.Split('|');
@@ -85,7 +85,7 @@ public static class ConsoleTableService
             {
                 if (colIndex == cols.Length - 1)
                 {
-                    Console.WriteLine("");
+                    consoleWriter.WriteLine("");
                     break;
                 }
                 var colRender = renderCols[colIndex];
@@ -102,7 +102,7 @@ public static class ConsoleTableService
         {
             if (colIndex == cols.Length - 1)
             {
-                Console.WriteLine("");
+                consoleWriter.WriteLine("");
                 break;
             }
             render.Write(cols[colIndex]);
@@ -110,7 +110,6 @@ public static class ConsoleTableService
     }
     private static IEnumerable<IColumnRender> GetColumnRenders<T>(IEnumerable<ColumnRenderOptionsAttribute> columnRenderDefinitions, IConsoleWriter consoleWriter)
     {
-        //if (TableColumnRenderDefinitions.ContainsKey(typeof(T).Name)) return TableColumnRenderDefinitions.First(r => r.Key == typeof(T).Name).Value;
         var renderCol = new List<IColumnRender>();
         foreach (var optionsAttribute in columnRenderDefinitions.OrderBy(c => c.Order))
         {
