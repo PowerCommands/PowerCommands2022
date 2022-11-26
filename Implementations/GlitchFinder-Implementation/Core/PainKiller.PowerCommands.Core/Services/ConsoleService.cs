@@ -7,17 +7,12 @@ public class ConsoleService : IConsoleService
     private static readonly Lazy<IConsoleService> Lazy = new(() => new ConsoleService());
     public static IConsoleService Service => Lazy.Value;
     public event OnWrite? WriteToOutput;
-
-    public bool DisableLog
+    public void DisableLog()
     {
-        get => _disableLog;
-        set
-        {
-            if(value) WriteWarning(nameof(ConsoleService),"Log from ConsoleService is disabled");
-            else WriteLine(nameof(ConsoleService), "Log from ConsoleService is enabled", null);
-            _disableLog = value;
-        }
+        WriteWarning(nameof(ConsoleService),"Log from ConsoleService is disabled");
+        _disableLog = true;
     }
+    public void EnableLog() => _disableLog = false;
     public void WriteObjectDescription(string scope, string name, string description, bool writeLog = true)
     {
         var currentColor = Console.ForegroundColor;
@@ -100,7 +95,7 @@ public class ConsoleService : IConsoleService
     public void WriteSuccess(string scope, string text, bool writeLog = true) => Write(scope, text, ConsoleColor.Green, writeLog);
     private void WriteToLog(string scope, string message, LogLevel level = LogLevel.Information)
     {
-        if(DisableLog) return;
+        if(_disableLog && level is LogLevel.Information or LogLevel.Debug or LogLevel.Trace) return;
         var text = $"{scope} {message}";
         switch (level)
         {
