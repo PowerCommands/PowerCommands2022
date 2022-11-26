@@ -18,7 +18,11 @@ public class HtmlConsoleService : IConsoleService
         WriteWarning(nameof(ConsoleService),"Log from ConsoleService is disabled");
         _disableLog = true;
     }
-    public void EnableLog() => _disableLog = false;
+    public void EnableLog()
+    {
+        _disableLog = false;
+        WriteToLog(nameof(ConsoleService), "Log from ConsoleService is enabled");
+    }
     public void WriteObjectDescription(string scope, string name, string description, bool writeLog = true)
     {
         if (writeLog) WriteToLog(scope, $"{name} {description}");

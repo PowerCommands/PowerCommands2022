@@ -18,7 +18,7 @@ public class ConsoleService : IConsoleService
     public void EnableLog()
     {
         _disableLog = false;
-        WriteToLog(nameof(ConsoleService), "Log from ConsoleService is disabled");
+        WriteToLog(nameof(ConsoleService), "Log from ConsoleService is enabled");
     }
     public void WriteObjectDescription(string scope, string name, string description, bool writeLog = true)
     {
