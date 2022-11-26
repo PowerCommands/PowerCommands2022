@@ -12,10 +12,14 @@ public class ConsoleService : IConsoleService
     /// </summary>
     public void DisableLog()
     {
-        WriteWarning(nameof(ConsoleService),"Log from ConsoleService is disabled");
+        WriteToLog(nameof(ConsoleService), "Log from ConsoleService is disabled", LogLevel.Warning);
         _disableLog = true;
     }
-    public void EnableLog() => _disableLog = false;
+    public void EnableLog()
+    {
+        _disableLog = false;
+        WriteToLog(nameof(ConsoleService), "Log from ConsoleService is disabled");
+    }
     public void WriteObjectDescription(string scope, string name, string description, bool writeLog = true)
     {
         var currentColor = Console.ForegroundColor;
