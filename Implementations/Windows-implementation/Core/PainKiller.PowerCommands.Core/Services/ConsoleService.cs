@@ -7,6 +7,9 @@ public class ConsoleService : IConsoleService
     private static readonly Lazy<IConsoleService> Lazy = new(() => new ConsoleService());
     public static IConsoleService Service => Lazy.Value;
     public event OnWrite? WriteToOutput;
+    /// <summary>
+    /// Disable log of severity levels Trace,Debug and Information.
+    /// </summary>
     public void DisableLog()
     {
         WriteWarning(nameof(ConsoleService),"Log from ConsoleService is disabled");

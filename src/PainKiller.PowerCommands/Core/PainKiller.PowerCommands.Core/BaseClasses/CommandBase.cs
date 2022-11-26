@@ -44,6 +44,12 @@ public abstract class CommandBase<TConfig> : IConsoleCommand, IConsoleWriter whe
     public virtual async Task<RunResult> RunAsync() => await Task.FromResult(new RunResult(this, Input, "", RunResultStatus.Initializing));
     protected TConfig Configuration { get; set; }
 
+    /// <summary>
+    /// Disable log of severity levels Trace,Debug and Information.
+    /// </summary>
+    protected void DisableLog() => ConsoleService.Service.DisableLog();
+    protected void EnableLog() => ConsoleService.Service.EnableLog();
+
     #region Options
     protected string GetOptionValue(string optionName) => Input.GetOptionValue(optionName);
     protected void DoBadOptionCheck() => Input.DoBadOptionCheck(this);
