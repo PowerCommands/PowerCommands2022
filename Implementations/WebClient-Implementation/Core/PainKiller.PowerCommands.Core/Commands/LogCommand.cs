@@ -25,12 +25,12 @@ public class LogCommand : CommandBase<CommandsConfiguration>
         Console.WriteLine();
         WriteHeadLine("To view current logfile type log view");
         WriteHeadLine("Example");
-        ConsoleService.Service.WriteLine(nameof(LogCommand), "log view");
+        ConsoleService.Service.WriteLine(nameof(LogCommand), "log --view");
 
         Console.WriteLine();
-        WriteHeadLine("To archive the logs into a zip file type log archive");
+        WriteHeadLine("To archive the logs into a zip file type log --archive");
         WriteHeadLine("Example");
-        ConsoleService.Service.WriteLine(nameof(LogCommand), "log archive");
+        ConsoleService.Service.WriteLine(nameof(LogCommand), "log --archive");
     }
     private void Archive() => WriteLine(Configuration.Log.ArchiveLogFiles());
     private void View()
