@@ -18,14 +18,12 @@ public class RunFlowManager
     public ICommandLineInput InitializeRunAutomation(ICommandLineInput input)
     {
         var retVal = input;
-        if (RunAutomatedAtStartup)
-        {
-            RunOnceThenQuit = input.HasOption("justRunOnceThenQuitPowerCommand");
-            if (!RunOnceThenQuit) return retVal; 
-            var raw = input.Raw.Replace(" --justRunOnceThenQuitPowerCommand", "");  //Remove the option that is triggering a shutdown when application is starting up with a proxy command.
-            retVal = raw.Interpret();
-        }
+        if (!RunAutomatedAtStartup) return retVal;
         RunAutomatedAtStartup = false;
+        RunOnceThenQuit = input.HasOption("justRunOnceThenQuitPowerCommand");
+        if (!RunOnceThenQuit) return retVal; 
+        var raw = input.Raw.Replace(" --justRunOnceThenQuitPowerCommand", "");  //Remove the option that is triggering a shutdown when application is starting up with a proxy command.
+        retVal = raw.Interpret();
         return retVal;
     }
 }
