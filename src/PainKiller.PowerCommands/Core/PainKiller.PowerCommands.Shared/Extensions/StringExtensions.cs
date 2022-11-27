@@ -1,4 +1,6 @@
-﻿namespace PainKiller.PowerCommands.Shared.Extensions;
+﻿using System.Text.RegularExpressions;
+
+namespace PainKiller.PowerCommands.Shared.Extensions;
 
 public static class StringExtensions
 {
@@ -14,4 +16,6 @@ public static class StringExtensions
         var required = option.StartsWith('!') ? " (required)" : "";
         return string.IsNullOrEmpty(option) ? "" : $"--{option.Replace("!", "")}{required}";
     }
+    public static string RemoveHtml(this string content) => Regex.Replace($"{content}", @"<[^>]*>", String.Empty);
+    public static List<string> ExtractLinks(this string content) => new Regex("http(s)?://([\\w+?\\.\\w+])+([a-zA-Z0-9\\~\\!\\@\\#\\$\\%\\^\\&amp;\\*\\(\\)_\\-\\=\\+\\\\\\/\\?\\.\\:\\;\\'\\,]*)?", RegexOptions.IgnoreCase).Matches(content).Select(m => m.Value).ToList();
 }
