@@ -1,4 +1,6 @@
-﻿namespace PainKiller.PowerCommands.Core;
+﻿using Microsoft.VisualBasic;
+
+namespace PainKiller.PowerCommands.Core;
 
 public class PowerCommandsRuntime<TConfig> : IPowerCommandsRuntime where TConfig : CommandsConfiguration
 {
@@ -25,8 +27,11 @@ public class PowerCommandsRuntime<TConfig> : IPowerCommandsRuntime where TConfig
         {
             foreach (var command in proxyCommand.Commands)
             {
-                ConsoleService.Service.WriteLine("PowerCommandsRuntime", $"Proxy command [{command}] added", null);
-                var powerCommand = new ProxyCommando(command, _configuration, proxyCommand.Name, proxyCommand.WorkingDirctory);
+                var identifiers = command.Split("|");
+                var identifier = identifiers[0];
+                var identifierAlias = command.Contains($"|") ? identifiers[1] : identifier;
+                ConsoleService.Service.WriteLine("PowerCommandsRuntime", $"Proxy command [{identifierAlias}] added", null);
+                var powerCommand = new ProxyCommando(identifier, _configuration, proxyCommand.Name, proxyCommand.WorkingDirctory, identifierAlias);
                 SuggestionProviderManager.AddContextBoundSuggestions(command, new[] { "--retry-interval-seconds", "--no-quit" });
                 if(Commands.All(c => c.Identifier != powerCommand.Identifier)) Commands.Add(powerCommand);
                 else ConsoleService.Service.WriteWarning("PowerCommandsRuntime", $"A command with the same identifier [{command}] already exist, proxy command not added.");

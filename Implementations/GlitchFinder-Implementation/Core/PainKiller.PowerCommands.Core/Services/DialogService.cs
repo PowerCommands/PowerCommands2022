@@ -7,4 +7,10 @@ public static class DialogService
         var response = Console.ReadLine();
         return $"{response}".Trim().ToLower() == yesValue.ToLower();
     }
+    public static string QuestionAnswerDialog(string question)
+    {
+        Console.WriteLine($"\n{question}");
+        var response = Console.ReadLine();
+        return $"{response}".Trim();
+    }
 }

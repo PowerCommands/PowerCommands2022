@@ -72,5 +72,4 @@ public static class CommandLineInputInterpreterExtension
         return diff > 1 ? "" : firstQuoteAfterOption.Quote.Replace("\"","");
     }
     public static string GetOutputFilename(this IConsoleCommand command) => Path.Combine(ConfigurationGlobals.ApplicationDataFolder, $"proxy_{command.Identifier}.data");
-    public static string GetOutputFilename(this ICommandLineInput input) => Path.Combine(ConfigurationGlobals.ApplicationDataFolder, $"proxy_{input.Identifier}.data");
 }

@@ -8,28 +8,32 @@ public class ProxyCommando : CommandBase<CommandsConfiguration>
 {
     private readonly string _name;
     private readonly string _workingDirctory;
-    public ProxyCommando(string identifier, CommandsConfiguration configuration, string name, string workingDirectory) : base(identifier, configuration)
+    private readonly string _aliasName;
+    private readonly string _identifier;
+
+    public ProxyCommando(string identifier, CommandsConfiguration configuration, string name, string workingDirectory, string aliasName) : base(string.IsNullOrEmpty(aliasName) ? identifier : aliasName, configuration)
     {
+        _identifier = identifier;
         _name = name;
         _workingDirctory = workingDirectory;
+        _aliasName = aliasName;
     }
-
     public override RunResult Run()
     {
         WriteProcessLog("Proxy", $"{Input.Raw}");
-        var input = Input.Raw.Interpret();
+        var input = (Identifier == _identifier) ? Input.Raw.Interpret() : Input.Raw.Replace(_aliasName, _identifier).Interpret();
         var start = DateTime.Now;
         var quitOption = Input.HasOption("no-quit") ? "" : " --justRunOnceThenQuitPowerCommand";
-        ShellService.Service.Execute(_name, $"{Input.Raw}{quitOption}", _workingDirctory, WriteLine, useShellExecute: true);
+        ShellService.Service.Execute(_name, $"{input.Raw}{quitOption}", _workingDirctory, WriteLine, useShellExecute: true);
         
         var retries = 0;
-        var maxRetries = 9;
+        var maxRetries = 10;
         var foundOutput = false;
         var retryInterval = (int.TryParse(Input.GetOptionValue("retry-interval-seconds"), out var index) ? index * 1000 : 500);
-        while (!foundOutput || retries > maxRetries)
+        while (!foundOutput && retries < maxRetries)
         {
             Thread.Sleep(500);
-            var fileName = input.GetOutputFilename();
+            var fileName = GetOutputFilename();
             if (File.Exists(fileName))
             {
                 var result = StorageService<ProxyResult>.Service.GetObject(fileName);
@@ -39,10 +43,11 @@ public class ProxyCommando : CommandBase<CommandsConfiguration>
                     break;
                 }
             }
-            WriteWarning($"Retrying... ({retries} of {maxRetries})");
+            WriteWarning($"Retrying... ({retries+1} of {maxRetries})");
             Thread.Sleep(retryInterval);
             retries++;
         }
         return Ok();
     }
+    private string GetOutputFilename() => Path.Combine(ConfigurationGlobals.ApplicationDataFolder, $"proxy_{_identifier}.data");
 }
