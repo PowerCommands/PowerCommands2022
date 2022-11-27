@@ -73,6 +73,7 @@ public abstract class CommandBase<TConfig> : IConsoleCommand, IConsoleWriter whe
     protected RunResult Continue() => new(this, Input, _ouput.ToString(), RunResultStatus.Continue);
     protected RunResult BadParameterError(string output) => new(this, Input, output, RunResultStatus.ArgumentError);
     protected RunResult ExceptionError(string output) => new(this, Input, output, RunResultStatus.ExceptionThrown);
+    protected RunResult ContinueWith(string output, string rawInput) => new(this, Input, output, RunResultStatus.ExceptionThrown, rawInput);
     #endregion
 
     #region Write helpers

@@ -69,7 +69,7 @@ public class PowerCommandsRuntime<TConfig> : IPowerCommandsRuntime where TConfig
         finally{command.RunCompleted();}
         return Latest;
     }
-    public RunResult ExecuteAsyncCommand(IConsoleCommand command, CommandLineInput input)
+    public RunResult ExecuteAsyncCommand(IConsoleCommand command, ICommandLineInput input)
     {
         try
         {

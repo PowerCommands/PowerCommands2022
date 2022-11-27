@@ -7,7 +7,6 @@ using PainKiller.PowerCommands.Shared.DomainObjects.Core;
 
 namespace PainKiller.PowerCommands.WindowsCommands.Commands;
 
-[PowerCommandTest(         tests: " ")]
 [PowerCommandDesign( description: "Run powershell commands, with possibility to filter the output. You don´t have to use the options, you could just write your powershell commands as is.",
                          options: "Get-Help|Get-Command|Get-Process|Get-Service|filter",
                          example: "//Get all available powershell commands on your machine.|ps --Get-Command")]

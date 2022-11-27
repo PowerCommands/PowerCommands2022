@@ -5,7 +5,7 @@ namespace PainKiller.PowerCommands.Core.Extensions;
 
 public static class CommandLineInputInterpreterExtension
 {
-    public static CommandLineInput Interpret(this string commandLineInput, string defaultCommand = "commands")
+    public static ICommandLineInput Interpret(this string commandLineInput, string defaultCommand = "commands")
     {
         if(IsNullOrEmpty(commandLineInput)) throw new ArgumentNullException(nameof(commandLineInput));
         var raw = commandLineInput.Trim();
