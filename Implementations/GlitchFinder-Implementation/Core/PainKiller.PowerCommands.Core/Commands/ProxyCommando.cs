@@ -28,7 +28,7 @@ public class ProxyCommando : CommandBase<CommandsConfiguration>
         var retryInterval = (int.TryParse(Input.GetOptionValue("retry-interval-seconds"), out var index) ? index * 1000 : 500);
         while (!foundOutput || retries > maxRetries)
         {
-            Thread.Sleep(retryInterval);
+            Thread.Sleep(500);
             var fileName = input.GetOutputFilename();
             if (File.Exists(fileName))
             {
@@ -40,6 +40,7 @@ public class ProxyCommando : CommandBase<CommandsConfiguration>
                 }
             }
             WriteWarning($"Retrying... ({retries} of {maxRetries})");
+            Thread.Sleep(retryInterval);
             retries++;
         }
         return Ok();

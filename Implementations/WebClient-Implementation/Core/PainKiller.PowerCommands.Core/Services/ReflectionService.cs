@@ -25,7 +25,10 @@ public class ReflectionService : IReflectionService
             Object[] args = { name.Substring(0, name.Length - 7), (constructorInfo.GetParameters()[1].ParameterType == typeof(CommandsConfiguration) ? configuration as CommandsConfiguration : configuration)};
             var command = (IConsoleCommand)Activator.CreateInstance(commandType, args)!;
             var pcAttribute = command.GetPowerCommandAttribute();
-            if(!string.IsNullOrEmpty(pcAttribute.Options)) SuggestionProviderManager.AddContextBoundSuggestions(command.Identifier, pcAttribute.Options.Split('|').Select(f => $"--{f}").ToArray());
+            var suggestions = new List<string>();
+            if(!string.IsNullOrEmpty(pcAttribute.Options)) suggestions.AddRange(pcAttribute.Options.Split('|').Select(f => $"--{f}"));
+            suggestions.Add("--help");
+            SuggestionProviderManager.AddContextBoundSuggestions(command.Identifier, suggestions.ToArray());
             retVal.Add(command);
         }
         return retVal.OrderBy(c => c.Identifier).ToList();

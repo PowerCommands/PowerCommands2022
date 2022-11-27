@@ -27,6 +27,7 @@ public class PowerCommandsRuntime<TConfig> : IPowerCommandsRuntime where TConfig
             {
                 ConsoleService.Service.WriteLine("PowerCommandsRuntime", $"Proxy command [{command}] added", null);
                 var powerCommand = new ProxyCommando(command, _configuration, proxyCommand.Name, proxyCommand.WorkingDirctory);
+                SuggestionProviderManager.AddContextBoundSuggestions(command, new[] { "--retry-interval-seconds", "--no-quit" });
                 if(Commands.All(c => c.Identifier != powerCommand.Identifier)) Commands.Add(powerCommand);
                 else ConsoleService.Service.WriteWarning("PowerCommandsRuntime", $"A command with the same identifier [{command}] already exist, proxy command not added.");
             }
