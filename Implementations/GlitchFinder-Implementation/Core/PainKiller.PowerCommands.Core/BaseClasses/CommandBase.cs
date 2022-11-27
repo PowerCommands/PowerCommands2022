@@ -70,10 +70,9 @@ public abstract class CommandBase<TConfig> : IConsoleCommand, IConsoleWriter whe
     #region RunResult
     protected RunResult Ok() => new(this, Input, _ouput.ToString(), RunResultStatus.Ok);
     protected RunResult Quit() => new(this, Input, _ouput.ToString(), RunResultStatus.Quit);
-    protected RunResult Continue() => new(this, Input, _ouput.ToString(), RunResultStatus.Continue);
     protected RunResult BadParameterError(string output) => new(this, Input, output, RunResultStatus.ArgumentError);
     protected RunResult ExceptionError(string output) => new(this, Input, output, RunResultStatus.ExceptionThrown);
-    protected RunResult ContinueWith(string output, string rawInput) => new(this, Input, output, RunResultStatus.ExceptionThrown, rawInput);
+    protected RunResult ContinueWith(string rawInput) => new(this, Input, _ouput.ToString(), RunResultStatus.ExceptionThrown, rawInput);
     #endregion
 
     #region Write helpers

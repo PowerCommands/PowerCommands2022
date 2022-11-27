@@ -21,7 +21,7 @@ public abstract class DisplayCommandsBase : CommandBase<PowerCommandsConfigurati
             else Open(SelectedItem);
             return Ok();
         }
-        return Continue();
+        return ContinueWith("");
     }
 
     protected void Print()
