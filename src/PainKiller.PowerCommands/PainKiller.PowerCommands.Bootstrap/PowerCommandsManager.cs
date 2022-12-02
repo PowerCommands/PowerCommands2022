@@ -25,7 +25,7 @@ public class PowerCommandsManager : IPowerCommandsManager
                 var promptText = runFlow.CurrentRunResultStatus == RunResultStatus.Async ? "" : $"\n{ConfigurationGlobals.Prompt}";
                 runFlow.Raw = runFlow.RunAutomatedAtStartup ? string.Join(' ', args) : ReadLine.ReadLineService.Service.Read(prompt: promptText);
                 if (string.IsNullOrEmpty(runFlow.Raw.Trim())) continue;
-                var interpretedInput = runFlow.Raw.Interpret();
+                var interpretedInput = runFlow.Raw.Interpret(Services.Configuration.DefaultCommand);
                 if (runFlow.RunAutomatedAtStartup)
                 {
                     Services.Diagnostic.Message($"Started up with args: {interpretedInput.Raw}");
@@ -48,7 +48,7 @@ public class PowerCommandsManager : IPowerCommandsManager
             catch (ArgumentOutOfRangeException ex)
             {
                 var commandsCommand = new CommandsCommand("commands", (Services.Configuration as CommandsConfiguration)!);
-                var interpretedInput = runFlow.Raw.Interpret();
+                var interpretedInput = runFlow.Raw.Interpret(Services.Configuration.DefaultCommand);
                 ConsoleService.Service.WriteError(GetType().Name, $"Could not found any commands with a matching Id: {interpretedInput.Raw} and there is no defaultCommand defined in configuration or the defined defaultCommand does not exist.");
                 commandsCommand.InitializeAndValidateInput(interpretedInput);
                 commandsCommand.Run();

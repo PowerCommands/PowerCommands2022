@@ -21,7 +21,7 @@ public class ProxyCommando : CommandBase<CommandsConfiguration>
     public override RunResult Run()
     {
         WriteProcessLog("Proxy", $"{Input.Raw}");
-        var input = (Identifier == _identifier) ? Input.Raw.Interpret() : Input.Raw.Replace(_aliasName, _identifier).Interpret();
+        var input = (Identifier == _identifier) ? Input.Raw.Interpret(Configuration.DefaultCommand) : Input.Raw.Replace(_aliasName, _identifier).Interpret(Configuration.DefaultCommand);
         var start = DateTime.Now;
         var quitOption = Input.HasOption("no-quit") ? "" : " --justRunOnceThenQuitPowerCommand";
         ShellService.Service.Execute(_name, $"{input.Raw}{quitOption}", _workingDirctory, WriteLine, useShellExecute: true);
