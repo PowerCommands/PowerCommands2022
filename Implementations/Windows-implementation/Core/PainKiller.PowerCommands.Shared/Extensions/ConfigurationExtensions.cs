@@ -8,6 +8,6 @@ public static class ConfigurationExtensions
     {
         if (configuration.Variables != null) configuration.Variables.Add(new EnvironmentItemConfiguration { EnvironmentVariableTarget = $"{target}", Name = name });
         else configuration.Variables = new List<EnvironmentItemConfiguration> { new() { EnvironmentVariableTarget = $"{EnvironmentVariableTarget.User}", Name = name } };
-        Environment.SetEnvironmentVariable(name, val, target);
+        if(string.IsNullOrEmpty(Environment.GetEnvironmentVariable("name"))) Environment.SetEnvironmentVariable(name, val, target);
     }
 }
