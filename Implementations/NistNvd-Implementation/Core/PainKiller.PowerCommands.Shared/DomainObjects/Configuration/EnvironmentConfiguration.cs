@@ -12,7 +12,7 @@ public class EnvironmentConfiguration
         {
             var target = string.IsNullOrEmpty(variable.EnvironmentVariableTarget) ? EnvironmentVariableTarget.User : Enum.Parse<EnvironmentVariableTarget>(variable.EnvironmentVariableTarget);
             var envVariableValue = Environment.GetEnvironmentVariable(variable.Name, target);
-            _values.Add(variable.Name, $"{envVariableValue}");
+            if(!_values.ContainsKey(variable.Name)) _values.Add(variable.Name, $"{envVariableValue}");
         }
     }
     public string GetValue(string environmentVariableName)
