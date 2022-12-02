@@ -23,7 +23,7 @@ public class RunFlowManager
         RunOnceThenQuit = input.HasOption("justRunOnceThenQuitPowerCommand");
         if (!RunOnceThenQuit) return retVal; 
         var raw = input.Raw.Replace(" --justRunOnceThenQuitPowerCommand", "");  //Remove the option that is triggering a shutdown when application is starting up with a proxy command.
-        retVal = raw.Interpret();
+        retVal = raw.Interpret("commands");
         return retVal;
     }
 }

@@ -41,7 +41,7 @@ public class PowerCommandsRuntime<TConfig> : IPowerCommandsRuntime where TConfig
     {
         var input = rawInput.Interpret(_configuration.DefaultCommand);
         var command = Commands.FirstOrDefault(c => c.Identifier.ToLower() == input.Identifier);
-        if (command == null) throw new ArgumentOutOfRangeException($"Could not identify any Commmand with identy {input.Identifier} and there is no defaultCommand defined in configuration file either.");
+        if (command == null) throw new ArgumentOutOfRangeException($"Could not identify any Commmand with identy {input.Identifier}");
         
         var attrib = command.GetPowerCommandAttribute();
         if (input.Options.Any(f => f == "--help"))

@@ -10,7 +10,8 @@ public static class CommandLineInputInterpreterExtension
         if(IsNullOrEmpty(commandLineInput)) throw new ArgumentNullException(nameof(commandLineInput));
         var raw = commandLineInput.Trim();
         var quotes = Regex.Matches(raw, "\\\"(.*?)\\\"").ToStringArray();
-        var arguments = raw.Split(' ').Where(r => !r.Contains('\"') && !r.StartsWith("--")).ToList();
+        raw = quotes.Aggregate(raw, (current, quote) => current.Replace(quote, ""));
+        var arguments = raw.Split(' ').Where(r => !r.Contains('\"') && !r.StartsWith("--")).Where(a => !string.IsNullOrEmpty(a)).ToList();
         var options = raw.Split(' ').Where(r => !r.Contains('\"') && r.StartsWith("--")).ToArray();
         var identifier = arguments.Count == 0 ? defaultCommand : $"{arguments[0].ToLower()}";
         if(arguments.Count > 0) arguments.RemoveAt(0);  //Remove identifier from arguments
