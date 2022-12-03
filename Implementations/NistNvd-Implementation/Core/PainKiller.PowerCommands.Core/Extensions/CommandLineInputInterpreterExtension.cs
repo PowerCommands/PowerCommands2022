@@ -8,6 +8,7 @@ public static class CommandLineInputInterpreterExtension
     public static ICommandLineInput Interpret(this string raw, string defaultCommand = "commands")
     {
         if(IsNullOrEmpty(raw)) throw new ArgumentNullException(nameof(raw));
+        raw = raw.Trim();
         var adjustedInput = raw.Trim();
 
         var tempQuotes = Regex.Matches(adjustedInput, "\\\"(.*?)\\\"").ToStringArray();

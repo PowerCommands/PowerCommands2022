@@ -1,7 +1,7 @@
 namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
 [PowerCommandDesign( description: "Demo command just to se that your solution is setup properly",
-                         options: "diagnostic-only|!hello-world",
+                         options: "command|solution|output|template|backup",
                          example: "demo")]
 public class DemoCommand : CommandBase<PowerCommandsConfiguration>
 {
