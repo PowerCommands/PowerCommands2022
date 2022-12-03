@@ -13,15 +13,7 @@ public static class CommandLineInputInterpreterExtension
 
         var tempQuotes = Regex.Matches(adjustedInput, "\\\"(.*?)\\\"").ToStringArray();
         var options = adjustedInput.Split(' ').Where(r => !r.Contains('\"') && r.StartsWith("--")).ToArray();
-        if (tempQuotes.Length > 0)
-        {
-            foreach (var option in options)
-            {
-                var replacer = $"{option} \"{GetOptionValue(options, option.Replace("--",""), raw, tempQuotes)}\"";
-                adjustedInput = adjustedInput.Replace(replacer, option);
-            }
-        }
-        var quotes = Regex.Matches(adjustedInput, "\\\"(.*?)\\\"").ToStringArray();
+        var quotes = Regex.Matches(adjustedInput, "\\\"(.*?)\\\"").ToStringArray().ToList();
         adjustedInput = quotes.Aggregate(adjustedInput, (current, quote) => current.Replace(quote, ""));
         var arguments = adjustedInput.Split(' ').Where(r => !r.Contains('\"') && !r.StartsWith("--")).Where(a => !string.IsNullOrEmpty(a)).ToList();
         var identifier = arguments.Count == 0 ? defaultCommand : $"{arguments[0].ToLower()}";
@@ -32,12 +24,14 @@ public static class CommandLineInputInterpreterExtension
             var requredOpptions = attrib.Options.Split('|').Where(o => o.StartsWith("!"));
             foreach (var option in requredOpptions)
             {
-                var optionValue = GetOptionValue(options, option.Replace("!", ""), raw, quotes);
+                var optionValue = GetOptionValue(options, option.Replace("!", ""), raw);
                 var argument = arguments.FirstOrDefault(a => a == optionValue);
                 if (!string.IsNullOrEmpty(argument)) arguments.Remove(argument);
+                var quote = quotes.FirstOrDefault(q => q == $"\"{optionValue}\"");
+                if (!string.IsNullOrEmpty(quote)) quotes.Remove(quote);
             }
         }
-        var retVal = new CommandLineInput {Arguments = arguments.ToArray(), Identifier = identifier, Quotes = quotes, Options = options, Raw = raw, Path = arguments.ToArray().ToPath()};
+        var retVal = new CommandLineInput {Arguments = arguments.ToArray(), Identifier = identifier, Quotes = quotes.ToArray(), Options = options, Raw = raw, Path = arguments.ToArray().ToPath()};
         return retVal;
     }
     public static string ToPath(this string[] inputArray)
@@ -59,9 +53,10 @@ public static class CommandLineInputInterpreterExtension
         foreach (var inputOption in input.Options) if (options.Any(f => $"--{f}" == inputOption)) return inputOption.Replace("--", "");
         return "";
     }
-    public static string GetOptionValue(this ICommandLineInput input, string optionName) => GetOptionValue(input.Options, optionName, input.Raw, input.Quotes);
-    private static string GetOptionValue(string[] options, string optionName, string raw, string[] quotes)
+    public static string GetOptionValue(this ICommandLineInput input, string optionName) => GetOptionValue(input.Options, optionName, input.Raw);
+    private static string GetOptionValue(string[] options, string optionName, string raw)
     {
+        var quotes = Regex.Matches(raw, "\\\"(.*?)\\\"").ToStringArray();
         var option = options.FirstOrDefault(f => f == $"--{optionName.ToLower()}" || f.ToLower().Substring(2,1)  == $"{optionName.ToLower()}".Substring(0,1));
         if (IsNullOrEmpty(option)) return "";
 
@@ -84,7 +79,7 @@ public static class CommandLineInputInterpreterExtension
         var dokumentedOptions = command.GetPowerCommandAttribute().Options.Split('|');
         foreach (var option in input.Options) if(dokumentedOptions.All(f => $"--{f.ToLower().Replace("!","")}" != option.ToLower())) ConsoleService.Service.WriteLine($"{input.Identifier}", $"Warning, option  [{option}] is not declared and probably unhandled in command [{command.Identifier}]", ConsoleColor.DarkYellow);
     }
-    private static string FindFirstQuotedOptionValueIfAny(ICommandLineInput input, string optionName) => FindFirstQuotedOptionValueIfAny(input.Raw, input.Quotes, optionName);
+    private static string FindFirstQuotedOptionValueIfAny(ICommandLineInput input, string optionName) => FindFirstQuotedOptionValueIfAny(input.Raw, input.Quotes.ToArray(), optionName);
     private static string FindFirstQuotedOptionValueIfAny(string raw, string[] quotes, string optionName)
     {
         if (quotes.Length == 0) return "";

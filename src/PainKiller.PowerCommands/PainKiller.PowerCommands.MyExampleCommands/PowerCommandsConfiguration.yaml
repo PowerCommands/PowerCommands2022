@@ -23,7 +23,12 @@ configuration:
     name: PainKiller Core
   - component: PainKiller.PowerCommands.MyExampleCommands.dll
     checksum: a2df61ea89e4f9ec265d921bfad87193
-    name: My Example Command  
+    name: My Example Command
+  proxyCommands:
+  - name: kdb
+    workingDirctory: C:\repos\Publish\KnowledgeDB
+    commands:
+    - find
   secret:
     secrets:    
   environment:

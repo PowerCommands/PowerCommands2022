@@ -1,7 +1,7 @@
 namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
 [PowerCommandDesign( description: "Demo command just to se that your solution is setup properly",
-                         options: "command|solution|output|template|backup",
+                         options: "!create|from-search",
                          example: "demo")]
 public class DemoCommand : CommandBase<PowerCommandsConfiguration>
 {
@@ -31,7 +31,11 @@ public class DemoCommand : CommandBase<PowerCommandsConfiguration>
             WriteLine($"{powerOption.Name} {powerOption.Value} isRequired: {powerOption.IsRequired}\n");
         }
         WriteHeadLine("Input Options, with value if any.");
-        foreach (var powerOption in Input.Options) WriteLine($"Raw input: {powerOption} Value: {GetOptionValue(powerOption.Replace("--",""))}\n");
+        foreach (var powerOption in Input.Options)
+        {
+            var babar = GetOptionValue(powerOption.Replace("--", ""));
+            WriteLine($"Raw input: {powerOption} Value: {GetOptionValue(powerOption.Replace("--",""))}\n");
+        }
         return Ok();
     }
 }
