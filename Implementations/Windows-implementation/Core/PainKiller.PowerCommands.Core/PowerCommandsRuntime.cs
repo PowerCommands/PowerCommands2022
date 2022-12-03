@@ -41,6 +41,11 @@ public class PowerCommandsRuntime<TConfig> : IPowerCommandsRuntime where TConfig
     {
         var input = rawInput.Interpret(_configuration.DefaultCommand);
         var command = Commands.FirstOrDefault(c => c.Identifier.ToLower() == input.Identifier);
+        if (command == null && !string.IsNullOrEmpty(_configuration.DefaultCommand))
+        {
+            input = $"{_configuration.DefaultCommand} {rawInput}".Interpret();
+            command = Commands.FirstOrDefault(c => c.Identifier.ToLower() == input.Identifier); //Retry with default command if no command found on the first try
+        }
         if (command == null) throw new ArgumentOutOfRangeException($"Could not identify any Commmand with identy {input.Identifier}");
         
         var attrib = command.GetPowerCommandAttribute();
