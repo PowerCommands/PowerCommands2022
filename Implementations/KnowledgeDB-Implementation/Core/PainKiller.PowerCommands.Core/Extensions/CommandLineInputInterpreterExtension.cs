@@ -9,7 +9,7 @@ public static class CommandLineInputInterpreterExtension
     {
         if(IsNullOrEmpty(raw)) throw new ArgumentNullException(nameof(raw));
         var adjustedInput = raw.Trim();
-        
+
         var tempQuotes = Regex.Matches(adjustedInput, "\\\"(.*?)\\\"").ToStringArray();
         var options = adjustedInput.Split(' ').Where(r => !r.Contains('\"') && r.StartsWith("--")).ToArray();
         if (tempQuotes.Length > 0)
@@ -22,20 +22,20 @@ public static class CommandLineInputInterpreterExtension
         }
         var quotes = Regex.Matches(adjustedInput, "\\\"(.*?)\\\"").ToStringArray();
         adjustedInput = quotes.Aggregate(adjustedInput, (current, quote) => current.Replace(quote, ""));
-
-        var tempArguments = adjustedInput.Split(' ').Where(r => !r.Contains('\"') && !r.StartsWith("--")).Where(a => !string.IsNullOrEmpty(a)).ToList();
-        if(tempArguments.Count > 0) 
-        {
-            foreach (var option in options)
-            {
-                var replacer = $"{option} {GetOptionValue(options, option.Replace("--",""), raw, tempArguments.ToArray())}";
-                adjustedInput = adjustedInput.Replace(replacer, option);
-            }
-        }
         var arguments = adjustedInput.Split(' ').Where(r => !r.Contains('\"') && !r.StartsWith("--")).Where(a => !string.IsNullOrEmpty(a)).ToList();
         var identifier = arguments.Count == 0 ? defaultCommand : $"{arguments[0].ToLower()}";
-        if(arguments.Count > 0) arguments.RemoveAt(0);  //Remove identifier from arguments
-
+        if (arguments.Count > 0)
+        {
+            arguments.RemoveAt(0); //Remove identifier from arguments
+            var attrib = GetAttributeOfCommand(identifier, defaultCommand);
+            var requredOpptions = attrib.Options.Split('|').Where(o => o.StartsWith("!"));
+            foreach (var option in requredOpptions)
+            {
+                var optionValue = GetOptionValue(options, option.Replace("!", ""), raw, quotes);
+                var argument = arguments.FirstOrDefault(a => a == optionValue);
+                if (!string.IsNullOrEmpty(argument)) arguments.Remove(argument);
+            }
+        }
         var retVal = new CommandLineInput {Arguments = arguments.ToArray(), Identifier = identifier, Quotes = quotes, Options = options, Raw = raw, Path = arguments.ToArray().ToPath()};
         return retVal;
     }
@@ -96,4 +96,10 @@ public static class CommandLineInputInterpreterExtension
         return diff > 1 ? "" : firstQuoteAfterOption.Quote.Replace("\"","");
     }
     public static string GetOutputFilename(this IConsoleCommand command) => Path.Combine(ConfigurationGlobals.ApplicationDataFolder, $"proxy_{command.Identifier}.data");
+    private static PowerCommandDesignAttribute GetAttributeOfCommand(string identifier, string defaultCommandIdentifier)
+    {
+        var command = IPowerCommandsRuntime.DefaultInstance!.Commands.FirstOrDefault(c => c.Identifier == identifier) ?? IPowerCommandsRuntime.DefaultInstance.Commands.FirstOrDefault(c => c.Identifier == defaultCommandIdentifier);
+        if (command == null) return new PowerCommandDesignAttribute("no attribute found");
+        return command.GetPowerCommandAttribute();
+    }
 }
