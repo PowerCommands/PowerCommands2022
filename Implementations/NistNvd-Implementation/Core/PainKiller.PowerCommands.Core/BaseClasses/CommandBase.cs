@@ -23,6 +23,7 @@ public abstract class CommandBase<TConfig> : IConsoleCommand, IConsoleWriter whe
     protected PowerCommandDesignAttribute? DesignAttribute { get; private set; }
     public virtual bool InitializeAndValidateInput(ICommandLineInput input, PowerCommandDesignAttribute? designAttribute = null)
     {
+        Options.Clear();
         designAttribute ??= new PowerCommandDesignAttribute("This command has no design attribute");
         if (IPowerCommandServices.DefaultInstance!.DefaultConsoleService.GetType().Name != _console.GetType().Name) _console = IPowerCommandServices.DefaultInstance.DefaultConsoleService;
         Input = input;
