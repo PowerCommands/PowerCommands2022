@@ -10,8 +10,6 @@ public static class CommandLineInputInterpreterExtension
         if(IsNullOrEmpty(raw)) throw new ArgumentNullException(nameof(raw));
         raw = raw.Trim();
         var adjustedInput = raw.Trim();
-
-        var tempQuotes = Regex.Matches(adjustedInput, "\\\"(.*?)\\\"").ToStringArray();
         var options = adjustedInput.Split(' ').Where(r => !r.Contains('\"') && r.StartsWith("--")).ToArray();
         var quotes = Regex.Matches(adjustedInput, "\\\"(.*?)\\\"").ToStringArray().ToList();
         adjustedInput = quotes.Aggregate(adjustedInput, (current, quote) => current.Replace(quote, ""));
