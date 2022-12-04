@@ -13,7 +13,7 @@ public static class CommandLineInputInterpreterExtension
         var options = adjustedInput.Split(' ').Where(r => !r.Contains('\"') && r.StartsWith("--")).ToArray();
         var quotes = Regex.Matches(adjustedInput, "\\\"(.*?)\\\"").ToStringArray().ToList();
         adjustedInput = quotes.Aggregate(adjustedInput, (current, quote) => current.Replace(quote, ""));
-        var arguments = adjustedInput.Split(' ').Where(r => !r.Contains('\"') && !r.StartsWith("--")).Where(a => !string.IsNullOrEmpty(a)).ToList();
+        var arguments = adjustedInput.Split(' ').Where(r => !r.Contains('\"') && !r.StartsWith("--")).Where(a => !IsNullOrEmpty(a)).ToList();
         var identifier = arguments.Count == 0 ? defaultCommand : $"{arguments[0].ToLower()}";
         if (arguments.Count > 0)
         {
@@ -22,11 +22,12 @@ public static class CommandLineInputInterpreterExtension
             var requredOpptions = attrib.Options.Split('|').Where(o => o.StartsWith("!"));
             foreach (var option in requredOpptions)
             {
+                if(options.All(o => o != option)) continue;
                 var optionValue = GetOptionValue(options, option.Replace("!", ""), raw);
                 var argument = arguments.FirstOrDefault(a => a == optionValue);
-                if (!string.IsNullOrEmpty(argument)) arguments.Remove(argument);
+                if (!IsNullOrEmpty(argument)) arguments.Remove(argument);
                 var quote = quotes.FirstOrDefault(q => q == $"\"{optionValue}\"");
-                if (!string.IsNullOrEmpty(quote)) quotes.Remove(quote);
+                if (!IsNullOrEmpty(quote)) quotes.Remove(quote);
             }
         }
         var retVal = new CommandLineInput {Arguments = arguments.ToArray(), Identifier = identifier, Quotes = quotes.ToArray(), Options = options, Raw = raw, Path = arguments.ToArray().ToPath()};
@@ -59,7 +60,7 @@ public static class CommandLineInputInterpreterExtension
         if (IsNullOrEmpty(option)) return "";
 
         var firstQuotedOptionValueIfAny = FindFirstQuotedOptionValueIfAny(raw, quotes, optionName);
-        if (!string.IsNullOrEmpty(firstQuotedOptionValueIfAny)) return firstQuotedOptionValueIfAny;
+        if (!IsNullOrEmpty(firstQuotedOptionValueIfAny)) return firstQuotedOptionValueIfAny;
 
         short index = 0;
         var indexedInputs = raw.Split(' ').Select(r => new IndexedInput{Index = index+=1,Value = r}).ToList();
@@ -77,14 +78,13 @@ public static class CommandLineInputInterpreterExtension
         var dokumentedOptions = command.GetPowerCommandAttribute().Options.Split('|');
         foreach (var option in input.Options) if(dokumentedOptions.All(f => $"--{f.ToLower().Replace("!","")}" != option.ToLower())) ConsoleService.Service.WriteLine($"{input.Identifier}", $"Warning, option  [{option}] is not declared and probably unhandled in command [{command.Identifier}]", ConsoleColor.DarkYellow);
     }
-    private static string FindFirstQuotedOptionValueIfAny(ICommandLineInput input, string optionName) => FindFirstQuotedOptionValueIfAny(input.Raw, input.Quotes.ToArray(), optionName);
     private static string FindFirstQuotedOptionValueIfAny(string raw, string[] quotes, string optionName)
     {
         if (quotes.Length == 0) return "";
         //First lets find out if the next parameter after the option is a surrounded by " characters
-        var lastIndexOfOption = raw.LastIndexOf($"--{optionName}") + $"--{optionName}".Length;
-        var quotesAfterOption = quotes.Where(q => raw.LastIndexOf(q) > lastIndexOfOption).Select(q => new{Index = raw.LastIndexOf(q), Quote = q }).ToList();
-        var firstQuoteAfterOption = quotesAfterOption.FirstOrDefault(q => q.Index == quotesAfterOption.Min(q => q.Index));
+        var lastIndexOfOption = raw.LastIndexOf($"--{optionName}", StringComparison.Ordinal) + $"--{optionName}".Length;
+        var quotesAfterOption = quotes.Where(q => raw.LastIndexOf(q, StringComparison.Ordinal) > lastIndexOfOption).Select(q => new{Index = raw.LastIndexOf(q, StringComparison.Ordinal), Quote = q }).ToList();
+        var firstQuoteAfterOption = quotesAfterOption.FirstOrDefault(q => q.Index == quotesAfterOption.Min(arg => arg.Index));
         if (firstQuoteAfterOption == null) return "";
         var diff = firstQuoteAfterOption.Index - lastIndexOfOption;
         return diff > 1 ? "" : firstQuoteAfterOption.Quote.Replace("\"","");
