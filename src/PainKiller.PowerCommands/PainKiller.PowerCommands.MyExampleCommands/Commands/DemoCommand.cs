@@ -33,7 +33,6 @@ public class DemoCommand : CommandBase<PowerCommandsConfiguration>
         WriteHeadLine("Input Options, with value if any.");
         foreach (var powerOption in Input.Options)
         {
-            var babar = GetOptionValue(powerOption.Replace("--", ""));
             WriteLine($"Raw input: {powerOption} Value: {GetOptionValue(powerOption.Replace("--",""))}\n");
         }
         return Ok();
