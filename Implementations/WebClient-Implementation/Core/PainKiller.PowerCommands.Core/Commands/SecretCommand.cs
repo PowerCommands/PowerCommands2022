@@ -2,7 +2,7 @@
 
 namespace PainKiller.PowerCommands.Core.Commands;
 [PowerCommandDesign(description: "Get, creates, removes or view secrets, first you need to configure your encryption key with initialize argument",
-                        options: "configuration|create|get|remove|salt",
+                        options: "initialize|configuration|create|get|remove|salt",
              disableProxyOutput: true,
                         example: "//View all declared secrets|secret|//Get the decrypted value of named secret|secret --get \"mycommand-pass\"|secret --create \"mycommand-pass\"|secret --remove \"mycommand-pass\"|//Initialize your machine with a new encryption key (stops if this is already done)|secret --initialize")]
 public class SecretCommand : CommandBase<CommandsConfiguration>
@@ -10,7 +10,8 @@ public class SecretCommand : CommandBase<CommandsConfiguration>
     public SecretCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
     public override RunResult Run()
     {
-        if (Input.HasOption("configuration")) return CheckEncryptConfiguration();
+        if (Input.HasOption("initialize")) return Init();
+        if (Input.HasOption("")) return CheckEncryptConfiguration();
         if (Input.HasOption("salt")) return Salt();
         if (Input.HasOption("get")) return Get();
         if (Input.HasOption("create")) return Create();
@@ -41,6 +42,19 @@ public class SecretCommand : CommandBase<CommandsConfiguration>
         Console.WriteLine(IEncryptionService.GetRandomSalt());
         return Ok();
     }
+
+    private RunResult Init()
+    {
+        var salt = IEncryptionService.GetRandomSalt();
+        WriteLine($"{salt.Length}");
+        var firstHalf = salt.Substring(0, 22);
+        var secondHalf = salt.Substring(22, 22);
+        Environment.SetEnvironmentVariable("_encryptionManager", firstHalf, EnvironmentVariableTarget.User);
+        var securityConfig = new SecurityConfiguration { Encryption = new EncryptionConfiguration { SharedSecretEnvironmentKey = "_encryptionManager", SharedSecretSalt = secondHalf } };
+        StorageService<SecurityConfiguration>.Service.StoreObject(securityConfig, ConfigurationGlobals.SecurityFileName);
+        return Ok();
+    }
+
     private RunResult List()
     {
         if (Configuration.Secret.Secrets == null) return Ok();
