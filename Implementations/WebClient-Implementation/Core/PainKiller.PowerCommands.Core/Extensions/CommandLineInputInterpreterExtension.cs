@@ -46,7 +46,12 @@ public static class CommandLineInputInterpreterExtension
         return retVal.ToArray();
     }
     public static int FirstArgumentToInt(this ICommandLineInput input) => (int.TryParse(input.SingleArgument, out var index) ? index : 0);
-    public static int OptionToInt(this ICommandLineInput input, string optionName, int valueIfMissing = 0) => (int.TryParse(GetOptionValue(input, optionName), out var index) ? index : valueIfMissing);
+    public static int OptionToInt(this ICommandLineInput input, string optionName, int valueIfMissing = 0)
+    {
+        var optionValue = GetOptionValue(input, optionName);
+        if (IsNullOrEmpty(optionValue)) return valueIfMissing;
+        return (int.TryParse(optionValue, out var index) ? index : valueIfMissing);
+    }
     public static string GetOptionValue(this ICommandLineInput input, string[] options)
     {
         foreach (var inputOption in input.Options) if (options.Any(f => $"--{f}" == inputOption)) return inputOption.Replace("--", "");
