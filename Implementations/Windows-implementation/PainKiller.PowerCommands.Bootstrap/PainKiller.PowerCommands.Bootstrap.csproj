@@ -1,17 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFrameworks>net7.0;net6.0</TargetFrameworks>
+		<LangVersion>10.0</LangVersion>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="Extensions\" />
-  </ItemGroup>
+	<ItemGroup>
+		<Folder Include="Extensions\" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\PainKiller.PowerCommands.WindowsCommands\PainKiller.PowerCommands.WindowsCommands.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\PainKiller.PowerCommands.WindowsCommands\PainKiller.PowerCommands.WindowsCommands.csproj" />
+	</ItemGroup>
 
 </Project>
