@@ -1,6 +1,8 @@
 # PowerCommands2022
 You could se PowerCommands as an easy Create your CLI applikation starter kit. It is a structured framework for creating your own customized command prompt to perform simple or advanced task with the full control from your command environment. That means no time-consuming hassling with a GUI, try catch block, validate your input, you do not need to write a zilion test classes either. Just concentrate on the code, create your commands and run the Console applikation.
 
+[Follow progress on twitter](https://twitter.com/PowerCommands) <img src="Docs/images/twitter.png" alt="drawing" width="20"/>
+
  ### The core components offering this to your custom PowerCommands
  - Logging (using Microsoft.Extensions.Logging.ILogger)
  - Process log (using the standard logger with tags to track a process)
@@ -10,7 +12,7 @@ You could se PowerCommands as an easy Create your CLI applikation starter kit. I
  - Validation rules with attribute
  - Diagnostic 
  - Secret handling to protect sensitive information like password or authentication tokens in the configuration file.
- - Command completion, with history, suggestions, flags and support for Path/File navigation and color highlightning when typing a valid command
+ - Command completion, with history, suggestions, options and support for Path/File navigation and color highlightning when typing a valid command
  - Progressbar
  - Download files
  - Password prompt

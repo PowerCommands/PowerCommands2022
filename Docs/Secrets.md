@@ -3,17 +3,15 @@
 ## Configure your environment to use Encryption/Decryption and Secrets functionallity
 Run first this command
 ```
-secret --configuration
+secret
 ```
 This will do a test do encrypt and decrypt a text, this will cause a error that will look something like this.
 ![Alt text](images/secret_configuration.png?raw=true "Secret configuration")
-All you have to do is to create an environment variable named **_encryptionManager** but, before you do that you need a good random key, create that with the following command.
+All you have to do is to run the same command with the --initialize option like this.
 ```
-secret --salt
+secret --initialize
 ```
-Copy the result and create a environment variable in user scope with the name **_encryptionManager** and the copied random key, now your environment is ready to use Encryption with all your PowerCommands running on that machine. 
-
-Please note that the name of the environment variable is configurable in the secret.yaml file, **_encryptionManager** is the default name.
+Now your environment is ready to use Encryption with all your PowerCommands running on that machine. Please note that the name of the environment variable is configurable in the secret.yaml file, **_encryptionManager** is the default name. Also note that values that you encrypt on our machine can not be decrypted on another machine, unless you copy the encryption keys.
 
 Now your environment is ready!
 
