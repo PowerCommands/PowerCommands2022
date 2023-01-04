@@ -23,7 +23,7 @@ public class ShellService : IShellService
         _logger.LogInformation($"{nameof(ShellService)} {nameof(OpenDirectory)} {uri}");
         Process.Start(new ProcessStartInfo {FileName = uri, UseShellExecute = true, Verb = "open" });
     }
-    public void Execute(string programName, string arguments, string workingDirectory, Action<string> writeFunction, string fileExtension = "exe", bool waitForExit = false, bool useShellExecute = false)
+    public void Execute(string programName, string arguments, string workingDirectory, Action<string> writeFunction, string fileExtension = "exe", bool waitForExit = false, bool useShellExecute = false, bool disableOutputLogging = false)
     {
         var path = ReplaceCmdArguments(programName);
         var workingDirPath = ReplaceCmdArguments(workingDirectory);
@@ -43,11 +43,11 @@ public class ShellService : IShellService
         {
             var outputAdd = processAdd!.StandardOutput.ReadToEnd();
             writeFunction(outputAdd);
-            _logger.LogInformation($"{nameof(ShellService)} output: {outputAdd}");
+            if (!disableOutputLogging) _logger.LogInformation($"{nameof(ShellService)} output: {outputAdd}");
         }
         processAdd!.WaitForExit(waitForExit ? InfiniteWait : ImmediateReturn);
     }
-    public void Execute(string programName, string arguments, string workingDirectory, string fileExtension = "exe", bool waitForExit = false, bool useShellExecute = false)
+    public void Execute(string programName, string arguments, string workingDirectory, string fileExtension = "exe", bool waitForExit = false, bool useShellExecute = false, bool disableOutputLogging = false)
     {
         var path = ReplaceCmdArguments(programName);
         var workingDirPath = ReplaceCmdArguments(workingDirectory);
@@ -66,7 +66,7 @@ public class ShellService : IShellService
         {
             var outputAdd = processAdd!.StandardOutput.ReadToEnd();
             Console.WriteLine(outputAdd);
-            _logger.LogInformation($"{nameof(ShellService)} output: {outputAdd}");
+            if (!disableOutputLogging) _logger.LogInformation($"{nameof(ShellService)} output: {outputAdd}");
         }
         processAdd!.WaitForExit(waitForExit ? InfiniteWait : ImmediateReturn);
     }
