@@ -1,0 +1,45 @@
+<VSTemplate Version="2.0.0" Type="ProjectGroup"
+    xmlns="http://schemas.microsoft.com/developer/vstemplate/2005">
+    <TemplateData>
+        <Name>PowerCommands Solution</Name>
+        <Description>Create a new PowerCommands project</Description>
+        <Icon>Icon.ico</Icon>
+        <ProjectType>CSharp</ProjectType>
+        <LanguageTag>csharp</LanguageTag>
+    </TemplateData>
+    <TemplateContent>
+        <ProjectCollection>
+            <SolutionFolder Name="Core" CreateOnDisk="true">
+                <ProjectTemplateLink ProjectName="PainKiller.PowerCommands.ReadLine">
+                    Core\PainKiller.PowerCommands.ReadLine\MyTemplate.vstemplate
+                </ProjectTemplateLink>
+                <ProjectTemplateLink ProjectName="PainKiller.PowerCommands.Configuration">
+                    Core\PainKiller.PowerCommands.Configuration\MyTemplate.vstemplate
+                </ProjectTemplateLink>
+                <ProjectTemplateLink ProjectName="PainKiller.PowerCommands.Core">
+                    Core\PainKiller.PowerCommands.Core\MyTemplate.vstemplate
+                </ProjectTemplateLink>
+                <ProjectTemplateLink ProjectName="PainKiller.PowerCommands.Security">
+                    Core\PainKiller.PowerCommands.Security\MyTemplate.vstemplate
+                </ProjectTemplateLink>
+                <ProjectTemplateLink ProjectName="PainKiller.PowerCommands.Shared">
+                    Core\PainKiller.PowerCommands.Shared\MyTemplate.vstemplate
+                </ProjectTemplateLink>                
+            </SolutionFolder>
+            <SolutionFolder Name="Third party components" CreateOnDisk="true">
+                <ProjectTemplateLink ProjectName="PainKiller.SerilogExtensions">
+                    Third party components\PainKiller.SerilogExtensions\MyTemplate.vstemplate
+                </ProjectTemplateLink>                                
+            </SolutionFolder>
+            <ProjectTemplateLink ProjectName="PainKiller.PowerCommands.Bootstrap" CopyParameters="true">
+                    PainKiller.PowerCommands.Bootstrap\MyTemplate.vstemplate
+                </ProjectTemplateLink>                
+                <ProjectTemplateLink ProjectName="PainKiller.PowerCommands.$projectname$Commands" CopyParameters="true">
+                    PainKiller.PowerCommands.MyExampleCommands\MyTemplate.vstemplate
+                </ProjectTemplateLink>
+                <ProjectTemplateLink ProjectName="PainKiller.PowerCommands.PowerCommandsConsole">
+                    PainKiller.PowerCommands.PowerCommandsConsole\MyTemplate.vstemplate
+                </ProjectTemplateLink>                
+        </ProjectCollection>
+    </TemplateContent>
+</VSTemplate>

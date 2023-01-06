@@ -1,0 +1,40 @@
+<VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Project">
+  <TemplateData>
+    <Name>PainKiller.PowerCommands.Security</Name>
+    <Description>PowerCommands Security</Description>
+    <ProjectType>CSharp</ProjectType>
+    <ProjectSubType>
+    </ProjectSubType>
+    <SortOrder>1000</SortOrder>
+    <CreateNewFolder>true</CreateNewFolder>
+    <DefaultName>PainKiller.PowerCommands.Security</DefaultName>
+    <ProvideDefaultName>true</ProvideDefaultName>
+    <LocationField>Enabled</LocationField>
+    <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
+    <CreateInPlace>true</CreateInPlace>
+    <Icon>__TemplateIcon.ico</Icon>
+  </TemplateData>
+  <TemplateContent>
+    <Project TargetFileName="PainKiller.PowerCommands.Security.csproj" File="PainKiller.PowerCommands.Security.csproj" ReplaceParameters="true">
+      <Folder Name="Contracts" TargetFolderName="Contracts">
+        <ProjectItem ReplaceParameters="true" TargetFileName="IEncryptionManager.cs">IEncryptionManager.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="IPasswordPromptService.cs">IPasswordPromptService.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="ISecretService.cs">ISecretService.cs</ProjectItem>
+      </Folder>
+      <Folder Name="DomainObjects" TargetFolderName="DomainObjects">
+        <ProjectItem ReplaceParameters="true" TargetFileName="FileChecksum.cs">FileChecksum.cs</ProjectItem>
+      </Folder>
+      <Folder Name="Extensions" TargetFolderName="Extensions">
+        <ProjectItem ReplaceParameters="true" TargetFileName="SecurityExtensions.cs">SecurityExtensions.cs</ProjectItem>
+      </Folder>
+      <Folder Name="Managers" TargetFolderName="Managers">
+        <ProjectItem ReplaceParameters="true" TargetFileName="AESEncryptionManager.cs">AESEncryptionManager.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="ChecksumManager.cs">ChecksumManager.cs</ProjectItem>
+      </Folder>
+      <Folder Name="Services" TargetFolderName="Services">
+        <ProjectItem ReplaceParameters="true" TargetFileName="PasswordPromptService.cs">PasswordPromptService.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="SecretService.cs">SecretService.cs</ProjectItem>
+      </Folder>
+    </Project>
+  </TemplateContent>
+</VSTemplate>

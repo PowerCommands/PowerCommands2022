@@ -1,0 +1,37 @@
+<VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Project">
+  <TemplateData>
+    <Name>PainKiller.PowerCommands.ReadLine</Name>
+    <Description>ReadLine for PowerCommands</Description>
+    <ProjectType>CSharp</ProjectType>
+    <ProjectSubType>
+    </ProjectSubType>
+    <SortOrder>1000</SortOrder>
+    <CreateNewFolder>true</CreateNewFolder>
+    <DefaultName>PainKiller.PowerCommands.ReadLine</DefaultName>
+    <ProvideDefaultName>true</ProvideDefaultName>
+    <LocationField>Enabled</LocationField>
+    <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
+    <CreateInPlace>true</CreateInPlace>
+    <Icon>__TemplateIcon.ico</Icon>
+  </TemplateData>
+  <TemplateContent>
+    <Project TargetFileName="PainKiller.PowerCommands.ReadLine.csproj" File="PainKiller.PowerCommands.ReadLine.csproj" ReplaceParameters="true">
+      <Folder Name="Contracts" TargetFolderName="Contracts">
+        <ProjectItem ReplaceParameters="true" TargetFileName="IAutoCompleteHandler.cs">IAutoCompleteHandler.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="IConsole.cs">IConsole.cs</ProjectItem>
+      </Folder>
+      <Folder Name="DomainObjects" TargetFolderName="DomainObjects">
+        <ProjectItem ReplaceParameters="true" TargetFileName="Console2.cs">Console2.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="KeyHandler.cs">KeyHandler.cs</ProjectItem>
+      </Folder>
+      <Folder Name="Handlers" TargetFolderName="Handlers">
+        <ProjectItem ReplaceParameters="true" TargetFileName="AutoCompleteHandler.cs">AutoCompleteHandler.cs</ProjectItem>
+      </Folder>
+      <Folder Name="Managers" TargetFolderName="Managers">
+        <ProjectItem ReplaceParameters="true" TargetFileName="SuggestionProviderManager.cs">SuggestionProviderManager.cs</ProjectItem>
+      </Folder>
+      <ProjectItem ReplaceParameters="true" TargetFileName="ReadLineService.cs">ReadLineService.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="Readme.md">Readme.md</ProjectItem>
+    </Project>
+  </TemplateContent>
+</VSTemplate>

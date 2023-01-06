@@ -1,0 +1,77 @@
+<VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Project">
+  <TemplateData>
+    <Name>PainKiller.PowerCommands.Core</Name>
+    <Description>PowerCommands Core</Description>
+    <ProjectType>CSharp</ProjectType>
+    <ProjectSubType>
+    </ProjectSubType>
+    <SortOrder>1000</SortOrder>
+    <CreateNewFolder>true</CreateNewFolder>
+    <DefaultName>PainKiller.PowerCommands.Core</DefaultName>
+    <ProvideDefaultName>true</ProvideDefaultName>
+    <LocationField>Enabled</LocationField>
+    <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
+    <CreateInPlace>true</CreateInPlace>
+    <Icon>__TemplateIcon.ico</Icon>
+  </TemplateData>
+  <TemplateContent>
+    <Project TargetFileName="PainKiller.PowerCommands.Core.csproj" File="PainKiller.PowerCommands.Core.csproj" ReplaceParameters="true">
+      <Folder Name="BaseClasses" TargetFolderName="BaseClasses">
+        <ProjectItem ReplaceParameters="true" TargetFileName="CommandBase.cs">CommandBase.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="IndexedInput.cs">IndexedInput.cs</ProjectItem>
+      </Folder>
+      <Folder Name="Commands" TargetFolderName="Commands">
+        <ProjectItem ReplaceParameters="true" TargetFileName="ClsCommand.cs">ClsCommand.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="CommandNewSolution.cs">CommandNewSolution.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="CommandsCommand.cs">CommandsCommand.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="CommandTemplate.cs">CommandTemplate.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="CommandUpdate.cs">CommandUpdate.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="DescribeCommand.cs">DescribeCommand.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="ExitCommand.cs">ExitCommand.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="LogCommand.cs">LogCommand.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="PowerCommandCommand.cs">PowerCommandCommand.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="ProxyCommando.cs">ProxyCommando.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="SecretCommand.cs">SecretCommand.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="TestCommand.cs">TestCommand.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="VersionCommand.cs">VersionCommand.cs</ProjectItem>
+      </Folder>
+      <Folder Name="Extensions" TargetFolderName="Extensions">
+        <ProjectItem ReplaceParameters="true" TargetFileName="CommandLineInputInterpreterExtension.cs">CommandLineInputInterpreterExtension.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="FileHandlingExtensions.cs">FileHandlingExtensions.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="LogExtensions.cs">LogExtensions.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="ReflectionExtensions.cs">ReflectionExtensions.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="SecretExtensions.cs">SecretExtensions.cs</ProjectItem>
+      </Folder>
+      <Folder Name="Managers" TargetFolderName="Managers">
+        <ProjectItem ReplaceParameters="true" TargetFileName="ComponentManager.cs">ComponentManager.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="DiagnosticManager.cs">DiagnosticManager.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="HttpClientDownloadManager.cs">HttpClientDownloadManager.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="InputValidationManager.cs">InputValidationManager.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="ProgressBar.cs">ProgressBar.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="RunFlowManager.cs">RunFlowManager.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="SolutionFileManager.cs">SolutionFileManager.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="TemplateManager.cs">TemplateManager.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="VisualStudioManager.cs">VisualStudioManager.cs</ProjectItem>
+      </Folder>
+      <Folder Name="Services" TargetFolderName="Services">
+        <ProjectItem ReplaceParameters="true" TargetFileName="ConsoleService.cs">ConsoleService.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="ConsoleTableService.cs">ConsoleTableService.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="DialogService.cs">DialogService.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="DownloadWithProgressService.cs">DownloadWithProgressService.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="EncryptionService.cs">EncryptionService.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="EnvironmentService.cs">EnvironmentService.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="GithubService.cs">GithubService.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="HelpService.cs">HelpService.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="HtmlConsoleService.cs">HtmlConsoleService.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="IOService.cs">IOService.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="ReflectionService.cs">ReflectionService.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="ShellService.cs">ShellService.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="StorageService.cs">StorageService.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="ZipService.cs">ZipService.cs</ProjectItem>
+      </Folder>
+      <ProjectItem ReplaceParameters="false" TargetFileName="DocsDB.data">DocsDB.data</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="GlobalUsings.cs">GlobalUsings.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="PowerCommandsRuntime.cs">PowerCommandsRuntime.cs</ProjectItem>
+    </Project>
+  </TemplateContent>
+</VSTemplate>

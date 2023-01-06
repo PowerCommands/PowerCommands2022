@@ -1,0 +1,37 @@
+<VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Project">
+  <TemplateData>
+    <Name>PainKiller.PowerCommands.Configuration</Name>
+    <Description>Power Commands configuration</Description>
+    <ProjectType>CSharp</ProjectType>
+    <ProjectSubType>
+    </ProjectSubType>
+    <SortOrder>1000</SortOrder>
+    <CreateNewFolder>true</CreateNewFolder>
+    <DefaultName>PainKiller.PowerCommands.Configuration</DefaultName>
+    <ProvideDefaultName>true</ProvideDefaultName>
+    <LocationField>Enabled</LocationField>
+    <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
+    <CreateInPlace>true</CreateInPlace>
+    <Icon>__TemplateIcon.ico</Icon>
+  </TemplateData>
+  <TemplateContent>
+    <Project TargetFileName="PainKiller.PowerCommands.Configuration.csproj" File="PainKiller.PowerCommands.Configuration.csproj" ReplaceParameters="true">
+      <Folder Name="Contracts" TargetFolderName="Contracts">
+        <ProjectItem ReplaceParameters="true" TargetFileName="IConfigurationService.cs">IConfigurationService.cs</ProjectItem>
+      </Folder>
+      <Folder Name="DomainObjects" TargetFolderName="DomainObjects">
+        <ProjectItem ReplaceParameters="true" TargetFileName="ArtifactPathsConfiguration.cs">ArtifactPathsConfiguration.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="ArtifactSourcePaths.cs">ArtifactSourcePaths.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="ArtifactTargetPaths.cs">ArtifactTargetPaths.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="ConfigurationGlobals.cs">ConfigurationGlobals.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="EncryptionConfiguration.cs">EncryptionConfiguration.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="SecurityConfiguration.cs">SecurityConfiguration.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="YamlContainer.cs">YamlContainer.cs</ProjectItem>
+      </Folder>
+      <Folder Name="Extensions" TargetFolderName="Extensions">
+        <ProjectItem ReplaceParameters="true" TargetFileName="ConfigurationExtension.cs">ConfigurationExtension.cs</ProjectItem>
+      </Folder>
+      <ProjectItem ReplaceParameters="true" TargetFileName="ConfigurationService.cs">ConfigurationService.cs</ProjectItem>
+    </Project>
+  </TemplateContent>
+</VSTemplate>

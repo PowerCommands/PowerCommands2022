@@ -1,0 +1,33 @@
+<VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Project">
+  <TemplateData>
+    <Name>PainKiller.PowerCommands.$ext_projectname$Commands</Name>
+    <Description>My commands</Description>
+    <ProjectType>CSharp</ProjectType>
+    <ProjectSubType>
+    </ProjectSubType>
+    <SortOrder>1000</SortOrder>
+    <CreateNewFolder>true</CreateNewFolder>	  
+    <DefaultName>PainKiller.PowerCommands.$ext_projectname$Commands</DefaultName>
+    <ProvideDefaultName>true</ProvideDefaultName>
+    <LocationField>Enabled</LocationField>
+    <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
+    <CreateInPlace>true</CreateInPlace>
+    <Icon>__TemplateIcon.ico</Icon>
+  </TemplateData>
+  <TemplateContent>
+    <Project TargetFileName="PainKiller.PowerCommands.$ext_projectname$Commands.csproj" File="PainKiller.PowerCommands.MyExampleCommands.csproj" ReplaceParameters="true" >
+      <Folder Name="Commands" TargetFolderName="Commands">        
+        <ProjectItem ReplaceParameters="true" TargetFileName="ConfigCommand.cs">ConfigCommand.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="DemoCommand.cs">DemoCommand.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="DirCommand.cs">DirCommand.cs</ProjectItem>        
+      </Folder>
+      <Folder Name="Configuration" TargetFolderName="Configuration">
+        <ProjectItem ReplaceParameters="true" TargetFileName="PowerCommandsConfiguration.cs">PowerCommandsConfiguration.cs</ProjectItem>
+      </Folder>
+      <ProjectItem ReplaceParameters="false" TargetFileName="ArtifactPathsConfiguration.yaml">ArtifactPathsConfiguration.yaml</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="GlobalUsings.cs">GlobalUsings.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="PowerCommandsConfiguration.yaml">PowerCommandsConfiguration.yaml</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="PowerCommandServices.cs">PowerCommandServices.cs</ProjectItem>
+    </Project>
+  </TemplateContent>
+</VSTemplate>
