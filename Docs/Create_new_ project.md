@@ -1,15 +1,14 @@
 # Create your first PowerCommands project
-1. Clone this repo.
-2. Open the Solution PainKiller.PowerCommands in the src\PainKiller.PowerCommands folder.
-3. Make sure that one of the Console project is marked as startup project
-4. Build the solution to make sure that the PowerCommandsConfig.yaml file is created in output folder
-5. Start the application and run the command ```powercommand new --solution nameOfYourCommandsProject --output "Path to directory*"```
 
-*One limitation, the --output directory must be a path on your c: drive, sorry for that.
+Download the Visual Studio Template zipfile from [here](https://github.com/PowerCommands/PowerCommands2022/tree/main/Templates/Artifact)
 
+Copy the .zip file into the user project template directory. By default, this directory is %USERPROFILE%\Documents\Visual Studio <version>\Templates\ProjectTemplates.
 
+Open Visual Studio and write Power in the searchbox, you should find the PowerCommand template.
 
-A new solution with all the dependent project is created for you, open the solution, set the PowerCommands Console project as startup project ant hit F5 to try it out. 
+![Alt text](images/vs_new_solution.png?raw=true "Demo Command")
+
+A now a new solution with all the dependent project is created for you, open the solution, set the PowerCommands Console project as startup project ant hit F5 to try it out. 
 
 Run this command 
 
