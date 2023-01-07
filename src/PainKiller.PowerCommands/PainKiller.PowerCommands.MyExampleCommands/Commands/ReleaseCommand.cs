@@ -20,11 +20,8 @@ public class ReleaseCommand : CommandBase<PowerCommandsConfiguration>
         var all = Input.HasOption("all");
         var releases = new Release[]
         {
-            new(){Option ="windows",Name = "Windows"},
             new() { Option = "knowledge", Name = "KnowledgeDB" },
-            new() { Option = "glitch", Name = "GlitchFinder" },
-            new() { Option = "nist", Name = "NistNvd" },
-            new() { Option = "web", Name = "WebClient" }
+            new() { Option = "glitch", Name = "GlitchFinder" }
         };
         foreach (var release in releases)
         {
