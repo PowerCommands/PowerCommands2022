@@ -1,7 +1,7 @@
 ﻿using System.Text.RegularExpressions;
 using static System.String;
 
-namespace PainKiller.PowerCommands.Core.Extensions;
+namespace $safeprojectname$.Extensions;
 
 public static class CommandLineInputInterpreterExtension
 {

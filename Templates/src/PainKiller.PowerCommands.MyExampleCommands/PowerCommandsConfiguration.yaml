@@ -17,13 +17,13 @@ configuration:
     component: PainKiller.SerilogExtensions.dll
     checksum: 13b9944b55efe60362720a679f17a22c
     name: Serialog
-  components:
+  components:  
+  - component: PainKiller.PowerCommands.$ext_projectname$Commands.dll
+    checksum: a2df61ea89e4f9ec265d921bfad87193
+    name: $ext_projectname$
   - component: PainKiller.PowerCommands.Core.dll
     checksum: 4f04313db8e67b2bc4b059c478a900af
     name: PainKiller Core
-  - component: PainKiller.PowerCommands.$ext_projectname$Commands.dll
-    checksum: a2df61ea89e4f9ec265d921bfad87193
-    name: My Example Command  
   secret:
     secrets:    
   environment:

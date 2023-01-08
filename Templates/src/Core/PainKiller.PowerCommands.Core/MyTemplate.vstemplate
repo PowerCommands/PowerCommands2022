@@ -1,7 +1,7 @@
 <VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Project">
   <TemplateData>
     <Name>PainKiller.PowerCommands.Core</Name>
-    <Description>PowerCommands Core</Description>
+    <Description>&lt;No description available&gt;</Description>
     <ProjectType>CSharp</ProjectType>
     <ProjectSubType>
     </ProjectSubType>
@@ -21,6 +21,7 @@
         <ProjectItem ReplaceParameters="true" TargetFileName="IndexedInput.cs">IndexedInput.cs</ProjectItem>
       </Folder>
       <Folder Name="Commands" TargetFolderName="Commands">
+        <ProjectItem ReplaceParameters="true" TargetFileName="CdCommand.cs">CdCommand.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="ClsCommand.cs">ClsCommand.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="CommandNewSolution.cs">CommandNewSolution.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="CommandsCommand.cs">CommandsCommand.cs</ProjectItem>
