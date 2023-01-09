@@ -34,8 +34,12 @@ public class SuggestionProviderManager
             if (string.IsNullOrEmpty(inputs.Last())) return ContextBoundSuggestions.Where(c => c.Key == contextId).Select(c => c.Value).First();
 
             if (ContextBoundSuggestions.ContainsKey(contextId) && ContextBoundSuggestions.Any(c => c.Value.Any(v => v.ToLower().StartsWith(inputs.Last().ToLower().Substring(0, 1)))))
-                return ContextBoundSuggestions.Where(c => c.Key == contextId && c.Value.Any(v => v.Length > 0 && v.ToLower().StartsWith(inputs.Last().ToLower().Substring(0, 1))))
-                    .Select(x => x.Value).First().Where(s => s.ToLower().StartsWith(inputs.Last().ToLower())).ToArray();
+            {
+                var suggestions = ContextBoundSuggestions.Where(c => c.Key == contextId && c.Value.Any(v => v.Length > 0 && v.ToLower().StartsWith(inputs.Last().ToLower().Substring(0, 1))))
+                    .Select(x => x.Value).FirstOrDefault();
+                if(suggestions == null) return null!;
+                return suggestions.Where(s => s.ToLower().StartsWith(inputs.Last().ToLower())).ToArray();
+            }
 
             var buildPath = new List<string>();
             var startOfPathNotFound = true;

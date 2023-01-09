@@ -34,15 +34,15 @@ public class CdCommand : CommandBase<CommandsConfiguration>
         ShowDirectories(appendFiles: false);
         return Ok();
     }
-    public void ShowDirectories(string directory = "", bool appendDirectories = true, bool appendFiles = true, bool appendSuggestions = true)
+    public void ShowDirectories(string directory = "", bool appendDirectories = true, bool appendFiles = true, bool appendSuggestions = true, bool showOutput = true)
     {
         var dirInfo = new DirectoryInfo(string.IsNullOrEmpty(directory) ? WorkingDirectory : directory);
-        Console.WriteLine(dirInfo.FullName);
+        if(showOutput) Console.WriteLine(dirInfo.FullName);
         var suggestions = new List<string>();
         var dirSuggestions = new List<string>();
         foreach (var directoryInfo in dirInfo.GetDirectories())
         {
-            Console.WriteLine($"{directoryInfo.CreationTime}\t<DIR>\t{directoryInfo.Name}");
+            if(showOutput) Console.WriteLine($"{directoryInfo.CreationTime}\t<DIR>\t{directoryInfo.Name}");
             if (appendSuggestions && appendDirectories)
             {
                 suggestions.Add(directoryInfo.Name);
@@ -51,7 +51,7 @@ public class CdCommand : CommandBase<CommandsConfiguration>
         }
         foreach (var fileInfo in dirInfo.GetFiles())
         {
-            Console.WriteLine($"{fileInfo.CreationTime}\t     \t{fileInfo.Name}");
+            if(showOutput) Console.WriteLine($"{fileInfo.CreationTime}\t     \t{fileInfo.Name}");
             if(appendSuggestions && appendFiles) suggestions.Add(fileInfo.Name);
         }
         if (appendSuggestions)
