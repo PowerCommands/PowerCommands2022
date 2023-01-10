@@ -8,10 +8,20 @@
 public class CdCommand : CommandBase<CommandsConfiguration>
 {
     public static string WorkingDirectory = AppContext.BaseDirectory;
+    public static Action<string>? WorkingDirectoryChanged;
     public CdCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
     public override RunResult Run()
     {
         var path = WorkingDirectory;
+        if (Input.SingleArgument == "\\")
+        {
+            var directory = new DirectoryInfo(WorkingDirectory);
+            WorkingDirectory = directory.Root.FullName;
+            ShowDirectories(appendFiles: false);
+            return Ok();
+        }
+
+        var inputPath = string.IsNullOrEmpty(Input.Path) ? !string.IsNullOrEmpty(Input.SingleQuote) ? Path.Combine(path, Input.SingleQuote) : Path.Combine(path, string.Join(' ', Input.Arguments)) : Input.Path;
 
         var bookMarkIndex = Input.OptionToInt("bookmark", -1);
         var bookMark = GetOptionValue("bookmark");
@@ -30,9 +40,9 @@ public class CdCommand : CommandBase<CommandsConfiguration>
         {
             path = Configuration.Bookmark.Bookmarks.First(b => b.Name.ToLower() == bookMark.ToLower()).Path;
         }
-        else if (!string.IsNullOrEmpty(Input.Path))
+        else if (!string.IsNullOrEmpty(inputPath))
         {
-            path = Input.Path;
+            path = inputPath;
         }
         else if (Input.SingleArgument == "..")
         {
@@ -79,4 +89,6 @@ public class CdCommand : CommandBase<CommandsConfiguration>
             if(Identifier != "cd") SuggestionProviderManager.AppendContextBoundSuggestions("cd", dirSuggestions.ToArray());
         }
     }
+    public virtual void OnWorkingDirectoryChanged(string workingDirectory) => ShowDirectories(showOutput: false);
+    public virtual void InitializeWorkingDirectory() => ShowDirectories(showOutput: false);
 }
