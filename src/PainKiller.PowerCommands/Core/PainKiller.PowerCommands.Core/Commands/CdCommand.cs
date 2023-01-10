@@ -2,8 +2,9 @@
 
 [PowerCommandTest(        tests: " ")]
 [PowerCommandDesign(description: "Change or view the current working directory",
+                        options: "bookmark",
              disableProxyOutput: true,
-                        example: "//View current working directory|cd|//Traverse down one directory|//Change working directory|cd ..|cd \"C:\\ProgramData\"")]
+                        example: "//View current working directory|cd|//Traverse down one directory|//Change working directory|cd ..|cd \"C:\\ProgramData\"|//Set bookmark as the working directory using name|cd --bookmark program|//Set bookmark as the working directory using index|cd --bookmark 0")]
 public class CdCommand : CommandBase<CommandsConfiguration>
 {
     public static string WorkingDirectory = AppContext.BaseDirectory;
@@ -11,7 +12,25 @@ public class CdCommand : CommandBase<CommandsConfiguration>
     public override RunResult Run()
     {
         var path = WorkingDirectory;
-        if (!string.IsNullOrEmpty(Input.Path))
+
+        var bookMarkIndex = Input.OptionToInt("bookmark", -1);
+        var bookMark = GetOptionValue("bookmark");
+        if (bookMarkIndex >-1)
+        {
+            if (bookMarkIndex > Configuration.Bookmark.Bookmarks.Count-1)
+            {
+                WriteError($"\nThere is no bookmark with index {bookMarkIndex} defined in {ConfigurationGlobals.MainConfigurationFile}\n");
+                WriteHeadLine("Defined bookmarks");
+                foreach(var b in Configuration.Bookmark.Bookmarks) WriteCodeExample($"{b.Index}", b.Name);
+                return Ok();
+            }
+            path = Configuration.Bookmark.Bookmarks[bookMarkIndex].Path;
+        }
+        else if (!string.IsNullOrEmpty(bookMark) && Configuration.Bookmark.Bookmarks.Any(b => b.Name.ToLower() == bookMark.ToLower()))
+        {
+            path = Configuration.Bookmark.Bookmarks.First(b => b.Name.ToLower() == bookMark.ToLower()).Path;
+        }
+        else if (!string.IsNullOrEmpty(Input.Path))
         {
             path = Input.Path;
         }

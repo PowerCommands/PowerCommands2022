@@ -15,9 +15,11 @@
 		<ProjectReference Include="..\Core\PainKiller.PowerCommands.Shared\PainKiller.PowerCommands.Shared.csproj" />
 		<ProjectReference Include="..\PainKiller.PowerCommands.MyExampleCommands\PainKiller.PowerCommands.MyExampleCommands.csproj" />
 	</ItemGroup>
-
 	<ItemGroup>
 		<Folder Include="Extensions\" />
 	</ItemGroup>
-
+	<ItemGroup>
+		<ProjectCapability Include="ConfigurableFileNesting" />
+		<ProjectCapability Include="ConfigurableFileNestingFeatureEnabled" />
+	</ItemGroup>
 </Project>

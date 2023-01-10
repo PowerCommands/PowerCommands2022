@@ -24,8 +24,11 @@ configuration:
   - component: PainKiller.PowerCommands.Core.dll
     checksum: 4f04313db8e67b2bc4b059c478a900af
     name: PainKiller Core
-  secret:
-    secrets:    
+  bookmark:
+    bookmarks:
+    - name: Program
+      path: C:\Program Files
+      index: 0
   environment:
     variables:
     - name: OS
