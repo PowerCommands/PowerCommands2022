@@ -20,6 +20,7 @@
         <ProjectItem ReplaceParameters="true" TargetFileName="ServiceConfigurationExtensions.cs">ServiceConfigurationExtensions.cs</ProjectItem>
       </Folder>
       <ProjectItem ReplaceParameters="true" TargetFileName="PowerCommandsManager.cs">PowerCommandsManager.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="PowerCommandsManager.partial.cs">PowerCommandsManager.partial.cs</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="Startup.cs">Startup.cs</ProjectItem>
     </Project>
   </TemplateContent>

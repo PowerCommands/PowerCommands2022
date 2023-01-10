@@ -15,5 +15,6 @@ namespace $safeprojectname$.DomainObjects.Configuration
         public List<ProxyPowerCommandConfiguration> ProxyCommands { get; set; } = new();
         public SecretConfiguration Secret { get; set; } = new();
         public EnvironmentConfiguration Environment { get; set; } = new();
+        public BookmarkConfiguration Bookmark { get; set; } = new();
     }
 }

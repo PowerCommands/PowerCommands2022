@@ -1,7 +1,7 @@
 <VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Project">
   <TemplateData>
     <Name>PainKiller.PowerCommands.Shared</Name>
-    <Description>PowerCommands Shared</Description>
+    <Description>&lt;No description available&gt;</Description>
     <ProjectType>CSharp</ProjectType>
     <ProjectSubType>
     </ProjectSubType>
@@ -44,11 +44,14 @@
         <ProjectItem ReplaceParameters="true" TargetFileName="IStorageService.cs">IStorageService.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="ITemplateManager.cs">ITemplateManager.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="IVisualStudioManager.cs">IVisualStudioManager.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="IWorkingDirectoryChangesListener.cs">IWorkingDirectoryChangesListener.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="IZipService.cs">IZipService.cs</ProjectItem>
       </Folder>
       <Folder Name="DomainObjects" TargetFolderName="DomainObjects">
         <Folder Name="Configuration" TargetFolderName="Configuration">
           <ProjectItem ReplaceParameters="true" TargetFileName="BaseComponentConfiguration.cs">BaseComponentConfiguration.cs</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="BookmarkConfiguration.cs">BookmarkConfiguration.cs</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="BookmarkItemConfiguration.cs">BookmarkItemConfiguration.cs</ProjectItem>
           <ProjectItem ReplaceParameters="true" TargetFileName="CommandsConfiguration.cs">CommandsConfiguration.cs</ProjectItem>
           <ProjectItem ReplaceParameters="true" TargetFileName="EnvironmentConfiguration.cs">EnvironmentConfiguration.cs</ProjectItem>
           <ProjectItem ReplaceParameters="true" TargetFileName="EnvironmentItemConfiguration.cs">EnvironmentItemConfiguration.cs</ProjectItem>

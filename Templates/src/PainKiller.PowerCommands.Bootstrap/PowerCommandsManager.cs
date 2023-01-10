@@ -11,7 +11,7 @@ using PainKiller.PowerCommands.Shared.DomainObjects.Core;
 using PainKiller.PowerCommands.Shared.Enums;
 
 namespace $safeprojectname$;
-public class PowerCommandsManager : IPowerCommandsManager
+public partial class PowerCommandsManager : IPowerCommandsManager
 {
     public readonly IExtendedPowerCommandServices<PowerCommandsConfiguration> Services;
     public PowerCommandsManager(IExtendedPowerCommandServices<PowerCommandsConfiguration> services) { Services = services; }

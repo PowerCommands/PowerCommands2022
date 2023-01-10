@@ -29,9 +29,21 @@ public class ReflectionService : IReflectionService
             if(!string.IsNullOrEmpty(pcAttribute.Options)) suggestions.AddRange(pcAttribute.Options.Split('|').Select(f => $"--{f}"));
             suggestions.Add("--help");
             SuggestionProviderManager.AddContextBoundSuggestions(command.Identifier, suggestions.ToArray());
+            AppendWorkingDirectoryListener(command);
             retVal.Add(command);
         }
         return retVal.OrderBy(c => c.Identifier).ToList();
+    }
+    private void AppendWorkingDirectoryListener(IConsoleCommand command)
+    {
+        var workingDirectoryListener = command.GetType().GetInterface(nameof(IWorkingDirectoryChangesListener));
+        if (workingDirectoryListener != null)
+        {
+            // ReSharper disable once SuspiciousTypeConversion.Global
+            var listener = (IWorkingDirectoryChangesListener)command;
+            listener.InitializeWorkingDirectory();
+            CdCommand.WorkingDirectoryChanged += listener.OnWorkingDirectoryChanged;
+        }
     }
     public string GetVersion(Assembly assembly) => $"{assembly.GetName().Version!.Major}.{assembly.GetName().Version!.Minor}.{assembly.GetName().Version!.Build}.{assembly.GetName().Version!.Revision}";
 }
