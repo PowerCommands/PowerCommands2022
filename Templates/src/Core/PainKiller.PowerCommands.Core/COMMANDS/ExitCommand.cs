@@ -2,7 +2,7 @@
 
 [PowerCommandDesign( description: "Exit command exits the program",
                        arguments: "<answer>(any answer starting with y will close the application)",
-                      suggestion: "y",
+                      suggestions: "y",
               disableProxyOutput: true,
                          example: "exit|exit y|exit Yes")]
 public class ExitCommand : CommandBase<CommandsConfiguration>

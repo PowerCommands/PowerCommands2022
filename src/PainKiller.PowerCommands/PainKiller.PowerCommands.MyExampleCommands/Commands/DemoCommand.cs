@@ -2,7 +2,6 @@ namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
 [PowerCommandDesign( description: "Demo command just to se that your solution is setup properly",
                          options: "!create|from-search",
-                     suggestions: "lorum|ipsum",
                          example: "demo")]
 public class DemoCommand : CommandBase<PowerCommandsConfiguration>
 {

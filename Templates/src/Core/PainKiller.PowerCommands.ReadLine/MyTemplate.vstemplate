@@ -24,6 +24,9 @@
         <ProjectItem ReplaceParameters="true" TargetFileName="Console2.cs">Console2.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="KeyHandler.cs">KeyHandler.cs</ProjectItem>
       </Folder>
+      <Folder Name="Extensions" TargetFolderName="Extensions">
+        <ProjectItem ReplaceParameters="true" TargetFileName="StringExtension.cs">StringExtension.cs</ProjectItem>
+      </Folder>
       <Folder Name="Handlers" TargetFolderName="Handlers">
         <ProjectItem ReplaceParameters="true" TargetFileName="AutoCompleteHandler.cs">AutoCompleteHandler.cs</ProjectItem>
       </Folder>

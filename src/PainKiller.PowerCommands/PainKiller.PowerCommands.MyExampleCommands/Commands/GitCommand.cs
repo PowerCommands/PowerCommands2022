@@ -4,7 +4,7 @@
                 arguments: "!commit|push|status|log|branch",
                   options: "create|change|delete|merge|main",
                    quotes: "\"<comment>\" defaults to \"refactoring\" if omitted, only used with commit.",
-              suggestions: "commit|push|status|log|branch",
+              suggestions: "status|commit|push|log|branch",
                   example: "//Add and commit|git commit \"Bugfix\"|//Performs a push to Git repo|git push|//Git status of the configured git repo|git status|//Show log|git log|//Create and change to branch|git branch --create my-branch|//Change branch|git branch --change my-branch|//Merge branch|git --merge my-branch|//Delete branch locally (and remote if you want)|git --delete my-branch|//Change to main branch|git branch main")]
 
 public class GitCommand : CommandBase<PowerCommandsConfiguration>

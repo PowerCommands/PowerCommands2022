@@ -17,7 +17,7 @@
   <TemplateContent>
     <Project TargetFileName="PainKiller.PowerCommands.Shared.csproj" File="PainKiller.PowerCommands.Shared.csproj" ReplaceParameters="true">
       <Folder Name="Attributes" TargetFolderName="Attributes">
-        <ProjectItem ReplaceParameters="true" TargetFileName="PowerCommandDesign.cs">PowerCommandDesign.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="PowerCommandDesignAttribute.cs">PowerCommandDesignAttribute.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="PowerCommandTestAttribute.cs">PowerCommandTestAttribute.cs</ProjectItem>
       </Folder>
       <Folder Name="Contracts" TargetFolderName="Contracts">
