@@ -1,4 +1,6 @@
-﻿namespace PainKiller.PowerCommands.ReadLine.Managers;
+﻿using PainKiller.PowerCommands.ReadLine.Extensions;
+
+namespace PainKiller.PowerCommands.ReadLine.Managers;
 
 public class SuggestionProviderManager
 {
@@ -14,15 +16,12 @@ public class SuggestionProviderManager
 
     public static void AppendContextBoundSuggestions(string contextId, string[] suggestions, bool clearAllExceptOptions = true)
     {
-        if (ContextBoundSuggestions.TryGetValue(contextId, out var values))
-        {
-            var keepValues = values.Length == 0 ? new List<string>() : values.Where(v => v.StartsWith("--")).ToList();
-            keepValues.AddRange(suggestions);
-            ContextBoundSuggestions.Remove(contextId);
-            ContextBoundSuggestions.Add(contextId, keepValues.ToArray());
-        }
+        if (!ContextBoundSuggestions.TryGetValue(contextId, out var values)) return;
+        var keepValues = values.Length == 0 ? new List<string>() : values.Where(v => v.StartsWith("--")).ToList();
+        keepValues.AddRange(suggestions);
+        ContextBoundSuggestions.Remove(contextId);
+        ContextBoundSuggestions.Add(contextId, keepValues.ToArray());
     }
-
     private static string[] GetSuggestions(string input)
     {
         try
@@ -32,11 +31,15 @@ public class SuggestionProviderManager
             var contextId = inputs.First();
             inputs.RemoveAt(0);
 
-            if (string.IsNullOrEmpty(inputs.Last())) return ContextBoundSuggestions.Where(c => c.Key == contextId).Select(c => c.Value).First();
+            if (string.IsNullOrEmpty(inputs.Last())) return ContextBoundSuggestions.Where(c => c.Key == contextId).Select(c => c.Value).First().SortSuggestions();
 
             if (ContextBoundSuggestions.ContainsKey(contextId) && ContextBoundSuggestions.Any(c => c.Value.Any(v => v.ToLower().StartsWith(inputs.Last().ToLower().Substring(0, 1)))))
-                return ContextBoundSuggestions.Where(c => c.Key == contextId && c.Value.Any(v => v.Length > 0 && v.ToLower().StartsWith(inputs.Last().ToLower().Substring(0, 1))))
-                    .Select(x => x.Value).First().Where(s => s.ToLower().StartsWith(inputs.Last().ToLower())).ToArray();
+            {
+                var suggestions = ContextBoundSuggestions.Where(c => c.Key == contextId && c.Value.Any(v => v.Length > 0 && v.ToLower().StartsWith(inputs.Last().ToLower().Substring(0, 1))))
+                    .Select(x => x.Value).FirstOrDefault();
+                if(suggestions == null) return null!;
+                return suggestions.Where(s => s.ToLower().StartsWith(inputs.Last().ToLower())).ToArray();
+            }
 
             var buildPath = new List<string>();
             var startOfPathNotFound = true;
@@ -60,4 +63,5 @@ public class SuggestionProviderManager
             return new[] { e.Message };
         }
     }
+    
 }

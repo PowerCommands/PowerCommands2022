@@ -1,4 +1,6 @@
-﻿namespace PainKiller.PowerCommands.ReadLine.Managers;
+﻿using PainKiller.PowerCommands.ReadLine.Extensions;
+
+namespace PainKiller.PowerCommands.ReadLine.Managers;
 
 public class SuggestionProviderManager
 {
@@ -14,13 +16,11 @@ public class SuggestionProviderManager
 
     public static void AppendContextBoundSuggestions(string contextId, string[] suggestions, bool clearAllExceptOptions = true)
     {
-        if (ContextBoundSuggestions.TryGetValue(contextId, out var values))
-        {
-            var keepValues = values.Length == 0 ? new List<string>() : values.Where(v => v.StartsWith("--")).ToList();
-            keepValues.AddRange(suggestions);
-            ContextBoundSuggestions.Remove(contextId);
-            ContextBoundSuggestions.Add(contextId, keepValues.ToArray());
-        }
+        if (!ContextBoundSuggestions.TryGetValue(contextId, out var values)) return;
+        var keepValues = values.Length == 0 ? new List<string>() : values.Where(v => v.StartsWith("--")).ToList();
+        keepValues.AddRange(suggestions);
+        ContextBoundSuggestions.Remove(contextId);
+        ContextBoundSuggestions.Add(contextId, keepValues.ToArray());
     }
     private static string[] GetSuggestions(string input)
     {
@@ -31,7 +31,9 @@ public class SuggestionProviderManager
             var contextId = inputs.First();
             inputs.RemoveAt(0);
 
-            if (string.IsNullOrEmpty(inputs.Last())) return ContextBoundSuggestions.Where(c => c.Key == contextId).Select(c => c.Value).First();
+            if(!ContextBoundSuggestions.ContainsKey(contextId)) return null!;
+
+            if (string.IsNullOrEmpty(inputs.Last())) return ContextBoundSuggestions.Where(c => c.Key == contextId).Select(c => c.Value).First().SortSuggestions();
 
             if (ContextBoundSuggestions.ContainsKey(contextId) && ContextBoundSuggestions.Any(c => c.Value.Any(v => v.ToLower().StartsWith(inputs.Last().ToLower().Substring(0, 1)))))
             {

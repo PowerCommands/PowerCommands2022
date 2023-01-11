@@ -65,7 +65,7 @@ public static class ReflectionExtensions
     public static string GetDefaultParameter(this IConsoleCommand command)
     {
         var attribute = command.GetType().GetCustomAttributes(typeof(PowerCommandDesignAttribute), inherit: false).FirstOrDefault() as PowerCommandDesignAttribute;
-        return attribute is null ? "" : attribute.Suggestion;
+        return attribute is null ? "" : attribute.Suggestions;
     }
     public static T DeepClone<T>(this T objSource) where T : class => CopyObject<T>(objSource);
     public static T CopyObject<T>(object objSource)

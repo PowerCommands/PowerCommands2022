@@ -5,7 +5,7 @@ namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 [PowerCommandDesign(  description: "Download a file that is provides as an argument, after download you get a checksum of the downloaded file",
                         arguments: "!<url>",
                            quotes: "!<local file path>",
-                       suggestion: "https://downloadurl.com \"filename.txt\"",
+                       suggestions: "https://downloadurl.com \"filename.txt\"",
                           example: "download https://downloadurl.com \"filename.txt\"",
                          useAsync: true)]
 public class DownloadCommand : CommandBase<CommandsConfiguration>

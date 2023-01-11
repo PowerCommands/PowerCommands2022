@@ -5,9 +5,9 @@ using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
 namespace PainKiller.PowerCommands.KnowledgeDBCommands.Commands;
 
 [PowerCommandDesign( description: "Config command is a util to help you build a default yaml configuration file, practical when you adding new configuration elements to the PowerCommandsConfiguration class",
-                 arguments: "create|edit",
-                suggestion: "edit",
-                   example: "/*View the config file in PowerCommands console*/|config|/*Create a config file, practical when adding new elements to see the correct yaml syntax*/|config create|/*Edit the configuration with your favorite editor configured in the PowerCommandsConfiguration.yaml file*/|config edit")]
+                       arguments: "create|edit",
+                     suggestions: "create|edit",
+                         example: "/*View the config file in PowerCommands console*/|config|/*Create a config file, practical when adding new elements to see the correct yaml syntax*/|config create|/*Edit the configuration with your favorite editor configured in the PowerCommandsConfiguration.yaml file*/|config edit")]
 public class ConfigCommand : CommandBase<PowerCommandsConfiguration>
 {
     public ConfigCommand(string identifier, PowerCommandsConfiguration configuration) : base(identifier, configuration) { }
