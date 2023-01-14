@@ -31,6 +31,8 @@ public class SuggestionProviderManager
             var contextId = inputs.First();
             inputs.RemoveAt(0);
 
+            if(!ContextBoundSuggestions.ContainsKey(contextId)) return null!;
+
             if (string.IsNullOrEmpty(inputs.Last())) return ContextBoundSuggestions.Where(c => c.Key == contextId).Select(c => c.Value).First().SortSuggestions();
 
             if (ContextBoundSuggestions.ContainsKey(contextId) && ContextBoundSuggestions.Any(c => c.Value.Any(v => v.ToLower().StartsWith(inputs.Last().ToLower().Substring(0, 1)))))
@@ -63,5 +65,4 @@ public class SuggestionProviderManager
             return new[] { e.Message };
         }
     }
-    
 }

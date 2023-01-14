@@ -2,6 +2,6 @@
 
 public interface IWorkingDirectoryChangesListener
 {
-    void OnWorkingDirectoryChanged(string workingDirectory);
+    void OnWorkingDirectoryChanged(string[] files, string[] directories);
     void InitializeWorkingDirectory();
 }

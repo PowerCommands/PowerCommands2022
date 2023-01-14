@@ -4,11 +4,11 @@
 [PowerCommandDesign(description: "Change or view the current working directory",
                         options: "bookmark",
              disableProxyOutput: true,
-                        example: "//View current working directory|cd|//Traverse down one directory|//Change working directory|cd ..|cd \"C:\\ProgramData\"|//Set bookmark as the working directory using name|cd --bookmark program|//Set bookmark as the working directory using index|cd --bookmark 0")]
-public class CdCommand : CommandBase<CommandsConfiguration>
+                        example: "//View current working directory|cd|//Traverse down one directory|//Change working directory|cd ..|cd \"C:\\ProgramData\"|//Set bookmark as the working directory using name|cd --bookmark program|//Set bookmark as the working directory using index|cd --bookmark 0|//Set first existing bookmark (if any) as working directory|cd --bookmark")]
+public class CdCommand : CommandBase<CommandsConfiguration>, IWorkingDirectoryChangesListener
 {
     public static string WorkingDirectory = AppContext.BaseDirectory;
-    public static Action<string>? WorkingDirectoryChanged;
+    public static Action<string[], string[]>? WorkingDirectoryChanged;
     public CdCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
     public override RunResult Run()
     {
@@ -17,7 +17,7 @@ public class CdCommand : CommandBase<CommandsConfiguration>
         {
             var directory = new DirectoryInfo(WorkingDirectory);
             WorkingDirectory = directory.Root.FullName;
-            ShowDirectories(appendFiles: false);
+            ShowDirectories();
             return Ok();
         }
 
@@ -40,6 +40,10 @@ public class CdCommand : CommandBase<CommandsConfiguration>
         {
             path = Configuration.Bookmark.Bookmarks.First(b => b.Name.ToLower() == bookMark.ToLower()).Path;
         }
+        else if (HasOption("bookmark") && Configuration.Bookmark.Bookmarks.Count > 0)
+        {
+            path = Configuration.Bookmark.Bookmarks.First().Path;
+        }
         else if (!string.IsNullOrEmpty(inputPath))
         {
             path = inputPath;
@@ -60,35 +64,42 @@ public class CdCommand : CommandBase<CommandsConfiguration>
 
         if (Directory.Exists(path)) WorkingDirectory = path;
         else WriteFailureLine($"[{path}] does not exist");
-        ShowDirectories(appendFiles: false);
+        ShowDirectories();
         return Ok();
     }
-    public void ShowDirectories(string directory = "", bool appendDirectories = true, bool appendFiles = true, bool appendSuggestions = true, bool showOutput = true)
+    private void ShowDirectories()
     {
-        var dirInfo = new DirectoryInfo(string.IsNullOrEmpty(directory) ? WorkingDirectory : directory);
-        if(showOutput) Console.WriteLine(dirInfo.FullName);
-        var suggestions = new List<string>();
+        var dirInfo = new DirectoryInfo(WorkingDirectory);
+        Console.WriteLine(dirInfo.FullName);
+        var fileSuggestions = new List<string>();
         var dirSuggestions = new List<string>();
         foreach (var directoryInfo in dirInfo.GetDirectories())
         {
-            if(showOutput) Console.WriteLine($"{directoryInfo.CreationTime}\t<DIR>\t{directoryInfo.Name}");
-            if (appendSuggestions && appendDirectories)
-            {
-                suggestions.Add(directoryInfo.Name);
-                dirSuggestions.Add(directoryInfo.Name);
-            }
+            Console.WriteLine($"{directoryInfo.CreationTime}\t<DIR>\t{directoryInfo.Name}");
+            dirSuggestions.Add(directoryInfo.Name);
         }
         foreach (var fileInfo in dirInfo.GetFiles())
         {
-            if(showOutput) Console.WriteLine($"{fileInfo.CreationTime}\t     \t{fileInfo.Name}");
-            if(appendSuggestions && appendFiles) suggestions.Add(fileInfo.Name);
+            Console.WriteLine($"{fileInfo.CreationTime}\t     \t{fileInfo.Name}");
+            fileSuggestions.Add(fileInfo.Name);
         }
-        if (appendSuggestions)
-        {
-            SuggestionProviderManager.AppendContextBoundSuggestions(Identifier, suggestions.ToArray());
-            if(Identifier != "cd") SuggestionProviderManager.AppendContextBoundSuggestions("cd", dirSuggestions.ToArray());
-        }
+        SuggestionProviderManager.AppendContextBoundSuggestions(Identifier, dirSuggestions.ToArray());
+        WorkingDirectoryChanged?.Invoke(fileSuggestions.ToArray(), dirSuggestions.ToArray());
+        
     }
-    public virtual void OnWorkingDirectoryChanged(string workingDirectory) => ShowDirectories(showOutput: false);
-    public virtual void InitializeWorkingDirectory() => ShowDirectories(showOutput: false);
+    public virtual void OnWorkingDirectoryChanged(string[] files, string[] directories)
+    {
+        var suggestions = new List<string>();
+        suggestions.AddRange(directories);
+        if(Identifier != "cd") suggestions.AddRange(files);
+        SuggestionProviderManager.AppendContextBoundSuggestions(Identifier, suggestions.ToArray());
+    }
+    public virtual void InitializeWorkingDirectory()
+    {
+        var id = Identifier;
+        var dirInfo = new DirectoryInfo(WorkingDirectory);
+        var fileSuggestions = dirInfo.GetFiles().Select(d => d.Name).ToArray();
+        var dirSuggestions = dirInfo.GetDirectories().Select(d => d.Name).ToArray();
+        WorkingDirectoryChanged?.Invoke(fileSuggestions, dirSuggestions);
+    }
 }

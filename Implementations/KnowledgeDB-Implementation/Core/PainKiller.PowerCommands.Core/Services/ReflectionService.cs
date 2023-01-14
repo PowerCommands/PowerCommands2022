@@ -42,8 +42,8 @@ public class ReflectionService : IReflectionService
         {
             // ReSharper disable once SuspiciousTypeConversion.Global
             var listener = (IWorkingDirectoryChangesListener)command;
-            listener.InitializeWorkingDirectory();
             CdCommand.WorkingDirectoryChanged += listener.OnWorkingDirectoryChanged;
+            listener.InitializeWorkingDirectory();
         }
     }
     public string GetVersion(Assembly assembly) => $"{assembly.GetName().Version!.Major}.{assembly.GetName().Version!.Minor}.{assembly.GetName().Version!.Build}.{assembly.GetName().Version!.Revision}";
