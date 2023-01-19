@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.Logging;
 using PainKiller.PowerCommands.Core.Managers;
 using PainKiller.PowerCommands.Core.Services;
-using PainKiller.PowerCommands.$ext_projectname$Commands;
-using PainKiller.PowerCommands.$ext_projectname$Commands.Configuration;
+using $ext_projectname$Commands;
+using $ext_projectname$Commands.Configuration;
 
 namespace $safeprojectname$;
 public static class Startup

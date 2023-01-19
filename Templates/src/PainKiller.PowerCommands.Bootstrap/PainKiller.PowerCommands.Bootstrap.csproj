@@ -13,7 +13,7 @@
 		<ProjectReference Include="..\Core\PainKiller.PowerCommands.ReadLine\PainKiller.PowerCommands.ReadLine.csproj" />
 		<ProjectReference Include="..\Core\PainKiller.PowerCommands.Security\PainKiller.PowerCommands.Security.csproj" />
 		<ProjectReference Include="..\Core\PainKiller.PowerCommands.Shared\PainKiller.PowerCommands.Shared.csproj" />
-		<ProjectReference Include="..\PainKiller.PowerCommands.$ext_projectname$Commands\PainKiller.PowerCommands.$ext_projectname$Commands.csproj" />
+		<ProjectReference Include="..\$ext_projectname$Commands\$ext_projectname$Commands.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

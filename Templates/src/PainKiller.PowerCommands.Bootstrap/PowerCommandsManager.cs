@@ -4,7 +4,7 @@ using PainKiller.PowerCommands.Core.Commands;
 using PainKiller.PowerCommands.Core.Extensions;
 using PainKiller.PowerCommands.Core.Managers;
 using PainKiller.PowerCommands.Core.Services;
-using PainKiller.PowerCommands.$ext_projectname$Commands.Configuration;
+using $ext_projectname$Commands.Configuration;
 using PainKiller.PowerCommands.Shared.Contracts;
 using PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
 using PainKiller.PowerCommands.Shared.DomainObjects.Core;

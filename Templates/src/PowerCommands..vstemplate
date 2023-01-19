@@ -2,7 +2,7 @@
     xmlns="http://schemas.microsoft.com/developer/vstemplate/2005">
     <TemplateData>
         <Name>PowerCommands Solution</Name>
-		<DefaultName>MyExampleCommands</DefaultName>
+		<DefaultName>MyExample</DefaultName>
         <Description>Create a new PowerCommands project</Description>
 	    <Icon>Icon.ico</Icon>
         <ProjectType>CSharp</ProjectType>
@@ -35,7 +35,7 @@
             <ProjectTemplateLink ProjectName="PainKiller.PowerCommands.Bootstrap" CopyParameters="true">
                     PainKiller.PowerCommands.Bootstrap\MyTemplate.vstemplate
                 </ProjectTemplateLink>                
-                <ProjectTemplateLink ProjectName="PainKiller.PowerCommands.$projectname$Commands" CopyParameters="true">
+                <ProjectTemplateLink ProjectName="$projectname$Commands" CopyParameters="true">
                     PainKiller.PowerCommands.MyExampleCommands\MyTemplate.vstemplate
                 </ProjectTemplateLink>
                 <ProjectTemplateLink ProjectName="PainKiller.PowerCommands.PowerCommandsConsole">

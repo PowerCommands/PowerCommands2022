@@ -1,6 +1,6 @@
 # Create your first PowerCommands project
 
-Download the Visual Studio Template zipfile from [here](https://github.com/PowerCommands/PowerCommands2022/tree/main/Templates/Artifact)
+Download the Visual Studio Template zipfile from [here](https://github.com/PowerCommands/PowerCommands2022/tree/main/Templates)
 
 Copy the .zip file into the user project template directory. By default, this directory is %USERPROFILE%\Documents\Visual Studio <version>\Templates\ProjectTemplates.
 
