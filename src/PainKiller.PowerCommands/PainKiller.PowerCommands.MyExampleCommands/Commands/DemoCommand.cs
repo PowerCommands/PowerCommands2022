@@ -1,7 +1,8 @@
 namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
+[PowerCommandTest(tests: " |--pause 3")]
 [PowerCommandDesign( description: "Demo command just to se that your solution is setup properly",
-                         options: "!create|from-search",
+                         options: "!pause|dummie",
                          example: "demo")]
 public class DemoCommand : CommandBase<PowerCommandsConfiguration>
 {
@@ -9,6 +10,8 @@ public class DemoCommand : CommandBase<PowerCommandsConfiguration>
 
     public override RunResult Run()
     {
+        PauseService.Pause(Input);
+
         WriteLine("Hello World!");
         WriteHeadLine("Congratulations! You have setup your PowerCommands solution correctly!");
         WriteLine("You may set up some things in your PowerCommandsConfiguration.yaml file, like the path to your favorite code editor");
@@ -37,6 +40,7 @@ public class DemoCommand : CommandBase<PowerCommandsConfiguration>
         }
         WriteHeadLine("Path value, witch is the first valid path in the input.");
         WriteLine(Input.Path);
+
         return Ok();
     }
 }
