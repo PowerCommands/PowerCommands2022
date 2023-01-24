@@ -22,7 +22,7 @@ public class DemoCommand : CommandBase<PowerCommandsConfiguration>
 
         
         WriteHeadLine("Diagnostic output of the command line input, for testing purposes");
-        WriteLine($"Raw input: {Input.Raw}n");
+        WriteLine($"Raw input: {Input.Raw}");
         WriteLine($"Arguments: {string.Join(' ', Input.Arguments)}");
         WriteLine($"SingleArgument: {string.Join(' ', Input.SingleArgument)}\n");
         WriteLine($"Quotes: {string.Join(' ', Input.Quotes)}");

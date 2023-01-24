@@ -30,6 +30,7 @@
         <ProjectItem ReplaceParameters="true" TargetFileName="DescribeCommand.cs">DescribeCommand.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="ExitCommand.cs">ExitCommand.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="LogCommand.cs">LogCommand.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="MasterCommando.cs">MasterCommando.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="PowerCommandCommand.cs">PowerCommandCommand.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="ProxyCommando.cs">ProxyCommando.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="SecretCommand.cs">SecretCommand.cs</ProjectItem>
@@ -65,6 +66,7 @@
         <ProjectItem ReplaceParameters="true" TargetFileName="HelpService.cs">HelpService.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="HtmlConsoleService.cs">HtmlConsoleService.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="IOService.cs">IOService.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="PauseService.cs">PauseService.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="ReflectionService.cs">ReflectionService.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="ShellService.cs">ShellService.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="StorageService.cs">StorageService.cs</ProjectItem>

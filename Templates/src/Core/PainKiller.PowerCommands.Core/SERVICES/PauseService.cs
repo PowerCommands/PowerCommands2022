@@ -1,4 +1,4 @@
-﻿namespace PainKiller.PowerCommands.Core.Services;
+﻿namespace $safeprojectname$.Services;
 
 public static class PauseService
 {
