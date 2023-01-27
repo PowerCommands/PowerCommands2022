@@ -1,6 +1,6 @@
 ﻿using PainKiller.PowerCommands.Core.Commands;
 
-namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
+namespace $safeprojectname$.Commands;
 
 [PowerCommandTest(         tests: " ")]
 [PowerCommandDesign( description: "Run powershell commands",
