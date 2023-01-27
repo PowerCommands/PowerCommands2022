@@ -1,6 +1,4 @@
-﻿using PainKiller.PowerCommands.KnowledgeDBCommands.Extensions;
-
-namespace PainKiller.PowerCommands.KnowledgeDBCommands.DomainObjects;
+﻿namespace PainKiller.PowerCommands.KnowledgeDBCommands.DomainObjects;
 
 public class KnowledgeItem
 {
@@ -10,7 +8,7 @@ public class KnowledgeItem
     {
         ItemID = Guid.NewGuid();
         Name = input.GetOptionValue(nameof(Name).ToLower());
-        SourceType = input.ToSourceType();
+        SourceType = input.SingleArgument;
         Uri = input.SingleQuote;
         Tags = input.GetOptionValue(nameof(Tags).ToLower());
     }
