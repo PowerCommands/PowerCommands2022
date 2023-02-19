@@ -26,7 +26,7 @@ public class AESEncryptionManager : IEncryptionManager
         using var aesAlg = Aes.Create(); 
         try
         {
-            var key = new Rfc2898DeriveBytes(sharedSecret, _saltBytes);
+            var key = new Rfc2898DeriveBytes(sharedSecret, _saltBytes, iterations: 1000, HashAlgorithmName.SHA1);
             aesAlg.Key = key.GetBytes(aesAlg.KeySize / 8);
             aesAlg.Mode = CipherMode.CBC;
 
@@ -70,7 +70,7 @@ public class AESEncryptionManager : IEncryptionManager
         try
         {
             // generate the key from the shared secret and the salt
-            var key = new Rfc2898DeriveBytes(sharedSecret, _saltBytes);
+            var key = new Rfc2898DeriveBytes(sharedSecret, _saltBytes, iterations: 1000, HashAlgorithmName.SHA1);
 
             var bytes = Convert.FromBase64String(cipherText);
             using var msDecrypt = new MemoryStream(bytes);
