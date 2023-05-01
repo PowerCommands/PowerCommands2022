@@ -18,10 +18,10 @@ public class ShellService : IShellService
         if (!Directory.Exists(path)) return;
         Process.Start(new ProcessStartInfo { FileName = path, UseShellExecute = true, Verb = "open" });
     }
-    public void OpenWithDefaultProgram(string uri)
+    public void OpenWithDefaultProgram(string uri, string workingDirectory = "")
     {
-        _logger.LogInformation($"{nameof(ShellService)} {nameof(OpenDirectory)} {uri}");
-        Process.Start(new ProcessStartInfo {FileName = uri, UseShellExecute = true, Verb = "open" });
+        _logger.LogInformation($"{workingDirectory} {nameof(ShellService)} {nameof(OpenDirectory)} {uri}");
+        Process.Start(new ProcessStartInfo { FileName = uri, WorkingDirectory = workingDirectory, UseShellExecute = true, Verb = "open" });
     }
     public void Execute(string programName, string arguments, string workingDirectory, Action<string> writeFunction, string fileExtension = "exe", bool waitForExit = false, bool useShellExecute = false, bool disableOutputLogging = false)
     {
