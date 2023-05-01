@@ -1,56 +1,59 @@
 ﻿using PainKiller.PowerCommands.Shared.Utils.DisplayTable;
 
-
 namespace $safeprojectname$.Services;
 public static class ConsoleTableService
 {
     private static readonly Dictionary<string, IEnumerable<IColumnRender>> TableColumnRenderDefinitions = new();
-
     public static void RenderTable<T>(IEnumerable<T> items, IConsoleWriter consoleWriter) where T : new()
     {
-        var tableITems = items.ToArray();
-        if (!tableITems.Any()) return;
+        var tableItems = items.ToArray();
+        if (!tableItems.Any()) return;
         var rows = ConsoleTable
-            .From<T>(tableITems)
+            .From<T>(tableItems)
             .Configure(o => o.NumberAlignment = Alignment.Right)
             .Read(WriteFormat.Alternative).Split("\r\n");
-
-        for (var rowIndex = 0; rowIndex < rows.Length; rowIndex++)
-        {
-            var row = rows[rowIndex];
-            if (rowIndex < 3)
-            {
-                consoleWriter.WriteHeadLine(row);
-                continue;
-            }
-            consoleWriter.WriteLine(row);
-        }
+        RenderConsoleTable(rows, consoleWriter);
     }
-
     public static void RenderConsoleCommandTable<T>(IEnumerable<T> items, IConsoleWriter consoleWriter) where T : class, IConsoleCommandTable, new()
     {
-        var tableITems = items.ToArray();
-        if(!tableITems.Any()) return;
+        var tableItems = items.ToArray();
+        if (!tableItems.Any()) return;
         if (typeof(T).GetInterface(nameof(IConsoleCommandTable)) != null)
         {
-            var consoleCommandTable = tableITems.First();
-            RenderTable(tableITems, consoleCommandTable.GetColumnRenderOptionsAttribute().ToArray(), consoleWriter);
+            var consoleCommandTable = tableItems.First();
+            RenderTable(tableItems, consoleCommandTable.GetColumnRenderOptionsAttribute().ToArray(), consoleWriter);
             return;
         }
         var rows = ConsoleTable
-            .From<T>(tableITems)
+            .From<T>(tableItems)
             .Configure(o => o.NumberAlignment = Alignment.Right)
             .Read(WriteFormat.Alternative).Split("\r\n");
-
+        RenderConsoleTable(rows, consoleWriter);
+    }
+    private static void RenderConsoleTable(string[] rows, IConsoleWriter consoleWriter)
+    {
         for (var rowIndex = 0; rowIndex < rows.Length; rowIndex++)
         {
+            if(rowIndex % 2 == 0) continue;
             var row = rows[rowIndex];
+            row = row.Replace("+-", "").Replace("-+", "").Replace(" |", "").Replace("| ", "");
             if (rowIndex < 3)
             {
-                consoleWriter.WriteHeadLine(row);
+                var foregroundColor = Console.ForegroundColor;
+                var color = Console.BackgroundColor;
+                Console.BackgroundColor = ConsoleColor.White;
+                Console.ForegroundColor = ConsoleColor.Blue;
+                consoleWriter.Write(row);
+                Console.BackgroundColor = color;
+                Console.ForegroundColor = foregroundColor;
+                Console.WriteLine();
                 continue;
             }
-            consoleWriter.WriteLine(row);
+            var color2 = Console.BackgroundColor;
+            Console.BackgroundColor = ConsoleColor.DarkCyan;
+            consoleWriter.Write(row);
+            Console.BackgroundColor = color2;
+            Console.WriteLine();
         }
     }
     public static void AddTableColumnRenderDefinitions(string name, IEnumerable<IColumnRender> columnRenderDefinitions)
@@ -73,7 +76,7 @@ public static class ConsoleTableService
 
         for (var index = 0; index < rows.Length; index++)
         {
-            if(index<3) continue;
+            if (index < 3) continue;
             var row = rows[index];
             if (row.StartsWith("+-"))
             {
@@ -94,43 +97,18 @@ public static class ConsoleTableService
             }
         }
     }
-    private static void WriteHeaderRow(string row, ColumnRenderOptionsAttribute[] columnRenderDefinitions, IConsoleWriter consoleWriter)
-    {
-        var cols = row.Split('|');
-        var render = new ColumnRenderHeader(consoleWriter);
-        for (var colIndex = 0; colIndex < cols.Length; colIndex++)
-        {
-            if (colIndex == cols.Length - 1)
-            {
-                consoleWriter.WriteLine("");
-                break;
-            }
-            render.Write(cols[colIndex]);
-        }
-    }
     private static IEnumerable<IColumnRender> GetColumnRenders<T>(IEnumerable<ColumnRenderOptionsAttribute> columnRenderDefinitions, IConsoleWriter consoleWriter)
     {
-        var renderCol = new List<IColumnRender>();
-        foreach (var optionsAttribute in columnRenderDefinitions.OrderBy(c => c.Order))
-        {
-            IColumnRender render;
-            switch (optionsAttribute.RenderFormat)
+        var renderCol = columnRenderDefinitions.OrderBy(c => c.Order)
+            .Select(optionsAttribute => optionsAttribute.RenderFormat switch
             {
-                case ColumnRenderFormat.None:
-                    render = new ColumnRenderBase(consoleWriter);
-                    break;
-                case ColumnRenderFormat.Standard:
-                    render = new ColumnRenderStandard(consoleWriter);
-                    break;
-                case ColumnRenderFormat.SucessOrFailure:
-                    render = new ColumnRenderSuccsessOrFailure(consoleWriter, optionsAttribute.Trigger1, optionsAttribute.Trigger2, optionsAttribute.Mark);
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-            renderCol.Add(render);
-        }
-        renderCol.Insert(0,new ColumnRenderStandard(consoleWriter));
+                ColumnRenderFormat.None => new ColumnRenderBase(consoleWriter),
+                ColumnRenderFormat.Standard => new ColumnRenderStandard(consoleWriter),
+                ColumnRenderFormat.SucessOrFailure => new ColumnRenderSuccsessOrFailure(consoleWriter, optionsAttribute.Trigger1, optionsAttribute.Trigger2, optionsAttribute.Mark), _ => throw new ArgumentOutOfRangeException()
+            })
+            .Cast<IColumnRender>()
+            .ToList();
+        renderCol.Insert(0, new ColumnRenderStandard(consoleWriter));
         renderCol.Add(new ColumnRenderBase(consoleWriter));
         AddTableColumnRenderDefinitions(typeof(T).Name, renderCol);
         return renderCol;
