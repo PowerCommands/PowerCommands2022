@@ -2,7 +2,7 @@ namespace $safeprojectname$.Commands;
 
 [PowerCommandTest(tests: "! |!--pause 3")]
 [PowerCommandDesign( description: "Demo command just to try out how you could use the input, do not forget the MANDATORY option, will trigger a validation error otherwise! ;-)\n That is because the option name is typed with UPPERCASE letters, useful when you want a mandatory option\n The pause option on the other hand starts with a ! symbol meaning that if you add the --pause option you must also give it a value, an integer in this case.",
-                         options: "MANDATORY|!pause",
+                         options: "!MANDATORY|!pause",
                          example: "//Must provide the MANDATORY option will trigger a validation error otherwise|demo MANDATORY|//Test the pause service|demo --pause 5 MANDATORY")]
 public class DemoCommand : CommandBase<PowerCommandsConfiguration>
 {
