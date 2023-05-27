@@ -30,11 +30,15 @@ public class InputValidationManager
         var optionInfos = attribute.Options.Split('|').Select(f => new PowerOption(f)).ToList();
         retVal.Options.AddRange(optionInfos);
         
-        foreach (var optionInfo in optionInfos.Where(f => f.IsRequired))
+        foreach (var optionInfo in optionInfos.Where(f => f.ValueIsRequired || f.IsMandatory))
         {
+            if (optionInfo.IsMandatory && !_input.HasOption(optionInfo.Name))
+            {
+                retVal.HasValidationError = true;
+                _logger.Invoke($"Option [{optionInfo.Name}] is mandatory");
+            }
             optionInfo.Value = _input.GetOptionValue(optionInfo.Name);
-
-            if (!string.IsNullOrEmpty(optionInfo.Value) || !_input.HasOption(optionInfo.Name)) continue;
+            if (!string.IsNullOrEmpty(optionInfo.Value) || !_input.HasOption(optionInfo.Name) || !optionInfo.ValueIsRequired) continue;
             _logger.Invoke($"Option [{optionInfo.Name}] is required to have a value or not used at all.");
             retVal.HasValidationError = true;
         }
@@ -43,18 +47,10 @@ public class InputValidationManager
         var requiredSecrets = attribute.Secrets.Split('|').Where(s => s.StartsWith('!')).ToArray();
         foreach (var secretName in requiredSecrets)
         {
-            if (IPowerCommandServices.DefaultInstance!.Configuration.Secret.Secrets == null)
-            {
-                _logger.Invoke($"Secret [{secretName}] is required");
-                retVal.HasValidationError = true;
-                break;
-            }
             var secret = IPowerCommandServices.DefaultInstance!.Configuration.Secret.Secrets.FirstOrDefault(s => s.Name.ToLower() == secretName.Replace("!","").ToLower());
-            if (secret == null)
-            {
-                _logger.Invoke($"Secret [{secretName.Replace("!","")}] is required");
-                retVal.HasValidationError = true;
-            }
+            if (secret != null) continue;
+            _logger.Invoke($"Secret [{secretName.Replace("!","")}] is required");
+            retVal.HasValidationError = true;
         }
         return retVal;
     }

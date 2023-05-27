@@ -14,4 +14,10 @@
 		<ProjectReference Include="..\PainKiller.PowerCommands.Shared\PainKiller.PowerCommands.Shared.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <None Update="DocsDB.data">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	</ItemGroup>
+
 </Project>

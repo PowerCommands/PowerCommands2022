@@ -1,6 +1,6 @@
 # Design your command
 
-Think of your command as an one line command with some parameters in a cmd prompt environment, it should do a small amount of isolated task in a specific context, for example lets say you want to convert yaml file to json or xml. A good name could be **ConvertCommand**, as parameters you have a path to the input file, and a O for the format and a value to that option. That is a pretty good design for one Command. 
+Think of your command as an one line command with some parameters in a cmd prompt environment, it should do a small amount of isolated task in a specific context, for example lets say you want to convert yaml file to json or xml. A good name could be **ConvertCommand**, as parameters you have a path to the input file, and an option flag for the format and a value to that option. That is a pretty good design for one Command. 
  
  The usage of this command will look like this if I want to convert my yaml fil to json.
 
@@ -36,12 +36,17 @@ public class ConvertCommand : CommandBase<PowerCommandsConfiguration>
     }
 }
 ```
-Notice that the documentation for how this command will be used is created with the [PowerCommandDesign](PowerCommandDesignAttribute.md) attribute. I realize that the path option should be required, I can of course code this check in the Command but I do not need to do that, instead I declare that with the [PowerCommandDesign](PowerCommandDesignAttribute.md) attribute, I just add a **!** before the path option, this will be validated before the execution of the run command. The new design look like this.
+## Validation of mandatory option and value
+Notice that the documentation for how this command will be used is created with the [PowerCommandDesign](PowerCommandDesignAttribute.md) attribute. I realize that the path option should be both **mandatory** and must have a value, I can of course add code to do this check in the Command but I do not need to do that, instead I declare that with the [PowerCommandDesign](PowerCommandDesignAttribute.md) attribute, I just add a **!** before the path option, this will be validated before the execution of the run command. I also spell the option name in UPPERCASE letters which does the option **mandatory**.
+
+The new design look like this.
 ```
 [PowerCommandDesign(  description: "Converting yaml format to json or xml format",
-                            options: "!path|format",
+                          options: "!PATH|format",
                           example: "//Convert to json format|convert --path \"c:\\temp\\test.yaml\" --format json|//Convert to xml format|convert --path \"c:\\temp\\test.yaml\" --format xml")]
 ```                     
+Have a closer look at the !PATH option, it starts with a **!** and it consists of upperletter cases only **PATH**, with the use of the **!** sympol the option must have a value. With the use of uppercase letter the option it self is **mandatory**.  
+
 If I run the command empty I trigger a validation error.
 
 ![Alt text](images/convert_validation_error.png?raw=true "Describe convert command")

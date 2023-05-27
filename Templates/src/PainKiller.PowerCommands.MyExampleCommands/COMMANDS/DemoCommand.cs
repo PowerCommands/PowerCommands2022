@@ -1,9 +1,9 @@
 namespace $safeprojectname$.Commands;
 
-[PowerCommandTest(tests: " |--pause 3")]
-[PowerCommandDesign( description: "Demo command just to se that your solution is setup properly",
-                         options: "!pause|dummie",
-                         example: "demo")]
+[PowerCommandTest(tests: "! |!--pause 3")]
+[PowerCommandDesign( description: "Demo command just to try out how you could use the input, do not forget the MANDATORY option, will trigger a validation error otherwise! ;-)\n That is because the option name is typed with UPPERCASE letters, useful when you want a mandatory option\n The pause option on the other hand starts with a ! symbol meaning that if you add the --pause option you must also give it a value, an integer in this case.",
+                         options: "MANDATORY|!pause",
+                         example: "//Must provide the MANDATORY option will trigger a validation error otherwise|demo MANDATORY|//Test the pause service|demo --pause 5 MANDATORY")]
 public class DemoCommand : CommandBase<PowerCommandsConfiguration>
 {
     public DemoCommand(string identifier, PowerCommandsConfiguration configuration) : base(identifier, configuration) { }
@@ -31,7 +31,8 @@ public class DemoCommand : CommandBase<PowerCommandsConfiguration>
         foreach (var powerOption in Options)
         {
             WriteLine($"Raw input: {powerOption.Raw}");
-            WriteLine($"{powerOption.Name} {powerOption.Value} isRequired: {powerOption.IsRequired}\n");
+            WriteLine($"{powerOption.Name} {powerOption.Value} {nameof(powerOption.ValueIsRequired)}: {powerOption.ValueIsRequired}\n");
+            WriteLine($"{powerOption.Name} {powerOption.Value} {nameof(powerOption.IsMandatory)}: {powerOption.IsMandatory}\n");
         }
         WriteHeadLine("Input Options, with value if any.");
         foreach (var powerOption in Input.Options)

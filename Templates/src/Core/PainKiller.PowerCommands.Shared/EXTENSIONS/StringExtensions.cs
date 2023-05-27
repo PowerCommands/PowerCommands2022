@@ -18,4 +18,5 @@ public static class StringExtensions
     }
     public static string RemoveHtml(this string content) => Regex.Replace($"{content}", @"<[^>]*>", String.Empty);
     public static List<string> ExtractLinks(this string content) => new Regex("http(s)?://([\\w+?\\.\\w+])+([a-zA-Z0-9\\~\\!\\@\\#\\$\\%\\^\\&amp;\\*\\(\\)_\\-\\=\\+\\\\\\/\\?\\.\\:\\;\\'\\,]*)?", RegexOptions.IgnoreCase).Matches(content).Select(m => m.Value).ToList();
+    public static bool IsUppercaseOnly(this string input) => new Regex("^[A-Z]+$").IsMatch(input);
 }
