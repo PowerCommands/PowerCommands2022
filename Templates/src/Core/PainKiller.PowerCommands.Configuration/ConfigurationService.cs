@@ -64,16 +64,12 @@ public class ConfigurationService : IConfigurationService
     /// <param name="defaultIfMissing"></param>
     /// <param name="inputFileName"></param>
     /// <returns></returns>
-    public YamlContainer<T> GetAppDataConfiguration<T>(T defaultIfMissing, string inputFileName = "") where T : new()
+    public YamlContainer<T> GetAppDataConfiguration<T>(string inputFileName = "") where T : new()
     {
         var directory = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\{nameof(PowerCommands)}";
         if (!Directory.Exists(directory)) Directory.CreateDirectory(directory);
         var fileName = Path.Combine(directory, inputFileName);
-        if (!File.Exists(fileName))
-        {
-            var yaml = CreateContent(defaultIfMissing);
-            File.WriteAllText(fileName, yaml);
-        }
+        if (!File.Exists(fileName)) throw new FileNotFoundException($"Could not find file {fileName}");
         var yamlContent = File.ReadAllText(fileName);
         var deserializer = new DeserializerBuilder()
             .WithNamingConvention(CamelCaseNamingConvention.Instance)

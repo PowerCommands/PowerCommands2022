@@ -45,13 +45,13 @@ public class SecretCommand : CommandBase<CommandsConfiguration>
 
     private RunResult Init()
     {
-        var salt = IEncryptionService.GetRandomSalt();
-        WriteLine($"{salt.Length}");
-        var firstHalf = salt.Substring(0, 22);
-        var secondHalf = salt.Substring(22, 22);
+        var firstHalf = IEncryptionService.GetRandomSalt();;
+        var secondHalf = IEncryptionService.GetRandomSalt();;
         Environment.SetEnvironmentVariable("_encryptionManager", firstHalf, EnvironmentVariableTarget.User);
         var securityConfig = new SecurityConfiguration { Encryption = new EncryptionConfiguration { SharedSecretEnvironmentKey = "_encryptionManager", SharedSecretSalt = secondHalf } };
-        StorageService<SecurityConfiguration>.Service.StoreObject(securityConfig, ConfigurationGlobals.SecurityFileName);
+        var fileName = Path.Combine(ConfigurationGlobals.ApplicationDataFolder, ConfigurationGlobals.SecurityFileName);
+        ConfigurationService.Service.Create(securityConfig, fileName);
+        WriteSuccessLine($"File {fileName} saved OK, you will need to restart the application before the changes take effect.");
         return Ok();
     }
 
