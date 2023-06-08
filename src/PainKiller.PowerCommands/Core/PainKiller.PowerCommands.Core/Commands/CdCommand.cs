@@ -2,7 +2,7 @@
 
 [PowerCommandTest(        tests: " ")]
 [PowerCommandDesign(description: "Change or view the current working directory",
-                        options: "bookmark",
+                        options: "bookmark|roaming",
              disableProxyOutput: true,
                         example: "//View current working directory|cd|//Traverse down one directory|//Change working directory|cd ..|cd \"C:\\ProgramData\"|//Set bookmark as the working directory using name|cd --bookmark program|//Set bookmark as the working directory using index|cd --bookmark 0|//Set first existing bookmark (if any) as working directory|cd --bookmark")]
 public class CdCommand : CommandBase<CommandsConfiguration>, IWorkingDirectoryChangesListener
@@ -44,6 +44,10 @@ public class CdCommand : CommandBase<CommandsConfiguration>, IWorkingDirectoryCh
         {
             path = Configuration.Bookmark.Bookmarks.First().Path;
         }
+        else if (HasOption("roaming"))
+        {
+            path = ConfigurationGlobals.ApplicationDataFolder;
+        }
         else if (!string.IsNullOrEmpty(inputPath))
         {
             path = inputPath;
@@ -61,7 +65,7 @@ public class CdCommand : CommandBase<CommandsConfiguration>, IWorkingDirectoryCh
             if(!string.IsNullOrEmpty(dir)) paths.Add(dir);
             path = string.Join(Path.DirectorySeparatorChar, paths);
         }
-
+        if (path.Contains("$ROAMING$")) path = path.Replace("$ROAMING$", ConfigurationGlobals.ApplicationDataFolder);
         if (Directory.Exists(path)) WorkingDirectory = path;
         else WriteFailureLine($"[{path}] does not exist");
         ShowDirectories();
