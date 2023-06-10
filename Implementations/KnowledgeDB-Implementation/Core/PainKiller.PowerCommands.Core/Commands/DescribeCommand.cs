@@ -22,7 +22,7 @@ public class DescribeCommand : CommandBase<CommandsConfiguration>
         var docSearch = Input.HasOption("docs") ? Input.GetOptionValue("docs").ToLower() : Input.SingleArgument.ToLower();
         var docs = StorageService<DocsDB>.Service.GetObject().Docs;
         var matchDocs = docs.Where(d => d.DocID.ToString().PadLeft(4, '0') == docSearch || d.Name.ToLower().Contains(docSearch) || d.Tags.ToLower().Contains(docSearch)).ToArray();
-        if (matchDocs.Length == 1)
+        if (matchDocs.Length == 1 || matchDocs.Select(d => d.DocID).Distinct().Count() == 1)
         {
             ShellService.Service.OpenWithDefaultProgram(matchDocs.First().Uri);
             return;

@@ -9,6 +9,7 @@ public static class PauseService
     }
     public static void Pause(int seconds = 5, string description = ",  before continuing the process.")
     {
+        Console.WriteLine();
         for (int i = 0; i < seconds; i++)
         {
                 OverwritePreviousLine($"Waiting {seconds-i} seconds{description}...");
