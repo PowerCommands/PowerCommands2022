@@ -21,9 +21,8 @@ public class PowerCommandServices : IExtendedPowerCommandServices<PowerCommandsC
         Runtime = new PowerCommandsRuntime<PowerCommandsConfiguration>(ExtendedConfiguration, Diagnostic); 
         Logger = GetLoggerManager.GetFileLogger(ExtendedConfiguration.Log.FileName.GetSafePathRegardlessHowApplicationStarted(ExtendedConfiguration.Log.FilePath),ExtendedConfiguration.Log.RollingIntervall,ExtendedConfiguration.Log.RestrictedToMinimumLevel);
         DefaultConsoleService = ConsoleService.Service;
-
+        
         var suggestions = new List<string>(Runtime.CommandIDs);
-        suggestions.AddRange(Runtime.CommandIDs.Select(s => $"describe {s}").ToList());
         suggestions.AddRange(Runtime.Commands.Where(c => !string.IsNullOrEmpty(c.GetDefaultParameter())).Select(c => $"{c.Identifier} {c.GetDefaultParameter()}").ToList());
 
         ReadLineService.InitializeAutoComplete(history: new string[]{},suggestions: suggestions.ToArray());
