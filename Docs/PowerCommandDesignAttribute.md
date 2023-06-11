@@ -46,7 +46,7 @@ Describe your quotes, separate them with | use // to display a commented line ov
 Suggestion will be added to the autocomplete functionallity so the user could use tab to cycle trough the commands and commands with a suggested argument.
 ### Options
 Describe your options, separate them with | use // to display a commented line over the actual option, all options that are described will also be used by the autocomplete functionallity to help the user find the right option.
-Read more about [options](options.md).
+Read more about [options](Options.md).
 ### secrets
 Describe your secrets that the commands needs, you probably want to declare a secret as required with **!** character, in the sample above secret **cnDatabase** is marked as required.
 ```

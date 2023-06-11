@@ -3,7 +3,7 @@
 ## Configure your environment to use Encryption/Decryption and Secrets functionallity
 ## Good to know
 Secret is initialized the fist time you startup a new power command project on your machine, the same keys for encryption/decryption is used by all your PowerCommands based applications on the same machine.
-If you setup PowerCommands on a diffrent machine, a new key for encryption/decryption will be used, meaning you have to create the secrets again on that machine. But you can move the keys manually, but I do not think that you should do that.
+If you setup PowerCommands on a diffrent machine, a new key for encryption/decryption will be created for that machine. It is possible to manually move both the key and the encrypted secrets from one machine to another, but it is not recommended and therefore not documented.
 ## Use the secrets built in functionallity 
 Create secret with built in commands named secret, like this:
 ```

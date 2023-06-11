@@ -4,23 +4,18 @@ You could se PowerCommands as an easy Create your CLI applikation starter kit. I
 [Follow progress on twitter](https://twitter.com/PowerCommands) <img src="https://github.com/PowerCommands/PowerCommands2022/blob/main/Docs/images/Twitter.png?raw=true" alt="drawing" width="20"/>
 
  ### The core components offering this to your custom PowerCommands
- - Logging (using Microsoft.Extensions.Logging.ILogger)
- - Process log (using the standard logger with tags to track a process)
- - Configuration with YAML (built to be very easy to extend)
- - Display your POCO:s easy with a nice Console Table display output
- - Simple to write test rules with attribute
- - Validation rules with attribute
- - Diagnostic 
- - Secret handling to protect sensitive information like password or authentication tokens in the configuration file.
  - Command completion, with history, suggestions, options and support for Path/File navigation and color highlightning when typing a valid command
- - Progressbar
- - Download files
- - Password prompt
+ - Secret handling to protect sensitive information like password or authentication tokens in the configuration file. 
+ - Configuration with YAML (built to be very easy to extend)
+ - Logging (using Microsoft.Extensions.Logging.ILogger)
+ - Built in help system with the use of attributes
  - Run as job
- - Zip with attributes like checksum, filecount and file size
- - Describe your commands with code examples using attributes. 
+ - Validation rules with attribute
+ - Diagnostic  
+ - Progressbar
+ - Dialog service (with password prompting) 
 
- ![Alt text](Docs/images/startup.png?raw=true "Test result")
+ ![Alt text](Docs/images/startup.png?raw=true "Startup")
 
  ## Start your journey
 [Create a new VS Solution](Docs/Create_new_%20project.md)
@@ -41,6 +36,9 @@ You could se PowerCommands as an easy Create your CLI applikation starter kit. I
 [Simple automated test](Docs/Test.md)
 
 [Output to the Console guidline](Docs/ConsoleOutput.md)
+
+## Automation
+[Run your command as job](Docs/Job.md)
 
 ## Core framework
 [PowerCommandsRuntime](Docs/PowerCommandsRuntime.md)
