@@ -69,7 +69,7 @@ Using argument and suggestion your design attribute could look like this.
                       suggestions: "xml|json",
                           example: "//Convert to json format|convert json --path \"c:\\temp\\test.yaml\"|//Convert to xml format|convert xml --path \"c:\\temp\\test.yaml\"")]
 ```
-The user can hus the tab to cycle trough the different formats.
+The user can use the tab to cycle trough the different formats.
 
 The whole code example below:
 ```
@@ -94,16 +94,18 @@ public class ConvertCommand : CommandBase<PowerCommandsConfiguration>
     }
 }
 ```
+### **Please Note** that the name of the arguments in the design attribute is not important in code, it is usefull thou when help about the command is displayed. Suggestions is what it sounds like only suggestions to guide the user to the right input.
 
 ## Must I use the PowerCommandDesign attribute on every command I create?
-No that is not mandatory but it is recommended, note that when you declare the [Options](Options.md), they will be available for code completion, wich means that when the consumer types - and hit the tab button the user will can se what options there are that could be used, with a simple ! character you tell that the argument, quote, option or secret is required and then the Core runtime will validate that automatically for you. That is really nice, you could read more about design of good Command Line Inter fade design here:
+No that is not mandatory but it is recommended, note that when you declare the [Options](Options.md), they will be available for code completion, wich means that when the consumer types - and hit the tab button the user will can se what options there are that could be used, with a simple ! character you tell that the argument, quote, option or secret is required and then the Core runtime will validate that automatically for you.
+
+Read more about CLI design here: [10 design principles for delightful CLIs](https://blog.developer.atlassian.com/10-design-principles-for-delightful-clis/)
 
 Next step is to understand the [Power Commands Design attribute](PowerCommandDesignAttribute.md)
 
-[10 design principles for delightful CLIs](https://blog.developer.atlassian.com/10-design-principles-for-delightful-clis/)
+
 
 Read more about:
-
 
 [Input](Input.md)
 
