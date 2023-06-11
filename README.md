@@ -20,7 +20,7 @@ You could se PowerCommands as an easy Create your CLI applikation starter kit. I
  - Zip with attributes like checksum, filecount and file size
  - Describe your commands with code examples using attributes. 
 
- ![Alt text](Docs/images/test_all.png?raw=true "Test result")
+ ![Alt text](Docs/images/startup.png?raw=true "Test result")
 
  ## Start your journey
 [Create a new VS Solution](Docs/Create_new_%20project.md)
