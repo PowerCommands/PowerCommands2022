@@ -18,7 +18,7 @@ And this is what you should se!
 
 ![Alt text](images/DemoCommand.png?raw=true "Demo Command")
 
-Do not worry about all the drama that an empty demo input creates, demo command demonstrates who you can use options to design your command and add built in validation with.
+Do not worry about all the drama that an empty demo input creates, the **demo** command demonstrates how you can use options to design your command and achive validation without the need for you to add validation code.
 The demo command has an design attribute that looks something like this:
 
 ```
