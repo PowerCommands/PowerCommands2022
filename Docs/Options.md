@@ -22,7 +22,7 @@ Sometimes you just want a option without a value, you can solve that like this:
 The option can trigger validation of **required value** and/or **mandatory** meaning the option is not optional. 
 
 - A starting **!** means that the option must have a value if the user adds it to the input, but it is still optional.
-- UPPERCASE option name means that the option must be included by the user input, but value is not required unless the option starts with the **!** symbol.
+- **UPPERCASE** option name means that the option must be included by the user input, but value is not required unless the option starts with the **!** symbol.
 
 The example below shows how the path option is both mandatory an requires a value.
 ```

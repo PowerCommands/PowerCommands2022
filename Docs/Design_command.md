@@ -58,6 +58,43 @@ Lets have look of how the user input is designed.
 
 This input will first be handled by the Core Framework, using the Identifier an instanse of the ConvertCommand will be created and the framework will also add the [Input](Input.md) instance to the ConvertCommand instans wich give your convert command two options named **path** and **format** to handle progamatically to create a file on the given path with the given format.
 
+# An alternative design using suggestions
+Instead of using the option **format** in the previous example you could use argument **xml** and **json** instead, there is nothing wrong or right here, it is up to you to choose what you think is the best approach.
+Using argument and suggestion your design attribute could look like this.
+
+```
+[PowerCommandDesign(  description: "Converting yaml format to json or xml format",
+                        arguments: "format",
+                          options: "!PATH",
+                      suggestions: "xml|json",
+                          example: "//Convert to json format|convert json --path \"c:\\temp\\test.yaml\"|//Convert to xml format|convert xml --path \"c:\\temp\\test.yaml\"")]
+```
+The user can hus the tab to cycle trough the different formats.
+
+The whole code example below:
+```
+using PainKiller.PowerCommands.Core.Extensions;
+using PainKiller.PowerCommands.MyExampleCommands.Configuration;
+
+namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
+
+[PowerCommandDesign(  description: "Converting yaml format to json or xml format",
+                        arguments: "format",
+                          options: "!PATH",
+                      suggestions: "xml|json",
+                          example: "//Convert to json format|convert json --path \"c:\\temp\\test.yaml\"|//Convert to xml format|convert xml --path \"c:\\temp\\test.yaml\"")]
+public class ConvertCommand : CommandBase<PowerCommandsConfiguration>
+{
+    public ConvertCommand(string identifier, PowerCommandsConfiguration configuration) : base(identifier, configuration) { }
+
+    public override RunResult Run()
+    {
+        YamlFormatManger.Convert(Input.GetOptionValue("path"), Input.SingleArgument);
+        return Ok();
+    }
+}
+```
+
 ## Must I use the PowerCommandDesign attribute on every command I create?
 No that is not mandatory but it is recommended, note that when you declare the [Options](Options.md), they will be available for code completion, wich means that when the consumer types - and hit the tab button the user will can se what options there are that could be used, with a simple ! character you tell that the argument, quote, option or secret is required and then the Core runtime will validate that automatically for you. That is really nice, you could read more about design of good Command Line Inter fade design here:
 
