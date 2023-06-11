@@ -19,6 +19,9 @@
 
 [Output to the Console guidline](ConsoleOutput.md)
 
+## Automation
+[Run your command as job](Job.md)
+
 ## Core framework
 [PowerCommandsRuntime](PowerCommandsRuntime.md)
 
