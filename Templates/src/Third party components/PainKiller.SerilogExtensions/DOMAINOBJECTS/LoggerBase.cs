@@ -9,7 +9,7 @@ namespace $safeprojectname$.DomainObjects
         public LoggerBase(Serilog.ILogger logger) { _logger = logger; }
         public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)
         {
-            var messageTemplate = formatter.Invoke(state, exception);
+            var messageTemplate = $"[{Environment.UserName}]\t{formatter.Invoke(state, exception)}";
             var loglevelEvent = logLevel.ToLogLevel();
             _logger.Write(loglevelEvent, messageTemplate, state, exception);
         }

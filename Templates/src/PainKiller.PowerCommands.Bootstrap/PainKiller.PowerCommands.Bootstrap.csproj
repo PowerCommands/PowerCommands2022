@@ -22,4 +22,9 @@
 		<ProjectCapability Include="ConfigurableFileNesting" />
 		<ProjectCapability Include="ConfigurableFileNestingFeatureEnabled" />
 	</ItemGroup>
+	<ItemGroup>
+	  <None Update="whats_new.md">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	</ItemGroup>
 </Project>

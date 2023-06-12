@@ -22,6 +22,7 @@
       <ProjectItem ReplaceParameters="true" TargetFileName="PowerCommandsManager.cs">PowerCommandsManager.cs</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="PowerCommandsManager.partial.cs">PowerCommandsManager.partial.cs</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="Startup.cs">Startup.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="whats_new.md">whats_new.md</ProjectItem>
     </Project>
   </TemplateContent>
 </VSTemplate>
