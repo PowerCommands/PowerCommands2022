@@ -14,7 +14,7 @@ Your PowerCommands application may of course have so other name and your command
 "powercommands.exe job argument1"
 ```
 
-## Run PowerCommand with a service account
+## Run PowerCommand with a service account and use secrets
 If you want to run your PowerCommands application as a Windows scheduled task started by a service accounts that is not allowed to login on the machine, you need to do a couple of steps.
 
 - You need to copy the PainKiller directory from your %User%\AppData\Roaming to the corresponding one for the service account. 
