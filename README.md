@@ -17,7 +17,7 @@ You could see PowerCommands as your CLI applikation starter kit. It is a structu
  - Dialog service (with password prompting) 
  - Navigation with working directory and familiar cd and dir commands
 
- ![Alt text](Docs/images/startup.png?raw=true "Startup")
+https://github.com/PowerCommands/PowerCommands2022/assets/102176789/d8ad92f0-93aa-4350-b37b-d0961108117d 
 
  ## Start your journey
 [Create a new VS Solution](Docs/Create_new_%20project.md)
