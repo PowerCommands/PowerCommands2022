@@ -26,9 +26,9 @@ public class ReflectionService : IReflectionService
             var command = (IConsoleCommand)Activator.CreateInstance(commandType, args)!;
             var pcAttribute = command.GetPowerCommandAttribute();
             var suggestions = new List<string>();
-            if(!string.IsNullOrEmpty(pcAttribute.Options)) suggestions.AddRange(pcAttribute.Options.Split('|').Select(f => $"--{f}"));
+            if(!string.IsNullOrEmpty(pcAttribute.Options)) suggestions.AddRange(pcAttribute.Options.Split(ConfigurationGlobals.ArraySplitter).Select(f => $"--{f}"));
             suggestions.Add("--help");
-            if(!string.IsNullOrEmpty(pcAttribute.Suggestions)) suggestions.AddRange(pcAttribute.Suggestions.Split('|').Select(f => $"{f}"));
+            if(!string.IsNullOrEmpty(pcAttribute.Suggestions)) suggestions.AddRange(pcAttribute.Suggestions.Split(ConfigurationGlobals.ArraySplitter).Select(f => $"{f}"));
             SuggestionProviderManager.AddContextBoundSuggestions(command.Identifier, suggestions.ToArray());
             AppendWorkingDirectoryListener(command);
             retVal.Add(command);

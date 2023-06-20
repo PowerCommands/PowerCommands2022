@@ -22,7 +22,7 @@ public static class ReflectionExtensions
         var propertyInfos = instanceType.GetProperties().Where(t => t.PropertyType.BaseType == typeof(T)).ToList();
         return propertyInfos;
     }
-    public static List<PropertyInfo> GetProperties<T>(this Type instanceType)
+    public static List<PropertyInfo> GetProperties(this Type instanceType)
     {
         var propertyInfos = instanceType.GetProperties(BindingFlags.Public | BindingFlags.Instance).ToList();
         return propertyInfos;
@@ -45,6 +45,11 @@ public static class ReflectionExtensions
         var attributes = command.GetType().GetCustomAttributes(typeof(PowerCommandDesignAttribute), inherit: false);
         return attributes.Length == 0 ? new PowerCommandDesignAttribute(description:"Command have no description attribute") : (PowerCommandDesignAttribute)attributes.First();
     }
+    public static PowerCommandsToolbarAttribute? GetToolbarAttribute(this IConsoleCommand command)
+    {
+        var attributes = command.GetType().GetCustomAttributes(typeof(PowerCommandsToolbarAttribute), inherit: false);
+        return attributes.Length == 0 ? null : (PowerCommandsToolbarAttribute)attributes.First();
+    }
     public static TAttribute GetAttribute<TAttribute>(this IConsoleCommand command) where TAttribute : Attribute, new()
     {
         var attributes = command.GetType().GetCustomAttributes(typeof(TAttribute), inherit: false);
@@ -53,7 +58,7 @@ public static class ReflectionExtensions
     public static IEnumerable<ColumnRenderOptionsAttribute> GetColumnRenderOptionsAttribute<T>(this T table) where T : IConsoleCommandTable
     {
         var retVal = new List<ColumnRenderOptionsAttribute>();
-        var properties = GetProperties<T>(typeof(T));
+        var properties = GetProperties(typeof(T));
         foreach (var propertyInfo in properties)
         {
             var attributes = propertyInfo.GetCustomAttributes(typeof(ColumnRenderOptionsAttribute), inherit: false);
@@ -77,9 +82,9 @@ public static class ReflectionExtensions
     public static string ToUsingDescription(this IConsoleCommand command)
     {
         var da = command.GetPowerCommandAttribute();
-        var args = da.Arguments.Replace("!", "").Split('|');
-        var quotes = da.Quotes.Replace("!", "").Split('|');
-        var options = da.Options.Replace("!", "").Split('|');
+        var args = da.Arguments.Replace("!", "").Split(ConfigurationGlobals.ArraySplitter);
+        var quotes = da.Quotes.Replace("!", "").Split(ConfigurationGlobals.ArraySplitter);
+        var options = da.Options.Replace("!", "").Split(ConfigurationGlobals.ArraySplitter);
         
         var argsMarkup = args.Any(a => !string.IsNullOrEmpty(a)) ?      "[arguments]" : "";
         var quotesMarkup = quotes.Any(q => !string.IsNullOrEmpty(q)) ?  "[quotes]" : "";

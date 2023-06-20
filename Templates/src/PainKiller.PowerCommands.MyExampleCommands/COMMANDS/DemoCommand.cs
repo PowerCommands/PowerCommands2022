@@ -1,13 +1,14 @@
 namespace $safeprojectname$.Commands;
 
 [PowerCommandTest(tests: "! |!--pause 3")]
+[PowerCommandsToolbar(    labels: "[1. Hit space =>]|[2. Hit tab =>]|[3. Enter space and an option value]|[4. Hit enter]",
+    colors: new [] { ConsoleColor.DarkBlue,ConsoleColor.DarkGreen ,ConsoleColor.Red,ConsoleColor.DarkYellow})]
 [PowerCommandDesign( description: "Demo command just to try out how you could use the input, do not forget the MANDATORY option, will trigger a validation error otherwise! ;-)\n That is because the option name is typed with UPPERCASE letters, useful when you want a mandatory option\n The pause option on the other hand starts with a ! symbol meaning that if you add the --pause option you must also give it a value, an integer in this case.",
                          options: "!MANDATORY|!pause",
-                         example: "//Must provide the MANDATORY option will trigger a validation error otherwise|demo MANDATORY|//Test the pause service|demo --pause 5 MANDATORY")]
-public class DemoCommand : CommandBase<PowerCommandsConfiguration>
+                         example: "//Must provide the MANDATORY option, will trigger a validation error otherwise|demo MANDATORY|//Test the pause service|demo --pause 5 MANDATORY")]
+public class DemoCommand : CommandWithToolbarBase<PowerCommandsConfiguration>
 {
     public DemoCommand(string identifier, PowerCommandsConfiguration configuration) : base(identifier, configuration) { }
-
     public override RunResult Run()
     {
         PauseService.Pause(Input);
@@ -19,6 +20,10 @@ public class DemoCommand : CommandBase<PowerCommandsConfiguration>
         WriteLine("");
         WriteLine("This command could now be removed from your solution.");
         WriteLine("The commands [config] and [dir] could also be deleted (practical help commands only)\n\n");
+
+        ClearToolbar();
+        var diagnostic = DialogService.YesNoDialog("Do you want to show diagnostic info from the input?");
+        if (!diagnostic) return Ok();
 
         
         WriteHeadLine("Diagnostic output of the command line input, for testing purposes");

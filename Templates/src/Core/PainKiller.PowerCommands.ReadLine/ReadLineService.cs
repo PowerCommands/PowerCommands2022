@@ -1,5 +1,6 @@
 ﻿using $safeprojectname$.Contracts;
 using $safeprojectname$.DomainObjects;
+using $safeprojectname$.Events;
 using $safeprojectname$.Handlers;
 using $safeprojectname$.Managers;
 using static System.String;
@@ -11,7 +12,8 @@ public class ReadLineService
     private readonly List<string> _suggestions = new();
     private static readonly Lazy<ReadLineService> Lazy = new(() => new ReadLineService());
     public static ReadLineService Service => Lazy.Value;
-
+    public static event EventHandler<CommandHighlightedArgs>? CommandHighlighted;
+    public static event EventHandler<CmdLineTextChangedArgs>? CmdLineTextChanged;
     public static void InitializeAutoComplete(string[] history, string[] suggestions)
     {
         if (history.Length > 0) Service.AddHistory(history);
@@ -39,8 +41,10 @@ public class ReadLineService
             keyInfo = Console.ReadKey(true);
             keyHandler.Handle(keyInfo);
             HighlightText(keyHandler);
+            OnCmdLineTextChanged(new CmdLineTextChangedArgs(keyHandler.Text));
         }
         Console.WriteLine();
+        OnCmdLineTextChanged(new CmdLineTextChangedArgs("\n"));
         return keyHandler.Text;
     }
     private void HighlightText(KeyHandler keyHandler)
@@ -53,7 +57,10 @@ public class ReadLineService
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.SetCursorPosition(Console.GetCursorPosition().Left - keyHandler.Text.Length, Console.GetCursorPosition().Top);
             Console.Write(keyHandler.Text);
+            OnCommandHighlighted(new CommandHighlightedArgs(keyHandler.Text));
             Console.ForegroundColor = currentColor;
         }
     }
+    private static void OnCommandHighlighted(CommandHighlightedArgs e) => CommandHighlighted?.Invoke("ReadLineService", e);
+    private static void OnCmdLineTextChanged(CmdLineTextChangedArgs e) => CmdLineTextChanged?.Invoke("ReadLineService", e);
 }

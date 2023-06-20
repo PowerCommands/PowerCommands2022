@@ -1,6 +1,8 @@
 namespace $safeprojectname$.Commands;
 
-[PowerCommandDesign("A dummie iteration is running in async mode", example:"iteration", useAsync: true)]
+[PowerCommandDesign(description:"A dummie iteration is running in async mode",
+                       useAsync: true,
+                        example: "iteration")]
 public class IterationCommand : CommandBase<CommandsConfiguration>
 {
     public IterationCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
@@ -10,6 +12,11 @@ public class IterationCommand : CommandBase<CommandsConfiguration>
         await RunIterations(PowerCommandServices.Service.Runtime.Commands);
         return Ok();
     }
+    public override void RunCompleted()
+    {
+        base.RunCompleted();
+        WriteSuccessLine($"\nDone!\n");
+    }
     private async Task RunIterations(List<IConsoleCommand> runtimeCommands)
     {
         await Task.Yield();
@@ -18,6 +25,5 @@ public class IterationCommand : CommandBase<CommandsConfiguration>
             Console.WriteLine(command.Identifier);
             Thread.Sleep(100);
         }
-        Console.Write($"\nDone!\n{ConfigurationGlobals.Prompt}");
     }
 }

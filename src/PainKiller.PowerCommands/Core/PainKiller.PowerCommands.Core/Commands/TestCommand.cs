@@ -45,7 +45,7 @@ public class TestCommand : CommandBase<CommandsConfiguration>
             ConsoleService.Service.DisableLog();
             var retVal = new List<CommandTestItem>();
             var runtime = IPowerCommandServices.DefaultInstance!.Runtime;
-            foreach (var test in attribute.Tests.Split("|"))
+            foreach (var test in attribute.Tests.Split(ConfigurationGlobals.ArraySplitter))
             {
                 var result = runtime.ExecuteCommand($"{command.Identifier} {test.Replace("!","")}");
                 var testItem = new CommandTestItem { ExpectedResult = !test.StartsWith("!"), Status = result.Status, Command = command.Identifier, Test = test };

@@ -24,6 +24,10 @@
         <ProjectItem ReplaceParameters="true" TargetFileName="Console2.cs">Console2.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="KeyHandler.cs">KeyHandler.cs</ProjectItem>
       </Folder>
+      <Folder Name="Events" TargetFolderName="Events">
+        <ProjectItem ReplaceParameters="true" TargetFileName="CmdLineTextChangedArgs.cs">CmdLineTextChangedArgs.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="CommandHighlightedArgs.cs">CommandHighlightedArgs.cs</ProjectItem>
+      </Folder>
       <Folder Name="Extensions" TargetFolderName="Extensions">
         <ProjectItem ReplaceParameters="true" TargetFileName="StringExtension.cs">StringExtension.cs</ProjectItem>
       </Folder>

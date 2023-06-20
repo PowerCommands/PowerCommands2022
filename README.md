@@ -11,9 +11,11 @@ You could see PowerCommands as your CLI applikation starter kit. It is a structu
  - Built in help system with the use of attributes
  - Run as job
  - Validation rules with attribute
+ - Toolbar labels to guide the user
  - Diagnostic  
  - Progressbar
  - Dialog service (with password prompting) 
+ - Navigation with working directory and familiar cd and dir commands
 
  ![Alt text](Docs/images/startup.png?raw=true "Startup")
 
@@ -26,6 +28,8 @@ You could see PowerCommands as your CLI applikation starter kit. It is a structu
 [Design your Command](Docs/Design_command.md)
 
 [Power Commands Design attribute](Docs/PowerCommandDesignAttribute.md)
+
+[Patterns to use the Toolbar with dynamic content](Docs/PowerCommandToolbarAttribute.md)
 
 [Command base class](Docs/CommandBase.md)
 

@@ -17,20 +17,20 @@ public class InputValidationManager
         var retVal = new InputValidationResult();
         var messages = new StringBuilder();
         var attribute = _command.GetPowerCommandAttribute();
-        var requiredArguments = attribute.Arguments.Split('|').Where(a => a.StartsWith('!')).ToArray();
+        var requiredArguments = attribute.Arguments.Split(ConfigurationGlobals.ArraySplitter).Where(a => a.StartsWith('!')).ToArray();
         if (_input.Arguments.Length < requiredArguments.Length)
         {
             messages.AppendLine($"Missing argument(s), required arguments is {requiredArguments.Length}");
             retVal.HasValidationError = true;
         }
-        var requiredQuotes = attribute.Quotes.Split('|').Where(q => q.StartsWith('!')).ToArray();
+        var requiredQuotes = attribute.Quotes.Split(ConfigurationGlobals.ArraySplitter).Where(q => q.StartsWith('!')).ToArray();
         if (_input.Quotes.Length < requiredQuotes.Length)
         {
             messages.AppendLine($"Missing quote(s), required quotes is {requiredQuotes.Length}");
             retVal.HasValidationError = true;
         }
 
-        var optionInfos = attribute.Options.Split('|').Select(f => new PowerOption(f)).ToList();
+        var optionInfos = attribute.Options.Split(ConfigurationGlobals.ArraySplitter).Select(f => new PowerOption(f)).ToList();
         retVal.Options.AddRange(optionInfos);
         
         foreach (var optionInfo in optionInfos.Where(f => f.ValueIsRequired || f.IsMandatory))
@@ -48,7 +48,7 @@ public class InputValidationManager
         _logger.Invoke(messages.ToString());
         if (string.IsNullOrEmpty(attribute.Secrets)) return retVal;
 
-        var requiredSecrets = attribute.Secrets.Split('|').Where(s => s.StartsWith('!')).ToArray();
+        var requiredSecrets = attribute.Secrets.Split(ConfigurationGlobals.ArraySplitter).Where(s => s.StartsWith('!')).ToArray();
         foreach (var secretName in requiredSecrets)
         {
             var secret = IPowerCommandServices.DefaultInstance!.Configuration.Secret.Secrets.FirstOrDefault(s => s.Name.ToLower() == secretName.Replace("!","").ToLower());

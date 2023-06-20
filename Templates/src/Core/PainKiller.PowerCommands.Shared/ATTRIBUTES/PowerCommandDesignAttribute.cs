@@ -10,7 +10,7 @@ public class PowerCommandDesignAttribute : Attribute
     public string Arguments { get; }
     [Description("Separate items with | character, if required begin with a ! character")]
     public string Quotes { get; }
-    [Description("Separate items with | character, if required begin with a ! character")] 
+    [Description("Separate items with | character, if required begin with a ! character, if mandatory use UPPERCASE letters")] 
     public string Options { get; }
     [Description("Separate items with | character, if required begin with a ! character")]
     public string Secrets { get; }

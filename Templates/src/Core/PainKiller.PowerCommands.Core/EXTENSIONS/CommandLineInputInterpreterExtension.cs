@@ -19,7 +19,7 @@ public static class CommandLineInputInterpreterExtension
         {
             arguments.RemoveAt(0); //Remove identifier from arguments
             var attrib = GetAttributeOfCommand(identifier, defaultCommand);
-            var requredOpptions = attrib.Options.Split('|').Where(o => o.StartsWith("!"));
+            var requredOpptions = attrib.Options.Split(ConfigurationGlobals.ArraySplitter).Where(o => o.StartsWith("!"));
             foreach (var option in requredOpptions)
             {
                 if(options.All(o => o != option)) continue;
@@ -83,7 +83,7 @@ public static class CommandLineInputInterpreterExtension
     public static string FirstOptionWithValue(this ICommandLineInput input) => $"{input.Options.FirstOrDefault(o => !IsNullOrEmpty(o))}".Replace("!", "").Replace("--", "");
     public static void DoBadOptionCheck(this ICommandLineInput input, IConsoleCommand command)
     {
-        var dokumentedOptions = command.GetPowerCommandAttribute().Options.Split('|');
+        var dokumentedOptions = command.GetPowerCommandAttribute().Options.Split(ConfigurationGlobals.ArraySplitter);
         foreach (var option in input.Options) if(dokumentedOptions.All(f => $"--{f.ToLower().Replace("!","")}" != option.ToLower())) ConsoleService.Service.WriteLine($"{input.Identifier}", $"Warning, option  [{option}] is not declared and probably unhandled in command [{command.Identifier}]", ConsoleColor.DarkYellow);
     }
     private static string FindFirstQuotedOptionValueIfAny(string raw, string[] quotes, string optionName)

@@ -11,6 +11,12 @@ Open Visual Studio and write Power in the searchbox, you should find the PowerCo
 
 # What is new?
 
+## Version 1.0.1.0
+**Released 2023-06-20**
+### Toolbar styled Commands
+- Added new base command class ```CommandWithToolbarBase``` that opens upp for a new way of designing your commands with a displayed toolbar in the bottom right corner. Can either be display suggestions or be set programmatically listening and reacting on to the cmd line input.
+- Added the constant for array splitter to the ```ConfigurationGlobals```, and refactored all code to use it, makes it easier to swap that if necessary.
+- Adjusted the run process so that RunCompleted is always triggered, when running async or when a exception is thrown.
 ## Version 1.0.0.1
 **Released 2023-06-12**
 ### Capability to Run PowerCommand with a service account and using secrets

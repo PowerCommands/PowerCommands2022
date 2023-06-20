@@ -16,8 +16,10 @@
   </TemplateData>
   <TemplateContent>
     <Project TargetFileName="PainKiller.PowerCommands.Core.csproj" File="PainKiller.PowerCommands.Core.csproj" ReplaceParameters="true">
+      <Folder Name="Properties" TargetFolderName="Properties" />
       <Folder Name="BaseClasses" TargetFolderName="BaseClasses">
         <ProjectItem ReplaceParameters="true" TargetFileName="CommandBase.cs">CommandBase.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="CommandWithToolbarBase.cs">CommandWithToolbarBase.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="IndexedInput.cs">IndexedInput.cs</ProjectItem>
       </Folder>
       <Folder Name="Commands" TargetFolderName="Commands">

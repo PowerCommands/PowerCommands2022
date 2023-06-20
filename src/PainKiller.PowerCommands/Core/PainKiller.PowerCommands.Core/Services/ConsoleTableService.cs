@@ -83,7 +83,7 @@ public static class ConsoleTableService
                 consoleWriter.WriteLine(row);
                 continue;
             }
-            var cols = row.Split('|');
+            var cols = row.Split(ConfigurationGlobals.ArraySplitter);
             for (var colIndex = 0; colIndex < cols.Length; colIndex++)
             {
                 if (colIndex == cols.Length - 1)

@@ -13,15 +13,15 @@ public class HelpService : IHelpService
         var da = command.GetPowerCommandAttribute();
         if(clearConsole) Console.Clear();
 
-        var examples = da.Examples.Split('|');
+        var examples = da.Examples.Split(ConfigurationGlobals.ArraySplitter);
 
         ConsoleService.Service.WriteHeaderLine($"{GetType().Name}", $"{command.Identifier}\n\nDescription", writeLog: WriteToLog);
         ConsoleService.Service.WriteLine(nameof(HelpService),$" {da.Description}");
         Console.WriteLine();
 
-        var args = da.Arguments.Replace("!","").Split('|');
-        var quotes = da.Quotes.Replace("!", "").Split('|');
-        var options = da.Options.Replace("!", "").Split('|');
+        var args = da.Arguments.Replace("!","").Split(ConfigurationGlobals.ArraySplitter);
+        var quotes = da.Quotes.Replace("!", "").Split(ConfigurationGlobals.ArraySplitter);
+        var options = da.Options.Replace("!", "").Split(ConfigurationGlobals.ArraySplitter);
         
         ConsoleService.Service.WriteHeaderLine(nameof(HelpService), "Usage");
 
