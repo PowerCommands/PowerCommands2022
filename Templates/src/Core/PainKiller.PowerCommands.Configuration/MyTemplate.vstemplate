@@ -26,7 +26,12 @@
         <ProjectItem ReplaceParameters="true" TargetFileName="ConfigurationGlobals.cs">ConfigurationGlobals.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="EncryptionConfiguration.cs">EncryptionConfiguration.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="SecurityConfiguration.cs">SecurityConfiguration.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="ToolbarConfiguration.cs">ToolbarConfiguration.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="ToolbarItemConfiguration.cs">ToolbarItemConfiguration.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="YamlContainer.cs">YamlContainer.cs</ProjectItem>
+      </Folder>
+      <Folder Name="Enums" TargetFolderName="Enums">
+        <ProjectItem ReplaceParameters="true" TargetFileName="HideToollbarOption.cs">HideToollbarOption.cs</ProjectItem>
       </Folder>
       <Folder Name="Extensions" TargetFolderName="Extensions">
         <ProjectItem ReplaceParameters="true" TargetFileName="ConfigurationExtension.cs">ConfigurationExtension.cs</ProjectItem>

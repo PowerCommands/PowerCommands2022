@@ -1,20 +1,22 @@
-﻿using System.Timers;
-using PainKiller.PowerCommands.ReadLine;
+﻿using PainKiller.PowerCommands.ReadLine;
 using PainKiller.PowerCommands.ReadLine.Events;
+using System.Timers;
 
 namespace PainKiller.PowerCommands.Core.BaseClasses
 {
     public abstract class CommandWithToolbarBase<TConfig> : CommandBase<TConfig> where TConfig : new()
     {
-        private static string _latestHighightedCommand = string.Empty;
+        protected string LatestHighlightedCommand = string.Empty;
         private readonly System.Timers.Timer _overflowTimer;
+        private readonly bool _autoShowToolbar;
         private readonly ConsoleColor[]? _colors;
         protected List<string> Labels = new();
         protected PowerCommandsToolbarAttribute? ToolbarAttribute;
         protected CommandWithToolbarBase(string identifier, TConfig configuration, bool autoShowToolbar = true, ConsoleColor[]? colors = null) : base(identifier, configuration)
         {
+            _autoShowToolbar = autoShowToolbar;
             _colors = colors;
-            if (autoShowToolbar) ReadLineService.CommandHighlighted += ReadLineService_CommandHighlighted;
+            ReadLineService.CommandHighlighted += ReadLineService_CommandHighlighted;
             ToolbarAttribute = this.GetToolbarAttribute();
             var overflowMilliseconds = ToolbarAttribute?.Timer ?? 500;
             _overflowTimer = new System.Timers.Timer(Math.Clamp(overflowMilliseconds, 500, 5000));
@@ -22,7 +24,7 @@ namespace PainKiller.PowerCommands.Core.BaseClasses
         }
         protected virtual void ReadLineService_CmdLineTextChanged(object? sender, CmdLineTextChangedArgs e)
         {
-            if (!e.CmdText.StartsWith(Identifier) && _latestHighightedCommand == Identifier) ClearToolbar();
+            if (!e.CmdText.StartsWith(Identifier) && LatestHighlightedCommand == Identifier) ClearToolbar();
         }
         public override RunResult Run()
         {
@@ -31,11 +33,14 @@ namespace PainKiller.PowerCommands.Core.BaseClasses
         }
         protected void ReadLineService_CommandHighlighted(object? sender, CommandHighlightedArgs e)
         {
-            _latestHighightedCommand = e.CommandName;
+            LatestHighlightedCommand = e.CommandName;
             if (e.CommandName != Identifier) return;
-            _overflowTimer.Elapsed += InitializeToolbar;
-            _overflowTimer.AutoReset = true;
-            _overflowTimer.Enabled = true;
+            if (_autoShowToolbar)
+            {
+                _overflowTimer.Elapsed += InitializeToolbar;
+                _overflowTimer.AutoReset = true;
+                _overflowTimer.Enabled = true;
+            }
         }
         private void InitializeToolbar(object? sender, ElapsedEventArgs e)
         {

@@ -38,6 +38,13 @@ public class HtmlConsoleService : IConsoleService
         if (writeLog) WriteToLog(scope, $"{text}");
         OnWriteToOutput($"<span {_colorStyleSuccess}>{text}</span>");
     }
+
+    public void WriteUrl(string scope, string text, bool writeLog = true)
+    {
+        if (writeLog) WriteToLog(scope, $"{text}");
+        OnWriteToOutput($"<a href=\"{text}\">{text}</a>");
+    }
+
     public void WriteSuccessLine(string scope, string text, bool writeLog = true)
     {
         if (writeLog) WriteToLog(scope, $"{text}");

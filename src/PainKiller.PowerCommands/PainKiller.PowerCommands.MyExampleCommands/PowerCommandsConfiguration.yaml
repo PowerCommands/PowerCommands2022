@@ -6,6 +6,13 @@ configuration:
   repository: https://github.com/PowerCommands/PowerCommands2022
   backupPath: ..\..\..\..\..\
   defaultGitRepositoryPath: C:\repos\github\PowerCommands2022
+  startupToolbar:
+    hideToollbarOption: OnCommandHighlighted
+    toolbarItems:
+    - label: "[Type ->]"
+      color: "Cyan"
+    - label: "demo"
+      color: "DarkGreen"
   metadata:
     name: Test
     description: En exempelbeskrivning

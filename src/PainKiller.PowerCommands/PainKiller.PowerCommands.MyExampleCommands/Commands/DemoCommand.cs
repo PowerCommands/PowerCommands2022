@@ -13,16 +13,16 @@ public class DemoCommand : CommandWithToolbarBase<PowerCommandsConfiguration>
     {
         PauseService.Pause(Input);
 
-        WriteLine("Hello World!");
-        WriteHeadLine("Congratulations! You have setup your PowerCommands solution correctly!");
-        WriteLine("You may set up some things in your PowerCommandsConfiguration.yaml file, like the path to your favorite code editor");
-        WriteLine("Just type dir and hit enter to open up this applications bin directory");
-        WriteLine("");
-        WriteLine("This command could now be removed from your solution.");
-        WriteLine("The commands [config] and [dir] could also be deleted (practical help commands only)\n\n");
+        WriteHeadLine(" Congratulations! You have setup your PowerCommands solution correctly!\n");
+        WriteLine(" You may set up some things in your PowerCommandsConfiguration.yaml file, like the path to your favorite code editor");
+        WriteLine(" This [demo] command could now be removed from your solution.\n");
+        WriteLine(" The [config] command could also be deleted (practical help commands only)\n");
+        WriteLine(" The [dir] command could be kept or moved to the Core/Commands if your PowerCommands console needs directory traversal.\n");
+        Write(" Find more example commands on github: ");
+        WriteUrl($"{Configuration.Repository}.\n\n");
 
         ClearToolbar();
-        var diagnostic = DialogService.YesNoDialog("Do you want to show diagnostic info from the input?");
+        var diagnostic = DialogService.YesNoDialog(" Do you want to show diagnostic info from the input?");
         if (!diagnostic) return Ok();
 
         
@@ -48,5 +48,11 @@ public class DemoCommand : CommandWithToolbarBase<PowerCommandsConfiguration>
         WriteLine(Input.Path);
 
         return Ok();
+    }
+
+    public override void RunCompleted()
+    {
+        Console.Clear();
+        base.RunCompleted();
     }
 }

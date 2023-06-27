@@ -1,11 +1,13 @@
 ﻿using System.Drawing;
+using PainKiller.PowerCommands.Configuration.Enums;
+using PainKiller.PowerCommands.ReadLine;
 
 namespace $safeprojectname$.Services;
 public static class DialogService
 {
     public static bool YesNoDialog(string question, string yesValue = "y", string noValue = "n")
     {
-        Console.WriteLine($"\n{question} ({yesValue}/{noValue}):");
+        Console.Write($"\n{question} ({yesValue}/{noValue}): ");
         var response = Console.ReadLine();
         return $"{response}".Trim().ToLower() == yesValue.ToLower();
     }
@@ -48,5 +50,29 @@ public static class DialogService
         Console.SetCursorPosition( Math.Clamp(Console.WindowWidth - width, 0, Console.WindowWidth),  Math.Clamp(Console.WindowHeight-2, 0, Console.WindowHeight));
         Console.Write("".PadLeft(width,' '));
         Console.SetCursorPosition(originalPosition.X, originalPosition.Y);
+    }
+
+    private static ToolbarConfiguration? _configuration = null;
+    public static void DrawToolbar(ToolbarConfiguration? configuration)
+    {
+        _configuration = configuration;
+        if(_configuration == null ) return;
+        DrawToolbar(_configuration.ToolbarItems.Select(t => t.Label).ToArray(),_configuration.ToolbarItems.Select(t => t.Color).ToArray());
+        if(_configuration.HideToollbarOption == HideToollbarOption.OnTextChange) ReadLineService.CmdLineTextChanged += ReadLineService_CmdLineTextChanged;
+        else if(_configuration.HideToollbarOption == HideToollbarOption.OnCommandHighlighted) ReadLineService.CommandHighlighted += ReadLineService_CommandHighlighted;
+    }
+
+    private static void ReadLineService_CommandHighlighted(object? sender, ReadLine.Events.CommandHighlightedArgs e)
+    {
+        if(_configuration?.ToolbarItems == null ) return;
+        ClearToolbar(_configuration.ToolbarItems.Select(t => t.Label).ToArray());
+        ReadLineService.CommandHighlighted -= ReadLineService_CommandHighlighted;
+    }
+
+    private static void ReadLineService_CmdLineTextChanged(object? sender, ReadLine.Events.CmdLineTextChangedArgs e)
+    {
+        if(_configuration?.ToolbarItems == null ) return;
+        ClearToolbar(_configuration.ToolbarItems.Select(t => t.Label).ToArray());
+        ReadLineService.CmdLineTextChanged -= ReadLineService_CmdLineTextChanged;
     }
 }

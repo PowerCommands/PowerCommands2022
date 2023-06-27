@@ -6,6 +6,13 @@ configuration:
   repository: https://github.com/PowerCommands/PowerCommands2022
   backupPath: ..\..\..\..\Core\PainKiller.PowerCommands.Core\  
   defaultGitRepositoryPath: ..\..\..\..\..\
+  startupToolbar:
+    hideToollbarOption: OnCommandHighlighted
+    toolbarItems:
+    - label: "[Type ->]"
+      color: "Cyan"
+    - label: "demo"
+      color: "DarkGreen"
   metadata:
     name: $ext_projectname$
     description: Description of my project

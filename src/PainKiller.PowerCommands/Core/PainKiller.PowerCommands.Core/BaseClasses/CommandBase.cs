@@ -89,6 +89,7 @@ public abstract class CommandBase<TConfig> : IConsoleCommand, IConsoleWriter whe
     public void WriteHeadLine(string output) => _console.WriteHeaderLine(GetType().Name, output);
     public void WriteSuccess(string output) => _console.WriteSuccess(GetType().Name, output);
     public void WriteSuccessLine(string output) => _console.WriteSuccessLine(GetType().Name, output);
+    public void WriteUrl(string output) => _console.WriteUrl(GetType().Name, output);
     public void WriteFailure(string output) => _console.Write(GetType().Name, output, ConsoleColor.DarkRed);
     public void WriteFailureLine(string output) => _console.WriteLine(GetType().Name, output, ConsoleColor.DarkRed);
     public void WriteWarning(string output) => _console.WriteWarning(GetType().Name, output);

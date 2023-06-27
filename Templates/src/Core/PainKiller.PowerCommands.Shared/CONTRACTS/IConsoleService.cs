@@ -16,4 +16,5 @@ public interface IConsoleService
     void WriteCritical(string scope, string text);
     void WriteSuccessLine(string scope, string text, bool writeLog = true);
     void WriteSuccess(string scope, string text, bool writeLog = true);
+    void WriteUrl(string scope, string text, bool writeLog = true);
 }

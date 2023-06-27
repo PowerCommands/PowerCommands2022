@@ -100,6 +100,16 @@ public class ConsoleService : IConsoleService
     }
     public void WriteSuccessLine(string scope, string text, bool writeLog = true) => WriteLine(scope, text, ConsoleColor.Green, writeLog);
     public void WriteSuccess(string scope, string text, bool writeLog = true) => Write(scope, text, ConsoleColor.Green, writeLog);
+    public void WriteUrl(string scope, string text, bool writeLog = true)
+    {
+        var currentColor = Console.ForegroundColor;
+        Console.ForegroundColor = ConsoleColor.DarkBlue;
+        Console.WriteLine(text);
+        Console.ForegroundColor = currentColor;
+
+        if (writeLog) WriteToLog(scope, $"{text}");
+        OnWriteToOutput($"{text}\n");
+    }
     private void WriteToLog(string scope, string message, LogLevel level = LogLevel.Information)
     {
         if(_disableLog && level is LogLevel.Information or LogLevel.Debug or LogLevel.Trace) return;
