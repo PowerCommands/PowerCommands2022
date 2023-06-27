@@ -58,8 +58,8 @@ public static class DialogService
         _configuration = configuration;
         if(_configuration == null ) return;
         DrawToolbar(_configuration.ToolbarItems.Select(t => t.Label).ToArray(),_configuration.ToolbarItems.Select(t => t.Color).ToArray());
-        if(_configuration.HideToollbarOption == HideToollbarOption.OnTextChange) ReadLineService.CmdLineTextChanged += ReadLineService_CmdLineTextChanged;
-        else if(_configuration.HideToollbarOption == HideToollbarOption.OnCommandHighlighted) ReadLineService.CommandHighlighted += ReadLineService_CommandHighlighted;
+        if(_configuration.HideToolbarOption == HideToolbarOption.OnTextChange) ReadLineService.CmdLineTextChanged += ReadLineService_CmdLineTextChanged;
+        else if(_configuration.HideToolbarOption == HideToolbarOption.OnCommandHighlighted) ReadLineService.CommandHighlighted += ReadLineService_CommandHighlighted;
     }
 
     private static void ReadLineService_CommandHighlighted(object? sender, ReadLine.Events.CommandHighlightedArgs e)

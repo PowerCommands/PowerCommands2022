@@ -31,7 +31,7 @@
         <ProjectItem ReplaceParameters="true" TargetFileName="YamlContainer.cs">YamlContainer.cs</ProjectItem>
       </Folder>
       <Folder Name="Enums" TargetFolderName="Enums">
-        <ProjectItem ReplaceParameters="true" TargetFileName="HideToollbarOption.cs">HideToollbarOption.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="HideToolbarOption.cs">HideToolbarOption.cs</ProjectItem>
       </Folder>
       <Folder Name="Extensions" TargetFolderName="Extensions">
         <ProjectItem ReplaceParameters="true" TargetFileName="ConfigurationExtension.cs">ConfigurationExtension.cs</ProjectItem>

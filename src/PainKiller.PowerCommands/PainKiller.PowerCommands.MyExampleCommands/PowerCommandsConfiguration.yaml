@@ -7,7 +7,7 @@ configuration:
   backupPath: ..\..\..\..\..\
   defaultGitRepositoryPath: C:\repos\github\PowerCommands2022
   startupToolbar:
-    hideToollbarOption: OnCommandHighlighted
+    hideToolbarOption: OnCommandHighlighted
     toolbarItems:
     - label: "[Type ->]"
       color: "Cyan"

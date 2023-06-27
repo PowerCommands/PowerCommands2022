@@ -4,6 +4,6 @@ namespace PainKiller.PowerCommands.Configuration.DomainObjects;
 
 public class ToolbarConfiguration
 {
-    public HideToollbarOption HideToollbarOption { get; set; } = HideToollbarOption.Never;
+    public HideToolbarOption HideToolbarOption { get; set; } = HideToolbarOption.Never;
     public List<ToolbarItemConfiguration> ToolbarItems { get; set; } = new();
 }

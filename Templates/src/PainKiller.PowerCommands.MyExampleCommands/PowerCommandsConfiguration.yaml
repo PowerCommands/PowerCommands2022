@@ -7,7 +7,7 @@ configuration:
   backupPath: ..\..\..\..\Core\PainKiller.PowerCommands.Core\  
   defaultGitRepositoryPath: ..\..\..\..\..\
   startupToolbar:
-    hideToollbarOption: OnCommandHighlighted
+    hideToolbarOption: OnCommandHighlighted
     toolbarItems:
     - label: "[Type ->]"
       color: "Cyan"
