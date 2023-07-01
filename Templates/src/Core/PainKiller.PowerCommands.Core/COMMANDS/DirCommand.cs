@@ -1,6 +1,4 @@
-﻿using PainKiller.PowerCommands.Core.Commands;
-
-namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
+﻿namespace $safeprojectname$.Commands;
 
 [PowerCommandDesign(description: "List the content of the working directory or this applications app directory, with the option to open the directory with the File explorer ",
     options: "open|app",

@@ -1,5 +1,10 @@
-# What is new?
+﻿# What is new?
 
+## Version 1.0.2.0
+**Released 2023-06-30**
+- Toolbar functionality moved to own ToolbarService and reworked, not using timers anymore that caused problems, more stable now but still it is a experimental feature.
+- New List feature, display a list which selectable items.
+- It is now possible to move the cursor up and down with ```CTRL``` + (```⬆️```  or ⬇️).
 ## Version 1.0.1.0
 **Released 2023-06-20**
 ### Toolbar styled Commands

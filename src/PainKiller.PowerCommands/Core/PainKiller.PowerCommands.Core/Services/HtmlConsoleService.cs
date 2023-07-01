@@ -44,7 +44,6 @@ public class HtmlConsoleService : IConsoleService
         if (writeLog) WriteToLog(scope, $"{text}");
         OnWriteToOutput($"<a href=\"{text}\">{text}</a>");
     }
-
     public void WriteSuccessLine(string scope, string text, bool writeLog = true)
     {
         if (writeLog) WriteToLog(scope, $"{text}");
@@ -82,6 +81,9 @@ public class HtmlConsoleService : IConsoleService
         WriteToLog(scope, $"{text}", LogLevel.Critical);
         OnWriteToOutput($"<p {_colorStyleCritical}>{text}</p>\n");
     }
+    public void ClearRow(int top) { }
+    public void WriteRowWithColor(int top, ConsoleColor foregroundColor, ConsoleColor backgroundColor, string rowContent) { }
+
     private void WriteToLog(string scope, string message, LogLevel level = LogLevel.Information)
     {
         if(_disableLog && level is LogLevel.Information or LogLevel.Debug or LogLevel.Trace) return;

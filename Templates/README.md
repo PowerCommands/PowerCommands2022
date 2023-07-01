@@ -8,9 +8,19 @@ Copy the .zip file into the user project template directory. By default, this di
 
 Open Visual Studio and write Power in the searchbox, you should find the PowerCommand template.
 
+I recommend you to use the option ```Place solution in the same directory``` some experimental features for update and create commands using a template the Core depends on that.
+
+![Alt text](../Docs/images/VS_solution_option.png?raw=true "Command Base")
+
 
 # What is new?
 
+**Released 2023-06-30**
+- Toolbar functionality moved to own ```ToolbarService``` and reworked it completely, not using timers anymore that caused problems, so it is now a more stable feature (but still a bit experimental).
+- Added PasswordPromptDialog to the ```DialogService```.
+- New List feature, display a list which selectable items.
+- ```DirCommand``` is now a Core command instead of a Demo command.
+- It is now possible to move the cursor up and down with ```CTRL``` + (```⬆️```  or ⬇️).
 ## Version 1.0.1.0
 **Released 2023-06-20**
 ### Toolbar styled Commands

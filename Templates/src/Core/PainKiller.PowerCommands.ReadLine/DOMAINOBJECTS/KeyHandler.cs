@@ -46,6 +46,8 @@ internal class KeyHandler
         _keyActions["ControlL"] = ClearLine;
         _keyActions["Escape"] = ClearLine;
         _keyActions["UpArrow"] = PrevHistory;
+        _keyActions["ControlUpArrow"] = MoveCursorUp;
+        _keyActions["ControlDownArrow"] = MoveCursorDown;
         _keyActions["ControlP"] = PrevHistory;
         _keyActions["DownArrow"] = NextHistory;
         _keyActions["ControlN"] = NextHistory;
@@ -121,6 +123,18 @@ internal class KeyHandler
 
         _cursorPos++;
     }
+
+    private void MoveCursorUp()
+    {
+        if (Console2.CursorTop < 1) return;
+        Console2.SetCursorPosition(0, Console2.CursorTop - 1);
+    }
+    private void MoveCursorDown()
+    {
+        if (Console.WindowHeight-2 < Console2.CursorTop) return;
+        Console2.SetCursorPosition(0, Console2.CursorTop + 1);
+    }
+
     private void MoveCursorEnd()
     {
         while (!IsEndOfLine()) MoveCursorRight();

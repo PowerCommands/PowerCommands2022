@@ -3,39 +3,31 @@ using PainKiller.PowerCommands.ReadLine.Events;
 
 namespace $safeprojectname$.Commands;
 
-[PowerCommandTest(         tests: " ")]
-[PowerCommandDesign( description: "Generate API with OpenApi Code generator using a docker image, you create two files.\n First one with the API specification, the second one for the config, the filename should contain config so the command knows what is what...\n Navigate to the directory with the files using the cd command.",
+[PowerCommandTest(tests: " ")]
+[PowerCommandDesign(description: "Generate API with OpenApi Code generator using a docker image, you create two files.\n First one with the API specification, the second one for the config, the filename should contain config so the command knows what is what...\n Navigate to the directory with the files using the cd command.",
                          example: "openapi --generate")]
 public class OpenApiCommand : CommandWithToolbarBase<PowerCommandsConfiguration>
 {
     public OpenApiCommand(string identifier, PowerCommandsConfiguration configuration) : base(identifier, configuration, autoShowToolbar: false) { }
-    protected override void ReadLineService_CmdLineTextChanged(object? sender, CmdLineTextChangedArgs e)
+    protected override void ReadLineService_CommandHighlighted(object? sender, CommandHighlightedArgs e)
     {
-        if (e.CmdText.StartsWith(Identifier))
+        if (e.CommandName == Identifier)
         {
-            if (e.CmdText == Identifier)
-            {
-                Labels.Clear();
-                if (ValidFilesExists())
-                {
-                    Labels.Add("Valid files found! ->");
-                    Labels.Add("--generate");
-                    DrawToolbar();
-                    return;
-                }
-                Labels.Add("Navigate to a directory with the yaml files, using cd command");
-                DrawToolbar();
-            }
-        }
-        else
-        {
-            ClearToolbar();
             Labels.Clear();
+            if (ValidFilesExists())
+            {
+                Labels.Add("Valid files found! ->");
+                Labels.Add("--generate");
+                DrawToolbar();
+                return;
+            }
+            Labels.Add("Navigate to a directory with the yaml files, using cd command");
+            DrawToolbar();
         }
     }
     public override RunResult Run()
     {
-        if(HasOption("generate")) GenerateCode();
+        if (HasOption("generate")) GenerateCode();
         return Ok();
     }
     public void GenerateCode()

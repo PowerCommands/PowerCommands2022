@@ -16,7 +16,6 @@
   </TemplateData>
   <TemplateContent>
     <Project TargetFileName="PainKiller.PowerCommands.Core.csproj" File="PainKiller.PowerCommands.Core.csproj" ReplaceParameters="true">
-      <Folder Name="Properties" TargetFolderName="Properties" />
       <Folder Name="BaseClasses" TargetFolderName="BaseClasses">
         <ProjectItem ReplaceParameters="true" TargetFileName="CommandBase.cs">CommandBase.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="CommandWithToolbarBase.cs">CommandWithToolbarBase.cs</ProjectItem>
@@ -30,6 +29,7 @@
         <ProjectItem ReplaceParameters="true" TargetFileName="CommandTemplate.cs">CommandTemplate.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="CommandUpdate.cs">CommandUpdate.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="DescribeCommand.cs">DescribeCommand.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="DirCommand.cs">DirCommand.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="ExitCommand.cs">ExitCommand.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="LogCommand.cs">LogCommand.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="MasterCommando.cs">MasterCommando.cs</ProjectItem>
@@ -72,6 +72,7 @@
         <ProjectItem ReplaceParameters="true" TargetFileName="ReflectionService.cs">ReflectionService.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="ShellService.cs">ShellService.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="StorageService.cs">StorageService.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="ToolbarService.cs">ToolbarService.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="ZipService.cs">ZipService.cs</ProjectItem>
       </Folder>
       <ProjectItem ReplaceParameters="false" TargetFileName="DocsDB.data">DocsDB.data</ProjectItem>

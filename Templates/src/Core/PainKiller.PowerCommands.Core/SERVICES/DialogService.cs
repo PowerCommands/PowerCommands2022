@@ -1,6 +1,5 @@
-﻿using System.Drawing;
-using PainKiller.PowerCommands.Configuration.Enums;
-using PainKiller.PowerCommands.ReadLine;
+﻿using PainKiller.PowerCommands.ReadLine;
+using PainKiller.PowerCommands.Security.Services;
 
 namespace $safeprojectname$.Services;
 public static class DialogService
@@ -18,61 +17,70 @@ public static class DialogService
         var response = Console.ReadLine();
         return $"{response}".Trim();
     }
-    public static void DrawToolbar(string[] labels, ConsoleColor[]? consoleColors = null)
+    public static string SecretPromptDialog(string question, int maxRetries = 3)
     {
-        var colors = consoleColors ?? new[] { ConsoleColor.Green, ConsoleColor.DarkRed, ConsoleColor.DarkMagenta, ConsoleColor.DarkYellow, ConsoleColor.DarkGray,ConsoleColor.Red,ConsoleColor.DarkBlue,ConsoleColor.DarkGreen };
-        colors = colors.Reverse().ToArray();
-        var originalPosition = new Point(x: Console.CursorLeft, y: Console.CursorTop);
-        var colorIndex = 0;
-        var width = 0;
+        var retryCount = 0;
+        var secret = "";
+        while (retryCount < maxRetries)
+        {
+            Console.Write($"\n{question} :");
+            secret = PasswordPromptService.Service.ReadPassword();
+            Console.WriteLine();
+            Console.Write("Confirm: ".PadLeft(question.Length));
+            var confirm = PasswordPromptService.Service.ReadPassword();
+            if (secret != confirm)
+            {
+                ConsoleService.Service.WriteCritical(nameof(DialogService),"\nConfirmation failure, please try again.\n");
+                retryCount++;
+            }
+            else break;
+        }
+        
+        return $"{secret}".Trim();
+    }
+    public static List<string> ListDialog(string header, List<string> items, ConsoleColor foregroundColor = ConsoleColor.White, ConsoleColor backgroundColor = ConsoleColor.Blue)
+    {
+        Console.Clear();
+        ConsoleService.Service.WriteHeaderLine(nameof(DialogService), header);
+        var startRow = Console.CursorTop;
+        var startForegroundColor = Console.ForegroundColor;
         var startBackgroundColor = Console.BackgroundColor;
 
-        foreach (var label in labels.Reverse().Take(colors.Length))
+        for (int index=0; index<items.Count;index++)
         {
-            var color = colors[colorIndex++];
-            width += label.Length + 1;
-            Console.SetCursorPosition(Math.Clamp(Console.WindowWidth - width, 0, Console.WindowWidth), Math.Clamp(Console.WindowHeight - 2, 0, Console.WindowHeight));
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.BackgroundColor = color;
-            Console.Write(label);
-            Console.BackgroundColor = startBackgroundColor;
-            Console.Write(" ");
+            var item = items[index];
+            Console.WriteLine($" {index+1}. {item}");
         }
-        Console.ResetColor();
-        Console.SetCursorPosition(originalPosition.X, originalPosition.Y);
-    }
-    public static void ClearToolbar(string[] labels)
-    {
-        if(labels.Length == 0) return;
-        var originalPosition = new Point(x: Console.CursorLeft, y: Console.CursorTop);
-        var width = 0;
-        foreach (var label in labels) width += label.Length+1; 
-        Console.SetCursorPosition( Math.Clamp(Console.WindowWidth - width, 0, Console.WindowWidth),  Math.Clamp(Console.WindowHeight-2, 0, Console.WindowHeight));
-        Console.Write("".PadLeft(width,' '));
-        Console.SetCursorPosition(originalPosition.X, originalPosition.Y);
-    }
+        var quit = " ";
+        var input = "";
+        var selectedItems = new Dictionary<int, string>();
+        
+        ToolbarService.DrawToolbar(new []{"Select number, hit enter","When your done just hit enter."});
+        while (input != quit)
+        {
+            Console.WriteLine("");
+            Console.Write(" ");
+            input = ReadLineService.Service.Read();
+            if(input.Trim() == "") break;
+            
+            var selectedIndex = (int.TryParse(input, out var index) ? index : 1);
+            if(selectedIndex > items.Count-1) selectedIndex = items.Count;
+            var selectedItem = new { Index = selectedIndex, Value = items[selectedIndex - 1] };
+            var itemAdded = selectedItems.TryAdd(selectedItem.Index, selectedItem.Value);
+            
+            ConsoleService.Service.ClearRow(Console.CursorTop-1);
+            var top = Console.CursorTop - 2;
+            Console.CursorTop = Math.Clamp(top, 0, Console.LargestWindowHeight - 1);
+            Console.CursorLeft = 0;
 
-    private static ToolbarConfiguration? _configuration = null;
-    public static void DrawToolbar(ToolbarConfiguration? configuration)
-    {
-        _configuration = configuration;
-        if(_configuration == null ) return;
-        DrawToolbar(_configuration.ToolbarItems.Select(t => t.Label).ToArray(),_configuration.ToolbarItems.Select(t => t.Color).ToArray());
-        if(_configuration.HideToolbarOption == HideToolbarOption.OnTextChange) ReadLineService.CmdLineTextChanged += ReadLineService_CmdLineTextChanged;
-        else if(_configuration.HideToolbarOption == HideToolbarOption.OnCommandHighlighted) ReadLineService.CommandHighlighted += ReadLineService_CommandHighlighted;
-    }
-
-    private static void ReadLineService_CommandHighlighted(object? sender, ReadLine.Events.CommandHighlightedArgs e)
-    {
-        if(_configuration?.ToolbarItems == null ) return;
-        ClearToolbar(_configuration.ToolbarItems.Select(t => t.Label).ToArray());
-        ReadLineService.CommandHighlighted -= ReadLineService_CommandHighlighted;
-    }
-
-    private static void ReadLineService_CmdLineTextChanged(object? sender, ReadLine.Events.CmdLineTextChangedArgs e)
-    {
-        if(_configuration?.ToolbarItems == null ) return;
-        ClearToolbar(_configuration.ToolbarItems.Select(t => t.Label).ToArray());
-        ReadLineService.CmdLineTextChanged -= ReadLineService_CmdLineTextChanged;
+            if(itemAdded) ConsoleService.Service.WriteRowWithColor(startRow + selectedIndex - 1, foregroundColor, backgroundColor, $" {selectedIndex}. {selectedItem.Value}");
+            else
+            {
+                selectedItems.Remove(selectedItem.Index);
+                ConsoleService.Service.WriteRowWithColor(startRow + selectedIndex - 1, startForegroundColor, startBackgroundColor, $" {selectedIndex}. {selectedItem.Value}");
+            }
+        }
+        ToolbarService.ClearToolbar();
+        return selectedItems.Select(s => s.Value).ToList();
     }
 }

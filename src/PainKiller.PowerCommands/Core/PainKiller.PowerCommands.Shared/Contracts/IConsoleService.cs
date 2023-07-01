@@ -17,4 +17,7 @@ public interface IConsoleService
     void WriteSuccessLine(string scope, string text, bool writeLog = true);
     void WriteSuccess(string scope, string text, bool writeLog = true);
     void WriteUrl(string scope, string text, bool writeLog = true);
+
+    void ClearRow(int top);
+    void WriteRowWithColor(int top, ConsoleColor foregroundColor, ConsoleColor backgroundColor, string rowContent);
 }

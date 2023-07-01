@@ -11,6 +11,8 @@ public class DemoCommand : CommandWithToolbarBase<PowerCommandsConfiguration>
     public DemoCommand(string identifier, PowerCommandsConfiguration configuration) : base(identifier, configuration) { }
     public override RunResult Run()
     {
+        ToolbarService.ClearToolbar();
+
         PauseService.Pause(Input);
 
         WriteHeadLine(" Congratulations! You have setup your PowerCommands solution correctly!\n");
@@ -21,9 +23,12 @@ public class DemoCommand : CommandWithToolbarBase<PowerCommandsConfiguration>
         Write(" Find more example commands on github: ");
         WriteUrl($"{Configuration.Repository}.\n\n");
 
-        ClearToolbar();
         var diagnostic = DialogService.YesNoDialog(" Do you want to show diagnostic info from the input?");
-        if (!diagnostic) return Ok();
+        if (!diagnostic)
+        {
+            Console.Clear();
+            return Ok();
+        }
 
         
         WriteHeadLine("Diagnostic output of the command line input, for testing purposes");
@@ -48,11 +53,5 @@ public class DemoCommand : CommandWithToolbarBase<PowerCommandsConfiguration>
         WriteLine(Input.Path);
 
         return Ok();
-    }
-
-    public override void RunCompleted()
-    {
-        Console.Clear();
-        base.RunCompleted();
     }
 }

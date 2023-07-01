@@ -75,17 +75,9 @@ public class SecretCommand : CommandBase<CommandsConfiguration>
     private RunResult Create()
     {
         var name = Input.SingleQuote;
-        Console.Write("Enter secret: ");
-        var password = PasswordPromptService.Service.ReadPassword();
-        Console.WriteLine();
-        Console.Write("Confirm secret: ");
-        var passwordConfirm = PasswordPromptService.Service.ReadPassword();
-
-        if (password != passwordConfirm)
-        {
-            Console.WriteLine();
-            return BadParameterError("Passwords do not match");
-        }
+        var password = DialogService.SecretPromptDialog("Enter secret:");
+        if (string.IsNullOrEmpty(password)) return BadParameterError("Passwords do not match");
+        
         var secret = new SecretItemConfiguration { Name = name };
         var val = SecretService.Service.SetSecret(name, password, secret.Options, EncryptionService.Service.EncryptString);
 

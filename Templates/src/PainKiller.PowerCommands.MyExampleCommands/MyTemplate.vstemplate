@@ -19,7 +19,7 @@
       <Folder Name="Commands" TargetFolderName="Commands">        
         <ProjectItem ReplaceParameters="true" TargetFileName="ConfigCommand.cs">ConfigCommand.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="DemoCommand.cs">DemoCommand.cs</ProjectItem>
-        <ProjectItem ReplaceParameters="true" TargetFileName="DirCommand.cs">DirCommand.cs</ProjectItem>        
+        <ProjectItem ReplaceParameters="true" TargetFileName="ListCommand.cs">ListCommand.cs</ProjectItem>        
       </Folder>
       <Folder Name="Configuration" TargetFolderName="Configuration">
         <ProjectItem ReplaceParameters="true" TargetFileName="PowerCommandsConfiguration.cs">PowerCommandsConfiguration.cs</ProjectItem>

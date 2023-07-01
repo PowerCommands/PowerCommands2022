@@ -35,6 +35,10 @@ https://github.com/PowerCommands/PowerCommands2022/assets/102176789/d8ad92f0-93a
 
 [Handling the Input](Docs/Input.md)
 
+[Dialog services](Docs/DialogService.md)
+
+https://github.com/PowerCommands/PowerCommands2022/assets/102176789/10945ee0-947d-4af3-aef5-27ad8ff6be4b
+
 [Using Options](Docs/Options.md)
 
 [Simple automated test](Docs/Test.md)

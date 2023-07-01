@@ -56,6 +56,8 @@ The path is a special value if your command only should have an input that is a 
 
 Read more about:
 
+[Dialog services](DialogService.md)
+
 [Design your Command](Design_command.md)
 
 [Options](Options.md)
