@@ -14,8 +14,8 @@ I recommend you to use the option ```Place solution in the same directory``` som
 
 
 # What is new?
-
-**Released 2023-06-30**
+## Version 1.0.2.0
+**Released 2023-07-01**
 - Toolbar functionality moved to own ```ToolbarService``` and reworked it completely, not using timers anymore that caused problems, so it is now a more stable feature (but still a bit experimental).
 - Added PasswordPromptDialog to the ```DialogService```.
 - New List feature, display a list which selectable items.
