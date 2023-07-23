@@ -60,6 +60,9 @@ https://github.com/PowerCommands/PowerCommands2022/assets/102176789/10945ee0-947
 
 [Documentation index](Docs/DocumentationIndexDB.md)
 
+## Console Input
+[Shortcut guide and listening on keyboard events](Docs/ReadLine.md)
+
 ## Architecture
 [Design principles and guidlines](Docs/PowerCommands%20Design%20Principles%20And%20Guidlines.md)
 

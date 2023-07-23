@@ -14,6 +14,8 @@ public class ReadLineService
     public static ReadLineService Service => Lazy.Value;
     public static event EventHandler<CommandHighlightedArgs>? CommandHighlighted;
     public static event EventHandler<CmdLineTextChangedArgs>? CmdLineTextChanged;
+    public static Action? OpenShortCutPressed;
+    public static Action? SaveShortCutPressed;
     public static void InitializeAutoComplete(string[] history, string[] suggestions)
     {
         if (history.Length > 0) Service.AddHistory(history);
@@ -63,4 +65,7 @@ public class ReadLineService
     }
     private static void OnCommandHighlighted(CommandHighlightedArgs e) => CommandHighlighted?.Invoke("ReadLineService", e);
     private static void OnCmdLineTextChanged(CmdLineTextChangedArgs e) => CmdLineTextChanged?.Invoke("ReadLineService", e);
+    internal static void OnOpenShortCutPressed() => OpenShortCutPressed?.Invoke();
+    internal static void OnSaveShortCutPressed() => SaveShortCutPressed?.Invoke();
+    
 }

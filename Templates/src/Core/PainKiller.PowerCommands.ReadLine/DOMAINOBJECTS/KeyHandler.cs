@@ -97,6 +97,8 @@ internal class KeyHandler
         {
             if (IsInAutoCompleteMode()) PreviousAutoComplete();
         };
+        _keyActions["ControlO"] = ReadLineService.OnOpenShortCutPressed;
+        _keyActions["ControlS"] = ReadLineService.OnSaveShortCutPressed;
     }
 
     private void MoveCursorLeft()

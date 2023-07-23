@@ -1,5 +1,13 @@
 ﻿# What is new?
 
+## Version 1.0.2.1
+**Released 2023-07-24**
+- ```ReadLineService``` now has two static events by the ```OpenShortCutPressed``` Occurs when user press [`Ctrl + O`], ```SaveShortCutPressed``` Occurs when user press [`Ctrl + S`].
+- ```DialogService.ListDialog``` now returns a ```Dictionary<int, string>``` instead of ```List<string>``` so string value and index is returned for each selected item.
+- ```ChecksumManager``` now exposing it´t functions for calculating MDF checksum.
+- ```DialogService``` standard dialogs has some minor improvements.
+- ```PowerCommandsManager.RunCustomCode``` now has a parameter ```RunFlowManager runFlow```.
+- Adjusted creation of commands using ```powercommand new --command Name``` so that the new command class now has the correct namespace. (removed PainKiller.PowerCommands.)
 ## Version 1.0.2.0
 **Released 2023-07-01**
 - Toolbar functionality moved to own ```ToolbarService``` and reworked it completely, not using timers anymore that caused problems, so it is now a more stable feature (but still a bit experimental).

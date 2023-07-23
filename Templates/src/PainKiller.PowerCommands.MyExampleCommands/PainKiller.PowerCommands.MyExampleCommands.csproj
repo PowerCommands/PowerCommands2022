@@ -1,12 +1,17 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFrameworks>net7.0;net6.0</TargetFrameworks>
 		<LangVersion>10.0</LangVersion>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
-		<Version>1.0.1.1</Version>
+		<Version>1.0.2.1</Version>
 	</PropertyGroup>
+
+	<ItemGroup>
+		<Compile Remove="Commands\Templates\DefaultCommand.cs" />
+	</ItemGroup>
+
 	<ItemGroup>
 		<ProjectReference Include="..\Core\PainKiller.PowerCommands.Configuration\PainKiller.PowerCommands.Configuration.csproj" />
 		<ProjectReference Include="..\Core\PainKiller.PowerCommands.Core\PainKiller.PowerCommands.Core.csproj" />
@@ -15,6 +20,7 @@
 		<ProjectReference Include="..\Core\PainKiller.PowerCommands.Shared\PainKiller.PowerCommands.Shared.csproj" />
 		<ProjectReference Include="..\Third party components\PainKiller.SerilogExtensions\PainKiller.SerilogExtensions.csproj" />
 	</ItemGroup>
+
 	<ItemGroup>
 		<None Update="ArtifactPathsConfiguration.yaml">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -23,4 +29,9 @@
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
 	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="Commands\Templates\DefaultCommand.cs" />
+	</ItemGroup>
+
 </Project>

@@ -1,15 +1,9 @@
-﻿# ABOUT READLINE
-A Pure C# GNU-Readline like library for .NET/.NET Core
-
+# ReadLine
 PowerCommands is using an extended version of [ReadLine](https://github.com/tonerdo/readline) published on Github by [Toni Solarin-Sodara](https://github.com/tonerdo).
+The code is duplicated and then altered to implement more functionality like command highlighting and some events that is described here.
 
+## Description
 The core functionality is the same, but some code is added to suit the need for PowerCommands, the license model is still the same.
-
-## MIT License permissions
-- Commercial use
-- Modification
-- Distribution
-- Private use
 
 ## Events
 Events related to keyboard input is exposed as static event by the ```ReadLineService``` this events is possible to add listeners to.
@@ -91,3 +85,14 @@ Works just like the **CmdLineTextChanged** event but triggers when a valid comma
 | `Ctrl` + `D` / `Delete`        | Delete succeeding character       |
 | `Ctrl` + `↓`                   | Move cursor down one line         |
 | `Ctrl` + `↑`                   | Move cursor up one line           |
+
+
+Read more about:
+
+[Dialog services](DialogService.md)
+
+[Design your Command](Design_command.md)
+
+[Customize](Customize.md)
+
+[Back to start](https://github.com/PowerCommands/PowerCommands2022/blob/main/Docs/README.md)

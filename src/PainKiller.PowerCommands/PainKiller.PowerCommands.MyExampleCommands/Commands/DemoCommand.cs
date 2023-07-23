@@ -1,3 +1,5 @@
+using PainKiller.PowerCommands.ReadLine;
+
 namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
 [PowerCommandTest(tests: "! |!--pause 3")]
@@ -8,7 +10,8 @@ namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
                          example: "//Must provide the MANDATORY option, will trigger a validation error otherwise|demo MANDATORY|//Test the pause service|demo --pause 5 MANDATORY")]
 public class DemoCommand : CommandWithToolbarBase<PowerCommandsConfiguration>
 {
-    public DemoCommand(string identifier, PowerCommandsConfiguration configuration) : base(identifier, configuration) { }
+    public DemoCommand(string identifier, PowerCommandsConfiguration configuration) : base(identifier, configuration) => ReadLineService.OpenShortCutPressed += OpenShortCutPressed;
+    private void OpenShortCutPressed() => WriteSuccessLine("You pressed [CTRL]+[O]");
     public override RunResult Run()
     {
         ToolbarService.ClearToolbar();

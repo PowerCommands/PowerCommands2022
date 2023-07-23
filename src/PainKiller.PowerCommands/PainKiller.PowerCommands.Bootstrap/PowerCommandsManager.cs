@@ -22,7 +22,7 @@ public partial class PowerCommandsManager : IPowerCommandsManager
         {
             try
             {
-                RunCustomCode();
+                RunCustomCode(runFlow);
                 var promptText = runFlow.CurrentRunResultStatus == RunResultStatus.Async ? "" : $"\n{ConfigurationGlobals.Prompt}";
                 runFlow.Raw = runFlow.RunAutomatedAtStartup ? string.Join(' ', args) : ReadLine.ReadLineService.Service.Read(prompt: promptText);
                 if (string.IsNullOrEmpty(runFlow.Raw.Trim())) continue;

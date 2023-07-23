@@ -14,6 +14,13 @@ I recommend you to use the option ```Place solution in the same directory``` som
 
 
 # What is new?
+## Version 1.0.2.1
+**Released 2023-07-24**
+- ```DialogService.ListDialog``` now returns a ```Dictionary<int, string>``` instead of ```List<string>``` so string value and index is returned for each selected item.
+- ```ChecksumManager``` now exposing it´t functions for calculating MDF checksum.
+- ```DialogService``` standard dialogs has some minor improvements.
+- ```PowerCommandsManager.RunCustomCode``` now has a parameter ```RunFlowManager runFlow```.
+
 ## Version 1.0.2.0
 **Released 2023-07-01**
 - Toolbar functionality moved to own ```ToolbarService``` and reworked it completely, not using timers anymore that caused problems, so it is now a more stable feature (but still a bit experimental).

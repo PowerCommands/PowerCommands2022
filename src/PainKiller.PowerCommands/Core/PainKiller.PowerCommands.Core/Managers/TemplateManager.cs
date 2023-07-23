@@ -31,7 +31,7 @@ public class TemplateManager : ITemplateManager
             _logger.Invoke($"Template not found, run following command to download current templates\npowercommand update --template");
             return;
         }
-        var content = File.ReadAllText(filePath).Replace("namespace PainKiller.PowerCommands.MyExampleCommands.Commands.Templates;", $"namespace PainKiller.PowerCommands.{FindProjectName()}Commands.Commands;").Replace("NameCommand", $"{commandName}Command");
+        var content = File.ReadAllText(filePath).Replace("namespace PainKiller.PowerCommands.MyExampleCommands.Commands.Templates;", $"namespace {FindProjectName()}Commands.Commands;").Replace("NameCommand", $"{commandName}Command").Replace("\"demo\"",$"\"{commandName.ToLower()}\"");
         var commandsFolder = FindCommandsProjectDirectory();
         var copyFilePath = $"{commandsFolder}\\Commands\\{commandName}Command.cs";
 

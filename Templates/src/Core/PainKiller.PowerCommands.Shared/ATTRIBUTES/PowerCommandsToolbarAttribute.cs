@@ -8,7 +8,7 @@ public class PowerCommandsToolbarAttribute : Attribute
     /// <summary>
     /// Set parameters for the toolbar
     /// </summary>
-    /// <param name="labels">Name of the labels</param>
+    /// <param name="labels">Labels separated with | character</param>
     /// <param name="timer">Milliseconds before the toolbar is shown, possible min (and default) is 500 and max is 5000</param>
     /// <param name="description">Description of the toolbar</param>
     /// <param name="colors">Colors, could be null to use default colors</param>
