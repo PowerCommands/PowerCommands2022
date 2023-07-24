@@ -1,7 +1,11 @@
 # Implementations
  
 ## KnowledgeDB
- A very simple but powerfull application for you to build a knowledge DB adding Url:s, Directory pats and links to One Note documents and enriching them with tags wich makes them more searcheble, I use this PowerCommands implementation every day in my job as an IT-architect.
+ A very simple but powerful application for you to build a knowledge DB adding Url:s, Directory pats and links to One Note documents and enriching them with tags which makes them more searchable, I use this PowerCommands implementation every day in my job as an IT-architect.
+
+https://github.com/PowerCommands/kdb/assets/102176789/6df39a21-33df-40eb-9b83-48067c2a6341
+
+ This implementation is now moved out from this repo to its own github repo here: [Power Commands - KDB](https://github.com/PowerCommands/kdb)
 
  ## GlitchFinder power commands using GlitchFinder component by Jooachim
 
