@@ -25,19 +25,19 @@ public static class DialogService
         var secret = "";
         while (retryCount < maxRetries)
         {
-            WriteHeader($"\n{question} :");
+            WriteHeader($"\n{question} ");
             secret = PasswordPromptService.Service.ReadPassword();
             Console.WriteLine();
             Console.Write("Confirm: ".PadLeft(question.Length + 1));
             var confirm = PasswordPromptService.Service.ReadPassword();
             if (secret != confirm)
             {
-                ConsoleService.Service.WriteCritical(nameof(DialogService),"\nConfirmation failure, please try again.\n");
+                ConsoleService.Service.WriteCritical(nameof(DialogService), "\nConfirmation failure, please try again.\n");
                 retryCount++;
             }
             else break;
         }
-        
+
         return $"{secret}".Trim();
     }
     public static Dictionary<int, string> ListDialog(string header, List<string> items, bool multiSelect = false, bool autoSelectIfOnlyOneItem = true, ConsoleColor foregroundColor = ConsoleColor.White, ConsoleColor backgroundColor = ConsoleColor.Blue)

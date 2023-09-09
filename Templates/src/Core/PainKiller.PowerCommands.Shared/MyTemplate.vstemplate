@@ -39,6 +39,7 @@
         <ProjectItem ReplaceParameters="true" TargetFileName="IPowerCommandServices.cs">IPowerCommandServices.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="IPowerCommandsManager.cs">IPowerCommandsManager.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="IPowerCommandsRuntime.cs">IPowerCommandsRuntime.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="IPowerCommandDesign.cs">IPowerCommandDesign.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="IReflectionService.cs">IReflectionService.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="IShellService.cs">IShellService.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="ISolutionFileManager.cs">ISolutionFileManager.cs</ProjectItem>
@@ -58,6 +59,7 @@
           <ProjectItem ReplaceParameters="true" TargetFileName="EnvironmentItemConfiguration.cs">EnvironmentItemConfiguration.cs</ProjectItem>
           <ProjectItem ReplaceParameters="true" TargetFileName="LogComponentConfiguration.cs">LogComponentConfiguration.cs</ProjectItem>
           <ProjectItem ReplaceParameters="true" TargetFileName="Metadata.cs">Metadata.cs</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="PowerCommandDesignConfiguration.cs">PowerCommandDesignConfiguration.cs</ProjectItem>
           <ProjectItem ReplaceParameters="true" TargetFileName="ProxyPowerCommandConfiguration.cs">ProxyPowerCommandConfiguration.cs</ProjectItem>
           <ProjectItem ReplaceParameters="true" TargetFileName="SecretConfiguration.cs">SecretConfiguration.cs</ProjectItem>
           <ProjectItem ReplaceParameters="true" TargetFileName="SecretItemConfiguration.cs">SecretItemConfiguration.cs</ProjectItem>
@@ -82,6 +84,9 @@
       <Folder Name="Enums" TargetFolderName="Enums">
         <ProjectItem ReplaceParameters="true" TargetFileName="ParameterType.cs">ParameterType.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="RunResultStatus.cs">RunResultStatus.cs</ProjectItem>
+      </Folder>
+      <Folder Name="Events" TargetFolderName="Events">
+        <ProjectItem ReplaceParameters="true" TargetFileName="DesignAttributeReflectedArgs.cs">DesignAttributeReflectedArgs.cs</ProjectItem>        
       </Folder>
       <Folder Name="Extensions" TargetFolderName="Extensions">
         <ProjectItem ReplaceParameters="true" TargetFileName="ConfigurationExtensions.cs">ConfigurationExtensions.cs</ProjectItem>

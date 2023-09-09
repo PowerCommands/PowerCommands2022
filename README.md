@@ -29,6 +29,8 @@ https://github.com/PowerCommands/PowerCommands2022/assets/102176789/d8ad92f0-93a
 
 [Power Commands Design attribute](Docs/PowerCommandDesignAttribute.md)
 
+[Override Design attribute in config file](Docs/OverrideDesignAttribute.md)
+
 [Patterns to use the Toolbar with dynamic content](Docs/PowerCommandToolbarAttribute.md)
 
 [Command base class](Docs/CommandBase.md)

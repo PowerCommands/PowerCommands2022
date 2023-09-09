@@ -14,6 +14,12 @@ I recommend you to use the option ```Place solution in the same directory``` som
 
 
 # What is new?
+## Version 1.0.2.2
+**Released 2023-09-09**
+- Some of the values set with ```PowerCommandsDesignAttribute``` is now possible to override in the **PowerCommandsConfiguration.yaml** file, look at the example that comes with the VS template or read the documentation on GitHub.
+- Removed checksum control at startup as it achieves no really security purpose.
+- Minor fixes in core dialogs.
+
 ## Version 1.0.2.1
 **Released 2023-07-24**
 - ```ReadLineService``` now has two static events by the ```OpenShortCutPressed``` Occurs when user press [`Ctrl + O`], ```SaveShortCutPressed``` Occurs when user press [`Ctrl + S`].

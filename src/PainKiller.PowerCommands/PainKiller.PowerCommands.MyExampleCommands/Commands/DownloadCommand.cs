@@ -2,12 +2,7 @@
 
 namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
-[PowerCommandDesign(  description: "Download a file that is provides as an argument, after download you get a checksum of the downloaded file",
-                        arguments: "!<url>",
-                           quotes: "!<local file path>",
-                       suggestions: "https://downloadurl.com \"filename.txt\"",
-                          example: "download https://downloadurl.com \"filename.txt\"",
-                         useAsync: true)]
+[PowerCommandDesign(  description: "This text should be overriden by config for demo purposes, it should not work by purpose if the command is not overriden")]
 public class DownloadCommand : CommandBase<CommandsConfiguration>
 {
     private ProgressBar? _progressbar;

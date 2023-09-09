@@ -18,6 +18,9 @@ The Example project on Github has extended the configuration and will therefore 
 ### CodeEditor
 The path to your favorite code editor, that you could start with the ConfigCommand, this command is shipping with the creation of new PowerCommand Visual Studio solution.
 
+### Command design overrides
+You can override some of the values that are set in the **PowerCommandsDesignAttribute**, read more about this [here](OverrideDesignAttribute.md)
+
 ### Components
 Here you declare those dll components that the Core framework will use to find all available Commands.
 
@@ -45,10 +48,21 @@ Enable or disable the display of diagnostic output.
 version: 1.0
 configuration:
   showDiagnosticInformation: false
-  defaultCommand: commands  
+  defaultCommand: commands
   codeEditor: C:\Users\%USERNAME%\AppData\Local\Programs\Microsoft VS Code\Code.exe
   repository: https://github.com/PowerCommands/PowerCommands2022
-  backupPath: ..\..\..\..\Core\PainKiller.PowerCommands.Core\  
+  backupPath: ..\..\..\..\..\
+  defaultGitRepositoryPath: C:\repos\github\PowerCommands2022
+  commandDesignOverrides:
+  - name: demo
+    description: "Demo command just to try out how you could use the input, do not forget the MANDATORY option, will trigger a validation error otherwise! ;-)\n That is because the option name is typed with UPPERCASE letters, useful when you want a mandatory option\n The pause option on the other hand starts with a ! symbol meaning that if you add the --pause option you must also give it a value, an integer in this case."
+    arguments: "!<url>"
+    quotes: "!<local file path>"    
+    options: "!MANDATORY|!pause"
+    examples: "//Must provide the MANDATORY option, will trigger a validation error otherwise|demo MANDATORY|//Test the pause service|demo --pause 5 MANDATORY"
+    suggestions: ""
+    useAsync: true
+    showElapsedTime: false  
   metadata:
     name: Test
     description: En exempelbeskrivning
@@ -60,24 +74,22 @@ configuration:
     component: PainKiller.SerilogExtensions.dll
     checksum: 13b9944b55efe60362720a679f17a22c
     name: Serialog
-  components:
+  components:  
+  - component: PainKiller.PowerCommands.MyExampleCommands.dll
+    checksum: a2df61ea89e4f9ec265d921bfad87193
+    name: My Example Command  
   - component: PainKiller.PowerCommands.Core.dll
     checksum: 4f04313db8e67b2bc4b059c478a900af
     name: PainKiller Core
-  - component: PainKiller.PowerCommands.MyExampleCommands.dll
-    checksum: a2df61ea89e4f9ec265d921bfad87193
-    name: My Example Command
-  secret:
-    secrets:
-    - name: localDB
-      options:
-        target: User
+  bookmark:
+    bookmarks:
+    - name: Program
+      path: C:\Program Files
+      index: 0
   environment:
     variables:
-    - name: VAULT_NAME
-      environmentVariableTarget: User
-    - name: CLIENT_ID
-      environmentVariableTarget: User
+    - name: OS
+      environmentVariableTarget: Machine
 ```
 
 Next step could be to [Extend your configuration](ExtendYourConfiguration.md)
@@ -85,6 +97,8 @@ Next step could be to [Extend your configuration](ExtendYourConfiguration.md)
 Read more about:
 
 [Design your Command](Design_command.md)
+
+[Override Design attribute](OverrideDesignAttribute.md)
 
 [Documentation index](DocumentationIndexDB.md)
 

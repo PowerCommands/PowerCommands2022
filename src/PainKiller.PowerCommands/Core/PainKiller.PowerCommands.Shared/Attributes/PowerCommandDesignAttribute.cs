@@ -1,12 +1,12 @@
 ﻿using System.ComponentModel;
+using PainKiller.PowerCommands.Shared.Contracts;
 
 namespace PainKiller.PowerCommands.Shared.Attributes;
 
 [AttributeUsage(AttributeTargets.Class)]
-public class PowerCommandDesignAttribute : Attribute
+public class PowerCommandDesignAttribute : Attribute, IPowerCommandDesign
 {
     public string Description { get; }
-    [Description("Separate items with | character, if required begin with a ! character")]
     public string Arguments { get; }
     [Description("Separate items with | character, if required begin with a ! character")]
     public string Quotes { get; }
@@ -15,7 +15,7 @@ public class PowerCommandDesignAttribute : Attribute
     [Description("Separate items with | character, if required begin with a ! character")]
     public string Secrets { get; }
     [Description("The command will exexute the RunAsync instead of Run method")]
-    public bool UseAsync { get; }
+    public bool? UseAsync { get; }
     [Description("This mean that the command itself will handle the --help in any way")]
     public bool OverrideHelpOption { get; }
     [Description("Separate items with |, if you begin with // the value will be displayed as an comment row in help view.")]
@@ -23,8 +23,7 @@ public class PowerCommandDesignAttribute : Attribute
     public string Suggestions { get; }
     [Description("If enabled another powercommands projekt could pickup the output, helpfull if your project is used with the ProxyCommand.")]
     public bool DisableProxyOutput { get; }
-    [Description("Show the .")]
-    public bool ShowElapsedTime { get; }
+    [Description("Show the elapsed time of the run function")] public bool? ShowElapsedTime { get; }
     /// <summary>
     /// Set design parameters to help the consumer and control the program flow (async, diagnostics and validation)
     /// </summary>

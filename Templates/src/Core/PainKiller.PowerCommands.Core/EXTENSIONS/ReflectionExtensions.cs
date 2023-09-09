@@ -43,7 +43,12 @@ public static class ReflectionExtensions
     public static PowerCommandDesignAttribute GetPowerCommandAttribute(this IConsoleCommand command)
     {
         var attributes = command.GetType().GetCustomAttributes(typeof(PowerCommandDesignAttribute), inherit: false);
-        return attributes.Length == 0 ? new PowerCommandDesignAttribute(description:"Command have no description attribute") : (PowerCommandDesignAttribute)attributes.First();
+        var retVal = attributes.Length == 0 ? new PowerCommandDesignAttribute(description:"Command have no description attribute") : (PowerCommandDesignAttribute)attributes.First();
+        var cfgAttr = ReflectionService.CommandDesignOverrides.FirstOrDefault(c => c.Name == command.Identifier);
+        if (cfgAttr == null) return retVal;
+        //Not all values must be set in config so we have to create a new merged cfgDesign where does values that are not set is taken from the runtime attribute values
+        var cfgDesignMerged = new PowerCommandDesignConfiguration(cfgAttr, retVal);
+        return new PowerCommandDesignAttribute(description: cfgDesignMerged.Description, overrideHelpOption: retVal.OverrideHelpOption, arguments: cfgDesignMerged.Arguments, quotes: cfgDesignMerged.Quotes, example: cfgDesignMerged.Examples, options: cfgDesignMerged.Options, secrets: retVal.Secrets, suggestions: cfgDesignMerged.Suggestions, useAsync: cfgDesignMerged.UseAsync.GetValueOrDefault(), disableProxyOutput: retVal.DisableProxyOutput, showElapsedTime: cfgDesignMerged.ShowElapsedTime.GetValueOrDefault());
     }
     public static PowerCommandsToolbarAttribute? GetToolbarAttribute(this IConsoleCommand command)
     {

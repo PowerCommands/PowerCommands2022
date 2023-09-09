@@ -12,6 +12,7 @@ public class PowerCommandsRuntime<TConfig> : IPowerCommandsRuntime where TConfig
     }
     private void Initialize()
     {
+        ReflectionService.Service.DesignAttributeReflected += Service_DesignAttributeReflected;
         foreach (var component in _configuration.Components)
         {
             Commands.AddRange(ReflectionService.Service.GetCommands(component, _configuration));
@@ -65,7 +66,7 @@ public class PowerCommandsRuntime<TConfig> : IPowerCommandsRuntime where TConfig
             return Latest;
         }
 
-        if (command.GetPowerCommandAttribute().UseAsync) return ExecuteAsyncCommand(command, input);
+        if (command.GetPowerCommandAttribute().UseAsync.GetValueOrDefault()) return ExecuteAsyncCommand(command, input);
         try
         {
             Latest = command.Run();
@@ -93,4 +94,15 @@ public class PowerCommandsRuntime<TConfig> : IPowerCommandsRuntime where TConfig
         return Latest;
     }
     public RunResult? Latest { get; private set; }
+
+    #region event listeners
+    private void Service_DesignAttributeReflected(object? sender, Shared.Events.DesignAttributeReflectedArgs e)
+    {
+        var suggestions = new List<string>();
+        if(!string.IsNullOrEmpty(e.DesignAttribute.Options)) suggestions.AddRange(e.DesignAttribute.Options.Split(ConfigurationGlobals.ArraySplitter).Select(f => $"--{f}"));
+        suggestions.Add("--help");
+        if(!string.IsNullOrEmpty(e.DesignAttribute.Suggestions)) suggestions.AddRange(e.DesignAttribute.Suggestions.Split(ConfigurationGlobals.ArraySplitter).Select(f => $"{f}"));
+        SuggestionProviderManager.AddContextBoundSuggestions(e.Command.Identifier, suggestions.ToArray());
+    }
+    #endregion
 }
