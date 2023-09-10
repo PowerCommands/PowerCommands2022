@@ -27,6 +27,6 @@ Read more about:
 
 [Options](Options.md)
 
-[PowerCommands Attribute](PowerCommandAttribute.md)
+[PowerCommands Design Attribute](PowerCommandDesignAttribute.md)
 
 [Back to start](https://github.com/PowerCommands/PowerCommands2022/blob/main/Docs/README.md)
