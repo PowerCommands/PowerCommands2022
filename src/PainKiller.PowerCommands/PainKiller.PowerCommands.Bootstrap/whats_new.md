@@ -1,4 +1,11 @@
 ﻿# What is new?
+## Version 1.0.3.0
+**Released 2023-11-18**
+- Updated to .NET 8
+- Using C# 12
+- Updated YamlDotNet to current latest stable version
+- Updated Microsoft.Extensions.Logging.Abstractions to current latest stable version
+- Updated Serilog and Serilog.Sinks.File to current latest stable version
 ## Version 1.0.2.2
 **Released 2023-09-09**
 - Some of the values set with ```PowerCommandsDesignAttribute``` is now possible to override in the **PowerCommandsConfiguration.yaml** file, look at the example that comes with the VS template or read the documentation on GitHub.
@@ -35,3 +42,4 @@ If you want to run your PowerCommands application as a Windows scheduled task st
 - For your stored secrets you will need to to do the same thing and change target: User to target: Machine in the **PowerCommandsConfiguration.yaml** file.
 ### Improved logging
 Every log post now includes the current user running the PowerCommand application, the Log commands has been re-designed to use suggestions instead of options where more appropriate.
+

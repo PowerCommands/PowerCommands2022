@@ -10,10 +10,19 @@ Open Visual Studio and write Power in the searchbox, you should find the PowerCo
 
 I recommend you to use the option ```Place solution in the same directory``` some experimental features for update and create commands using a template the Core depends on that.
 
+## .NET 6 (and .NET 7) 1.0.2.2 version
+[PowerCommands_1.0.2.2.zip](PowerCommands_1.0.2.2.zip)
+
 ![Alt text](../Docs/images/VS_solution_option.png?raw=true "Command Base")
 
-
 # What is new?
+## Version 1.0.3.0
+**Released 2023-11-18**
+- Updated to .NET 8
+- Using C# 12
+- Updated YamlDotNet to current latest stable version
+- Updated Microsoft.Extensions.Logging.Abstractions to current latest stable version
+- Updated Serilog and Serilog.Sinks.File to current latest stable version
 ## Version 1.0.2.2
 **Released 2023-09-09**
 - Some of the values set with ```PowerCommandsDesignAttribute``` is now possible to override in the **PowerCommandsConfiguration.yaml** file, look at the example that comes with the VS template or read the documentation on GitHub.
