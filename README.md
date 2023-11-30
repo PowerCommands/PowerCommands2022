@@ -1,4 +1,4 @@
-# Power Commands - Version 1.0.3.0
+# Power Commands
 You could see PowerCommands as your CLI application starter kit. It is a structured framework for creating your own customized command prompt to perform tasks with the full control from your command environment. That means no time-consuming hassling with a GUI, try catch block, validate your input, you do not need to write a zilion test classes either. Just concentrate on the code, create your commands and run the Console application.
 
 [Follow progress on twitter](https://twitter.com/PowerCommands) <img src="https://github.com/PowerCommands/PowerCommands2022/blob/main/Docs/images/Twitter.png?raw=true" alt="drawing" width="20"/>
