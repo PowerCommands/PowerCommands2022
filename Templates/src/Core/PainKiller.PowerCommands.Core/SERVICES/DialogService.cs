@@ -76,7 +76,7 @@ public static class DialogService
             if(input.Trim() == "") break;
             
             var selectedIndex = (int.TryParse(input, out var index) ? index : 1);
-            if(selectedIndex > items.Count) selectedIndex = items.Count;
+            if(selectedIndex > items.Count || selectedIndex < 1) selectedIndex = 1;
             var selectedItem = new { Index = selectedIndex, Value = items[selectedIndex - 1] };
             var itemAdded = selectedItems.TryAdd(selectedItem.Index-1, selectedItem.Value);
             

@@ -3,7 +3,15 @@ You could see PowerCommands as your CLI application starter kit. It is a structu
 
 [Follow progress on twitter](https://twitter.com/PowerCommands) <img src="https://github.com/PowerCommands/PowerCommands2022/blob/main/Docs/images/Twitter.png?raw=true" alt="drawing" width="20"/>
 
-**Latest release 2023-11-18**
+## Version 1.0.3.1
+**Released 2023-11-30**
+- Adjusted the Power Command to use be run with a service account and use encryption, update the setup to reflect this.
+- Added general option --pc_force_quit in CommandBase to be used with any command to force application to quit.
+- Improved encryption
+- Bug fix DialogService.ListDialog now handles 0 input more gracefully
+- Bug fix CommandBase now return RunResultStatus.Quit when using Quit()
+
+**Release 2023-11-18**
 - Updated to .NET 8
 - Using C# 12
 - Updated YamlDotNet to current latest stable version

@@ -1,4 +1,5 @@
-﻿using PainKiller.PowerCommands.Configuration.Contracts;
+﻿using System.Text;
+using PainKiller.PowerCommands.Configuration.Contracts;
 using PainKiller.PowerCommands.Configuration.DomainObjects;
 using PainKiller.PowerCommands.Configuration.Extensions;
 using YamlDotNet.Serialization;
@@ -32,6 +33,46 @@ public class ConfigurationService : IConfigurationService
             return new YamlContainer<T>();
         }
     }
+    public YamlContainer<T> GetByNodeName<T>(string filePath, string nodeName) where T : new()
+    {
+        var stringBuilder = new StringBuilder();
+        stringBuilder.AppendLine("version: 1.0\r\nconfiguration:");
+        var nodeFound = false;
+        var nodeIndentation = 0;
+
+        using (var reader = new StreamReader(filePath))
+        {
+            while (reader.ReadLine() is { } line)
+            {
+                if (line.Trim().StartsWith(nodeName + ":"))
+                {
+                    nodeFound = true;
+                    nodeIndentation = line.TakeWhile(Char.IsWhiteSpace).Count();
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (!nodeFound) continue;
+                var currentIndentation = line.TakeWhile(Char.IsWhiteSpace).Count();
+                if (string.IsNullOrWhiteSpace(line) || currentIndentation <= nodeIndentation) break;
+                stringBuilder.AppendLine(line);
+            }
+        }
+
+        var yamlContent = stringBuilder.ToString();
+        var deserializer = new DeserializerBuilder()
+            .WithNamingConvention(CamelCaseNamingConvention.Instance)
+            .Build();
+        try
+        {
+            return deserializer.Deserialize<YamlContainer<T>>(yamlContent);
+        }
+        catch (Exception)
+        {
+            Console.WriteLine($"Could not deserialize the configuration file, default configuration will be loaded instead\nA template configuration file named default_{typeof(T).Name}.yaml will be created in application root.");
+            return new YamlContainer<T>();
+        }
+        
+    }
     public string SaveChanges<T>(T configuration, string inputFileName = "") where T : new()
     {
         if (configuration is null) return "";
@@ -45,7 +86,6 @@ public class ConfigurationService : IConfigurationService
         File.WriteAllText(fileName, yamlData);
         return fileName;
     }
-
     public void Create<T>(T configuration, string fullFileName) where T : new()
     {
         if (configuration is null) return;
@@ -67,9 +107,8 @@ public class ConfigurationService : IConfigurationService
     public YamlContainer<T> GetAppDataConfiguration<T>(string inputFileName = "") where T : new()
     {
         var directory = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\{nameof(PowerCommands)}";
-        if (!Directory.Exists(directory)) Directory.CreateDirectory(directory);
         var fileName = Path.Combine(directory, inputFileName);
-        if (!File.Exists(fileName)) throw new FileNotFoundException($"Could not find file {fileName}");
+        if (!File.Exists(fileName)) return new YamlContainer<T>();
         var yamlContent = File.ReadAllText(fileName);
         var deserializer = new DeserializerBuilder()
             .WithNamingConvention(CamelCaseNamingConvention.Instance)

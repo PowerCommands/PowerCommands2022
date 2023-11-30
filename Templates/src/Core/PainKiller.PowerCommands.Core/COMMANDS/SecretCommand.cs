@@ -39,16 +39,16 @@ public class SecretCommand : CommandBase<CommandsConfiguration>
     }
     private RunResult Salt()
     {
-        Console.WriteLine(IEncryptionService.GetRandomSalt());
+        Console.WriteLine(AESEncryptionManager.GetStrongRandomString());
         return Ok();
     }
 
     private RunResult Init()
     {
-        var firstHalf = IEncryptionService.GetRandomSalt(); 
-        var secondHalf = IEncryptionService.GetRandomSalt(); 
-        Environment.SetEnvironmentVariable("_encryptionManager", firstHalf, EnvironmentVariableTarget.User);
-        var securityConfig = new SecurityConfiguration { Encryption = new EncryptionConfiguration { SharedSecretEnvironmentKey = "_encryptionManager", SharedSecretSalt = secondHalf } };
+        var sharedSecret = AESEncryptionManager.GetStrongRandomString();
+        var salt = AESEncryptionManager.GetStrongRandomString(desiredByteLength: 16); 
+        Environment.SetEnvironmentVariable("_encryptionManager", sharedSecret, EnvironmentVariableTarget.User);
+        var securityConfig = new SecurityConfiguration { Encryption = new EncryptionConfiguration { SharedSecretEnvironmentKey = "_encryptionManager", SharedSecretSalt = salt } };
         var fileName = Path.Combine(ConfigurationGlobals.ApplicationDataFolder, ConfigurationGlobals.SecurityFileName);
         ConfigurationService.Service.Create(securityConfig, fileName);
         WriteSuccessLine($"File {fileName} saved OK, you will need to restart the application before the changes take effect.");

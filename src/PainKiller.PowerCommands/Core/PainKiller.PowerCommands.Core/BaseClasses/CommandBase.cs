@@ -2,24 +2,20 @@
 using Microsoft.Extensions.Logging;
 
 namespace PainKiller.PowerCommands.Core.BaseClasses;
-public abstract class CommandBase<TConfig> : IConsoleCommand, IConsoleWriter where TConfig : new()
+public abstract class CommandBase<TConfig>(string identifier, TConfig configuration, IConsoleService? console = null) : IConsoleCommand, IConsoleWriter
+    where TConfig : new()
 {
-    private IConsoleService _console;
+    private IConsoleService _console = console ?? ConsoleService.Service;
     protected ICommandLineInput Input = new CommandLineInput();
     protected List<PowerOption> Options = new();
     private readonly StringBuilder _ouput = new();
     protected string LastReadLine = "";
-    protected CommandBase(string identifier, TConfig configuration, IConsoleService? console = null)
-    {
-        Identifier = identifier;
-        Configuration = configuration;
-        _console = console ?? ConsoleService.Service;
-    }
+
     protected virtual void ConsoleWriteToOutput(string output)
     {
         if (AppendToOutput) _ouput.Append(output);
     }
-    public string Identifier { get; }
+    public string Identifier { get; } = identifier;
     protected bool AppendToOutput { get; set; } = true;
     protected PowerCommandDesignAttribute? DesignAttribute { get; private set; }
     public virtual bool InitializeAndValidateInput(ICommandLineInput input, PowerCommandDesignAttribute? designAttribute = null)
@@ -30,7 +26,7 @@ public abstract class CommandBase<TConfig> : IConsoleCommand, IConsoleWriter whe
         Input = input;
         DesignAttribute = designAttribute;
         IPowerCommandServices.DefaultInstance.Diagnostic.ShowElapsedTime = DesignAttribute.ShowElapsedTime.GetValueOrDefault();
-        var validationManager = new InputValidationManager(this, input, WriteError);
+        var validationManager = new InputValidationManager(this, input);
         var result = validationManager.ValidateAndInitialize();
         if (result.Options.Count > 0) Options.AddRange(result.Options);
         _console.WriteToOutput += ConsoleWriteToOutput;
@@ -41,10 +37,13 @@ public abstract class CommandBase<TConfig> : IConsoleCommand, IConsoleWriter whe
         _console.WriteToOutput -= ConsoleWriteToOutput;
         if (IPowerCommandServices.DefaultInstance!.DefaultConsoleService.GetType().Name != ConsoleService.Service.GetType().Name) Console.WriteLine(_ouput.ToString());
         _ouput.Clear();
+        if (!Input.Options.Contains("--pc_force_quit")) return;
+        WriteLine("--pc_force_quit was provided from command line, program will now quit");
+        Environment.Exit(Environment.ExitCode);
     }
     public virtual RunResult Run() => throw new NotImplementedException();
     public virtual async Task<RunResult> RunAsync() => await Task.FromResult(new RunResult(this, Input, "", RunResultStatus.Initializing));
-    protected TConfig Configuration { get; set; }
+    protected TConfig Configuration { get; set; } = configuration;
 
     /// <summary>
     /// Disable log of severity levels Trace,Debug and Information.
@@ -73,7 +72,7 @@ public abstract class CommandBase<TConfig> : IConsoleCommand, IConsoleWriter whe
     protected RunResult Ok(string message) => new(this, Input, $"{message} {_ouput}", RunResultStatus.Ok);
     protected RunResult Ok() => Ok(_ouput.ToString());
     protected RunResult Quit() => Quit(_ouput.ToString());
-    protected RunResult Quit(string message) => new(this, Input, $"{message} {_ouput}", RunResultStatus.Ok);
+    protected RunResult Quit(string message) => new(this, Input, $"{message} {_ouput}", RunResultStatus.Quit);
     protected RunResult BadParameterError(string output) => new(this, Input, output, RunResultStatus.ArgumentError);
     protected RunResult ExceptionError(string output) => new(this, Input, output, RunResultStatus.ExceptionThrown);
     protected RunResult ContinueWith(string rawInput) => new(this, Input, _ouput.ToString(), RunResultStatus.ExceptionThrown, rawInput);

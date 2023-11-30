@@ -5,12 +5,8 @@
 		<LangVersion>12.0</LangVersion>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
-		<Version>1.0.3.0</Version>
-	</PropertyGroup>
-
-	<ItemGroup>
-		<Compile Remove="Commands\Templates\DefaultCommand.cs" />
-	</ItemGroup>
+		<Version>1.0.3.1</Version>
+	</PropertyGroup>	
 
 	<ItemGroup>
 		<ProjectReference Include="..\Core\PainKiller.PowerCommands.Configuration\PainKiller.PowerCommands.Configuration.csproj" />
@@ -28,10 +24,5 @@
 		<None Update="PowerCommandsConfiguration.yaml">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
-	</ItemGroup>
-
-	<ItemGroup>
-		<None Include="Commands\Templates\DefaultCommand.cs" />
-	</ItemGroup>
-
+	</ItemGroup>	
 </Project>

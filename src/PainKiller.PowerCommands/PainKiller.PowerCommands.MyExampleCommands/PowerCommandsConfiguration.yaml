@@ -1,17 +1,17 @@
 ﻿version: 1.0
 configuration:
-  showDiagnosticInformation: false
+  showDiagnosticInformation: false  
   defaultCommand: commands
   codeEditor: C:\Users\%USERNAME%\AppData\Local\Programs\Microsoft VS Code\Code.exe
   repository: https://github.com/PowerCommands/PowerCommands2022
   backupPath: ..\..\..\..\..\
-  defaultGitRepositoryPath: C:\repos\github\PowerCommands2022
+  defaultGitRepositoryPath: C:\repos\github\PowerCommands2022  
   commandDesignOverrides:
   - name: demo
     description: "Demo command just to try out how you could use the input, do not forget the MANDATORY option, will trigger a validation error otherwise! ;-)\n That is because the option name is typed with UPPERCASE letters, useful when you want a mandatory option\n The pause option on the other hand starts with a ! symbol meaning that if you add the --pause option you must also give it a value, an integer in this case."
-    arguments: "!<url>"
-    quotes: "!<local file path>"    
-    options: "!MANDATORY|!pause"
+    arguments: "<url>"
+    quotes: "<local file path>"    
+    options: "MANDATORY|!pause"
     examples: "//Must provide the MANDATORY option, will trigger a validation error otherwise|demo MANDATORY|//Test the pause service|demo --pause 5 MANDATORY"
     suggestions: ""
     useAsync: true
@@ -22,7 +22,7 @@ configuration:
     - label: "[Type ->]"
       color: "Cyan"
     - label: "demo"
-      color: "DarkGreen"
+      color: "DarkGreen"  
   metadata:
     name: Test
     description: En exempelbeskrivning

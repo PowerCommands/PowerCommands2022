@@ -63,6 +63,7 @@
           <ProjectItem ReplaceParameters="true" TargetFileName="ProxyPowerCommandConfiguration.cs">ProxyPowerCommandConfiguration.cs</ProjectItem>
           <ProjectItem ReplaceParameters="true" TargetFileName="SecretConfiguration.cs">SecretConfiguration.cs</ProjectItem>
           <ProjectItem ReplaceParameters="true" TargetFileName="SecretItemConfiguration.cs">SecretItemConfiguration.cs</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="SetupConfiguration.cs">SetupConfiguration.cs</ProjectItem>
         </Folder>
         <Folder Name="Core" TargetFolderName="Core">
           <ProjectItem ReplaceParameters="true" TargetFileName="CommandLineInput.cs">CommandLineInput.cs</ProjectItem>

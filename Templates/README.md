@@ -16,6 +16,13 @@ I recommend you to use the option ```Place solution in the same directory``` som
 ![Alt text](../Docs/images/VS_solution_option.png?raw=true "Command Base")
 
 # What is new?
+## Version 1.0.3.1
+**Released 2023-11-30**
+- Adjusted the Power Command to use be run with a service account and use encryption, update the setup to reflect this.
+- Added general option --pc_force_quit in CommandBase to be used with any command to force application to quit.
+- Improved encryption
+- Bug fix DialogService.ListDialog now handles 0 input more gracefully
+- Bug fix CommandBase now return RunResultStatus.Quit when using Quit()
 ## Version 1.0.3.0
 **Released 2023-11-18**
 - Updated to .NET 8

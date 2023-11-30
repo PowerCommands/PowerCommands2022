@@ -1,4 +1,6 @@
 ﻿using PainKiller.PowerCommands.Configuration.DomainObjects;
+using YamlDotNet.Serialization.NamingConventions;
+using YamlDotNet.Serialization;
 
 namespace PainKiller.PowerCommands.Configuration.Extensions;
 
@@ -15,4 +17,11 @@ public static class ConfigurationExtension
         return Path.Combine(ReplaceTags(paths[0], configuration.Name), ReplaceTags(paths[1], configuration.Name), ReplaceTags(paths[2], configuration.Name));
     }
     private static string ReplaceTags(string raw, string name) => raw.Replace("{appdata}", AppContext.BaseDirectory).Replace("{name}", name);
+    public static string GetYaml<T>(this T configuration) where T : new()
+    {
+        var serializer = new SerializerBuilder()
+            .WithNamingConvention(CamelCaseNamingConvention.Instance)
+            .Build();
+        return serializer.Serialize(configuration);
+    }
 }

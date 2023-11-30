@@ -5,7 +5,7 @@
 		<LangVersion>12.0</LangVersion>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
-		<Version>1.0.3.0</Version>
+		<Version>1.0.3.1</Version>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -32,6 +32,10 @@
 
 	<ItemGroup>
 		<None Include="Commands\Templates\DefaultCommand.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Properties\" />
 	</ItemGroup>
 
 </Project>

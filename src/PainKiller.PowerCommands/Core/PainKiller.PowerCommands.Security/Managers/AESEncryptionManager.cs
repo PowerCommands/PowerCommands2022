@@ -3,11 +3,17 @@ using PainKiller.PowerCommands.Security.Contracts;
 
 namespace PainKiller.PowerCommands.Security.Managers;
 
-public class AESEncryptionManager : IEncryptionManager
+public class AESEncryptionManager(string salt, int keySize, int iterationsCount) : IEncryptionManager
 {
-    private readonly byte[] _saltBytes;
+    public const int MinimumKeySize = 256;
+    public const int MinimumIterationCount = 10000;
 
-    public AESEncryptionManager(string salt) => _saltBytes = Convert.FromBase64String(salt);
+    private readonly int _keySize = keySize < MinimumKeySize ? MinimumKeySize: keySize;
+    private readonly byte[] _saltBytes = Convert.FromBase64String(salt);
+    private readonly int _iterationsCount = iterationsCount < MinimumIterationCount ? MinimumIterationCount: iterationsCount;
+
+    public AESEncryptionManager(string salt): this(salt, keySize: MinimumKeySize, MinimumIterationCount) { }
+    public AESEncryptionManager(string salt, int keySize): this(salt, keySize: keySize, iterationsCount: MinimumIterationCount) { }
 
     /// <summary>
     ///     Encrypt the given string using AES.  The string can be decrypted using
@@ -23,20 +29,21 @@ public class AESEncryptionManager : IEncryptionManager
             throw new ArgumentNullException(nameof(sharedSecret));
 
         string outStr; // Encrypted string to return
-        using var aesAlg = Aes.Create(); 
+        using var aesAlg = Aes.Create();
+        aesAlg.KeySize = _keySize;
         try
         {
-            var key = new Rfc2898DeriveBytes(sharedSecret, _saltBytes, iterations: 1000, HashAlgorithmName.SHA1);
+            var key = new Rfc2898DeriveBytes(sharedSecret, _saltBytes, iterations: _iterationsCount, HashAlgorithmName.SHA256);
             aesAlg.Key = key.GetBytes(aesAlg.KeySize / 8);
             aesAlg.Mode = CipherMode.CBC;
 
-            var encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
+            var encryption = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
 
             using var msEncrypt = new MemoryStream();
-            
+           
             msEncrypt.Write(BitConverter.GetBytes(aesAlg.IV.Length), 0, sizeof(int));
             msEncrypt.Write(aesAlg.IV, 0, aesAlg.IV.Length);
-            using (var csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write))
+            using (var csEncrypt = new CryptoStream(msEncrypt, encryption, CryptoStreamMode.Write))
             {
                 using var swEncrypt = new StreamWriter(csEncrypt);
                 //Write all data to the stream.
@@ -65,12 +72,13 @@ public class AESEncryptionManager : IEncryptionManager
             throw new ArgumentNullException(nameof(sharedSecret));
 
         var aesAlg = Aes.Create();
+        aesAlg.KeySize = _keySize;
 
         string plaintext;
         try
         {
             // generate the key from the shared secret and the salt
-            var key = new Rfc2898DeriveBytes(sharedSecret, _saltBytes, iterations: 1000, HashAlgorithmName.SHA1);
+            var key = new Rfc2898DeriveBytes(sharedSecret, _saltBytes, iterations: _iterationsCount, HashAlgorithmName.SHA256);
 
             var bytes = Convert.FromBase64String(cipherText);
             using var msDecrypt = new MemoryStream(bytes);
@@ -78,15 +86,23 @@ public class AESEncryptionManager : IEncryptionManager
             aesAlg.Key = key.GetBytes(aesAlg.KeySize / 8);
             aesAlg.IV = ReadByteArray(msDecrypt);
             aesAlg.Mode = CipherMode.CBC;
-            var decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
-            using var csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read);
+            var decryption = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
+            using var csDecrypt = new CryptoStream(msDecrypt, decryption, CryptoStreamMode.Read);
             using var srDecrypt = new StreamReader(csDecrypt);
             plaintext = srDecrypt.ReadToEnd();
         }
         finally { aesAlg.Clear(); }
         return plaintext;
     }
-
+    public static string GetStrongRandomString(int desiredByteLength = 32)
+    {
+        var byteLength = Math.Max(desiredByteLength, 16);
+        var data = new byte[byteLength];
+        using (var rng = RandomNumberGenerator.Create())
+            rng.GetBytes(data);
+        var base64String = Convert.ToBase64String(data);
+        return base64String;
+    }
     private static byte[] ReadByteArray(Stream s)
     {
         var rawLength = new byte[sizeof(int)];

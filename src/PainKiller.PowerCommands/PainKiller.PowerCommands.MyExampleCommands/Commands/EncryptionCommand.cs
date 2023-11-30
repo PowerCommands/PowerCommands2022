@@ -1,9 +1,9 @@
 ﻿namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
-[PowerCommandTest(tests: "\"my decrypted secret\"|--decrypt EAAAAPv9AsKo6nfHJoFBNmQw9nKZv9PCdLyYhWoJgbovqGQpwY7PmSAkSPO9aagX0kSQyQ==")]
+[PowerCommandTest(tests: "\"my decrypted secret\"|--decrypt EAAAAHYqSRC/lZWEFQRFGDA7wo3UjIKnGgSAMSpN69e/ShsXz0/r75bhQ2KSB5p9dmBOow==")]
 [PowerCommandDesign(  description: "Encrypt or decrypt your input", 
                       options: "decrypt",
-                    example: "//Encrypt something|encryption \"my decrypted secret\"|//Decrypt your encrypted string|encryption --decrypt EAAAAPv9AsKo6nfHJoFBNmQw9nKZv9PCdLyYhWoJgbovqGQpwY7PmSAkSPO9aagX0kSQyQ==")]
+                    example: "//Encrypt something|encryption \"my decrypted secret\"|//Decrypt your encrypted string|encryption --decrypt EAAAAHYqSRC/lZWEFQRFGDA7wo3UjIKnGgSAMSpN69e/ShsXz0/r75bhQ2KSB5p9dmBOow==")]
 public class EncryptionCommand : CommandBase<CommandsConfiguration>
 {
     public EncryptionCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }

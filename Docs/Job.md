@@ -14,12 +14,25 @@ Your PowerCommands application may of course have so other name and your command
 "powercommands.exe job argument1"
 ```
 
-## Run PowerCommand with a service account and use secrets
-If you want to run your PowerCommands application as a Windows scheduled task started by a service accounts that is not allowed to login on the machine, you need to do a couple of steps.
+## What if the command you want to run just once is not designed to quit?
+If the command inherits from the CommandBase class, which most if not all Commands are, you can use the option `--pc_force_quit` to quit the application after the command is finished. If the command is running as async, this could cause unexpected behavior, be aware of that.
 
-- You need to copy the PainKiller directory from your %User%\AppData\Roaming to the corresponding one for the service account. 
-- Copy the environment variable _encryptionManager and create the same as a system environment variable. EncryptionService will look for the system environment variable if the user environment variable is not there. 
-- For your stored secrets you will need to to do the same thing and change target: User to target: Machine in the **PowerCommandsConfiguration.yaml** file.
+## Run PowerCommand with a service account and use secrets
+If you want to run your PowerCommands application as a Windows scheduled task started by a service accounts that is not allowed to login on the machine, you need to do a couple of steps to make sure that the service account user can use the decryption functionality.
+The easy way is to delete the setup.yaml file in the application folder and start your Power Command application again, this will guide you through the setup.
+
+- First answer `y` to the question if you want to setup encryption.
+- Answer `y` to the question that you intend to run your application using a service account.
+- Last you need to update the `PowerCommandsConfiguration.yaml` file with the encryption element.
+
+It could look something like this:
+```
+encryption:
+  sharedSecretEnvironmentKey: '_encryptionManager'
+  sharedSecretSalt: WJtOL/ZgbHwVhbL76JGFyA==
+  iterationCount: 10000
+  keySize: 256
+```
 
 Read more about:
 

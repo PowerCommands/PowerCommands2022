@@ -77,7 +77,7 @@ public static class CommandLineInputInterpreterExtension
         var retVal = indexedInput.Index == indexedInputs.Count ? "" : indexedInputs.First(i => i.Index == indexedInput.Index + 1).Value.Replace("\"","");
         return retVal.StartsWith("--") ? "" : retVal;   //A option could not have a option as it´s value
     }
-    public static bool HasOption(this ICommandLineInput input, string optionName) => input.Options.Any(f => f == $"--{optionName}");
+    public static bool HasOption(this ICommandLineInput input, string optionName) => input.Options.Any(f => f.ToLower() == $"--{optionName}".ToLower());
     public static bool NoOption(this ICommandLineInput input, string optionName) => !HasOption(input, optionName);
     public static bool MustHaveOneOfTheseOptionCheck(this ICommandLineInput input, string[] optionNames) => optionNames.Any(optionName => optionName.ToLower() == optionName);
     public static string FirstOptionWithValue(this ICommandLineInput input) => $"{input.Options.FirstOrDefault(o => !IsNullOrEmpty(o))}".Replace("!", "").Replace("--", "");

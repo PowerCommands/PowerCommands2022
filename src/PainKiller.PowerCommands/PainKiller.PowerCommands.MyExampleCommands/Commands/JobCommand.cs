@@ -16,6 +16,5 @@ public class JobCommand : CommandBase<CommandsConfiguration>
             Console.WriteLine(command.Identifier);
             Thread.Sleep(100);
         }
-        Console.Write($"\nDone!\n{{ConfigurationConstants.Prompt}}");
     }
 }
