@@ -4,7 +4,7 @@ using PainKiller.PowerCommands.Shared.Events;
 namespace $safeprojectname$.Services;
 public class ReflectionService : IReflectionService
 {
-    internal static  List<PowerCommandDesignConfiguration> CommandDesignOverrides { get; private set; } = new();
+    internal static  List<PowerCommandDesignConfiguration> CommandDesignOverrides { get; private set; } = [];
     private ReflectionService() { }
     private static readonly Lazy<IReflectionService> Lazy = new(() => new ReflectionService());
     public static IReflectionService Service => Lazy.Value;

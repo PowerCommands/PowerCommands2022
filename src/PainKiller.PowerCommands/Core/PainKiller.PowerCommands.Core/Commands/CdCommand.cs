@@ -65,6 +65,7 @@ public class CdCommand : CommandBase<CommandsConfiguration>, IWorkingDirectoryCh
             if(!string.IsNullOrEmpty(dir)) paths.Add(dir);
             path = string.Join(Path.DirectorySeparatorChar, paths);
         }
+        path = path.Replace("%USERNAME%", Environment.UserName, StringComparison.CurrentCultureIgnoreCase);
         if (path.Contains("$ROAMING$")) path = path.Replace("$ROAMING$", ConfigurationGlobals.ApplicationDataFolder);
         if (Directory.Exists(path)) WorkingDirectory = $"{Path.GetFullPath(path)}";
         else WriteFailureLine($"[{path}] does not exist");

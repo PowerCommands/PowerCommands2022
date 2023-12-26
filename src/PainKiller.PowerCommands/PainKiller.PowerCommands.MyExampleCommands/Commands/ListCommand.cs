@@ -2,13 +2,11 @@ namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
 [PowerCommandDesign( description: "A demo of the DialogService.List.",
                          example: "list")]
-public class ListCommand : CommandBase<PowerCommandsConfiguration>
+public class ListCommand(string identifier, PowerCommandsConfiguration configuration) : CommandBase<PowerCommandsConfiguration>(identifier, configuration)
 {
-    public ListCommand(string identifier, PowerCommandsConfiguration configuration) : base(identifier, configuration) { }
-
     public override RunResult Run()
     {
-        var selectedItems = DialogService.ListDialog("Which teams participated in the Stanley Cup final season 2022/23?", new() { "New York Rangers", "Colorado Avalanche", "Vegas Knights", "Pittsburgh Penguins", "Florida Panthers", "Detroit Red Wings", "Toronto Maple Leafs" }, multiSelect: true);
+        var selectedItems = ListService.ListDialog("Which teams participated in the Stanley Cup final season 2022/23?", new() { "New York Rangers", "Colorado Avalanche", "Vegas Knights", "Pittsburgh Penguins", "Florida Panthers", "Detroit Red Wings", "Toronto Maple Leafs" }, multiSelect: true);
         WriteHeadLine("You selected");
         foreach (var item in selectedItems) WriteLine(item.Value);
         if (selectedItems.Count == 2 && selectedItems.Any(t => t.Value == "Vegas Knights") && selectedItems.Any(t => t.Value == "Florida Panthers"))

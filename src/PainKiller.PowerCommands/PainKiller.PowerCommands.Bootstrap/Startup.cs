@@ -48,7 +48,7 @@ public static class Startup
             var salt = AESEncryptionManager.GetStrongRandomString(desiredByteLength: 16);
 
             Environment.SetEnvironmentVariable("_encryptionManager", sharedSecret, serviceAccountUse ? EnvironmentVariableTarget.Machine : EnvironmentVariableTarget.User);
-            var securityConfig = new SecurityConfiguration { Encryption = new EncryptionConfiguration { SharedSecretEnvironmentKey = ConfigurationGlobals.EncryptionEnviromentVariableName, SharedSecretSalt = salt } };
+            var securityConfig = new SecurityConfiguration { Encryption = new EncryptionConfiguration { SharedSecretEnvironmentKey = ConfigurationGlobals.EncryptionEnvironmentVariableName, SharedSecretSalt = salt } };
             var fileName = Path.Combine(ConfigurationGlobals.ApplicationDataFolder, ConfigurationGlobals.SecurityFileName);
             if (serviceAccountUse)
             {

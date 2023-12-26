@@ -56,7 +56,7 @@
           <ProjectItem ReplaceParameters="true" TargetFileName="BookmarkItemConfiguration.cs">BookmarkItemConfiguration.cs</ProjectItem>
           <ProjectItem ReplaceParameters="true" TargetFileName="CommandsConfiguration.cs">CommandsConfiguration.cs</ProjectItem>
           <ProjectItem ReplaceParameters="true" TargetFileName="EnvironmentConfiguration.cs">EnvironmentConfiguration.cs</ProjectItem>
-          <ProjectItem ReplaceParameters="true" TargetFileName="EnvironmentItemConfiguration.cs">EnvironmentItemConfiguration.cs</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="EnvironmentItemConfiguration.cs">EnvironmentItemConfiguration.cs</ProjectItem>          
           <ProjectItem ReplaceParameters="true" TargetFileName="LogComponentConfiguration.cs">LogComponentConfiguration.cs</ProjectItem>
           <ProjectItem ReplaceParameters="true" TargetFileName="Metadata.cs">Metadata.cs</ProjectItem>
           <ProjectItem ReplaceParameters="true" TargetFileName="PowerCommandDesignConfiguration.cs">PowerCommandDesignConfiguration.cs</ProjectItem>
@@ -70,6 +70,7 @@
           <ProjectItem ReplaceParameters="true" TargetFileName="CommandTestItem.cs">CommandTestItem.cs</ProjectItem>
           <ProjectItem ReplaceParameters="true" TargetFileName="CommandTestReport.cs">CommandTestReport.cs</ProjectItem>
           <ProjectItem ReplaceParameters="true" TargetFileName="InputValidationResult.cs">InputValidationResult.cs</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="ListDialogItem.cs">ListDialogItem.cs</ProjectItem>
           <ProjectItem ReplaceParameters="true" TargetFileName="PowerOption.cs">PowerOption.cs</ProjectItem>
           <ProjectItem ReplaceParameters="true" TargetFileName="ProxyResult.cs">ProxyResult.cs</ProjectItem>
           <ProjectItem ReplaceParameters="true" TargetFileName="RunResult.cs">RunResult.cs</ProjectItem>

@@ -3,6 +3,13 @@ You could see PowerCommands as your CLI application starter kit. It is a structu
 
 [Follow progress on twitter](https://twitter.com/PowerCommands) <img src="https://github.com/PowerCommands/PowerCommands2022/blob/main/Docs/images/Twitter.png?raw=true" alt="drawing" width="20"/>
 
+## Version 1.0.3.2
+**Released 2023-12-26**
+- `DialogService.ListDialog` has major improvements with paging and select all functionality and have been moved to a new service, named `ListService`.
+- `ProxyCommand` now handles suggestion overrides in configuration.
+- `ConsoleTableService.RenderTable` generic constraint new() removed since it is not needed.
+- Bookmarks in `CdCommand` now handles `%USERNAME%` as a placeholder for current user in paths. 
+
 ## Version 1.0.3.1
 **Released 2023-11-30**
 - Adjusted the Power Command to be run with a service account and use encryption, update the setup to reflect this.

@@ -4,12 +4,12 @@ namespace $safeprojectname$.Services;
 public static class ConsoleTableService
 {
     private static readonly Dictionary<string, IEnumerable<IColumnRender>> TableColumnRenderDefinitions = new();
-    public static void RenderTable<T>(IEnumerable<T> items, IConsoleWriter consoleWriter) where T : new()
+    public static void RenderTable<T>(IEnumerable<T> items, IConsoleWriter consoleWriter)
     {
         var tableItems = items.ToArray();
         if (!tableItems.Any()) return;
         var rows = ConsoleTable
-            .From<T>(tableItems)
+            .From(tableItems)
             .Configure(o => o.NumberAlignment = Alignment.Right)
             .Read(WriteFormat.Alternative).Split("\r\n");
         RenderConsoleTable(rows, consoleWriter);
@@ -25,7 +25,7 @@ public static class ConsoleTableService
             return;
         }
         var rows = ConsoleTable
-            .From<T>(tableItems)
+            .From(tableItems)
             .Configure(o => o.NumberAlignment = Alignment.Right)
             .Read(WriteFormat.Alternative).Split("\r\n");
         RenderConsoleTable(rows, consoleWriter);
@@ -64,7 +64,7 @@ public static class ConsoleTableService
     private static void RenderTable<T>(IEnumerable<T> tableData, ColumnRenderOptionsAttribute[] columnRenderDefinitions, IConsoleWriter consoleWriter)
     {
         var rows = ConsoleTable
-            .From<T>(tableData)
+            .From(tableData)
             .Configure(o => o.NumberAlignment = Alignment.Right)
             .Read(WriteFormat.Alternative).Split("\r\n");
 

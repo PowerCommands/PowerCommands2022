@@ -30,7 +30,11 @@ public class PowerCommandsRuntime<TConfig> : IPowerCommandsRuntime where TConfig
                 var identifierAlias = command.Contains($"|") ? identifiers[1] : identifier;
                 ConsoleService.Service.WriteLine("PowerCommandsRuntime", $"Proxy command [{identifierAlias}] added");
                 var powerCommand = new ProxyCommando(identifier, _configuration, proxyCommand.Name, proxyCommand.WorkingDirctory, identifierAlias);
-                SuggestionProviderManager.AddContextBoundSuggestions(identifierAlias, new[] { "--retry-interval-seconds", "--no-quit","--help" });
+                
+                var suggestions = new List<string>{"--retry-interval-seconds", "--no-quit","--help" };
+                var commandDesignOverrides = _configuration.CommandDesignOverrides.FirstOrDefault(c => c.Name == identifier);
+                if (commandDesignOverrides != null) suggestions.AddRange(commandDesignOverrides.Suggestions.Split('|'));
+                SuggestionProviderManager.AddContextBoundSuggestions(identifierAlias, suggestions.ToArray());
                 if(Commands.All(c => c.Identifier != powerCommand.Identifier)) Commands.Add(powerCommand);
                 else ConsoleService.Service.WriteWarning("PowerCommandsRuntime", $"A command with the same identifier [{command}] already exist, proxy command not added.");
             }

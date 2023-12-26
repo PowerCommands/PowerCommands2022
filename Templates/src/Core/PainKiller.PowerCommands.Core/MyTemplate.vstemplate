@@ -68,6 +68,7 @@
         <ProjectItem ReplaceParameters="true" TargetFileName="HelpService.cs">HelpService.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="HtmlConsoleService.cs">HtmlConsoleService.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="IOService.cs">IOService.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="ListService.cs">ListService.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="PauseService.cs">PauseService.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="ReflectionService.cs">ReflectionService.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="ShellService.cs">ShellService.cs</ProjectItem>
