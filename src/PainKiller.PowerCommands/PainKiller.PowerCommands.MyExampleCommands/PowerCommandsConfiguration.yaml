@@ -14,7 +14,7 @@ configuration:
     options: "MANDATORY|!pause"
     examples: "//Must provide the MANDATORY option, will trigger a validation error otherwise|demo MANDATORY|//Test the pause service|demo --pause 5 MANDATORY"
     suggestions: ""
-    useAsync: true
+    useAsync: false
     showElapsedTime: false
   startupToolbar:
     hideToolbarOption: OnCommandHighlighted
