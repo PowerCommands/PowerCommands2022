@@ -3,10 +3,8 @@
 [PowerCommandDesign(description: "List the content of the working directory or this applications app directory, with the option to open the directory with the File explorer ",
     options: "open|app",
     example: "//List the content and open the current working directory|dir --open|//Open the AppData roaming directory|dir --app --open")]
-public class DirCommand : CommandBase<CommandsConfiguration>
+public class DirCommand(string identifier, CommandsConfiguration configuration) : CommandBase<CommandsConfiguration>(identifier, configuration)
 {
-    public DirCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
-
     public override RunResult Run()
     {
         var directory = Input.HasOption("app") ? ConfigurationGlobals.ApplicationDataFolder : CdCommand.WorkingDirectory;

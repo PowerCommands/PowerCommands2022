@@ -7,10 +7,10 @@
                            quotes: "<path>",
                disableProxyOutput: true,
                           example: "//create new VS solution|powercommand new --solution testproject --output \"C:\\Temp\\\"|//Create new PowerCommand named Demo|powercommand new --command Demo|//Update powercommands core, this will first delete current Core projects and than apply the new Core projects|powercommand update|//Only update template(s)|powercommand update --templates|//Update with backup|powercommand update --backup|//Create a new command|powercommand new --command MyNewCommand")]
-public class PowerCommandCommand : CommandBase<CommandsConfiguration>
+public class PowerCommandCommand(string identifier, CommandsConfiguration configuration) : CommandBase<CommandsConfiguration>(identifier, configuration)
 {
     private readonly ArtifactPathsConfiguration _artifact = ConfigurationService.Service.Get<ArtifactPathsConfiguration>().Configuration;
-    public PowerCommandCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
+
     public override RunResult Run()
     {
         var name = Input.HasOption("solution") ? Input.GetOptionValue("solution") : Input.GetOptionValue("template");

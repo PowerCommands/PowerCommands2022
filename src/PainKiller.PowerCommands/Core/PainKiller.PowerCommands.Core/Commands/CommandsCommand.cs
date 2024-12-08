@@ -6,10 +6,8 @@
                          options: "this|reserved|default|!update|add-proxy",
               disableProxyOutput: true,
                          example: "//Show all commands|commands|//Show your custom commands|commands --this|//Show reserved commands|commands --reserved|//Search for commands matching \"encrypt\"|commands \"encrypt\"|//Show default command|commands --default|//Update the dir command (command must exist in the configured PowerCommands project)|commands --update dir|//Add a proxy|commands --add-proxy")]
-public class CommandsCommand : CommandBase<CommandsConfiguration>
+public class CommandsCommand(string identifier, CommandsConfiguration configuration) : CommandBase<CommandsConfiguration>(identifier, configuration)
 {
-    public CommandsCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
-
     public override RunResult Run()
     {
         Input.DoBadOptionCheck(this);

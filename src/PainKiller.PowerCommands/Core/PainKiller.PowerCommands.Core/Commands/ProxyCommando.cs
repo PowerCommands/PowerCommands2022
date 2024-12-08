@@ -4,27 +4,16 @@
                               options: "retry-interval-seconds|no-quit",
                               example: "//Use the retry-interval-seconds option to decide how long pause it should be between retries|//\nUse the --no-quit option to tell the proxy application to not quit after the command is run.",
                    disableProxyOutput: true)]
-public class ProxyCommando : CommandBase<CommandsConfiguration>
+public class ProxyCommando(string identifier, CommandsConfiguration configuration, string name, string workingDirectory, string aliasName)
+    : CommandBase<CommandsConfiguration>(string.IsNullOrEmpty(aliasName) ? identifier : aliasName, configuration)
 {
-    private readonly string _name;
-    private readonly string _workingDirctory;
-    private readonly string _aliasName;
-    private readonly string _identifier;
-
-    public ProxyCommando(string identifier, CommandsConfiguration configuration, string name, string workingDirectory, string aliasName) : base(string.IsNullOrEmpty(aliasName) ? identifier : aliasName, configuration)
-    {
-        _identifier = identifier;
-        _name = name;
-        _workingDirctory = workingDirectory;
-        _aliasName = aliasName;
-    }
     public override RunResult Run()
     {
         WriteProcessLog("Proxy", $"{Input.Raw}");
-        var input = (Identifier == _identifier) ? Input.Raw.Interpret(Configuration.DefaultCommand) : Input.Raw.Replace(_aliasName, _identifier).Interpret(Configuration.DefaultCommand);
+        var input = (Identifier == identifier) ? Input.Raw.Interpret(Configuration.DefaultCommand) : Input.Raw.Replace(aliasName, identifier).Interpret(Configuration.DefaultCommand);
         var start = DateTime.Now;
         var quitOption = Input.HasOption("no-quit") ? "" : " --justRunOnceThenQuitPowerCommand";
-        ShellService.Service.Execute(_name, $"{input.Raw}{quitOption}", _workingDirctory, WriteLine, useShellExecute: true);
+        ShellService.Service.Execute(name, $"{input.Raw}{quitOption}", workingDirectory, WriteLine, useShellExecute: true);
         
         var retries = 0;
         var maxRetries = 10;
@@ -48,5 +37,5 @@ public class ProxyCommando : CommandBase<CommandsConfiguration>
         }
         return Ok();
     }
-    private string GetOutputFilename() => Path.Combine(ConfigurationGlobals.ApplicationDataFolder, $"proxy_{_identifier}.data");
+    private string GetOutputFilename() => Path.Combine(ConfigurationGlobals.ApplicationDataFolder, $"proxy_{identifier}.data");
 }

@@ -5,11 +5,11 @@
                         options: "bookmark|roaming",
              disableProxyOutput: true,
                         example: "//View current working directory|cd|//Traverse down one directory|//Change working directory|cd ..|cd \"C:\\ProgramData\"|//Set bookmark as the working directory using name|cd --bookmark program|//Set bookmark as the working directory using index|cd --bookmark 0|//Set first existing bookmark (if any) as working directory|cd --bookmark")]
-public class CdCommand : CommandBase<CommandsConfiguration>, IWorkingDirectoryChangesListener
+public class CdCommand(string identifier, CommandsConfiguration configuration) : CommandBase<CommandsConfiguration>(identifier, configuration), IWorkingDirectoryChangesListener
 {
     public static string WorkingDirectory = AppContext.BaseDirectory;
     public static Action<string[], string[]>? WorkingDirectoryChanged;
-    public CdCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
+
     public override RunResult Run()
     {
         var path = WorkingDirectory;

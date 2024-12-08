@@ -6,10 +6,8 @@
                      suggestions: "view|archive",
                disableProxyOutput: true,
                           example: "//View a list with all the logfiles|log|//Archive the logs into a zip file.|log archive|//View content of the current log|log view|//Filter the log show only posts matching the provided process tag, this requires that you are using process tags when logging in your command(s).|log --process created")]
-public class LogCommand : CommandBase<CommandsConfiguration>
+public class LogCommand(string identifier, CommandsConfiguration configuration) : CommandBase<CommandsConfiguration>(identifier, configuration)
 {
-    public LogCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
-
     public override RunResult Run()
     {
         if (Input.Options.Length == 0) List();
