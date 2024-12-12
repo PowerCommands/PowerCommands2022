@@ -108,7 +108,7 @@ Read more about:
 
 [Configuration (see example on how you can add your bookmarks)](Configuration.md)
 
-[Chain command execution)](ChainCommands.md)
+[Chain command execution](ChainCommands.md)
 
 [Input](Input.md)
 

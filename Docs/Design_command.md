@@ -143,12 +143,13 @@ public class ConvertCommand(string identifier, PowerCommandsConfiguration config
 ![Alt text](images/convert_sample.png?raw=true "Describe convert command")
 
 ### User wants to write the converted output to file
-You could add this to the ConvertCommand class but... you do not have to do that, PowerCommands support to call a second command on the same commandline and that second command can handle the output from the "calling" command, so if you want the output that is displayed in the console by the ConvertCommand to be written to file you could write this in the console and use the existing `file` command, you need to specify a target file to the `file` command with the option flag `--target` like this:
+You could add this to the ConvertCommand class but you do not have to do that, PowerCommands support to call a second command on the same commandline and that second command can handle the output from the "calling" command, so if you want the output that is displayed in the console by the ConvertCommand to be written to file you could write this in the console and use the existing `file` command, you need to specify a target file to the `file` command with the option flag `--target` like this:
 
 ```convert PowerCommandsConfiguration.yaml --format json | file --target "PowerCommandsConfiguration.json"```
 
 This will write a file named **PowerCommandsConfiguration.json** in the current working directory.
 
+If you want to design a Command that wants to process output from a calling command, you can use the | functionality, read more about [Chain command execution](ChainCommands.md).
 
 ## Must I use the PowerCommandDesign attribute on every command I create?
 No that is not mandatory but it is recommended, note that when you declare the [Options](Options.md), they will be available for code completion, which means that when the consumer types - and hit the tab button the user will can se what options there are that could be used, with a simple ! character you tell that the argument, quote, option or secret is required and then the Core runtime will validate that automatically for you.
@@ -160,7 +161,7 @@ Next step is to understand the [Power Commands Design attribute](PowerCommandDes
 
 Read more about:
 
-[Chain command execution)](ChainCommands.md)
+[Chain command execution](ChainCommands.md)
 
 [Read and write files with FileCommand](ReadWriteFileHandler.md)
 
