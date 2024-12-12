@@ -7,7 +7,7 @@ The code below shows an example on how it could be used, in this case I first ru
 ![Alt text](images/pipe_call.png?raw=true "Chain of commands")
 
 ## Handling the output from the previous command
-The target command must implement code to work as a target command, let´s take a look on how this is implemented in the FileCommand class.
+If the target command needs the output from the calling command the target command must implement code pickup the output, let´s take a look on how this is implemented in the FileCommand class.
 
 ![Alt text](images/file_command.png?raw=true "Handling the output from the previous command")
 
