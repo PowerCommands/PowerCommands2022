@@ -40,28 +40,6 @@ This will also work.
 
 ```version version.txt | file```
 
-## DirCommand
-![Alt text](images/dir_and_file_command.png?raw=true "Dir commands")
-
-Show the content in current working directory
-
-```dir```
-
-Add a filter and show only the content in current working directory that matches the filter
-
-```dir --filter .txt```
-
-Show the content in current working directory and browse the directory in the file browser.
-
-```dir --browse```
-
-Show info about the available drives on your system
-
-```dir --drive-info```
-
-Dir also have som nice features that also CdCommand has, as it inherits that command, but that is undocumented as it is unintentional features.
-You could for example change the current working directory by writing ```dir directory-name```
-
 ## CdCommand
 
 You use the cd command pretty much as you would use it in a standard Windows console.
@@ -85,6 +63,46 @@ Change directory to a special directory using a option flag, the special directo
 ```cd --roaming```
 
 This will change working directory to the application roaming directory for PowerCommands.
+
+### Inherit CdCommand to add file/dir code completion
+If you are design a command that will handle files or directories you may want to help the user with code completion, you can implement this easily just inherit the CdCommand and then your Command will support just that!
+The Command below wil handle navigation trough files and directories (in current working folder) just using tab.
+```
+[PowerCommandDesign(description: "Run commands that supports pipe functionality.",
+                        example: "//First run this command and then the version command|version [PIPE] pipe")]
+public class BrowseCommand(string identifier, PowerCommandsConfiguration configuration) : CdCommand(identifier, configuration)
+{
+    public override RunResult Run()
+    {
+        var fileName = Input.SingleArgument;
+        WriteLine(fileName);
+        return Ok();;
+    }
+}
+```
+
+
+## DirCommand
+![Alt text](images/dir_and_file_command.png?raw=true "Dir commands")
+
+Show the content in current working directory
+
+```dir```
+
+Add a filter and show only the content in current working directory that matches the filter
+
+```dir --filter .txt```
+
+Show the content in current working directory and browse the directory in the file browser.
+
+```dir --browse```
+
+Show info about the available drives on your system
+
+```dir --drive-info```
+
+Dir also have som nice features that also CdCommand has, as it inherits that command, but that is undocumented as it is unintentional features.
+You could for example change the current working directory by writing ```dir directory-name```
 
 Read more about:
 

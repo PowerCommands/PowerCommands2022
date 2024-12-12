@@ -94,7 +94,24 @@ public class ConvertCommand : CommandBase<PowerCommandsConfiguration>
     }
 }
 ```
-### **Please Note** that the name of the arguments in the design attribute is not important in code, it is useful thou when help about the command is displayed. Suggestions is what it sounds like only suggestions to guide the user to the right input.
+**Please Note** that the name of the arguments in the design attribute is not important in code, it is useful thou when help about the command is displayed. Suggestions is what it sounds like only suggestions to guide the user to the right input.
+
+### Inherit CdCommand to add file/dir code completion
+If you are design a command that will handle files or directories you may want to help the user with code completion, you can implement this easily just inherit the CdCommand and then your Command will support just that!
+The Command below wil handle navigation trough files and directories (in current working folder) just using tab. PowerCommand has `cd` command and `dir` commands out of the box.
+```
+[PowerCommandDesign(description: "Run commands that supports pipe functionality.",
+                        example: "//First run this command and then the version command|version [PIPE] pipe")]
+public class BrowseCommand(string identifier, PowerCommandsConfiguration configuration) : CdCommand(identifier, configuration)
+{
+    public override RunResult Run()
+    {
+        var fileName = Input.SingleArgument;
+        WriteLine(fileName);
+        return Ok();;
+    }
+}
+```
 
 ## Must I use the PowerCommandDesign attribute on every command I create?
 No that is not mandatory but it is recommended, note that when you declare the [Options](Options.md), they will be available for code completion, which means that when the consumer types - and hit the tab button the user will can se what options there are that could be used, with a simple ! character you tell that the argument, quote, option or secret is required and then the Core runtime will validate that automatically for you.
