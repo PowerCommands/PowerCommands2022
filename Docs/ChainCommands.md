@@ -1,4 +1,4 @@
-# Read, Write and navigate to files and directories
+# Chain Commands
 
 From version 1.0.4.0 of PowerCommands you can call two commands using one line, using the | character, at the moment it is limited to two commands but the plan is to allow as many commands as you like in a call chain.
 
