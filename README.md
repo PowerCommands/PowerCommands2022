@@ -13,7 +13,9 @@ You could see PowerCommands as your CLI application starter kit. It is a structu
 - Added the feature to `Commands` command to pickup and display diagnostics about the latest RunResult (if any) for a given command (by name).
 - Log view is now the default action instead of viewing log files
 - Improved `cd` and `dir` command, added som nice new features to them
-- All Nuget packages has been updated. 
+- All Nuget packages has been updated.
+
+ https://github.com/user-attachments/assets/b718cc18-2cbb-4812-b3a2-0d054e948a00
 
  ## Start your journey
 [Create a new VS Solution](Docs/Create_new_%20project.md)
