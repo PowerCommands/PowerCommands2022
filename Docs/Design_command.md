@@ -96,22 +96,59 @@ public class ConvertCommand : CommandBase<PowerCommandsConfiguration>
 ```
 **Please Note** that the name of the arguments in the design attribute is not important in code, it is useful thou when help about the command is displayed. Suggestions is what it sounds like only suggestions to guide the user to the right input.
 
-### Inherit CdCommand to add file/dir code completion
-If you are design a command that will handle files or directories you may want to help the user with code completion, you can implement this easily just inherit the CdCommand and then your Command will support just that!
+## My final design with file/dir code completion
+If you are design a command that will handle files or directories you may want to help the user with code completion, you can implement this easily, just inherit the CdCommand and then your Command will support just that!
 The Command below wil handle navigation trough files and directories (in current working folder) just using tab. PowerCommand has `cd` command and `dir` commands out of the box.
+
+So here is my final design for the ConvertCommand class where I have implemented the conversion code also so this example is fully working, I have done some rearrangement of the parameters.
+I want the target file to be the first thing you input so that the user can use the code completion functionality, for the format I use a option flag --format where the user values can be json or xml. This example is simplified and only support the json format, but you get the idea I hope.
 ```
-[PowerCommandDesign(description: "Run commands that supports pipe functionality.",
-                        example: "//First run this command and then the version command|version [PIPE] pipe")]
-public class BrowseCommand(string identifier, PowerCommandsConfiguration configuration) : CdCommand(identifier, configuration)
+using System.Text.Json;
+using PainKiller.PowerCommands.Core.Commands;
+using YamlDotNet.Serialization.NamingConventions;
+using YamlDotNet.Serialization;
+
+namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
+
+[PowerCommandDesign(  description: "Converting yaml format to json or xml format",
+    arguments: "<filename>",
+      options: "format",
+  suggestions: "xml|json",
+      example: "//Convert to json format|convert \"c:\\temp\\test.yaml\" --format json|//Convert to xml format|convert \"c:\\temp\\test.yaml\" --format xml")]
+public class ConvertCommand(string identifier, PowerCommandsConfiguration configuration) : CdCommand(identifier, configuration)
 {
     public override RunResult Run()
     {
-        var fileName = Input.SingleArgument;
-        WriteLine(fileName);
-        return Ok();;
+        var yamlInput = File.ReadAllText(Input.SingleArgument);
+        var format = GetOptionValue("format");
+        if (format == "json")
+        {
+            var jsonOutput = ConvertYamlToJson(yamlInput);
+            WriteLine(jsonOutput);
+        }
+        return Ok();
+    }
+    public static string ConvertYamlToJson(string yamlInput)
+    {
+        var deserializer = new DeserializerBuilder()
+            .WithNamingConvention(CamelCaseNamingConvention.Instance)
+            .Build();
+        var yamlObject = deserializer.Deserialize<object>(yamlInput);
+
+        var json = JsonSerializer.Serialize(yamlObject, new JsonSerializerOptions { WriteIndented = true });
+        return json;
     }
 }
 ```
+![Alt text](images/convert_sample.png?raw=true "Describe convert command")
+
+### User wants to write the converted output to file
+You could add this to the ConvertCommand class but... you do not have to do that, PowerCommands support to call a second command on the same commandline and that second command can handle the output from the "calling" command, so if you want the output that is displayed in the console by the ConvertCommand to be written to file you could write this in the console and use the existing `file` command, you need to specify a target file to the `file` command with the option flag `--target` like this:
+
+```convert PowerCommandsConfiguration.yaml --format json | file --target "PowerCommandsConfiguration.json"```
+
+This will write a file named **PowerCommandsConfiguration.json** in the current working directory.
+
 
 ## Must I use the PowerCommandDesign attribute on every command I create?
 No that is not mandatory but it is recommended, note that when you declare the [Options](Options.md), they will be available for code completion, which means that when the consumer types - and hit the tab button the user will can se what options there are that could be used, with a simple ! character you tell that the argument, quote, option or secret is required and then the Core runtime will validate that automatically for you.
@@ -121,8 +158,11 @@ Read more about CLI design here: [10 design principles for delightful CLIs](http
 Next step is to understand the [Power Commands Design attribute](PowerCommandDesignAttribute.md)
 
 
-
 Read more about:
+
+[Chain command execution)](ChainCommands.md)
+
+[Read and write files with FileCommand](ReadWriteFileHandler.md)
 
 [Input](Input.md)
 
