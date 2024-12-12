@@ -10,14 +10,13 @@ public class LogCommand(string identifier, CommandsConfiguration configuration) 
 {
     public override RunResult Run()
     {
-        if (Input.Options.Length == 0) List();
-        if (Input.SingleArgument == "archive") Archive();
-        if (Input.SingleArgument == "view") View();
-        if (Input.HasOption("process")) ProcessLog($"{Input.GetOptionValue("process")}");
+        if (Input.SingleArgument == "archive") return Archive();
+        if (Input.SingleArgument == "files") return List();
+        if (Input.HasOption("process")) return ProcessLog($"{Input.GetOptionValue("process")}");
         
-        return Ok();
+        return View();
     }
-    private void List()
+    private RunResult List()
     {
         DisableLog();
         var dir = new DirectoryInfo(Path.Combine(AppContext.BaseDirectory, Configuration.Log.FilePath));
@@ -34,18 +33,22 @@ public class LogCommand(string identifier, CommandsConfiguration configuration) 
         WriteHeadLine("To view a certain process log use:");
         WriteCodeExample("log","--process myProcess");
         EnableLog();
+        return Ok();
     }
-    private void Archive() => WriteLine(Configuration.Log.ArchiveLogFiles());
-    private void View()
+    private RunResult Archive()
     {
-        DisableLog();
-        foreach (var line in Configuration.Log.ToLines()) ConsoleService.Service.WriteLine(nameof(LogCommand), line);
-        EnableLog();
+        WriteLine(Configuration.Log.ArchiveLogFiles());
+        return Ok();
     }
-    private void ProcessLog(string processTag)
+
+    private RunResult View()
     {
-        DisableLog();
-        foreach (var line in Configuration.Log.GetProcessLog(processTag)) ConsoleService.Service.WriteLine(nameof(LogCommand), line);
-        EnableLog();
+        foreach (var line in Configuration.Log.ToLines()) Console.WriteLine(line);
+        return Ok();
+    }
+    private RunResult ProcessLog(string processTag)
+    {
+        foreach (var line in Configuration.Log.GetProcessLog(processTag)) Console.WriteLine(line);
+        return Ok();
     }
 }

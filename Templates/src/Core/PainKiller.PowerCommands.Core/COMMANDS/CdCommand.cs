@@ -2,21 +2,20 @@
 
 [PowerCommandTest(        tests: " ")]
 [PowerCommandDesign(description: "Change or view the current working directory",
-                        options: "bookmark|roaming",
+                        options: "bookmark|roaming|startup|recent|documents|programs|windows|profile|templates|videos|pictures|music",
              disableProxyOutput: true,
-                        example: "//View current working directory|cd|//Traverse down one directory|//Change working directory|cd ..|cd \"C:\\ProgramData\"|//Set bookmark as the working directory using name|cd --bookmark program|//Set bookmark as the working directory using index|cd --bookmark 0|//Set first existing bookmark (if any) as working directory|cd --bookmark")]
-public class CdCommand : CommandBase<CommandsConfiguration>, IWorkingDirectoryChangesListener
+                        example: "//View current working directory|cd|//Traverse down one directory|//Change working directory|cd ..|cd \"C:\\ProgramData\"|//Set bookmark as the working directory using name|cd --bookmark program|//Set bookmark as the working directory using index|cd --bookmark 0|//Set first existing bookmark (if any) as working directory|cd --bookmark|//Set Windows directory as working directory|cd --windows")]
+public class CdCommand(string identifier, CommandsConfiguration configuration) : CommandBase<CommandsConfiguration>(identifier, configuration), IWorkingDirectoryChangesListener
 {
-    public static string WorkingDirectory = AppContext.BaseDirectory;
     public static Action<string[], string[]>? WorkingDirectoryChanged;
-    public CdCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
+
     public override RunResult Run()
     {
-        var path = WorkingDirectory;
+        var path = Environment.CurrentDirectory;
         if (Input.SingleArgument == "\\")
         {
-            var directory = new DirectoryInfo(WorkingDirectory);
-            WorkingDirectory = directory.Root.FullName;
+            var directory = new DirectoryInfo(Environment.CurrentDirectory);
+            Environment.CurrentDirectory = directory.Root.FullName;
             ShowDirectories();
             return Ok();
         }
@@ -48,6 +47,47 @@ public class CdCommand : CommandBase<CommandsConfiguration>, IWorkingDirectoryCh
         {
             path = ConfigurationGlobals.ApplicationDataFolder;
         }
+        else if (HasOption("startup"))
+        {
+            var exutableFileInfo = new FileInfo($"{Environment.ProcessPath}");
+            path = exutableFileInfo.DirectoryName;
+        }
+        else if (HasOption("programs"))
+        {
+            path = Environment.GetFolderPath(Environment.SpecialFolder.Programs);
+        }
+        else if (HasOption("documents"))
+        {
+            path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        }
+        else if (HasOption("recent"))
+        {
+            path = Environment.GetFolderPath(Environment.SpecialFolder.Recent);
+        }
+        else if (HasOption("windows"))
+        {
+            path = Environment.GetFolderPath(Environment.SpecialFolder.Windows);
+        }
+        else if (HasOption("music"))
+        {
+            path = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
+        }
+        else if (HasOption("pictures"))
+        {
+            path = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+        }
+        else if (HasOption("videos"))
+        {
+            path = Environment.GetFolderPath(Environment.SpecialFolder.MyVideos);
+        }
+        else if (HasOption("templates"))
+        {
+            path = Environment.GetFolderPath(Environment.SpecialFolder.Templates);
+        }
+        else if (HasOption("profile"))
+        {
+            path = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+        }
         else if (!string.IsNullOrEmpty(inputPath))
         {
             path = inputPath;
@@ -55,40 +95,44 @@ public class CdCommand : CommandBase<CommandsConfiguration>, IWorkingDirectoryCh
         else if (Input.SingleArgument == "..")
         {
             var skipLast = path.EndsWith("\\") ? 2 : 1;
-            var paths = WorkingDirectory.Split(Path.DirectorySeparatorChar).SkipLast(skipLast);
+            var paths = Environment.CurrentDirectory.Split(Path.DirectorySeparatorChar).SkipLast(skipLast);
             path = string.Join(Path.DirectorySeparatorChar, paths);
         }
         else 
         {
             var dir = string.IsNullOrEmpty(Input.SingleArgument) ? Input.SingleQuote : Input.SingleArgument;
-            var paths = WorkingDirectory.Split(Path.DirectorySeparatorChar).ToList();
+            var paths = Environment.CurrentDirectory.Split(Path.DirectorySeparatorChar).ToList();
             if(!string.IsNullOrEmpty(dir)) paths.Add(dir);
             path = string.Join(Path.DirectorySeparatorChar, paths);
         }
         path = path.Replace("%USERNAME%", Environment.UserName, StringComparison.CurrentCultureIgnoreCase);
         if (path.Contains("$ROAMING$")) path = path.Replace("$ROAMING$", ConfigurationGlobals.ApplicationDataFolder);
-        if (Directory.Exists(path)) WorkingDirectory = $"{Path.GetFullPath(path)}";
+        if (Directory.Exists(path)) Environment.CurrentDirectory = $"{Path.GetFullPath(path)}";
         else WriteFailureLine($"[{path}] does not exist");
         ShowDirectories();
         return Ok();
     }
-    private void ShowDirectories()
+    protected void ShowDirectories(string filter = "", bool output = false)
     {
-        var dirInfo = new DirectoryInfo(WorkingDirectory);
-        Console.WriteLine(dirInfo.FullName);
+        var dirInfo = new DirectoryInfo(Environment.CurrentDirectory);
+        WriteHeadLine(dirInfo.FullName);
         var fileSuggestions = new List<string>();
         var dirSuggestions = new List<string>();
-        foreach (var directoryInfo in dirInfo.GetDirectories())
+        var fileCounter = dirInfo.GetFiles().Length;
+        var dirCounter = dirInfo.GetDirectories().Length;
+        WriteCodeExample("Files", $"{fileCounter}");
+        WriteCodeExample("Directories", $"{dirCounter}");
+        if(HasOption("filter")) WriteCodeExample("Filter", $"{GetOptionValue("filter")}");
+        foreach (var directoryInfo in dirInfo.GetDirectories().Where(d => d.Name.Contains(filter) || string.IsNullOrEmpty(filter)))
         {
-            Console.WriteLine($"{directoryInfo.CreationTime}\t<DIR>\t{directoryInfo.Name}");
+            if(output) Console.WriteLine($"{directoryInfo.CreationTime}\t<DIR>\t{directoryInfo.Name}");
             dirSuggestions.Add(directoryInfo.Name);
         }
-        foreach (var fileInfo in dirInfo.GetFiles())
+        foreach (var fileInfo in dirInfo.GetFiles().Where(f => f.Name.Contains(filter) || string.IsNullOrEmpty(filter)))
         {
-            Console.WriteLine($"{fileInfo.CreationTime}\t     \t{fileInfo.Name}");
+            if(output)Console.WriteLine($"{fileInfo.CreationTime}\t     \t{fileInfo.Name}");
             fileSuggestions.Add(fileInfo.Name);
         }
-        SuggestionProviderManager.AppendContextBoundSuggestions(Identifier, dirSuggestions.ToArray());
         WorkingDirectoryChanged?.Invoke(fileSuggestions.ToArray(), dirSuggestions.ToArray());
         
     }
@@ -101,8 +145,7 @@ public class CdCommand : CommandBase<CommandsConfiguration>, IWorkingDirectoryCh
     }
     public virtual void InitializeWorkingDirectory()
     {
-        var id = Identifier;
-        var dirInfo = new DirectoryInfo(WorkingDirectory);
+        var dirInfo = new DirectoryInfo(Environment.CurrentDirectory);
         var fileSuggestions = dirInfo.GetFiles().Select(d => d.Name).ToArray();
         var dirSuggestions = dirInfo.GetDirectories().Select(d => d.Name).ToArray();
         WorkingDirectoryChanged?.Invoke(fileSuggestions, dirSuggestions);

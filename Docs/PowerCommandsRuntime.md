@@ -1,6 +1,6 @@
 # PowerCommandsRuntime
 
-The PowerCommandsRuntime is the Core engine you could say, this runtime first enumerates all the valid Commands using reflection. It is also responseble to run the interpret the input from the commandline or from args provided at the application startup. 
+The PowerCommandsRuntime is the Core engine you could say, this runtime first enumerates all the valid Commands using reflection. It is also responsible to run the interpret the input from the commandline or from args provided at the application startup. 
 
 ## The contract
 

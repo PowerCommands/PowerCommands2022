@@ -8,4 +8,5 @@ public interface IPowerCommandsRuntime
     RunResult ExecuteCommand(string rawInput);
     List<IConsoleCommand> Commands { get; }
     public static IPowerCommandsRuntime? DefaultInstance { get; protected set; }
+    RunResult? Latest { get; }
 }

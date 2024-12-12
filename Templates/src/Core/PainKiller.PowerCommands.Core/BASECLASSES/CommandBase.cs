@@ -8,12 +8,12 @@ public abstract class CommandBase<TConfig>(string identifier, TConfig configurat
     private IConsoleService _console = console ?? ConsoleService.Service;
     protected ICommandLineInput Input = new CommandLineInput();
     protected List<PowerOption> Options = new();
-    private readonly StringBuilder _ouput = new();
+    private readonly StringBuilder _output = new();
     protected string LastReadLine = "";
 
     protected virtual void ConsoleWriteToOutput(string output)
     {
-        if (AppendToOutput) _ouput.Append(output);
+        if (AppendToOutput) _output.Append(output);
     }
     public string Identifier { get; } = identifier;
     protected bool AppendToOutput { get; set; } = true;
@@ -35,9 +35,15 @@ public abstract class CommandBase<TConfig>(string identifier, TConfig configurat
     public virtual void RunCompleted()
     {
         _console.WriteToOutput -= ConsoleWriteToOutput;
-        if (IPowerCommandServices.DefaultInstance!.DefaultConsoleService.GetType().Name != ConsoleService.Service.GetType().Name) Console.WriteLine(_ouput.ToString());
-        _ouput.Clear();
-        if (!Input.Options.Contains("--pc_force_quit")) return;
+        _output.Clear();
+        if (IPowerCommandServices.DefaultInstance!.DefaultConsoleService.GetType().Name != ConsoleService.Service.GetType().Name) Console.WriteLine(_output.ToString());
+        if (!Input.Options.Contains("--pc_force_quit"))
+        {
+            if (!Input.Raw.Contains('|')) return;
+            var nextCommandInput = Input.Raw.Split('|')[1].Trim().Interpret();
+            RunCommandService.Run(nextCommandInput.Identifier, nextCommandInput);
+            return;
+        }
         WriteLine("--pc_force_quit was provided from command line, program will now quit");
         Environment.Exit(Environment.ExitCode);
     }
@@ -63,19 +69,19 @@ public abstract class CommandBase<TConfig>(string identifier, TConfig configurat
     #region output
     protected void DisableOutput() => AppendToOutput = false;
     protected void EnableOutput() => AppendToOutput = true;
-    protected void DisplayOutput() => Console.WriteLine(_ouput.ToString());
-    protected void ClearOutput() => _ouput.Clear();
-    protected bool FindInOutput(string findPhrase) => _ouput.ToString().Contains(findPhrase);
+    protected void DisplayOutput() => Console.WriteLine(_output.ToString());
+    protected void ClearOutput() => _output.Clear();
+    protected bool FindInOutput(string findPhrase) => _output.ToString().Contains(findPhrase);
     #endregion
 
     #region RunResult
-    protected RunResult Ok(string message) => new(this, Input, $"{message} {_ouput}", RunResultStatus.Ok);
-    protected RunResult Ok() => Ok(_ouput.ToString());
-    protected RunResult Quit() => Quit(_ouput.ToString());
-    protected RunResult Quit(string message) => new(this, Input, $"{message} {_ouput}", RunResultStatus.Quit);
+    protected RunResult Ok(string message) => new(this, Input, $"{message} {_output}", RunResultStatus.Ok);
+    protected RunResult Ok() => new(this, Input, $"{_output}", RunResultStatus.Ok);
+    protected RunResult Quit() => new(this, Input, $"{_output}", RunResultStatus.Quit);
+    protected RunResult Quit(string message) => new(this, Input, $"{message} {_output}", RunResultStatus.Quit);
     protected RunResult BadParameterError(string output) => new(this, Input, output, RunResultStatus.ArgumentError);
     protected RunResult ExceptionError(string output) => new(this, Input, output, RunResultStatus.ExceptionThrown);
-    protected RunResult ContinueWith(string rawInput) => new(this, Input, _ouput.ToString(), RunResultStatus.ExceptionThrown, rawInput);
+    protected RunResult ContinueWith(string rawInput) => new(this, Input, _output.ToString(), RunResultStatus.ExceptionThrown, rawInput);
     #endregion
 
     #region Write helpers

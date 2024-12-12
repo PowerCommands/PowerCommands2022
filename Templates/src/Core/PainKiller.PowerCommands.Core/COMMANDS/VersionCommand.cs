@@ -5,10 +5,8 @@ namespace $safeprojectname$.Commands;
 [PowerCommandTest(tests: " ")]
 [PowerCommandDesign(description:"Shows current version for the Core components.",
              disableProxyOutput: true)]
-public class VersionCommand : CommandBase<CommandsConfiguration>
+public class VersionCommand(string identifier, CommandsConfiguration configuration) : CommandBase<CommandsConfiguration>(identifier, configuration)
 {
-    public VersionCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
-
     public override RunResult Run()
     {
         WriteLine($" {nameof(Core)}: {ReflectionService.Service.GetVersion(Assembly.Load($"$safeprojectname$"))}");

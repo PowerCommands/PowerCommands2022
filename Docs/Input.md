@@ -17,7 +17,7 @@ public interface ICommandLineInput
 }
 ```
 ## How is it initialized and used by the command?
-After the user hits return the input will be intpreted by the PowerCommands Runtime and if a valid Command could be matched, this Command will be created in runtime and Initialized with the CommandLineInput instance. It will then be programaticallay available in the Commands Run method.
+After the user hits return the input will be interpreted by the PowerCommands Runtime and if a valid Command could be matched, this Command will be created in runtime and Initialized with the CommandLineInput instance. It will then be programmatically available in the Commands Run method.
 
 ## How is the user input mapped to the CommandLineInput instance?
 ![Alt text](images/Command_line_input_described.png?raw=true "Describe convert command")
@@ -48,11 +48,11 @@ The Id of the command it is the first argument that the user types, the id is th
 ### Quotes
 All input strings surrounded with " (quotation mark) in this example it is one quote with the value **"This is a quote"** (This value will be returned by the **SingleQuote** property)
 ### Arguments
-All input strings not surrounded with " except for the first one (wich is the Identifier) and every argument starting with -- marks in the example it is one argument with the value **argumentOne** (This value will be returned by the **SingleArgument** property)
+All input strings not surrounded with " except for the first one (which is the Identifier) and every argument starting with -- marks in the example it is one argument with the value **argumentOne** (This value will be returned by the **SingleArgument** property)
 ### Options
 All arguments that is staring with the -- marks is considered as options, and ever argument after the option is considered as that options value, in the example the option **demo** has the value **myOptionValue** a option must not have a value.
 ### Path
-The path is a special value if your command only should have an input that is a path, then it is usefull, you do not need to input the path in quotation marks even if it contains blank space.
+The path is a special value if your command only should have an input that is a path, then it is useful, you do not need to input the path in quotation marks even if it contains blank space.
 
 Read more about:
 

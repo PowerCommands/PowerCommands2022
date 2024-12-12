@@ -2,7 +2,7 @@
 
 ## PowerCommandsConfiguration.Yaml
 The content in these file has two parts, the first part is the [basic application configuration](Configuration.md), that part all PowerCommand application has.
-Second part is the extended configuration parts, this part is optional if you need custom configuration you need to implement this by your self. The conten of this part is then merged into one configuration file. 
+Second part is the extended configuration parts, this part is optional if you need custom configuration you need to implement this by your self. The content of this part is then merged into one configuration file. 
 
 ## PowerCommandsConfiguration class
 In your PowerCommands Visual Studio project you can find the **PowerCommandsConfiguration.cs** file in the **Configuration** directory and from the start it looks like this.
@@ -37,7 +37,7 @@ public class PowerCommandsConfiguration : CommandsConfiguration
 }
 ```
 
-Note that a simple string property **DefaultGitRepositoryPath** has been addes as well. But this is not enough, the yaml file **PowerCommandsConfiguration.yml** must be updated to contain the new configuration content. The new configuration file will now look like this.
+Note that a simple string property **DefaultGitRepositoryPath** has been added as well. But this is not enough, the yaml file **PowerCommandsConfiguration.yml** must be updated to contain the new configuration content. The new configuration file will now look like this.
 
 ```
 version: 1.0

@@ -3,10 +3,8 @@ namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 [PowerCommandDesign(description:"A dummie iteration is running in async mode",
                        useAsync: true,
                         example: "iteration")]
-public class IterationCommand : CommandBase<CommandsConfiguration>
+public class IterationCommand(string identifier, CommandsConfiguration configuration) : CommandBase<CommandsConfiguration>(identifier, configuration)
 {
-    public IterationCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
-
     public override async Task<RunResult> RunAsync()
     {
         await RunIterations(PowerCommandServices.Service.Runtime.Commands);

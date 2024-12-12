@@ -28,16 +28,16 @@ Here you declare those dll components that the Core framework will use to find a
 Environment variables that the application needs to be aware about.
 
 ## Log
-Details about the loggning.
+Details about the logging.
 
 ## Metadata
 Description about your PowerCommand project.
 
 ## Repository
-URL to this repsository, used internally to create new VS solutions and Commands using PowerCommands applikation.
+URL to this repository, used internally to create new VS solutions and Commands using PowerCommands application.
 
 ## Secret
-Name of secrets that the application needs to be aware about, each secret has an corrensponding environment value that is encrypted.
+Name of secrets that the application needs to be aware about, each secret has an corresponding environment value that is encrypted.
 
 ## ShowDiagnosticInformation
 Enable or disable the display of diagnostic output.

@@ -17,7 +17,12 @@
 
 [Simple automated test](Test.md)
 
-[Output to the Console guidline](ConsoleOutput.md)
+[Output to the Console guideline](ConsoleOutput.md)
+
+[Chain commands calls](ChainCommands.md)
+
+## File handling
+[Handling files and directories with file, cd and dir commands](ReadWriteFileHandler.md)
 
 ## Automation
 [Run your command as job](Job.md)

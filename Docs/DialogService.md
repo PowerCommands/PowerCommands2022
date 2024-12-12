@@ -42,9 +42,6 @@ var password = DialogService.SecretPromptDialog("Enter secret:");
 ## QuestionAnswerDialog and YesNoDialog
 This dialog either prompt a question and returns the answer as an string or with the ```YesNoDialog``` prompts a question and returns a bool.
 
-
-
-
 Read more about:
 
 [Design your Command](Design_command.md)

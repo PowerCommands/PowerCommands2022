@@ -3,7 +3,7 @@
 ## There is two ways of doing that, manually our let PowerCommand create one for you, using a template
 
 ### Manually
- Create a new class in the Commands directory or copy one existing and just rename it, a command that outputs "Hello World!" shoult look like this.
+ Create a new class in the Commands directory or copy one existing and just rename it, a command that outputs "Hello World!" should look like this.
 
 ``` 
 [PowerCommand(  description: "The Hello World classic!", example: "helloworld")]
@@ -19,7 +19,7 @@ public class HelloWorldCommand : CommandBase<PowerCommandsConfiguration>
 }
 ```
 
-When you start the PowerCommand applikcation and type
+When you start the PowerCommand application and type
 ```
 helloworld
 ```

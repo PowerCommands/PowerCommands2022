@@ -5,9 +5,8 @@
                       suggestions: "y",
               disableProxyOutput: true,
                          example: "exit|exit y|exit Yes")]
-public class ExitCommand : CommandBase<CommandsConfiguration>
+public class ExitCommand(string identifier, CommandsConfiguration configuration) : CommandBase<CommandsConfiguration>(identifier, configuration)
 {
-    public ExitCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
     public override RunResult Run()
     {
         if (Input.Arguments.Length > 0 && Input.Arguments.First().ToLower().StartsWith("y")) return new RunResult(this, Input, output: "exit program", RunResultStatus.Quit);

@@ -4,10 +4,7 @@ namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
 [PowerCommandTest(         tests: " ")]
 [PowerCommandDesign( description: "Run powershell commands",
-                         options: "Get-Help|Get-Command|Get-Process|Get-Service|filter",
-                         example: "//Get all available powershell commands on your machine.|ps Get-Command")]
+    options: "Get-Help|Get-Command|Get-Process|Get-Service|filter",
+    example: "//Get all available powershell commands on your machine.|ps Get-Command")]
 
-public class PsCommand : MasterCommando
-{
-    public PsCommand(string identifier, PowerCommandsConfiguration configuration) : base(identifier, configuration, alias: "powershell") { }
-}
+public class PsCommand(string identifier, PowerCommandsConfiguration configuration) : MasterCommando(identifier, configuration, alias: "powershell");

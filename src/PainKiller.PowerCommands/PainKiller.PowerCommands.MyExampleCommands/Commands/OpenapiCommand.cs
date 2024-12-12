@@ -32,23 +32,23 @@ public class OpenApiCommand : CommandWithToolbarBase<PowerCommandsConfiguration>
     }
     public void GenerateCode()
     {
-        var directoryInfo = new DirectoryInfo(CdCommand.WorkingDirectory);
+        var directoryInfo = new DirectoryInfo(Environment.CurrentDirectory);
         var files = directoryInfo.GetFiles("*.yaml");
         if (files.Length != 2) throw new IndexOutOfRangeException("The directory must contain 2 and only 2 yaml files, one of them should contain \"config\" so that the generation could perform properly.");
         var config = files.FirstOrDefault(f => f.Name.ToLower().Contains("config"));
         if (config == null) throw new IndexOutOfRangeException("No yaml file found that contains \"config\" in the filename");
         var specification = files.First(f => f.Name != config.Name);
-        var outputDir = Path.Combine(string.Join(Path.DirectorySeparatorChar, CdCommand.WorkingDirectory.Split(Path.DirectorySeparatorChar).SkipLast(1)), "generated-code");
+        var outputDir = Path.Combine(string.Join(Path.DirectorySeparatorChar, Environment.CurrentDirectory.Split(Path.DirectorySeparatorChar).SkipLast(1)), "generated-code");
         if (!Directory.Exists(outputDir)) Directory.CreateDirectory(outputDir);
-        var dockerArgument = $"run --rm -v {CdCommand.WorkingDirectory}:/localin -v {outputDir}:/localout openapitools/openapi-generator-cli generate -i /localin/{specification.Name} -g aspnetcore -o /localout/ -c /localin/{config.Name}";
+        var dockerArgument = $"run --rm -v {Environment.CurrentDirectory}:/localin -v {outputDir}:/localout openapitools/openapi-generator-cli generate -i /localin/{specification.Name} -g aspnetcore -o /localout/ -c /localin/{config.Name}";
         WriteCodeExample("docker", dockerArgument);
-        ShellService.Service.Execute("docker", $"run --rm -v {CdCommand.WorkingDirectory}:/localin -v {outputDir}:/localout openapitools/openapi-generator-cli generate -i /localin/{specification.Name} -g aspnetcore -o /localout/ -c /localin/{config.Name}", CdCommand.WorkingDirectory, ReadLine, "", waitForExit: true);
+        ShellService.Service.Execute("docker", $"run --rm -v {Environment.CurrentDirectory}:/localin -v {outputDir}:/localout openapitools/openapi-generator-cli generate -i /localin/{specification.Name} -g aspnetcore -o /localout/ -c /localin/{config.Name}", Environment.CurrentDirectory, ReadLine, "", waitForExit: true);
 
         WriteLine($"{LastReadLine}");
     }
     public bool ValidFilesExists()
     {
-        var directoryInfo = new DirectoryInfo(CdCommand.WorkingDirectory);
+        var directoryInfo = new DirectoryInfo(Environment.CurrentDirectory);
         var files = directoryInfo.GetFiles("*.yaml");
         if (files.Length != 2) return false;
         var config = files.FirstOrDefault(f => f.Name.ToLower().Contains("config"));

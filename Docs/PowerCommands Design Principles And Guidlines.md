@@ -1,27 +1,27 @@
 <!-- vscode-markdown-toc -->
 * [Main components](#Maincomponents)
-* [PowerCommand Consolee](#PowerCommandConsolee)
-	* [Keep the Console appliakation as clean as possiblee](#KeeptheConsoleappliakationascleanaspossiblee)
+* [PowerCommand Console](#PowerCommandConsolee)
+	* [Keep the Console application as clean as possible](#KeeptheConsoleappliakationascleanaspossiblee)
 * [Bootstrap component](#Bootstrapcomponent)
 * [Your custom commands project(s)](#Yourcustomcommandsprojects)
-	* [PowerCommandServicess](#PowerCommandServicess)
+	* [PowerCommandServices](#PowerCommandServicess)
 	* [PowerCommandsConfiguration](#PowerCommandsConfiguration)
 * [PowerCommandsConfiguration.yaml](#PowerCommandsConfiguration.yaml)
-	* [More then one PowerCommand project in the same implemantation? (no problem but...)](#MorethenonePowerCommandprojectinthesameimplemantationnoproblembut...)
-* [Create your first Hello World Commandd](#CreateyourfirstHelloWorldCommandd)
+	* [More then one PowerCommand project in the same implementation? (no problem but...)](#MorethenonePowerCommandprojectinthesameimplemantationnoproblembut...)
+* [Create your first Hello World Command](#CreateyourfirstHelloWorldCommandd)
 * [Design of your Commands](#DesignofyourCommands)
 * [Extend PowerCommand](#ExtendPowerCommand)
 	* [Avoid changes in the PowerCommand Core, extend instead](#AvoidchangesinthePowerCommandCoreextendinstead)
 	* [Write generic custom modules](#Writegenericcustommodules)
 * [Reflection](#Reflection)
-* [Reserved Command namess](#ReservedCommandnamess)
-* [Directoriess](#Directoriess)
+* [Reserved Command names](#ReservedCommandnamess)
+* [Directories](#Directoriess)
 * [Store secrets outside the application path](#Storesecretsoutsidetheapplicationpath)
-* [Use the secrets built in functionallity](#Usethesecretsbuiltinfunctionallity)
-* [Be carefull when decrypting, be sure to protect your secrets in runtime](#Becarefullwhendecryptingbesuretoprotectyoursecretsinruntime)
-	* [Recomended pattern for custom Compenents using secrets, pass the DecryptSecret function](#RecomendedpatternforcustomCompenentsusingsecretspasstheDecryptSecretfunction)
-* [Reduce coad bloat by avoiding try and catch](#Reducecoadbloatbyavoidingtryandcatch)
-* [Reduce coad bloat by avoiding logging](#Reducecoadbloatbyavoidinglogging)
+* [Use the secrets built in functionality](#Usethesecretsbuiltinfunctionallity)
+* [Be careful when decrypting, be sure to protect your secrets in runtime](#Becarefullwhendecryptingbesuretoprotectyoursecretsinruntime)
+	* [Recommended pattern for custom Components using secrets, pass the DecryptSecret function](#RecomendedpatternforcustomCompenentsusingsecretspasstheDecryptSecretfunction)
+* [Reduce code bloat by avoiding try and catch](#Reducecoadbloatbyavoidingtryandcatch)
+* [Reduce code bloat by avoiding logging](#Reducecoadbloatbyavoidinglogging)
 * [Use CommandBase Write methods](#UseCommandBaseWritemethods)
 * [But? I really want to write to the log directly in my Command class!](#ButIreallywanttowritetothelogdirectlyinmyCommandclass)
 * [Use YAML](#UseYAML)
@@ -39,11 +39,11 @@
 
 # POWERCOMMANDS DESIGN PRINCIPLES AND GUIDLINES
 # Design principles
- The design principles for this project is to keep the Core lightweight and simple. The Core components is components that you probably or very often will use, while Custom Components do not have that characteristic feature. Another restriction for the Core components is that they should avoid to add any third party dependancies, that way you know exactly what code you are running.
+ The design principles for this project is to keep the Core lightweight and simple. The Core components is components that you probably or very often will use, while Custom Components do not have that characteristic feature. Another restriction for the Core components is that they should avoid to add any third party dependencies, that way you know exactly what code you are running.
 
-The core components should be reliable and robust and do not change much over time. That statement applies from the day when the project has reached 1.0 status, the current staus I would say is 0.5, hopefully the core part of this project reach level 1.0 before the end of this year (2022). 
+The core components should be reliable and robust and do not change much over time. That statement applies from the day when the project has reached 1.0 status, the current status I would say is 0.5, hopefully the core part of this project reach level 1.0 before the end of this year (2022). 
  
- Custom component are aloud to break that rule, custom components should on the other hand avoid to have depandencies to the Core components, they should be design to work as stand-alone components.
+ Custom component are aloud to break that rule, custom components should on the other hand avoid to have dependencies to the Core components, they should be design to work as stand-alone components.
 
 # Components
 ## <a name='Maincomponents'></a>Main components
@@ -63,7 +63,7 @@ The core components should be reliable and robust and do not change much over ti
  The items in the purple boxes is the most interesting part when you are setting upp a new implementation.
  
 ## <a name='PowerCommandConsolee'></a>PowerCommand Consolee
-### <a name='KeeptheConsoleappliakationascleanaspossiblee'></a>Keep the Console appliakation as clean as possiblee
+### <a name='KeeptheConsoleappliakationascleanaspossiblee'></a>Keep the Console application as clean as possible
  The console application should be used as is so that the look and feel of Power Commands is consistent, be restrictive in implementing your own custom code here, use the Bootstrap or the Command project(s) instead.
 
  The default PowerCommand Console contains two lines only.
@@ -76,10 +76,10 @@ The core components should be reliable and robust and do not change much over ti
  Simple guidline is, don´t do anything except maybe change the title, it could be practical, over time you could have many different implementations.
 
 ## <a name='Bootstrapcomponent'></a>Bootstrap component
-The bootstrap component is the glue between the Console and the other modules, it has a Startup class whos purpose is to initialize the application and customize its behavoiur if you want to. The main class to edit is in that case the PowerCommandsManager class.
+The bootstrap component is the glue between the Console and the other modules, it has a Startup class whos purpose is to initialize the application and customize its behavior if you want to. The main class to edit is in that case the PowerCommandsManager class.
 
 ## <a name='Yourcustomcommandsprojects'></a>Your custom commands project(s)
-The whole purpose of PowerCommands framework is so that you can write your own commands, and every implementation must therefore have at least one project containing this commands. This project also needs a couple of mandatory classes, if you use the PowerCommand new a whole new solution is set upp for you, it is explained further down the road in this documentation, but you have set up everything manuallay. simply copy the classes from the "MyExampleCommands" project in this github repository.
+The whole purpose of PowerCommands framework is so that you can write your own commands, and every implementation must therefore have at least one project containing this commands. This project also needs a couple of mandatory classes, if you use the PowerCommand new a whole new solution is set upp for you, it is explained further down the road in this documentation, but you have set up everything manually. simply copy the classes from the "MyExampleCommands" project in this github repository.
 [My Example Commands](https://github.com/PowerCommands/PowerCommands2022/tree/main/src/PainKiller.PowerCommands/PainKiller.PowerCommands.MyExampleCommands)
 The files needed is:
  - PowerCommandServices   
@@ -100,7 +100,7 @@ The files needed is:
  So if you want to swap a service for something else, for example the Logger component, here is the place to do that.
 
 ### <a name='PowerCommandsConfiguration'></a>PowerCommandsConfiguration
-This class purpose is to maket it easy for you to extend the configuration with your own elements, if you do not need that, just leave the class empty.
+This class purpose is to make it easy for you to extend the configuration with your own elements, if you do not need that, just leave the class empty.
 
 ```
 public class PowerCommandsConfiguration : CommandsConfiguration
@@ -117,7 +117,7 @@ public class PowerCommandsConfiguration : CommandsConfiguration
     public FavoriteConfiguration[] Favorites { get; set; } = new[] {new FavoriteConfiguration {Name = "Music", NameOfExecutable = "spotify"}, new FavoriteConfiguration { Name = "Games", NameOfExecutable = "steam" } };
 }
 ```
-The configuration element class FavoriteConfiguration  must of course be added, place the file in a directory named Configuration. (just a naming convetion guidline)
+The configuration element class FavoriteConfiguration  must of course be added, place the file in a directory named Configuration. (just a naming convection guideline)
 
 ## <a name='PowerCommandsConfiguration.yaml'></a>PowerCommandsConfiguration.yaml
 You should have this file in one of the projects and the Commands or the Console project is suitable for that, the configuration file is needed at runtime by the Console application. If you customize the PowerCommandsConfiguration class you also need to add this in the yaml configuration file so that the application can use it, same is also true when removing stuff, they should be in sync with each other.
@@ -148,10 +148,10 @@ configuration:
     name: My Example Command  
 ```
 
-### <a name='MorethenonePowerCommandprojectinthesameimplemantationnoproblembut...'></a>More then one PowerCommand project in the same implemantation? (no problem but...)
-If your PowerCommand implementation contains more then one PowerCommands project only one of them should contain this classes, it dosent matter wich one.
+### <a name='MorethenonePowerCommandprojectinthesameimplemantationnoproblembut...'></a>More then one PowerCommand project in the same implementation? (no problem but...)
+If your PowerCommand implementation contains more then one PowerCommands project only one of them should contain this classes, it doesn't matter which one.
 
-## <a name='CreateyourfirstHelloWorldCommandd'></a>Create your first Hello World Commandd
+## <a name='CreateyourfirstHelloWorldCommandd'></a>Create your first Hello World Command
   - Clone this repo
   - Open the Solution PainKiller.PowerCommands in the src\PainKiller.PowerCommands folder.
   - Make sure that one of the Console project is marked as startup project, for example the **PainKiller.PowerCommands.PowerCommandsConsole** in the Solution root
@@ -182,7 +182,7 @@ public class ExampleCommand : CommandBase<PowerCommandsConfiguration>
     }
 }
 ```
-This is the bare minimum that you need, to learn more about what you could do, look at sample commands in the Examaples project in this github repository.
+This is the bare minimum that you need, to learn more about what you could do, look at sample commands in the Examples project in this github repository.
 
 
 ## Update your Core component projects in your custom PowerCommands solution
@@ -207,14 +207,14 @@ There are other ways you can solve the design to, you can solve it with two Comm
 You could look here for inspiration:
 [10 design principles for delightful CLIs](https://blog.developer.atlassian.com/10-design-principles-for-delightful-clis/)
 
-Dont forget to describe your Commands, read more about that under [Always describe your PowerCommands](#AlwaysdescribeyourPowerCommands)
+Don´t forget to describe your Commands, read more about that under [Always describe your PowerCommands](#AlwaysdescribeyourPowerCommands)
 
 ## <a name='ExtendPowerCommand'></a>Extend PowerCommand
 
 ### <a name='AvoidchangesinthePowerCommandCoreextendinstead'></a>Avoid changes in the PowerCommand Core, extend instead
- PowerCommand Framework is distributed as open source code on Github, if you use the source code, avoid to change anything extend the functionallity instead if you feel that you need to do that. That way it is easier for you when something has changed in the Core.
+ PowerCommand Framework is distributed as open source code on Github, if you use the source code, avoid to change anything extend the functionality instead if you feel that you need to do that. That way it is easier for you when something has changed in the Core.
 ### <a name='Writegenericcustommodules'></a>Write generic custom modules
-Keep the Command classes and project lightweight, create custom modules if what you are about to solve means a lot of business and data logic, a good example is the custom command GlitchFinder in this repository. With Glitchfinder you could compare datasources with each other. The implementation is divided in two parts, in the custom module all the algoritms is placed that actually do the comparison and regression test, the Commands project is just a administrative "client" you could say, where you could organise the usage of this test and keep track of the results.
+Keep the Command classes and project lightweight, create custom modules if what you are about to solve means a lot of business and data logic, a good example is the custom command GlitchFinder in this repository. With Glitchfinder you could compare datasources with each other. The implementation is divided in two parts, in the custom module all the algorithms is placed that actually do the comparison and regression test, the Commands project is just a administrative "client" you could say, where you could organize the usage of this test and keep track of the results.
 
 # NAMING CONVENTIONS
 ## <a name='Reflection'></a>Reflection
@@ -227,7 +227,7 @@ PowerCommands rely on reflection to find all existing PowerCommands that are val
    Some base PowerCommands exists in Core, their name ends with "Base" and are defined as abstract and intended to be inherited by other PowerCommands classes, use the same pattern if you add commands with the purpose of acting as base classes.
 
 ## <a name='ReservedCommandnamess'></a>Reserved Command namess
- As the name of the PowerCommand class is used as an identifier, their name must be uniquee, this are the core Commands that you should not use in your custom PowerCommands project, at the moment the reserved commands names are:
+ As the name of the PowerCommand class is used as an identifier, their name must be unique, this are the core Commands that you should not use in your custom PowerCommands project, at the moment the reserved commands names are:
  - CommandsCommand
  - PowerCommandCommand
  - LogCommand
@@ -236,7 +236,7 @@ PowerCommands rely on reflection to find all existing PowerCommands that are val
  - DescribeCommand
  - NewCommand 
 
- This could of cours change in the future and the documentation may not be updated, you could easliy check the reserved commands using this command in the Console:
+ This could of course change in the future and the documentation may not be updated, you could easily check the reserved commands using this command in the Console:
 
  ```
  commands --reserved 
@@ -244,7 +244,7 @@ PowerCommands rely on reflection to find all existing PowerCommands that are val
 ## <a name='Directoriess'></a>Directoriess
  Guidlines for naming directories
  - **Contracts** contains interfaces 
- - **Managers** contains business logic classes with the postfix Manager, for exemple DiagnosticManager, ReflectionManager
+ - **Managers** contains business logic classes with the postfix Manager, for example DiagnosticManager, ReflectionManager
  - **Services** contains static och or Singleton classes acting as services to Managers or Commands
  - **Enums** contain Enums
  - **BaseClasses** contains base classes
@@ -252,7 +252,7 @@ PowerCommands rely on reflection to find all existing PowerCommands that are val
  - **DomainObjects** contain simple classes for data transfer (POCO, DTO, Record), could contain subdirectories for different domains
  - **Extensions** contains extensions classes
  - **Events** contain custom events
- - **Exceptions** contais custom exceptions  
+ - **Exceptions** contains custom exceptions  
 
 # SECURITY
 ## <a name='Storesecretsoutsidetheapplicationpath'></a>Store secrets outside the application path
@@ -260,13 +260,13 @@ PowerCommands rely on reflection to find all existing PowerCommands that are val
 
 ## <a name='Usethesecretsbuiltinfunctionallity'></a>Use the secrets built in functionallity 
 Secret is initialized the fist time you startup a new power command project on your machine, the same keys for encryption/decryption is used by all your PowerCommands based applications on the same machine.
-If you setup PowerCommands on a diffrent machine, a new key for encryption/decryption will be used, meaning you have to create the secrets again on that machine. But you can move the keys manually, but I do not think that you should do that.
+If you setup PowerCommands on a different machine, a new key for encryption/decryption will be used, meaning you have to create the secrets again on that machine. But you can move the keys manually, but I do not think that you should do that.
 
 Create secret with built in commands named secret, like this:
 ```
 secret create "localDB"
 ```
-This will create a secret item in configuration, and a encryptet secret will be stored in a EnvironmentVariable with the proviede name.
+This will create a secret item in configuration, and a encrypted secret will be stored in a EnvironmentVariable with the provide name.
 In you command you could get the decrypted secret like this.
 ```
 var cn = Configuration.Secret.DecryptSecret("Server=.;Database=timelineLocalDB;User Id=sa;Password=##localDB##;"); 
@@ -278,20 +278,20 @@ Another simple usa case where you decrypt your secret access token. Lets pretend
 var accessToken = Configuration.Secret.DecryptSecret("##AWS_TOKEN##");
 ```
 
-Sometimes you have to pass a configuration element to a thirdparty or custom module, then this could be usefull, it creates a new clone of the configuration and you pass that, its a good pattern ratcher then pass the runtime configuration instance that could lead to unpredictable result and in worst case revealing the decrypted secret by mistake.
+Sometimes you have to pass a configuration element to a thirdparty or custom module, then this could be useful, it creates a new clone of the configuration and you pass that, its a good pattern rather then pass the runtime configuration instance that could lead to unpredictable result and in worst case revealing the decrypted secret by mistake.
 ```
 var decryptedCloneConfiguration = Configuration.Secret.DecryptSecret(config.SourceSetting, nameof(config.SourceSetting.ConnectionString));
 ```
 You pass in the configuration and the property name that has a tagged secret and you get a clone of the configuration back where the property value decrypted. In the example above it is the **ConnectionString** property that is decrypted.
 
 
-## Be carefull when decrypting, be sure to protect your secrets in runtime
+## Be careful when decrypting, be sure to protect your secrets in runtime
 It is very easy to expose a decrypted value by mistake, the decryption should be in the same scope or in very near scope of the usage. It should not be passed around with the other configuration values and reside in runtime as long as the application executes. The risk is that for example the decrypted value is logged for some reason you cant predict and the secret is logged as clear text, in other words it is revealed and must be changed.
 
-### Recomended pattern for custom Compenents using secrets, pass the DecryptSecret function
-A pattern to reduce this risk could be to send the DecryptSecret function to the target rather then send the decrypted configuration, like this example below. In this real world use case I using a Custom Component, I want to implement the secret handling as late as possible but avoid to create a depandancy between the custom component and PowerCommands. I have to modify the Custom component a bit but no dependancy is needed. 
+### Recommended pattern for custom Components using secrets, pass the DecryptSecret function
+A pattern to reduce this risk could be to send the DecryptSecret function to the target rather then send the decrypted configuration, like this example below. In this real world use case I using a Custom Component, I want to implement the secret handling as late as possible but avoid to create a dependency between the custom component and PowerCommands. I have to modify the Custom component a bit but no dependency is needed. 
 ```
-//First I add this to the class in the custom component that will use the connction string.
+//First I add this to the class in the custom component that will use the connection string.
 private static Func<string, string> _decryptSecretsFunc;
 public static void SetDecryptSecretFunction(Func<string, string> decryptSecretsFunc) => _decryptSecretsFunc = decryptSecretsFunc;
 
@@ -303,10 +303,10 @@ using (var connection = new SqlConnection(cnString))
 SqlImport.SetDecryptSecretFunction(Configuration.Secret.DecryptSecret);
 ```
 # LOGGING
-## <a name='Reducecoadbloatbyavoidingtryandcatch'></a>Reduce coad bloat by avoiding try and catch
-No need for try catch in PowerCommands Run method as the call already is encapsulated in a try catch block, to reduce coad bload let custom code just crasch and handle that by the PowerCommands runtime, it will be logged, it will be presented for the user in a generic way that not reveal sensitive informaiton that could be the case if you just use Console.WriteLine(ex.Message).
-## <a name='Reducecoadbloatbyavoidinglogging'></a>Reduce coad bloat by avoiding logging
-The runtime always logg information about the input and output from a PowerCommand execution, if you want to pass information from the PowerCommand to the log, you could use Output to to that.
+## <a name='Reducecoadbloatbyavoidingtryandcatch'></a>Reduce code bloat by avoiding try and catch
+No need for try catch in PowerCommands Run method as the call already is encapsulated in a try catch block, to reduce code bloat let custom code just crash and handle that by the PowerCommands runtime, it will be logged, it will be presented for the user in a generic way that not reveal sensitive information that could be the case if you just use Console.WriteLine(ex.Message).
+## <a name='Reducecoadbloatbyavoidinglogging'></a>Reduce code bloat by avoiding logging
+The runtime always log information about the input and output from a PowerCommand execution, if you want to pass information from the PowerCommand to the log, you could use Output to to that.
 Every time you use a Write method in the Commands class, this will be added to the Output and logged as soon as the method is finished. 
 ```
 var name = $"{input.SingleArgument} {input.SingleQuote}";
@@ -317,7 +317,7 @@ This will add a row to the log with the output from the WriteLine call automatic
 The CommandBase class has a couple of help methods to output data to the console, use that rather then Console.WriteLine. The base class Write methods will automatically return all the output during a Run method execution, and this output will be logged by the logger component.
 ```
 WriteHeadLine("Header", addToOutput: true);
-WriteLine("Write line, also ends up in the log (default behaivour)");
+WriteLine("Write line, also ends up in the log (default behavior)");
 WriteProcessLog("Write with WriteProcessLog adds a tag do log","process1");
 //You could also use extensions methods
 this.WriteObjectDescription(name:"Megabytes", description:"A numeric value");
@@ -332,7 +332,7 @@ IPowerCommandServices.DefaultInstance?.Logger.LogInformation($"Log this informat
  The PowerCommands.Configuration component has generic support for reading and writing object as YAML and that format should always be used for configuration files. 
 ## <a name='Configurationcouldbesharedbyclients'></a>Configuration could be shared by clients
 The main configuration should be named PowerCommandsConfiguration.yaml and be a valid YAML file, it could be shared by many clients residing in the same directory.
-In such cases they should support the identical configuration structure otherwise there could be trouble, most propably some Console client won´t start.
+In such cases they should support the identical configuration structure otherwise there could be trouble, most probably some Console client won´t start.
 
 # Documentation
 ## <a name='UseMarkdownformat'></a>Use Markdown format
@@ -355,7 +355,7 @@ But it is just not for displaying the help, the option property and the suggesti
 ## <a name='Options'></a>Options
 In the example image showing usage of the attributes you could se that the options: property is set to **"mode|name"**, that means that this command has two option one named **mode** and the other one is **name**. This will give the user autocomplete feedback when typing - and using the [Tab] tangent.
 
-Programatically you can use Options in two ways, you could grab the value, wich is the parameter typed after the option, like this (using the RegressionCommand as example, it is a user created command).
+Programmatically you can use Options in two ways, you could grab the value, which is the parameter typed after the option, like this (using the RegressionCommand as example, it is a user created command).
 
 ``` regression --mode normal --name "My sample project" ```
 
@@ -368,8 +368,8 @@ Sometimes you just want a option without a value, you can solve that like this:
 ``` var mode = input.HasOption("xml"); ```
 
 ### Do not use the help option, unless you want to override it´s behaviour
-It will not harm anything but --help will trigger the Core frameowrk to display generic help (using the PowerCommandDesign attriute).
-You can override this behaviour if you set the property **overrideHelpOption** to true. Do not do that if your not intend to implement your own show help functionalllity for that command.
+It will not harm anything but --help will trigger the Core framework to display generic help (using the PowerCommandDesign attribute).
+You can override this behavior if you set the property **overrideHelpOption** to true. Do not do that if your not intend to implement your own show help functionality for that command.
 
 
 # ARCHITECTURE

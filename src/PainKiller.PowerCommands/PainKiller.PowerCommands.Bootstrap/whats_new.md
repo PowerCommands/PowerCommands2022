@@ -1,4 +1,15 @@
 ﻿# What is new?
+## Version 1.0.4.0
+**Released 2024-12-12**
+- Added a new `FileCommand` command to Read, Copy, Move, Delete files and show file properties.
+- `FileCommand` also handles to write the output for a provided existing Command to a file.
+- A new service to be used when running a Command from a command.
+- Improved the `ClsCommand` so that the `cls` really clears all the input, which is a security improvement.
+- Fixed a bug that duplicated the output to the RunResult instance.
+- Added the feature to Commands command to pickup and display diagnostics about the latest RunResult (if any)
+- Log view is now the default action instead of viewing log files
+- Improved `cd` and `dir` command, added som nice new features to them
+- All Nuget packages has been updated.
 ## Version 1.0.3.2
 **Released 2023-12-26**
 - `DialogService.ListDialog` has major improvements with paging and select all functionality and have been moved to a new service, named `ListService`.

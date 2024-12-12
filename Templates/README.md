@@ -4,11 +4,13 @@
 
 [PowerCommands.zip](PowerCommands.zip)
 
-Copy the .zip file into the user project template directory. By default, this directory is **%USERPROFILE%\Documents\Visual Studio <version>\Templates\ProjectTemplates** (do not place it in any of the subfolders).
+Copy the .zip file into the user project template directory. By default, this directory is **%USERPROFILE%\Documents\Visual Studio <version>\Templates\ProjectTemplates** (do not place it in any of the sub folders).
 
 Open Visual Studio and write Power in the searchbox, you should find the PowerCommand template.
 
 I recommend you to use the option ```Place solution in the same directory``` some experimental features for update and create commands using a template the Core depends on that.
+
+### [Read documentation](../Docs/README.md)
 
 ## .NET 6 (and .NET 7) 1.0.2.2 version
 [PowerCommands_1.0.2.2.zip](PowerCommands_1.0.2.2.zip)
@@ -16,6 +18,17 @@ I recommend you to use the option ```Place solution in the same directory``` som
 ![Alt text](../Docs/images/VS_solution_option.png?raw=true "Command Base")
 
 # What is new?
+## Version 1.0.4.0
+**Released 2024-12-12**
+- Added a new `FileCommand` command to Read, Copy, Move, Delete files and show file properties.
+- `FileCommand` also handles to write the output for a provided existing Command to a file.
+- A new service to be used when running a Command from a command.
+- Improved the `ClsCommand` so that the `cls` really clears all the input, which is a security improvement.
+- Fixed a bug that duplicated the output to the RunResult instance.
+- Added the feature to Commands command to pickup and display diagnostics about the latest RunResult (if any)
+- Log view is now the default action instead of viewing log files
+- Improved `cd` and `dir` command, added som nice new features to them
+- All Nuget packages has been updated.
 ## Version 1.0.3.2
 **Released 2023-12-26**
 - `DialogService.ListDialog` has major improvements with paging and select all functionality and have been moved to a new service, named `ListService`.

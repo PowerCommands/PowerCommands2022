@@ -4,10 +4,8 @@
                            options: "all|!command|trace",
                 disableProxyOutput: true,
                            example: "//Test a specific command|test --command commandName|//Test all commands (default) option could be omitted|test --all")]
-public class TestCommand : CommandBase<CommandsConfiguration>
+public class TestCommand(string identifier, CommandsConfiguration configuration) : CommandBase<CommandsConfiguration>(identifier, configuration)
 {
-    public TestCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
-
     public override RunResult Run()
     {
         Console.Clear();

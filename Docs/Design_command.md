@@ -14,7 +14,7 @@ There are other ways you can solve the design to, you can solve it with two Comm
 
 ## Example code
 ### Use case
-You want a simple Command that converts a yaml file to json or xml format. Your first architecture descision is, one command or two? Well, it is a matter of taste but for this example the choise is one single command that handles the conversion to both formats. We use two [Options](Options.md), one for the filename, named path and one for the format named format. I exclude the implementation code to keep the code example short. We pretend that we have a static class handling this format conversions.
+You want a simple Command that converts a yaml file to json or xml format. Your first architecture decision is, one command or two? Well, it is a matter of taste but for this example the choice is one single command that handles the conversion to both formats. We use two [Options](Options.md), one for the filename, named path and one for the format named format. I exclude the implementation code to keep the code example short. We pretend that we have a static class handling this format conversions.
 
 ```
 using PainKiller.PowerCommands.Core.Extensions;
@@ -45,7 +45,7 @@ The new design look like this.
                           options: "!PATH|format",
                           example: "//Convert to json format|convert --path \"c:\\temp\\test.yaml\" --format json|//Convert to xml format|convert --path \"c:\\temp\\test.yaml\" --format xml")]
 ```                     
-Have a closer look at the !PATH option, it starts with a **!** and it consists of upperletter cases only **PATH**, with the use of the **!** sympol the option must have a value. With the use of uppercase letter the option it self is **mandatory**.  
+Have a closer look at the !PATH option, it starts with a **!** and it consists of upper letter cases only **PATH**, with the use of the **!** symbol the option must have a value. With the use of uppercase letter the option it self is **mandatory**.  
 
 If I run the command empty I trigger a validation error.
 
@@ -56,7 +56,7 @@ Lets have look of how the user input is designed.
 
 ![Alt text](images/Command_line_input_convert.png?raw=true "Describe convert command")
 
-This input will first be handled by the Core Framework, using the Identifier an instanse of the ConvertCommand will be created and the framework will also add the [Input](Input.md) instance to the ConvertCommand instans wich give your convert command two options named **path** and **format** to handle progamatically to create a file on the given path with the given format.
+This input will first be handled by the Core Framework, using the Identifier an instance of the ConvertCommand will be created and the framework will also add the [Input](Input.md) instance to the ConvertCommand instance which give your convert command two options named **path** and **format** to handle programmatically to create a file on the given path with the given format.
 
 # An alternative design using suggestions
 Instead of using the option **format** in the previous example you could use argument **xml** and **json** instead, there is nothing wrong or right here, it is up to you to choose what you think is the best approach.
@@ -94,10 +94,10 @@ public class ConvertCommand : CommandBase<PowerCommandsConfiguration>
     }
 }
 ```
-### **Please Note** that the name of the arguments in the design attribute is not important in code, it is usefull thou when help about the command is displayed. Suggestions is what it sounds like only suggestions to guide the user to the right input.
+### **Please Note** that the name of the arguments in the design attribute is not important in code, it is useful thou when help about the command is displayed. Suggestions is what it sounds like only suggestions to guide the user to the right input.
 
 ## Must I use the PowerCommandDesign attribute on every command I create?
-No that is not mandatory but it is recommended, note that when you declare the [Options](Options.md), they will be available for code completion, wich means that when the consumer types - and hit the tab button the user will can se what options there are that could be used, with a simple ! character you tell that the argument, quote, option or secret is required and then the Core runtime will validate that automatically for you.
+No that is not mandatory but it is recommended, note that when you declare the [Options](Options.md), they will be available for code completion, which means that when the consumer types - and hit the tab button the user will can se what options there are that could be used, with a simple ! character you tell that the argument, quote, option or secret is required and then the Core runtime will validate that automatically for you.
 
 Read more about CLI design here: [10 design principles for delightful CLIs](https://blog.developer.atlassian.com/10-design-principles-for-delightful-clis/)
 

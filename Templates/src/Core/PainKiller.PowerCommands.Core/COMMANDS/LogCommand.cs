@@ -6,20 +6,17 @@
                      suggestions: "view|archive",
                disableProxyOutput: true,
                           example: "//View a list with all the logfiles|log|//Archive the logs into a zip file.|log archive|//View content of the current log|log view|//Filter the log show only posts matching the provided process tag, this requires that you are using process tags when logging in your command(s).|log --process created")]
-public class LogCommand : CommandBase<CommandsConfiguration>
+public class LogCommand(string identifier, CommandsConfiguration configuration) : CommandBase<CommandsConfiguration>(identifier, configuration)
 {
-    public LogCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
-
     public override RunResult Run()
     {
-        if (Input.Options.Length == 0) List();
-        if (Input.SingleArgument == "archive") Archive();
-        if (Input.SingleArgument == "view") View();
-        if (Input.HasOption("process")) ProcessLog($"{Input.GetOptionValue("process")}");
+        if (Input.SingleArgument == "archive") return Archive();
+        if (Input.SingleArgument == "files") return List();
+        if (Input.HasOption("process")) return ProcessLog($"{Input.GetOptionValue("process")}");
         
-        return Ok();
+        return View();
     }
-    private void List()
+    private RunResult List()
     {
         DisableLog();
         var dir = new DirectoryInfo(Path.Combine(AppContext.BaseDirectory, Configuration.Log.FilePath));
@@ -36,18 +33,22 @@ public class LogCommand : CommandBase<CommandsConfiguration>
         WriteHeadLine("To view a certain process log use:");
         WriteCodeExample("log","--process myProcess");
         EnableLog();
+        return Ok();
     }
-    private void Archive() => WriteLine(Configuration.Log.ArchiveLogFiles());
-    private void View()
+    private RunResult Archive()
     {
-        DisableLog();
-        foreach (var line in Configuration.Log.ToLines()) ConsoleService.Service.WriteLine(nameof(LogCommand), line);
-        EnableLog();
+        WriteLine(Configuration.Log.ArchiveLogFiles());
+        return Ok();
     }
-    private void ProcessLog(string processTag)
+
+    private RunResult View()
     {
-        DisableLog();
-        foreach (var line in Configuration.Log.GetProcessLog(processTag)) ConsoleService.Service.WriteLine(nameof(LogCommand), line);
-        EnableLog();
+        foreach (var line in Configuration.Log.ToLines()) Console.WriteLine(line);
+        return Ok();
+    }
+    private RunResult ProcessLog(string processTag)
+    {
+        foreach (var line in Configuration.Log.GetProcessLog(processTag)) Console.WriteLine(line);
+        return Ok();
     }
 }

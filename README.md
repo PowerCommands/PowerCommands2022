@@ -3,43 +3,17 @@ You could see PowerCommands as your CLI application starter kit. It is a structu
 
 [Follow progress on twitter](https://twitter.com/PowerCommands) <img src="https://github.com/PowerCommands/PowerCommands2022/blob/main/Docs/images/Twitter.png?raw=true" alt="drawing" width="20"/>
 
-## Version 1.0.3.2
-**Released 2023-12-26**
-- `DialogService.ListDialog` has major improvements with paging and select all functionality and have been moved to a new service, named `ListService`.
-- `ProxyCommand` now handles suggestion overrides in configuration.
-- `ConsoleTableService.RenderTable` generic constraint new() removed since it is not needed.
-- Bookmarks in `CdCommand` now handles `%USERNAME%` as a placeholder for current user in paths. 
-
-## Version 1.0.3.1
-**Released 2023-11-30**
-- Adjusted the Power Command to be run with a service account and use encryption, update the setup to reflect this.
-- Added general option `--pc_force_quit` in CommandBase to be used with any command to force application to quit.
-- Improved encryption.
-- Bug fix DialogService.ListDialog now handles 0 input more gracefully.
-- Bug fix CommandBase now return RunResultStatus.Quit when using Quit()
-
-**Release 2023-11-18**
-- Updated to .NET 8
-- Using C# 12
-- Updated YamlDotNet to current latest stable version
-- Updated Microsoft.Extensions.Logging.Abstractions to current latest stable version
-- Updated Serilog and Serilog.Sinks.File to current latest stable version
-
- ### The core components offering this to your custom PowerCommands
- - Command completion, with history, suggestions, options and support for Path/File navigation and color highlighting when typing a valid command
- - Secret handling to protect sensitive information like password or authentication tokens in the configuration file. 
- - Configuration with YAML (built to be very easy to extend)
- - Logging (using Microsoft.Extensions.Logging.ILogger)
- - Built in help system with the use of attributes
- - Run as job
- - Validation rules with attribute
- - Toolbar labels to guide the user
- - Diagnostic  
- - Progressbar
- - Dialog service (with password prompting) 
- - Navigation with working directory and familiar cd and dir commands
-
-https://github.com/PowerCommands/PowerCommands2022/assets/102176789/d8ad92f0-93aa-4350-b37b-d0961108117d 
+## Version 1.0.4.0
+**Released 2024-12-12**
+- Added a new `FileCommand` command to Read, Copy, Move, Delete files and show file properties.
+- `FileCommand` also handles to write the output for a provided existing Command to a file.
+- Added a new service `RunCommandService` to be used when running a Command from a command.
+- Improved the `ClsCommand` so that the `cls` really clears all the input, which is a security improvement.
+- Fixed a bug that duplicated the output to the RunResult instance.
+- Added the feature to `Commands` command to pickup and display diagnostics about the latest RunResult (if any) for a given command (by name).
+- Log view is now the default action instead of viewing log files
+- Improved `cd` and `dir` command, added som nice new features to them
+- All Nuget packages has been updated. 
 
  ## Start your journey
 [Create a new VS Solution](Docs/Create_new_%20project.md)

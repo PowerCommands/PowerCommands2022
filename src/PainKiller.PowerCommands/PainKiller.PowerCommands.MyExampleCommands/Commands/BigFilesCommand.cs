@@ -18,7 +18,7 @@ public class BigFilesCommand : CdCommand
     {
         var megaBytes = Input.GetOptionValue("megabytes");
         var path = Input.Path;
-        if (string.IsNullOrEmpty(path)) path = WorkingDirectory;
+        if (string.IsNullOrEmpty(path)) path = Environment.CurrentDirectory;
 
         if (!Directory.Exists(path)) return BadParameterError($"{path} must be a valid directory path");
         if (int.TryParse(megaBytes, out var number)) _minFileSize = number;

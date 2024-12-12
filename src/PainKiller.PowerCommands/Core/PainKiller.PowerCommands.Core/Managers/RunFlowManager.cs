@@ -1,15 +1,9 @@
 ﻿namespace PainKiller.PowerCommands.Core.Managers;
 
-public class RunFlowManager
+public class RunFlowManager(string[] args)
 {
-    public RunFlowManager(string[] args)
-    {
-        Args = args;
-        RunAutomatedAtStartup = args.Length > 0;
-    }
-
-    public string[] Args { get;}
-    public bool RunAutomatedAtStartup { get; private set; }
+    public string[] Args { get;} = args;
+    public bool RunAutomatedAtStartup { get; private set; } = args.Length > 0;
     public bool RunOnceThenQuit { get; private set; }
     public RunResultStatus CurrentRunResultStatus { get; set; } = RunResultStatus.Initializing;
     public string ContinueWith { get; set; } = "";

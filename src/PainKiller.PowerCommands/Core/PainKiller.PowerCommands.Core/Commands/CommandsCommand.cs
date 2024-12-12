@@ -3,7 +3,7 @@
 [PowerCommandTest(tests: " |--this|--reserved|\"encrypt\"|--default")]
 [PowerCommandDesign( description: "Shows commands, or filter commands by name, create a new command, show default command with option --default",
                           quotes: "<filter>",
-                         options: "this|reserved|default|!update|add-proxy",
+                         options: "this|reserved|latest-result|default|!update|add-proxy",
               disableProxyOutput: true,
                          example: "//Show all commands|commands|//Show your custom commands|commands --this|//Show reserved commands|commands --reserved|//Search for commands matching \"encrypt\"|commands \"encrypt\"|//Show default command|commands --default|//Update the dir command (command must exist in the configured PowerCommands project)|commands --update dir|//Add a proxy|commands --add-proxy")]
 public class CommandsCommand(string identifier, CommandsConfiguration configuration) : CommandBase<CommandsConfiguration>(identifier, configuration)
@@ -16,8 +16,21 @@ public class CommandsCommand(string identifier, CommandsConfiguration configurat
         if (Input.HasOption("default")) return Default();
         if (Input.HasOption("reserved")) return Reserved();
         if (Input.HasOption("update")) return Update();
+        if (Input.HasOption("latest-result")) return LatestResult();
         if (!string.IsNullOrEmpty(Input.SingleQuote)) return FilterByName();
         return NoFilter();
+    }
+
+    private RunResult LatestResult()
+    {
+        var commandName = Input.GetOptionValue("latest-result");
+        var result = commandName.GetLatestOutput();
+        WriteHeadLine(result.Identifier);
+        WriteCodeExample("Output", result.Output);
+        WriteCodeExample("Status", $"{result.Status}");
+        WriteCodeExample("Created", $"{result.Created}");
+        WriteCodeExample("Input", $"{result.Raw}");
+        return Ok();
     }
     private RunResult Update()
     {

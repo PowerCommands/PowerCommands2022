@@ -6,9 +6,8 @@ namespace $safeprojectname$.Commands;
     options: "create|initialize|configuration|remove|salt",
     disableProxyOutput: true,
     example: "//View all declared secrets|secret|secret --create \"mycommand-pass\"|secret --remove \"mycommand-pass\"|//Initialize your machine with a new encryption key (stops if this is already done)|secret --initialize")]
-public class SecretCommand : CommandBase<CommandsConfiguration>
+public class SecretCommand(string identifier, CommandsConfiguration configuration) : CommandBase<CommandsConfiguration>(identifier, configuration)
 {
-    public SecretCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
     public override RunResult Run()
     {
         if (Input.HasOption("initialize")) return Init();

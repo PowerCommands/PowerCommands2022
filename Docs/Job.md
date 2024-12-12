@@ -1,7 +1,7 @@
 # Run your command as a job
-A PowerCommands application can be started with arguments from the commandline which is usefull when you want to use your PowerCommands implementation to perform something as a automated job.
+A PowerCommands application can be started with arguments from the commandline which is useful when you want to use your PowerCommands implementation to perform something as a automated job.
 
-The code below shos a dummie example of how you design your Command to run as an automatated task, notice the **return Quit()** at the end of the Run() method, that will trigger the program to quit the application. 
+The code below shos a dummie example of how you design your Command to run as an automated task, notice the **return Quit()** at the end of the Run() method, that will trigger the program to quit the application. 
 
 ![Alt text](images/job.png?raw=true "job")
 

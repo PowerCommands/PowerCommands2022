@@ -10,4 +10,9 @@ public static class FileHandlingExtensions
         foreach (var fileInfo in fileNames) File.Copy(fileInfo.FullName, $"{toPath}\\{fileInfo.Name}");
         return fileCount;
     }
+    public static ProxyResult GetLatestOutput(this string identifier)
+    {
+        var fileName = Path.Combine(ConfigurationGlobals.ApplicationDataFolder, $"proxy_{identifier}.data");
+        return StorageService<ProxyResult>.Service.GetObject(fileName);
+    }
 }

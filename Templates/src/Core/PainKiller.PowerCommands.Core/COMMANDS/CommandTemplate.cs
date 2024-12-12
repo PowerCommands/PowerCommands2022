@@ -1,11 +1,6 @@
 ﻿namespace $safeprojectname$.Commands;
 
-public class CommandTemplate : CommandBase<CommandsConfiguration>
+public class CommandTemplate(string identifier, CommandsConfiguration configuration) : CommandBase<CommandsConfiguration>(identifier, configuration)
 {
-    public CommandTemplate(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
-
-    public override RunResult Run()
-    {
-        return Ok();
-    }
+    public override RunResult Run() => Ok();
 }

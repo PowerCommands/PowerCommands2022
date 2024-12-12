@@ -16,7 +16,7 @@ public class HelpService : IHelpService
         var examples = da.Examples.Split(ConfigurationGlobals.ArraySplitter);
 
         ConsoleService.Service.WriteHeaderLine($"{GetType().Name}", $"{command.Identifier}\n\nDescription", writeLog: WriteToLog);
-        ConsoleService.Service.WriteLine(nameof(HelpService),$" {da.Description}");
+        ConsoleService.Service.WriteLine(nameof(HelpService),$" {da.Description.Replace("[PIPE]", "|")}");
         Console.WriteLine();
 
         var args = da.Arguments.Replace("!","").Split(ConfigurationGlobals.ArraySplitter);
@@ -39,16 +39,17 @@ public class HelpService : IHelpService
         if (string.IsNullOrEmpty(da.Examples)) return;
         
         ConsoleService.Service.WriteHeaderLine($"{GetType().Name}", $"{nameof(da.Examples)}:", writeLog: WriteToLog);
-        foreach (var e in examples) WriteItem(e, command.Identifier);
+        foreach (var e in examples) WriteItem(e.Replace("[PIPE]", "|"), command.Identifier);
     }
     private void WriteItem(string description, string identifier = "")
     {
-        if (description.StartsWith("//"))
+        var formatedDescription = description.Replace("[PIPE]", "|");
+        if (formatedDescription.StartsWith("//"))
         {
-            ConsoleService.Service.WriteHeaderLine($"{GetType().Name}", $"\n{description.Replace("//","")}", ConsoleColor.White);
+            ConsoleService.Service.WriteHeaderLine($"{GetType().Name}", $"\n{formatedDescription.Replace("//","")}", ConsoleColor.White);
             return;
         }
         ConsoleService.Service.Write(GetType().Name, $" {identifier} ", ConsoleColor.Blue, WriteToLog);
-        ConsoleService.Service.WriteLine(GetType().Name, description.Replace(identifier,"").Trim(), null, WriteToLog);
+        ConsoleService.Service.WriteLine(GetType().Name, formatedDescription.Replace(identifier,"").Trim(), null, WriteToLog);
     }
 }

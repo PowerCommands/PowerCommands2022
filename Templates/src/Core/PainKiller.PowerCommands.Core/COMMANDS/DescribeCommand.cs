@@ -6,10 +6,8 @@
                          options: "docs|clear",
               disableProxyOutput: true,
                          example: "describe exit|describe cls|describe log|//Open documentation about options (if any)|describe options --doc")]
-public class DescribeCommand : CommandBase<CommandsConfiguration>
+public class DescribeCommand(string identifier, CommandsConfiguration configuration) : CommandBase<CommandsConfiguration>(identifier, configuration)
 {
-    public DescribeCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
-
     public override RunResult Run()
     {
         if(Input.HasOption("docs")) ShowDoc();
@@ -43,8 +41,8 @@ public class DescribeCommand : CommandBase<CommandsConfiguration>
 
     private void ShowCommand()
     {
-        var identifier = string.IsNullOrEmpty(Input.SingleArgument) ? "describe" : Input.SingleArgument;
-        var command = IPowerCommandsRuntime.DefaultInstance?.Commands.FirstOrDefault(c => c.Identifier == identifier);
+        var commandIdentifier = string.IsNullOrEmpty(Input.SingleArgument) ? "describe" : Input.SingleArgument;
+        var command = IPowerCommandsRuntime.DefaultInstance?.Commands.FirstOrDefault(c => c.Identifier == commandIdentifier);
         if (command == null)
         {
             if (Input.Identifier != nameof(DescribeCommand).ToLower().Replace("command", "")) WriteLine($"Command with identifier:{Input.Identifier} not found");
