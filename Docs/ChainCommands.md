@@ -4,7 +4,7 @@ From version 1.0.4.0 of PowerCommands you can call two commands using one line, 
 
 The code below shows an example on how it could be used, in this case I first run the command `output` which is a really simple command that prints out what you input in the flag `--text`, then we use the | to let the runtime know that one more command should be run, in this case it is the file command, I am adding a --target flag with a file name.
 
-![Alt text](images/pipe_call.png?raw=true "Chain of commands")
+https://github.com/user-attachments/assets/b718cc18-2cbb-4812-b3a2-0d054e948a00
 
 ## Handling the output from the previous command
 If the target command needs the output from the calling command the target command must implement code pickup the output, let´s take a look on how this is implemented in the FileCommand class.
