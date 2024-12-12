@@ -23,6 +23,8 @@ You could see PowerCommands as your CLI application starter kit. It is a structu
 ## Commands development
 [Design your Command](Docs/Design_command.md)
 
+[Chain commands calls](Docs/ChainCommands.md)
+
 [Power Commands Design attribute](Docs/PowerCommandDesignAttribute.md)
 
 [Override Design attribute in config file](Docs/OverrideDesignAttribute.md)
@@ -42,6 +44,9 @@ https://github.com/PowerCommands/PowerCommands2022/assets/102176789/10945ee0-947
 [Simple automated test](Docs/Test.md)
 
 [Output to the Console guideline](Docs/ConsoleOutput.md)
+
+## File handling
+[Handling files and directories with file, cd and dir commands](ReadWriteFileHandler.md)
 
 ## Automation
 [Run your command as job](Docs/Job.md)
