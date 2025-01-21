@@ -20,6 +20,7 @@
         <ProjectItem ReplaceParameters="true" TargetFileName="PowerCommandDesignAttribute.cs">PowerCommandDesignAttribute.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="PowerCommandsToolbarAttribute.cs">PowerCommandsToolbarAttribute.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="PowerCommandTestAttribute.cs">PowerCommandTestAttribute.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="PowerCommandPrivacyAttribute.cs">PowerCommandPrivacyAttribute.cs</ProjectItem>
       </Folder>
       <Folder Name="Contracts" TargetFolderName="Contracts">
         <ProjectItem ReplaceParameters="true" TargetFileName="ICommandLineInput.cs">ICommandLineInput.cs</ProjectItem>

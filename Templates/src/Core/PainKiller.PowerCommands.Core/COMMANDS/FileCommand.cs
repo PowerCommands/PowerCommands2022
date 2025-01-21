@@ -56,7 +56,7 @@ public class FileCommand(string identifier, CommandsConfiguration configuration)
     private RunResult WritePreviousCommandResult()
     {
         var latestCommandResult = IPowerCommandsRuntime.DefaultInstance?.Latest;
-        if (latestCommandResult == null) return BadParameterError("You must provide a valid file path as the first parameter (must be surrounded with quotation marks if filename contains whitespaces.");
+        if (latestCommandResult == null) return BadParameterError("Could not fetch the latest command.");
         var inputs = latestCommandResult.Input.Raw.Split(' ');
         var path = inputs[1].Contains("\"") ? Input.Quotes.First().Replace("\"","") : inputs[1];
         if (!string.IsNullOrEmpty(GetOptionValue("target"))) path = GetOptionValue("target");   //If a path is provided with the option flag target, this will be used instead.

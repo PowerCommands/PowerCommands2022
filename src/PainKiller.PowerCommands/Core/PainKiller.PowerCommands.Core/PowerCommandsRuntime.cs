@@ -87,7 +87,7 @@ public class PowerCommandsRuntime<TConfig> : IPowerCommandsRuntime where TConfig
             command.RunAsync().ContinueWith((_) =>
             {
                 command.RunCompleted();
-                Console.Write(ConfigurationGlobals.Prompt);
+                Console.Write(ConfigurationGlobals.GetPrompt());
             });
             Latest = new RunResult(command, input, "Command running async operation", RunResultStatus.Async);
         }

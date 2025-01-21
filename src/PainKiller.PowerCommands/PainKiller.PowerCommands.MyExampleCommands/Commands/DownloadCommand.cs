@@ -28,7 +28,7 @@ public class DownloadCommand : CommandBase<CommandsConfiguration>
         
         var fileCheckSum = new FileChecksum(_fileName);
         WriteLine($"Download content from {_downloadUrl} to file {_fileName} completed. Checksum: {fileCheckSum.Mde5Hash}");
-        Console.Write($"\n{ConfigurationGlobals.Prompt}");
+        Console.Write($"\n{ConfigurationGlobals.GetPrompt()}");
         _progressbar = null;
         return false;
     }

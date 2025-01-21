@@ -14,13 +14,12 @@ public class SecretService : ISecretService
         var decryptedVal = decryptFunction(val);
         return decryptedVal;
     }
-
     public string SetSecret(string name, string secret, Dictionary<string, string> options, Func<string, string> encryptFunction)
     {
         Enum.TryParse<EnvironmentVariableTarget>(options["target"], out var target);
-        var decryptedVal = encryptFunction(secret);
-        Environment.SetEnvironmentVariable(name, decryptedVal, target);
-        return decryptedVal;
+        var encryptedVal = encryptFunction(secret);
+        Environment.SetEnvironmentVariable(name, encryptedVal, target);
+        return encryptedVal;
     }
     public string ReplaceSecret(string content, string name, Dictionary<string, string> options, Func<string, string> decryptFunction)
     {

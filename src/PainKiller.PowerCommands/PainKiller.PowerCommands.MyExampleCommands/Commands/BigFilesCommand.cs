@@ -32,7 +32,7 @@ public class BigFilesCommand : CdCommand
         TraverseDirectory(rootDirectory);
         OverwritePreviousLine($"Big files found over {_minFileSize} MB:");
         foreach (var bigFile in _bigFiles) WriteLine(bigFile);
-        Console.Write($"\nDone!\n{ConfigurationGlobals.Prompt}");
+        Console.Write($"\nDone!\n{ConfigurationGlobals.GetPrompt()}");
     }
     private void TraverseDirectory(DirectoryInfo startDirectory)
     {

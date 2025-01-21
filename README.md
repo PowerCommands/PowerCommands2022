@@ -3,6 +3,15 @@ You could see PowerCommands as your CLI application starter kit. It is a structu
 
 [Follow progress on twitter](https://twitter.com/PowerCommands) <img src="https://github.com/PowerCommands/PowerCommands2022/blob/main/Docs/images/Twitter.png?raw=true" alt="drawing" width="20"/>
 
+## Version 1.0.4.1
+**Released 2025-01-21**
+- PowerCommandPrivacyAttribute to prevent sensitive data leak out to the logfile.
+- Improved dialog and toolbar service.
+- New function for deserialization of Yaml.
+- Improved ZipService.
+- Every PowerCommand implementation now has it´s own working folder.
+- Filter on dir command is now not case sensitive.
+- Nuget packages has been updated.
 ## Version 1.0.4.0
 **Released 2024-12-12**
 - Added a new `FileCommand` command to Read, Copy, Move, Delete files and show file properties.
@@ -13,7 +22,7 @@ You could see PowerCommands as your CLI application starter kit. It is a structu
 - Added the feature to `Commands` command to pickup and display diagnostics about the latest RunResult (if any) for a given command (by name).
 - Log view is now the default action instead of viewing log files
 - Improved `cd` and `dir` command, added som nice new features to them
-- All Nuget packages has been updated.
+- Nuget packages has been updated.
 
  https://github.com/user-attachments/assets/b718cc18-2cbb-4812-b3a2-0d054e948a00
 

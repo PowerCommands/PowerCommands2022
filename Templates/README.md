@@ -18,6 +18,15 @@ I recommend you to use the option ```Place solution in the same directory``` som
 ![Alt text](../Docs/images/VS_solution_option.png?raw=true "Command Base")
 
 # What is new?
+## Version 1.0.4.1
+**Released 2025-01-21**
+- PowerCommandPrivacyAttribute to prevent sensitive data leak out to the logfile.
+- Improved dialog and toolbar service.
+- New function for deserialization of Yaml.
+- Improved ZipService.
+- Every PowerCommand implementation now has it´s own working folder.
+- Filter on dir command is now not case sensitive.
+- Nuget packages has been updated.
 ## Version 1.0.4.0
 **Released 2024-12-12**
 - Added a new `FileCommand` command to Read, Copy, Move, Delete files and show file properties.

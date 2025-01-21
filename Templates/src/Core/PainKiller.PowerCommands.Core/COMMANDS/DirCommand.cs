@@ -3,8 +3,9 @@
 namespace $safeprojectname$.Commands;
 
 [PowerCommandDesign(description: "List the content of the working directory or this applications app directory, with the option to open the directory with the File explorer ",
-    options: "!filter|browse|drive-info",
-    example: "//List the content and open the current working directory|dir --open|//Open the AppData roaming directory|dir --app --open")]
+             disableProxyOutput: true,
+                        options: "!filter|browse|drive-info",
+                        example: "//List the content and open the current working directory|dir --open|//Open the AppData roaming directory|dir --app --open")]
 public class DirCommand(string identifier, CommandsConfiguration configuration) : CdCommand(identifier, configuration)
 {
     public override RunResult Run()

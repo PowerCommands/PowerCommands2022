@@ -192,4 +192,37 @@ public static class StringExtensions
         var extension = fileInfo.Extension.ToLowerInvariant();
         return FileTypeDescriptions.GetValueOrDefault(extension, "Unknown file type");
     }
+
+    private static readonly Dictionary<string, string> PlainTextFileContent = new()
+    {
+        // Text files
+        { ".txt", "Text file" },
+        { ".log", "Log file" },
+        { ".md", "Markdown file" },
+        // Code and script files
+        { ".cs", "C# source code file" },
+        { ".java", "Java source code file" },
+        { ".py", "Python script" },
+        { ".js", "JavaScript file" },
+        { ".html", "HTML file" },
+        { ".css", "Cascading Style Sheets file" },
+        { ".php", "PHP script" },
+        { ".cpp", "C++ source code file" },
+        { ".h", "C/C++ header file" },
+        { ".sh", "Shell script" },
+        { ".rb", "Ruby script" },
+        { ".ts", "TypeScript file" },
+        // Configuration files
+        { ".json", "JSON configuration file" },
+        { ".xml", "XML file" },
+        { ".ini", "Initialization file" },
+        { ".yml", "YAML configuration file" },
+        { ".yaml", "YAML configuration file" }
+    };
+    public static bool IsPlainTextFileContent(this FileInfo fileInfo)
+    {
+        if (fileInfo == null) throw new ArgumentNullException(nameof(fileInfo));
+        var extension = fileInfo.Extension.ToLowerInvariant();
+        return PlainTextFileContent.ContainsKey(extension);
+    }
 }

@@ -14,6 +14,10 @@ public static class Startup
 
     public static PowerCommandsManager ConfigureServices()
     {
+        var services = PowerCommandServices.Service;
+        services.Configuration.Environment.InitializeValues();
+        services.Logger.LogInformation("Program started, configuration read");
+        
         if (!File.Exists(SetupFileName))
         {
             var setupConfiguration = new SetupConfiguration { Setup = DateTime.Now, User = Environment.UserName };
@@ -24,10 +28,6 @@ public static class Startup
             ConsoleService.Service.WriteSuccessLine(nameof(Startup), "\nFirst startup basic application configuration completed...");
             ConsoleService.Service.WriteSuccessLine(nameof(Startup), "You will need to restart the application before the changes take effect.");
         }
-        var services = PowerCommandServices.Service;
-        
-        services.Configuration.Environment.InitializeValues();
-        services.Logger.LogInformation("Program started, configuration read");
 
         ConsoleService.Service.WriteLine(nameof(Startup), "\nUse the tab key to cycle trough available commands, suggestions and options.\nUse <command name> --help or describe <search phrase> to display documentation.", null);
         ConsoleService.Service.WriteLine(nameof(Startup), "\nUse up or down key  to cycle trough command history.", null);

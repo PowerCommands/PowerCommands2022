@@ -24,4 +24,11 @@ public static class ConfigurationExtension
             .Build();
         return serializer.Serialize(configuration);
     }
+    public static T GetObjectFromYaml<T>(this string yaml) where T : new()
+    {
+        var serializer = new DeserializerBuilder()
+            .WithNamingConvention(CamelCaseNamingConvention.Instance)
+            .Build();
+        return serializer.Deserialize<T>(yaml);
+    }
 }
