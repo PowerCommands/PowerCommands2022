@@ -1,6 +1,8 @@
-﻿namespace PainKiller.PowerCommands.Shared.Contracts;
-public interface IEncryptionService
+﻿namespace PainKiller.PowerCommands.Shared.Contracts
 {
-    string EncryptString(string plainText);
-    string DecryptString(string plainText);
+    public interface IEncryptionService
+    {
+        string EncryptString(string plainText);
+        string DecryptString(string plainText);
+    }
 }

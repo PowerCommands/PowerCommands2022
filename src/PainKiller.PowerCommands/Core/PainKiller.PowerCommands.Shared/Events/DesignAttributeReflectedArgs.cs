@@ -1,15 +1,16 @@
 ﻿using PainKiller.PowerCommands.Shared.Attributes;
 using PainKiller.PowerCommands.Shared.Contracts;
 
-namespace PainKiller.PowerCommands.Shared.Events;
-
-public class DesignAttributeReflectedArgs : EventArgs
+namespace PainKiller.PowerCommands.Shared.Events
 {
-    public DesignAttributeReflectedArgs(PowerCommandDesignAttribute designAttribute, IConsoleCommand command)
+    public class DesignAttributeReflectedArgs : EventArgs
     {
-        DesignAttribute = designAttribute;
-        Command = command;
+        public DesignAttributeReflectedArgs(PowerCommandDesignAttribute designAttribute, IConsoleCommand command)
+        {
+            DesignAttribute = designAttribute;
+            Command = command;
+        }
+        public PowerCommandDesignAttribute DesignAttribute { get; }
+        public IConsoleCommand Command { get; }
     }
-    public PowerCommandDesignAttribute DesignAttribute { get; }
-    public IConsoleCommand Command { get; }
 }

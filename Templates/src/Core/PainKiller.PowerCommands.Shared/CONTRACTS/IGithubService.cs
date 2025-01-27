@@ -1,7 +1,8 @@
-﻿namespace $safeprojectname$.Contracts;
-
-public interface IGithubService
+﻿namespace $safeprojectname$.Contracts
 {
-    void MergeDocsDB();
-    void DownloadCommand(string commandName);
+    public interface IGithubService
+    {
+        void MergeDocsDB();
+        void DownloadCommand(string commandName);
+    }
 }

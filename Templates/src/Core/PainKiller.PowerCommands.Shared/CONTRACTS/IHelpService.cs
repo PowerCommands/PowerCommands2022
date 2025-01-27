@@ -1,6 +1,7 @@
-﻿namespace $safeprojectname$.Contracts;
-
-public interface IHelpService
+﻿namespace $safeprojectname$.Contracts
 {
-    void ShowHelp(IConsoleCommand command, bool clearConsole = true);
+    public interface IHelpService
+    {
+        void ShowHelp(IConsoleCommand command, bool clearConsole = true);
+    }
 }

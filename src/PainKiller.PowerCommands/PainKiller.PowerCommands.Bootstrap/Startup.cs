@@ -14,9 +14,12 @@ public static class Startup
 
     public static PowerCommandsManager ConfigureServices()
     {
+        Console.Title = "Power Commands";
         var services = PowerCommandServices.Service;
         services.Configuration.Environment.InitializeValues();
         services.Logger.LogInformation("Program started, configuration read");
+
+        if (services.Configuration.InfoPanel.Use) services.InfoPanelManager.StartInfoPanelAsync();
         
         if (!File.Exists(SetupFileName))
         {

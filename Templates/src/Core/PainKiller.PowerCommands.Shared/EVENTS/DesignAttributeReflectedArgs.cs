@@ -1,15 +1,16 @@
 ﻿using $safeprojectname$.Attributes;
 using $safeprojectname$.Contracts;
 
-namespace $safeprojectname$.Events;
-
-public class DesignAttributeReflectedArgs : EventArgs
+namespace $safeprojectname$.Events
 {
-    public DesignAttributeReflectedArgs(PowerCommandDesignAttribute designAttribute, IConsoleCommand command)
+    public class DesignAttributeReflectedArgs : EventArgs
     {
-        DesignAttribute = designAttribute;
-        Command = command;
+        public DesignAttributeReflectedArgs(PowerCommandDesignAttribute designAttribute, IConsoleCommand command)
+        {
+            DesignAttribute = designAttribute;
+            Command = command;
+        }
+        public PowerCommandDesignAttribute DesignAttribute { get; }
+        public IConsoleCommand Command { get; }
     }
-    public PowerCommandDesignAttribute DesignAttribute { get; }
-    public IConsoleCommand Command { get; }
 }

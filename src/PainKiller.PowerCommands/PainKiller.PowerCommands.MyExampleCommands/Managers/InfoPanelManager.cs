@@ -1,0 +1,2 @@
+﻿namespace PainKiller.PowerCommands.MyExampleCommands.Managers;
+public class InfoPanelManager(InfoPanelConfiguration configuration) : InfoPanelManagerBase(configuration, new UserNameInfoPanelContent(), new TimeInfoPanelContent(), new CurrentDirectoryInfoPanel());

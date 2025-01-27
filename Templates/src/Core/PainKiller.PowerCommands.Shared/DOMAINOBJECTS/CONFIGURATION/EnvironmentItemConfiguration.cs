@@ -1,7 +1,8 @@
-﻿namespace $safeprojectname$.DomainObjects.Configuration;
-
-public class EnvironmentItemConfiguration
+﻿namespace $safeprojectname$.DomainObjects.Configuration
 {
-    public string Name { get; set; } = "Name";
-    public string EnvironmentVariableTarget { get; set; } = "User";
+    public class EnvironmentItemConfiguration
+    {
+        public string Name { get; set; } = "Name";
+        public string EnvironmentVariableTarget { get; set; } = "User";
+    }
 }

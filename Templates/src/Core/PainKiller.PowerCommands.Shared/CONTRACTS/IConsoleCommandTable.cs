@@ -1,2 +1,4 @@
-﻿namespace $safeprojectname$.Contracts;
-public interface IConsoleCommandTable { }
+﻿namespace $safeprojectname$.Contracts
+{
+    public interface IConsoleCommandTable { }
+}

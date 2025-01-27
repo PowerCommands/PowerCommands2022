@@ -1,18 +1,19 @@
 ﻿using PainKiller.PowerCommands.Shared.Extensions;
 
-namespace PainKiller.PowerCommands.Shared.DomainObjects.Core;
-
-public class PowerOption
+namespace PainKiller.PowerCommands.Shared.DomainObjects.Core
 {
-    public PowerOption(string attributeValue)
+    public class PowerOption
     {
-        IsMandatory = attributeValue.Replace("!", "").IsUppercaseOnly();
-        ValueIsRequired = attributeValue.StartsWith("!");
-        Name = attributeValue.Replace("!", "");
+        public PowerOption(string attributeValue)
+        {
+            IsMandatory = attributeValue.Replace("!", "").IsUppercaseOnly();
+            ValueIsRequired = attributeValue.StartsWith("!");
+            Name = attributeValue.Replace("!", "");
+        }
+        public string Name { get; set; }
+        public string Value { get; set; } = "";
+        public string Raw => $"--{Name}";
+        public bool ValueIsRequired { get; set; }
+        public bool IsMandatory { get; set; }
     }
-    public string Name { get; set; }
-    public string Value { get; set; } = "";
-    public string Raw => $"--{Name}";
-    public bool ValueIsRequired { get; set; }
-    public bool IsMandatory { get; set; }
 }

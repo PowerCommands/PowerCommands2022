@@ -1,7 +1,8 @@
-﻿namespace $safeprojectname$.DomainObjects.Core;
-
-public class InputValidationResult
+﻿namespace $safeprojectname$.DomainObjects.Core
 {
-    public bool HasValidationError { get; set; }
-    public List<PowerOption> Options { get; set; } = new();
+    public class InputValidationResult
+    {
+        public bool HasValidationError { get; set; }
+        public List<PowerOption> Options { get; set; } = new();
+    }
 }

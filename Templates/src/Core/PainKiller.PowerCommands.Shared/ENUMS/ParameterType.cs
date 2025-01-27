@@ -1,9 +1,10 @@
-﻿namespace $safeprojectname$.Enums;
-
-public enum ParameterType
+﻿namespace $safeprojectname$.Enums
 {
-    Argument,
-    Quote,
-    Option,
-    Secret
+    public enum ParameterType
+    {
+        Argument,
+        Quote,
+        Option,
+        Secret
+    }
 }

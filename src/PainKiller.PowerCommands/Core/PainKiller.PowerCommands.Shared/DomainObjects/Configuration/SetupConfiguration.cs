@@ -1,7 +1,8 @@
-﻿namespace PainKiller.PowerCommands.Shared.DomainObjects.Configuration;
-
-public class SetupConfiguration
+﻿namespace PainKiller.PowerCommands.Shared.DomainObjects.Configuration
 {
-    public string User { get; set; } = "";
-    public DateTime Setup { get; set; }
+    public class SetupConfiguration
+    {
+        public string User { get; set; } = "";
+        public DateTime Setup { get; set; }
+    }
 }

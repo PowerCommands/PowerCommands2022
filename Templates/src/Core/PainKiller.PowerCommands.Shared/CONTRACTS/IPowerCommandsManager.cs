@@ -1,5 +1,7 @@
-﻿namespace $safeprojectname$.Contracts;
-public interface IPowerCommandsManager
+﻿namespace $safeprojectname$.Contracts
 {
-    void Run(string[] args);
+    public interface IPowerCommandsManager
+    {
+        void Run(string[] args);
+    }
 }

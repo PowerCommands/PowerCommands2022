@@ -1,6 +1,7 @@
-﻿namespace $safeprojectname$.DomainObjects.Configuration;
-
-public class BookmarkConfiguration
+﻿namespace $safeprojectname$.DomainObjects.Configuration
 {
-    public List<BookmarkItemConfiguration> Bookmarks { get; set; } = new();
+    public class BookmarkConfiguration
+    {
+        public List<BookmarkItemConfiguration> Bookmarks { get; set; } = new();
+    }
 }

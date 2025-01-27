@@ -5,6 +5,7 @@ global using PainKiller.PowerCommands.Shared.DomainObjects.Core;
 using Microsoft.Extensions.Logging;
 using PainKiller.PowerCommands.Configuration.Extensions;
 using PainKiller.PowerCommands.Core;
+using PainKiller.PowerCommands.MyExampleCommands.Managers;
 using PainKiller.PowerCommands.ReadLine;
 using PainKiller.SerilogExtensions.Managers;
 
@@ -19,6 +20,7 @@ public class PowerCommandServices : IExtendedPowerCommandServices<PowerCommandsC
         Runtime = new PowerCommandsRuntime<PowerCommandsConfiguration>(ExtendedConfiguration, Diagnostic); 
         Logger = GetLoggerManager.GetFileLogger(ExtendedConfiguration.Log.FileName.GetSafePathRegardlessHowApplicationStarted(ExtendedConfiguration.Log.FilePath),ExtendedConfiguration.Log.RollingIntervall,ExtendedConfiguration.Log.RestrictedToMinimumLevel);
         DefaultConsoleService = ConsoleService.Service;
+        InfoPanelManager = new InfoPanelManager(Configuration.InfoPanel);
         
         var suggestions = new List<string>(Runtime.CommandIDs);
         suggestions.AddRange(Runtime.Commands.Where(c => !string.IsNullOrEmpty(c.GetDefaultParameter())).Select(c => $"{c.Identifier} {c.GetDefaultParameter()}").ToList());
@@ -35,4 +37,5 @@ public class PowerCommandServices : IExtendedPowerCommandServices<PowerCommandsC
     public ILogger Logger { get; }
     public IDiagnosticManager Diagnostic { get; }
     public IConsoleService DefaultConsoleService { get; }
+    public IInfoPanelManager InfoPanelManager { get; }
 }

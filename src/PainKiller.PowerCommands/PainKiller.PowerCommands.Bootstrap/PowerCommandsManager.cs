@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Logging;
-using PainKiller.PowerCommands.Configuration.DomainObjects;
 using PainKiller.PowerCommands.Core.Commands;
 using PainKiller.PowerCommands.Core.Extensions;
 using PainKiller.PowerCommands.Core.Managers;
@@ -26,14 +25,14 @@ namespace PainKiller.PowerCommands.Bootstrap
                 {
                     RunCustomCode(runFlow);
                     
-                    var promptText = runFlow.CurrentRunResultStatus == RunResultStatus.Async ? "" : $"\n{ConfigurationGlobals.GetPrompt()}";
+                    var promptText = runFlow.CurrentRunResultStatus == RunResultStatus.Async ? "" : $"\n{Services.Configuration.Prompt}";
                     runFlow.Raw = runFlow.RunAutomatedAtStartup ? string.Join(' ', args) : ReadLine.ReadLineService.Service.Read(prompt: promptText);
                     if (string.IsNullOrEmpty(runFlow.Raw.Trim())) continue;
                     var interpretedInput = runFlow.Raw.Interpret();
                     if (runFlow.RunAutomatedAtStartup)
                     {
                         Services.Diagnostic.Message($"Started up with args: {interpretedInput.Raw}");
-                        ConsoleService.Service.Write($"{nameof(PowerCommandsManager)}", ConfigurationGlobals.GetPrompt());
+                        ConsoleService.Service.Write($"{nameof(PowerCommandsManager)}", Services.Configuration.Prompt);
                         ConsoleService.Service.Write($"{nameof(PowerCommandsManager)} automated startup", $"{interpretedInput.Identifier}", ConsoleColor.Blue);
                         ConsoleService.Service.WriteLine($"{nameof(PowerCommandsManager)} automated startup", interpretedInput.Raw.Replace($"{interpretedInput.Identifier}", ""));
                         interpretedInput = runFlow.InitializeRunAutomation(interpretedInput);
@@ -44,9 +43,11 @@ namespace PainKiller.PowerCommands.Bootstrap
                     if(!confidentialAttribute.Confidential) Services.Logger.LogInformation($"Console input Identifier:{interpretedInput.Identifier} raw:{interpretedInput.Raw}");
 
                     Services.Diagnostic.Start();
+                    RunFlowManager.CommandIsRunning = true;
                     var runResult = Services.Runtime.ExecuteCommand($"{runFlow.Raw}");
                     runFlow.CurrentRunResultStatus = runResult.Status;
                     RunResultHandler(runResult);
+                    RunFlowManager.CommandIsRunning = false;
                     Services.Diagnostic.Stop();
                     if (runFlow.RunOnceThenQuit) runFlow.CurrentRunResultStatus = RunResultStatus.Quit;
                     if (string.IsNullOrEmpty(runResult.ContinueWith)) continue;

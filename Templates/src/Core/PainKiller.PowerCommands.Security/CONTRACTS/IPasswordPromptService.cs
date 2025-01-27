@@ -1,6 +1,7 @@
-﻿namespace $safeprojectname$.Contracts;
-
-public interface IPasswordPromptService
+﻿namespace $safeprojectname$.Contracts
 {
-    string ReadPassword();
+    public interface IPasswordPromptService
+    {
+        string ReadPassword();
+    }
 }

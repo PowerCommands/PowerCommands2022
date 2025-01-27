@@ -1,6 +1,7 @@
-﻿namespace $safeprojectname$.DomainObjects;
-
-public class SecurityConfiguration
+﻿namespace $safeprojectname$.DomainObjects
 {
-    public EncryptionConfiguration Encryption { get; set; } = new();
+    public class SecurityConfiguration
+    {
+        public EncryptionConfiguration Encryption { get; set; } = new();
+    }
 }

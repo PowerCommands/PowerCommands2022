@@ -1,13 +1,14 @@
-﻿namespace $safeprojectname$.Contracts;
-
-public interface IPowerCommandDesign
+﻿namespace $safeprojectname$.Contracts
 {
-    string Description { get; }
-    string Arguments { get; }
-    string Quotes { get; }
-    string Options { get; }
-    bool? UseAsync { get; }
-    string Examples { get; }
-    string Suggestions { get; }
-    bool? ShowElapsedTime { get; }
+    public interface IPowerCommandDesign
+    {
+        string Description { get; }
+        string Arguments { get; }
+        string Quotes { get; }
+        string Options { get; }
+        bool? UseAsync { get; }
+        string Examples { get; }
+        string Suggestions { get; }
+        bool? ShowElapsedTime { get; }
+    }
 }

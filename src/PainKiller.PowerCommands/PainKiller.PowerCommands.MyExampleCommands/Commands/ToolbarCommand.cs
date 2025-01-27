@@ -1,15 +1,13 @@
 namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
 [PowerCommandTest(         tests: " orange")]
-[PowerCommandsToolbar(    labels: "[ Pick a valid fruit ->]|[Apple]|[Orange]|[Banana]",
+[PowerCommandsToolbar(    labels: ["[ Pick a valid fruit ->]", "[Apple]", "[Orange]", "[Banana]"],
                           colors: new [] { ConsoleColor.DarkBlue,ConsoleColor.DarkGreen ,ConsoleColor.Red,ConsoleColor.DarkYellow})]
 [PowerCommandDesign( description: "Demonstration of the usage of a command with a toolbar",
                      suggestions: "Apple|Orange|Banana",
                          example: "toolbar")]
-public class ToolbarCommand : CommandWithToolbarBase<PowerCommandsConfiguration>
+public class ToolbarCommand(string identifier, PowerCommandsConfiguration configuration) : CommandWithToolbarBase<PowerCommandsConfiguration>(identifier, configuration)
 {
-    public ToolbarCommand(string identifier, PowerCommandsConfiguration configuration) : base(identifier, configuration) { }
-
     public override RunResult Run()
     {
         base.Run();

@@ -20,6 +20,7 @@
         <ProjectItem ReplaceParameters="true" TargetFileName="CommandBase.cs">CommandBase.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="CommandWithToolbarBase.cs">CommandWithToolbarBase.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="IndexedInput.cs">IndexedInput.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="InfoPanelManagerBase.cs">InfoPanelManagerBase.cs</ProjectItem>
       </Folder>
       <Folder Name="Commands" TargetFolderName="Commands">
         <ProjectItem ReplaceParameters="true" TargetFileName="CdCommand.cs">CdCommand.cs</ProjectItem>

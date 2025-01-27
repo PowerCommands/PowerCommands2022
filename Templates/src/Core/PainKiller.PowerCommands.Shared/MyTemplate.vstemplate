@@ -37,6 +37,8 @@
         <ProjectItem ReplaceParameters="true" TargetFileName="IGithubService.cs">IGithubService.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="IHelpService.cs">IHelpService.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="ILogComponentConfiguration.cs">ILogComponentConfiguration.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="IInfoPanelContent.cs">IInfoPanelContent.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="IInfoPanelManager.cs">IInfoPanelManager.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="IPowerCommandServices.cs">IPowerCommandServices.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="IPowerCommandsManager.cs">IPowerCommandsManager.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="IPowerCommandsRuntime.cs">IPowerCommandsRuntime.cs</ProjectItem>
@@ -58,6 +60,7 @@
           <ProjectItem ReplaceParameters="true" TargetFileName="CommandsConfiguration.cs">CommandsConfiguration.cs</ProjectItem>
           <ProjectItem ReplaceParameters="true" TargetFileName="EnvironmentConfiguration.cs">EnvironmentConfiguration.cs</ProjectItem>
           <ProjectItem ReplaceParameters="true" TargetFileName="EnvironmentItemConfiguration.cs">EnvironmentItemConfiguration.cs</ProjectItem>          
+          <ProjectItem ReplaceParameters="true" TargetFileName="InfoPanelConfiguration.cs">InfoPanelConfiguration.cs</ProjectItem>          
           <ProjectItem ReplaceParameters="true" TargetFileName="LogComponentConfiguration.cs">LogComponentConfiguration.cs</ProjectItem>
           <ProjectItem ReplaceParameters="true" TargetFileName="Metadata.cs">Metadata.cs</ProjectItem>
           <ProjectItem ReplaceParameters="true" TargetFileName="PowerCommandDesignConfiguration.cs">PowerCommandDesignConfiguration.cs</ProjectItem>
@@ -69,12 +72,15 @@
         <Folder Name="Core" TargetFolderName="Core">
           <ProjectItem ReplaceParameters="true" TargetFileName="CommandLineInput.cs">CommandLineInput.cs</ProjectItem>
           <ProjectItem ReplaceParameters="true" TargetFileName="CommandTestItem.cs">CommandTestItem.cs</ProjectItem>
-          <ProjectItem ReplaceParameters="true" TargetFileName="CommandTestReport.cs">CommandTestReport.cs</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="CommandTestReport.cs">CommandTestReport.cs</ProjectItem>          
+          <ProjectItem ReplaceParameters="true" TargetFileName="CurrentDirectoryInfoPanel.cs">CurrentDirectoryInfoPanel.cs</ProjectItem>          
           <ProjectItem ReplaceParameters="true" TargetFileName="InputValidationResult.cs">InputValidationResult.cs</ProjectItem>
           <ProjectItem ReplaceParameters="true" TargetFileName="ListDialogItem.cs">ListDialogItem.cs</ProjectItem>
           <ProjectItem ReplaceParameters="true" TargetFileName="PowerOption.cs">PowerOption.cs</ProjectItem>
           <ProjectItem ReplaceParameters="true" TargetFileName="ProxyResult.cs">ProxyResult.cs</ProjectItem>
-          <ProjectItem ReplaceParameters="true" TargetFileName="RunResult.cs">RunResult.cs</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="RunResult.cs">RunResult.cs</ProjectItem>          
+          <ProjectItem ReplaceParameters="true" TargetFileName="TimeInfoPanelContent.cs">TimeInfoPanelContent.cs</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="UserNameInfoPanelContent.cs">UserNameInfoPanelContent.cs</ProjectItem>          
           <ProjectItem ReplaceParameters="true" TargetFileName="VSSolutionProjectReference.cs">VSSolutionProjectReference.cs</ProjectItem>
           <ProjectItem ReplaceParameters="true" TargetFileName="ZipResult.cs">ZipResult.cs</ProjectItem>
         </Folder>

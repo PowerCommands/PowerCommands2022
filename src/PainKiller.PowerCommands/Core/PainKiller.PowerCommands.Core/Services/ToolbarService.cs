@@ -15,9 +15,11 @@ namespace PainKiller.PowerCommands.Core.Services
             var enumValues = Enum.GetValues(typeof(TEnum)).Cast<TEnum>().ToList();
             var labels = enumValues
                 .OrderBy(e => Convert.ToInt32(e))
-                .Select(e => e.ToString())        
+                .Select(e => e.ToString())
                 .ToArray();
             var selectedLabel = NavigateToolbar(labels, consoleColors, padLeft: padLeft);
+            ConsoleService.Service.ClearRow(Console.CursorTop);
+            ConsoleService.Service.WriteHeaderLine(nameof(NavigateToolbar), selectedLabel.PadLeft(selectedLabel.Length + padLeft));
             return (TEnum)Enum.Parse(typeof(TEnum), selectedLabel);
         }
         public static string NavigateToolbar(string[] labels, ConsoleColor[]? consoleColors = null, int padLeft = 1)
@@ -34,7 +36,7 @@ namespace PainKiller.PowerCommands.Core.Services
                 ];
                 colors = colors.Reverse().ToArray();
 
-                var currentIndex = labels.Length-1;
+                var currentIndex = labels.Length - 1;
                 ConsoleKey key;
                 do
                 {
@@ -45,7 +47,7 @@ namespace PainKiller.PowerCommands.Core.Services
                     if (key == ConsoleKey.Tab)
                     {
                         currentIndex = (currentIndex - 1) % labels.Length;
-                        if(currentIndex < 0) currentIndex = labels.Length - 1;
+                        if (currentIndex < 0) currentIndex = labels.Length - 1;
                     }
                     else if (key == ConsoleKey.Enter)
                     {
@@ -66,8 +68,8 @@ namespace PainKiller.PowerCommands.Core.Services
         public static void DrawContextualToolbar(string id, string[]? defaultLabels = null, ConsoleColor[]? consoleColors = null, bool showOnBottom = true, int selectedIndex = -1, int padLeft = 1)
         {
             if (ContextualToolbar.Count == 0) return;
-            var labels = ContextualToolbar.ContainsKey(id) ?  ContextualToolbar.First(i => i.Key == id).Value : defaultLabels ?? [];
-            if(labels.Length == 0) labels = defaultLabels;
+            var labels = ContextualToolbar.ContainsKey(id) ? ContextualToolbar.First(i => i.Key == id).Value : defaultLabels ?? [];
+            if (labels.Length == 0) labels = defaultLabels;
             DrawToolbar(labels!, consoleColors, showOnBottom, selectedIndex, padLeft);
         }
         public static void DrawToolbar<TEnum>(ConsoleColor[]? consoleColors = null, bool showOnBottom = true, int padLeft = 1) where TEnum : Enum
@@ -75,7 +77,7 @@ namespace PainKiller.PowerCommands.Core.Services
             var enumValues = Enum.GetValues(typeof(TEnum)).Cast<TEnum>().ToList();
             var labels = enumValues
                 .OrderBy(e => Convert.ToInt32(e))
-                .Select(e => e.ToString())        
+                .Select(e => e.ToString())
                 .ToArray();
             DrawToolbar(labels, consoleColors, showOnBottom, padLeft: padLeft);
         }
@@ -88,7 +90,7 @@ namespace PainKiller.PowerCommands.Core.Services
 
                 var originalPosition = new Point(Console.CursorLeft, Console.CursorTop);
                 var toolbarY = showOnBottom ? Console.WindowHeight - 2 : originalPosition.Y;
-                
+
                 Console.SetCursorPosition(0, toolbarY);
                 Console.Write(new string(' ', Console.WindowWidth));
                 Console.SetCursorPosition(padLeft, toolbarY);
@@ -123,8 +125,8 @@ namespace PainKiller.PowerCommands.Core.Services
                         Console.BackgroundColor = color;
                     }
 
-                    width += displayLabel.Length+2;
-                    if(showOnBottom) Console.SetCursorPosition(Math.Clamp(Console.WindowWidth - width, 0, Console.WindowWidth), Math.Clamp(Console.WindowHeight - 2, 0, Console.WindowHeight));
+                    width += displayLabel.Length + 2;
+                    if (showOnBottom) Console.SetCursorPosition(Math.Clamp(Console.WindowWidth - width, 0, Console.WindowWidth), Math.Clamp(Console.WindowHeight - 2, 0, Console.WindowHeight));
                     Console.Write($" {displayLabel} ");
                     Console.ResetColor();
                     Console.Write(" ");

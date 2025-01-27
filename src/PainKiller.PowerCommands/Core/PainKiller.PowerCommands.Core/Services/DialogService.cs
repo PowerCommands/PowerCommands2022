@@ -15,7 +15,7 @@ namespace PainKiller.PowerCommands.Core.Services
         public static string QuestionAnswerDialog(string question, string prompt = "")
         {
             WriteHeader($"{question}\n");
-            Console.Write(string.IsNullOrEmpty(prompt) ? ConfigurationGlobals.GetPrompt() : prompt);
+            Console.Write(string.IsNullOrEmpty(prompt) ? IPowerCommandServices.DefaultInstance?.Configuration.Prompt : prompt);
             var response = Console.ReadLine();
             return $"{response}".Trim();
         }

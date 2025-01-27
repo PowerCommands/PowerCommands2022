@@ -135,7 +135,6 @@
                 fileSuggestions.Add(fileInfo.Name);
             }
             WorkingDirectoryChanged?.Invoke(fileSuggestions.ToArray(), dirSuggestions.ToArray());
-            ConfigurationGlobals.SetPrompt($"{Environment.CurrentDirectory}>");
         }
         public virtual void OnWorkingDirectoryChanged(string[] files, string[] directories)
         {

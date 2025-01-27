@@ -1,6 +1,7 @@
-﻿namespace $safeprojectname$.DomainObjects.Documentation;
-
-public class DocsDB
+﻿namespace $safeprojectname$.DomainObjects.Documentation
 {
-    public List<Doc> Docs { get; set; } = new();
+    public class DocsDB
+    {
+        public List<Doc> Docs { get; set; } = new();
+    }
 }

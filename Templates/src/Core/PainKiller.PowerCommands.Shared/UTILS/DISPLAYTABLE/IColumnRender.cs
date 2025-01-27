@@ -1,6 +1,7 @@
-﻿namespace $safeprojectname$.Utils.DisplayTable;
-
-public interface IColumnRender
+﻿namespace $safeprojectname$.Utils.DisplayTable
 {
-    void Write(string value);
+    public interface IColumnRender
+    {
+        void Write(string value);
+    }
 }

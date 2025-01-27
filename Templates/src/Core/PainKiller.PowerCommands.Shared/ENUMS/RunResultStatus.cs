@@ -1,16 +1,17 @@
-﻿namespace $safeprojectname$.Enums;
-
-public enum RunResultStatus
+﻿namespace $safeprojectname$.Enums
 {
-    Ok,
-    Quit,
-    ExceptionThrown,
-    ArgumentError,
-    SyntaxError,
-    RunExternalPowerCommand,
-    InputValidationError,
-    Initializing,
-    Async,
-    Help,
-    Continue
+    public enum RunResultStatus
+    {
+        Ok,
+        Quit,
+        ExceptionThrown,
+        ArgumentError,
+        SyntaxError,
+        RunExternalPowerCommand,
+        InputValidationError,
+        Initializing,
+        Async,
+        Help,
+        Continue
+    }
 }

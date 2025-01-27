@@ -1,14 +1,15 @@
-﻿namespace PainKiller.PowerCommands.ReadLine.Extensions;
-
-internal static class StringExtension
+﻿namespace PainKiller.PowerCommands.ReadLine.Extensions
 {
-    internal static string[] SortSuggestions(this string[] suggestions)
+    internal static class StringExtension
     {
-        var options = suggestions.Where(s => s.StartsWith("--")).ToArray();
-        var noOptions = suggestions.Where(s => !s.StartsWith("--")).ToArray();
-        var retVal = new List<string>();
-        retVal.AddRange(noOptions);
-        retVal.AddRange(suggestions);
-        return retVal.ToArray();
+        internal static string[] SortSuggestions(this string[] suggestions)
+        {
+            var options = suggestions.Where(s => s.StartsWith("--")).ToArray();
+            var noOptions = suggestions.Where(s => !s.StartsWith("--")).ToArray();
+            var retVal = new List<string>();
+            retVal.AddRange(noOptions);
+            retVal.AddRange(suggestions);
+            return retVal.ToArray();
+        }
     }
 }

@@ -24,6 +24,9 @@
       <Folder Name="Configuration" TargetFolderName="Configuration">
         <ProjectItem ReplaceParameters="true" TargetFileName="PowerCommandsConfiguration.cs">PowerCommandsConfiguration.cs</ProjectItem>
       </Folder>
+      <Folder Name="Managers" TargetFolderName="Managers">
+        <ProjectItem ReplaceParameters="true" TargetFileName="InfoPanelManager.cs">InfoPanelManager.cs</ProjectItem>
+      </Folder>
       <ProjectItem ReplaceParameters="false" TargetFileName="ArtifactPathsConfiguration.yaml">ArtifactPathsConfiguration.yaml</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="GlobalUsings.cs">GlobalUsings.cs</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="PowerCommandsConfiguration.yaml">PowerCommandsConfiguration.yaml</ProjectItem>

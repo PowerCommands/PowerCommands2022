@@ -1,6 +1,8 @@
-﻿namespace $safeprojectname$.Contracts;
-public interface IEncryptionService
+﻿namespace $safeprojectname$.Contracts
 {
-    string EncryptString(string plainText);
-    string DecryptString(string plainText);
+    public interface IEncryptionService
+    {
+        string EncryptString(string plainText);
+        string DecryptString(string plainText);
+    }
 }

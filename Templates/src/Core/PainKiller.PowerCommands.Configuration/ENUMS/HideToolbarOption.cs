@@ -1,8 +1,9 @@
-﻿namespace $safeprojectname$.Enums;
-
-public enum HideToolbarOption
+﻿namespace $safeprojectname$.Enums
 {
-    Never,
-    OnTextChange,
-    OnCommandHighlighted
+    public enum HideToolbarOption
+    {
+        Never,
+        OnTextChange,
+        OnCommandHighlighted
+    }
 }

@@ -1,8 +1,9 @@
-﻿namespace PainKiller.PowerCommands.Configuration.Enums;
-
-public enum HideToolbarOption
+﻿namespace PainKiller.PowerCommands.Configuration.Enums
 {
-    Never,
-    OnTextChange,
-    OnCommandHighlighted
+    public enum HideToolbarOption
+    {
+        Never,
+        OnTextChange,
+        OnCommandHighlighted
+    }
 }

@@ -1,7 +1,8 @@
-﻿namespace $safeprojectname$.Utils.DisplayTable;
-
-public enum Alignment
+﻿namespace $safeprojectname$.Utils.DisplayTable
 {
-    Left,
-    Right
+    public enum Alignment
+    {
+        Left,
+        Right
+    }
 }

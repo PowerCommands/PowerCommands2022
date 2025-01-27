@@ -18,6 +18,9 @@ I recommend you to use the option ```Place solution in the same directory``` som
 ![Alt text](../Docs/images/VS_solution_option.png?raw=true "Command Base")
 
 # What is new?
+## Version 1.0.4.2
+**Released 2025-01-27**
+- New feature InfoPanel
 ## Version 1.0.4.1
 **Released 2025-01-21**
 - PowerCommandPrivacyAttribute to prevent sensitive data leak out to the logfile.

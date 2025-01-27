@@ -1,7 +1,8 @@
-﻿namespace $safeprojectname$.Contracts;
-
-public interface ISolutionFileManager
+﻿namespace $safeprojectname$.Contracts
 {
-    void WriteValidProjectFiles(string name, string[] validProjectFiles, string solutionFileTarget);
-    void RemoveGlobalSectionNestedProjects(string name, string solutionFileTarget);
+    public interface ISolutionFileManager
+    {
+        void WriteValidProjectFiles(string name, string[] validProjectFiles, string solutionFileTarget);
+        void RemoveGlobalSectionNestedProjects(string name, string solutionFileTarget);
+    }
 }

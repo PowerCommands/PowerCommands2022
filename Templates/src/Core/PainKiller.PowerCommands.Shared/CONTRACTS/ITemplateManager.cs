@@ -1,8 +1,9 @@
-﻿namespace $safeprojectname$.Contracts;
-
-public interface ITemplateManager
+﻿namespace $safeprojectname$.Contracts
 {
-    void InitializeTemplatesDirectory();
-    void CopyTemplates();
-    void CreateCommand(string templateName, string commandName);
+    public interface ITemplateManager
+    {
+        void InitializeTemplatesDirectory();
+        void CopyTemplates();
+        void CreateCommand(string templateName, string commandName);
+    }
 }

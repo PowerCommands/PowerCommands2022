@@ -3,6 +3,10 @@ You could see PowerCommands as your CLI application starter kit. It is a structu
 
 [Follow progress on twitter](https://twitter.com/PowerCommands) <img src="https://github.com/PowerCommands/PowerCommands2022/blob/main/Docs/images/Twitter.png?raw=true" alt="drawing" width="20"/>
 
+
+## Version 1.0.4.2
+**Released 2025-01-27**
+- New feature InfoPanel
 ## Version 1.0.4.1
 **Released 2025-01-21**
 - PowerCommandPrivacyAttribute to prevent sensitive data leak out to the logfile.

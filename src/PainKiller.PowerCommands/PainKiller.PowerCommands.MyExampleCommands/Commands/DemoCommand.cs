@@ -3,8 +3,8 @@ using PainKiller.PowerCommands.ReadLine;
 namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
 
 [PowerCommandTest(tests: "! |!--pause 3")]
-[PowerCommandsToolbar(    labels: "[1. Hit space =>]|[2. Hit tab =>]|[3. Enter space and an option value]|[4. Hit enter]",
-    colors: new [] { ConsoleColor.DarkBlue,ConsoleColor.DarkGreen ,ConsoleColor.Red,ConsoleColor.DarkYellow})]
+[PowerCommandsToolbar(    labels: ["[1. Hit space =>]","[2. Hit tab =>]","[3. Enter space and an option value]","[4. Hit enter]"],
+                          colors: new [] { ConsoleColor.DarkBlue,ConsoleColor.DarkGreen ,ConsoleColor.Red,ConsoleColor.DarkYellow})]
 [PowerCommandDesign( description: "Description is override in config file",
                          options: "MANDATORY|!pause",
                          example: "//Must provide the MANDATORY option, will trigger a validation error otherwise|demo MANDATORY|//Test the pause service|demo --pause 5 MANDATORY")]

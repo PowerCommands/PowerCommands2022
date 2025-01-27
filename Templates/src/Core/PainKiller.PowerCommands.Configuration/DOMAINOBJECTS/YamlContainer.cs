@@ -1,7 +1,8 @@
-﻿namespace $safeprojectname$.DomainObjects;
-
-public class YamlContainer<T> where T: new()
+﻿namespace $safeprojectname$.DomainObjects
 {
-    public string Version { get; set; } = "";
-    public T Configuration { get; set; } = new();
+    public class YamlContainer<T> where T : new()
+    {
+        public string Version { get; set; } = "";
+        public T Configuration { get; set; } = new();
+    }
 }

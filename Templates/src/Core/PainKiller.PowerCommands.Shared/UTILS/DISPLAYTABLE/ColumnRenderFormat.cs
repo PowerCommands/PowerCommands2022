@@ -1,8 +1,9 @@
-﻿namespace $safeprojectname$.Utils.DisplayTable;
-
-public enum ColumnRenderFormat
+﻿namespace $safeprojectname$.Utils.DisplayTable
 {
-    None,
-    Standard,
-    SucessOrFailure
+    public enum ColumnRenderFormat
+    {
+        None,
+        Standard,
+        SucessOrFailure
+    }
 }

@@ -1,9 +1,11 @@
-﻿namespace $safeprojectname$.Contracts;
-public interface IConsoleWriter
+﻿namespace $safeprojectname$.Contracts
 {
-    void WriteLine(string output);
-    void WriteHeadLine(string output);
-    void Write(string output, ConsoleColor? color = null);
-    void WriteSuccess(string output);
-    void WriteFailure(string output);
+    public interface IConsoleWriter
+    {
+        void WriteLine(string output);
+        void WriteHeadLine(string output);
+        void Write(string output, ConsoleColor? color = null);
+        void WriteSuccess(string output);
+        void WriteFailure(string output);
+    }
 }

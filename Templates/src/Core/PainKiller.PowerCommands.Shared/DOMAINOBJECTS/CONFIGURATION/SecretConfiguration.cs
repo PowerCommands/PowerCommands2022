@@ -1,6 +1,7 @@
-﻿namespace $safeprojectname$.DomainObjects.Configuration;
-
-public class SecretConfiguration
+﻿namespace $safeprojectname$.DomainObjects.Configuration
 {
-    public List<SecretItemConfiguration> Secrets { get; set; } = new();
+    public class SecretConfiguration
+    {
+        public List<SecretItemConfiguration> Secrets { get; set; } = new();
+    }
 }
