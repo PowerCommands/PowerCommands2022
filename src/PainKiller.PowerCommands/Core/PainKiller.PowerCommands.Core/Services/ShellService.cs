@@ -21,8 +21,9 @@ namespace PainKiller.PowerCommands.Core.Services
         }
         public void OpenWithDefaultProgram(string uri, string workingDirectory = "")
         {
+            var replacedUr = ReplaceCmdArguments(uri);
             _logger.LogInformation($"{workingDirectory} {nameof(ShellService)} {nameof(OpenDirectory)} {uri}");
-            Process.Start(new ProcessStartInfo { FileName = uri, WorkingDirectory = workingDirectory, UseShellExecute = true, Verb = "open" });
+            Process.Start(new ProcessStartInfo { FileName = replacedUr, WorkingDirectory = workingDirectory, UseShellExecute = true, Verb = "open" });
         }
         public void Execute(string programName, string arguments, string workingDirectory, Action<string> writeFunction, string fileExtension = "exe", bool waitForExit = false, bool useShellExecute = false, bool disableOutputLogging = false)
         {
@@ -71,6 +72,6 @@ namespace PainKiller.PowerCommands.Core.Services
             }
             processAdd!.WaitForExit(waitForExit ? InfiniteWait : ImmediateReturn);
         }
-        private string ReplaceCmdArguments(string input) => input.Replace("%USERNAME%", Environment.UserName, StringComparison.CurrentCultureIgnoreCase);
+        private string ReplaceCmdArguments(string input) => input.Replace(ConfigurationGlobals.UserNamePlaceholder, Environment.UserName, StringComparison.CurrentCultureIgnoreCase).Replace(ConfigurationGlobals.RoamingDirectoryPlaceholder, ConfigurationGlobals.ApplicationDataFolder, StringComparison.CurrentCultureIgnoreCase);
     }
 }

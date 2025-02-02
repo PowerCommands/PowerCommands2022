@@ -21,6 +21,7 @@
         <ProjectItem ReplaceParameters="true" TargetFileName="CommandWithToolbarBase.cs">CommandWithToolbarBase.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="IndexedInput.cs">IndexedInput.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="InfoPanelManagerBase.cs">InfoPanelManagerBase.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="CommandWithTranslationsBase.cs">CommandWithTranslationsBase.cs</ProjectItem>
       </Folder>
       <Folder Name="Commands" TargetFolderName="Commands">
         <ProjectItem ReplaceParameters="true" TargetFileName="CdCommand.cs">CdCommand.cs</ProjectItem>
@@ -53,10 +54,12 @@
         <ProjectItem ReplaceParameters="true" TargetFileName="DiagnosticManager.cs">DiagnosticManager.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="HttpClientDownloadManager.cs">HttpClientDownloadManager.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="InputValidationManager.cs">InputValidationManager.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="MarkdownEditorManager.cs">MarkdownEditorManager.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="ProgressBar.cs">ProgressBar.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="RunFlowManager.cs">RunFlowManager.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="SolutionFileManager.cs">SolutionFileManager.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="TemplateManager.cs">TemplateManager.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="TranslationManager.cs">TranslationManager.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="VisualStudioManager.cs">VisualStudioManager.cs</ProjectItem>
       </Folder>
       <Folder Name="Services" TargetFolderName="Services">
@@ -71,6 +74,7 @@
         <ProjectItem ReplaceParameters="true" TargetFileName="HtmlConsoleService.cs">HtmlConsoleService.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="IOService.cs">IOService.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="ListService.cs">ListService.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="MarkdownFileService.cs">MarkdownFileService.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="PauseService.cs">PauseService.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="ReflectionService.cs">ReflectionService.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="RunCommandService.cs">RunCommandService.cs</ProjectItem>

@@ -1,4 +1,9 @@
 ﻿# What is new?
+## Version 1.0.4.3
+**Released 2025-01-27**
+- New basic functionality for translation added.
+- Improved documentation functionality.
+- Added dialog for file and folder select to DialogService.
 ## Version 1.0.4.2
 **Released 2025-01-27**
 - New feature InfoPanel

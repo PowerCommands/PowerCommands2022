@@ -4,8 +4,9 @@ configuration:
   defaultCommand: commands
   codeEditor: C:\Users\%USERNAME%\AppData\Local\Programs\Microsoft VS Code\Code.exe
   repository: https://github.com/PowerCommands/PowerCommands2022
+  defaultAIBotUri: https://chatgpt.com/?q=$QUERY$&hints=search
   backupPath: ..\..\..\..\Core\PainKiller.PowerCommands.Core\  
-  defaultGitRepositoryPath: ..\..\..\..\..\
+  defaultGitRepositoryPath: ..\..\..\..\..\  
   infoPanel:
     use: false
     autoAdjustOnResize: true

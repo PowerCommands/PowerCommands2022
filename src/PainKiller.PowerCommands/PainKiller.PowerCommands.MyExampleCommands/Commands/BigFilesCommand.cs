@@ -8,12 +8,12 @@ namespace PainKiller.PowerCommands.MyExampleCommands.Commands;
                 suggestions: "path",
                   example: "bigfiles --path \"C:\\Repos|bigfiles\"|bigfiles \"C:\\Repos\" --megabytes 1024",
                  useAsync: true)]
-public class BigFilesCommand : CdCommand
+public class BigFilesCommand(string identifier, CommandsConfiguration configuration) : CdCommand(identifier, configuration)
 {
     private readonly List<string> _bigFiles = new();
     private long _minFileSize = 3;
     const int OneMegabyte = 1048576;
-    public BigFilesCommand(string identifier, CommandsConfiguration configuration) : base(identifier, configuration) { }
+
     public override async Task<RunResult> RunAsync()
     {
         var megaBytes = Input.GetOptionValue("megabytes");
@@ -32,7 +32,6 @@ public class BigFilesCommand : CdCommand
         TraverseDirectory(rootDirectory);
         OverwritePreviousLine($"Big files found over {_minFileSize} MB:");
         foreach (var bigFile in _bigFiles) WriteLine(bigFile);
-        Console.Write($"\nDone!\n{Configuration.Prompt}");
     }
     private void TraverseDirectory(DirectoryInfo startDirectory)
     {

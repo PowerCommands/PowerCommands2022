@@ -9,6 +9,7 @@ namespace PainKiller.PowerCommands.Shared.DomainObjects.Configuration
         public string DefaultCommand { get; set; } = "";
         public string CodeEditor { get; set; } = "C:\\Users\\%USERNAME%\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe";
         public string Repository { get; set; } = "https://github.com/PowerCommands/PowerCommands2022";
+        public string DefaultAIBotUri{ get; set; } = "https://chatgpt.com/?q=$QUERY$&hints=search";
         public string BackupPath { get; set; } = "C:\\Temp";
         public Metadata Metadata { get; set; } = new();
         public LogComponentConfiguration Log { get; set; } = new();

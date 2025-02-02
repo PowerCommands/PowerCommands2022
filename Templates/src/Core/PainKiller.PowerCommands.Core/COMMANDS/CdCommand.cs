@@ -105,8 +105,8 @@
                 if (!string.IsNullOrEmpty(dir)) paths.Add(dir);
                 path = string.Join(Path.DirectorySeparatorChar, paths);
             }
-            path = $"{path}".Replace("%USERNAME%", Environment.UserName, StringComparison.CurrentCultureIgnoreCase);
-            if (path.Contains("$ROAMING$")) path = path.Replace("$ROAMING$", ConfigurationGlobals.ApplicationDataFolder);
+            path = $"{path}".Replace(ConfigurationGlobals.UserNamePlaceholder, Environment.UserName, StringComparison.CurrentCultureIgnoreCase);
+            if (path.Contains(ConfigurationGlobals.RoamingDirectoryPlaceholder)) path = path.Replace(ConfigurationGlobals.RoamingDirectoryPlaceholder, ConfigurationGlobals.ApplicationDataFolder);
             if (Directory.Exists(path)) Environment.CurrentDirectory = $"{Path.GetFullPath(path)}";
             else WriteFailureLine($"[{path}] does not exist");
             ShowDirectories();

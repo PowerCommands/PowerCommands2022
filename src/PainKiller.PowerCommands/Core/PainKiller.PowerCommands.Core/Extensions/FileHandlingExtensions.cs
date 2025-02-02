@@ -1,4 +1,6 @@
-﻿namespace PainKiller.PowerCommands.Core.Extensions
+﻿using System.Globalization;
+
+namespace PainKiller.PowerCommands.Core.Extensions
 {
     public static class FileHandlingExtensions
     {
@@ -15,5 +17,6 @@
             var fileName = Path.Combine(ConfigurationGlobals.ApplicationDataFolder, $"proxy_{identifier}.data");
             return StorageService<ProxyResult>.Service.GetObject(fileName);
         }
+        public static string GetGlobalTranslationsFileName(this ITranslations translations) => Path.Combine(AppContext.BaseDirectory, $"gloooobal_translation_{CultureInfo.CurrentUICulture}.yaml");
     }
 }
