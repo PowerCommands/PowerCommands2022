@@ -4,7 +4,7 @@ You could see PowerCommands as your CLI application starter kit. It is a structu
 [Follow progress on twitter](https://twitter.com/PowerCommands) <img src="https://github.com/PowerCommands/PowerCommands2022/blob/main/Docs/images/Twitter.png?raw=true" alt="drawing" width="20"/>
 
 ## Version 1.0.4.3
-**Released 2025-01-27**
+**Released 2025-02-02**
 - New basic functionality for translation added.
 - Improved documentation functionality.
 - Added dialog for file and folder select to DialogService.
