@@ -22,7 +22,9 @@ namespace $safeprojectname$.BaseClasses
         public virtual bool InitializeAndValidateInput(ICommandLineInput input, PowerCommandDesignAttribute? designAttribute = null)
         {
             Options.Clear();
+            Log(LogLevel.Trace, $"{nameof(InitializeAndValidateInput)} Options.Clear()");
             designAttribute ??= new PowerCommandDesignAttribute("This command has no design attribute");
+            Log(LogLevel.Trace, $"{nameof(InitializeAndValidateInput)} designAttribute: {designAttribute.Description}");
             if (IPowerCommandServices.DefaultInstance!.DefaultConsoleService.GetType().Name != _console.GetType().Name) _console = IPowerCommandServices.DefaultInstance.DefaultConsoleService;
             Input = input;
             DesignAttribute = designAttribute;
@@ -30,7 +32,9 @@ namespace $safeprojectname$.BaseClasses
             var validationManager = new InputValidationManager(this, input);
             var result = validationManager.ValidateAndInitialize();
             if (result.Options.Count > 0) Options.AddRange(result.Options);
+            Log(LogLevel.Trace, $"{nameof(InitializeAndValidateInput)} validationManager result.Options: {string.Join(',', result.Options)}");
             _console.WriteToOutput += ConsoleWriteToOutput;
+            Log(LogLevel.Trace, $"{nameof(InitializeAndValidateInput)} result.HasValidationError: {result.HasValidationError}");
             return result.HasValidationError;
         }
         public virtual void RunCompleted()
@@ -51,6 +55,7 @@ namespace $safeprojectname$.BaseClasses
         public virtual RunResult Run() => throw new NotImplementedException();
         public virtual async Task<RunResult> RunAsync() => await Task.FromResult(new RunResult(this, Input, "", RunResultStatus.Initializing));
         protected TConfig Configuration { get; set; } = configuration;
+        protected void Log(LogLevel level, string message) => IPowerCommandServices.DefaultInstance?.Logger.Log(level, message);
 
         /// <summary>
         /// Disable log of severity levels Trace,Debug and Information.
@@ -103,6 +108,11 @@ namespace $safeprojectname$.BaseClasses
         public void WriteWarning(string output) => _console.WriteWarning(GetType().Name, output);
         public void WriteError(string output) => _console.WriteError(GetType().Name, output);
         public void WriteCritical(string output) => _console.WriteCritical(GetType().Name, output);
+        public void WriteSeparatorLine()
+        {
+            Console.WriteLine("");
+            WriteLine("".PadLeft(Console.WindowWidth - 2, '-'));
+        }
         protected void OverwritePreviousLine(string output)
         {
             Console.SetCursorPosition(Console.CursorLeft, Console.CursorTop - 1);

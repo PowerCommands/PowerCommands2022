@@ -18,6 +18,10 @@ I recommend you to use the option ```Place solution in the same directory``` som
 ![Alt text](../Docs/images/VS_solution_option.png?raw=true "Command Base")
 
 # What is new?
+## Version 1.0.4.4
+**Released 2025-02-28**
+- Improved diagnostic logging
+- Minor fixes
 ## Version 1.0.4.3
 **Released 2025-02-02**
 - New basic functionality for translation added.

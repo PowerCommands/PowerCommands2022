@@ -11,7 +11,7 @@ namespace PainKiller.PowerCommands.Core.Services
         public void ShowHelp(IConsoleCommand command, bool clearConsole = true)
         {
             var da = command.GetPowerCommandAttribute();
-            if (clearConsole) Console.Clear();
+            if (clearConsole) ConsoleService.Service.Clear();
 
             var examples = da.Examples.Split(ConfigurationGlobals.ArraySplitter);
 

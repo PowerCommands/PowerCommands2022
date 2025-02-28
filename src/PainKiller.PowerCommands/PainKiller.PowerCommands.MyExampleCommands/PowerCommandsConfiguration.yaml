@@ -9,7 +9,7 @@ configuration:
   backupPath: ..\..\..\..\..\
   defaultGitRepositoryPath: C:\repos\github\PowerCommands2022
   infoPanel:
-    use: true
+    use: false
     autoAdjustOnResize: true
     color: DarkMagenta
     height: 2
