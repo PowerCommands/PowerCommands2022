@@ -4,37 +4,22 @@ namespace $safeprojectname$.Extensions
 {
     public static class SecretExtensions
     {
-        public static T DecryptSecret<T>(this SecretConfiguration secretConfiguration, T configurationItem, string propertyName) where T : class, new()
+        public static string DecryptSecret(this SecretConfiguration secretConfiguration, string secretName)
         {
-            var retVal = configurationItem.DeepClone();
-            var encryptedContent = (string)configurationItem.GetPropertyValue(propertyName);
-
-            var decryptedContent = encryptedContent;
-            foreach (var secret in secretConfiguration.Secrets)
-            {
-                var findAndReplaceContent = SecretService.Service.ReplaceSecret(encryptedContent, secret.Name, secret.Options, EncryptionService.Service.DecryptString);
-                if (!string.Equals(findAndReplaceContent, decryptedContent, StringComparison.Ordinal))
-                {
-                    decryptedContent = findAndReplaceContent;
-                    break;
-                }
-            }
-            retVal.SetPropertyValue(propertyName, decryptedContent);
+            var secret = secretConfiguration.Secrets.FirstOrDefault(s => s.Name == secretName);
+            if (secret == null) return "";
+            var retVal = SecretService.Service.GetSecret(secret.Name, secret.Options, EncryptionService.Service.DecryptString);
             return retVal;
         }
-        public static string DecryptSecret(this SecretConfiguration secretConfiguration, string encryptedContent)
+        public static string EncryptSecret<T>(this T configuration,  EnvironmentVariableTarget target, string secretName, string secret) where T : ICommandsConfiguration, new()
         {
-            var decryptedContent = encryptedContent;
-            foreach (var secret in secretConfiguration.Secrets)
-            {
-                var findAndReplaceContent = SecretService.Service.ReplaceSecret(encryptedContent, secret.Name, secret.Options, EncryptionService.Service.DecryptString);
-                if (!string.Equals(findAndReplaceContent, decryptedContent, StringComparison.Ordinal))
-                {
-                    decryptedContent = findAndReplaceContent;
-                    break;
-                }
-            }
-            return decryptedContent;
+            var existing = configuration.Secret.Secrets.FirstOrDefault(s => s.Name == secretName);
+            if (existing != null) configuration.Secret.Secrets.Remove(existing);
+            var secretConfiguration = new SecretItemConfiguration(target) { Name = secretName };
+            configuration.Secret.Secrets.Add(secretConfiguration);
+            var retVal = SecretService.Service.SetSecret(secretName, secret, secretConfiguration.Options,EncryptionService.Service.EncryptString);
+            ConfigurationService.Service.SaveChanges(configuration);
+            return retVal;
         }
     }
 }

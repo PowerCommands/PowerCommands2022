@@ -32,8 +32,8 @@ configuration:
     - label: "demo"
       color: "DarkGreen"  
   metadata:
-    name: Test
-    description: En exempelbeskrivning
+    name: APPLICATION_NAME
+    description: Demonstration commands
   log:
     fileName: powercommands.log
     filePath: logs
@@ -57,6 +57,11 @@ configuration:
     - name: VS
       path: C:\Users\harri\Documents\Visual Studio 2022
       index: 1
+  secret:
+    secrets:
+    - name: _encryptionManager
+      options:
+        target: User
   environment:
     variables:
     - name: OS

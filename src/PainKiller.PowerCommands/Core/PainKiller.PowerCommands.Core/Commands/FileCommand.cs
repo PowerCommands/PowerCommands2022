@@ -4,7 +4,7 @@ namespace PainKiller.PowerCommands.Core.Commands
 {
     [PowerCommandTest(tests: "whats_new.md --read")]
     [PowerCommandDesign(description: "Handle basic file actions such as read, write, delete, copy, move\n You can use tab to traverse through current directory, use cd and dir command to change current directory or see it´s content.\nRemember that filename containing white spaces must be surrounded with quotation marks.",
-                            options: "read|write|delete|properties|!copy|move|!command|!text|confirm|overwrite",
+                            options: "read|write|delete|open|properties|!copy|move|!command|!text|confirm|overwrite",
                           arguments: "fileName",
                  disableProxyOutput: true,
                             example: "//Read a file in current working directory (use dir command to see current directory, cd command to change directory)|file filename.txt --read|//Delete a file (without the --confirm flag, no questions will be asked.|file filename.txt --delete --confirm|//Write a file with output from an existing command, example using the VersionCommand|file \"output.txt\" --write --command version|//Copy a existing file, use --overwrite flag to overwrite existing file if target file exists.|file filename.txt --copy --overwrite \"copy file.txt\"|//Move an existing file, use --overwrite flag to overwrite existing file if target file exists.|file filename.txt --move \"moved file.txt\" --overwrite")]
@@ -21,6 +21,7 @@ namespace PainKiller.PowerCommands.Core.Commands
 
             if (string.IsNullOrEmpty(path)) return BadParameterError("A valid path to a file must be provided!");
             if (HasOption("write")) return WriteFile(path);
+            if (HasOption("open")) return OpenFile(path);
             if (HasOption("properties")) return ShowFileInfo(path);
             if (HasOption("delete")) return DeleteFile(path);
             if (HasOption("copy")) return CopyFile(path);
@@ -118,6 +119,12 @@ namespace PainKiller.PowerCommands.Core.Commands
             File.Move(path, movePath, overwrite);
             WriteSuccessLine($"The file [{path}] has successfully been moved to file [{movePath}].");
             InitializeWorkingDirectory();
+            return Ok();
+        }
+        private RunResult OpenFile(string path)
+        {
+            if (!File.Exists(path)) return BadParameterError($"{path} does not exist!");
+            ShellService.Service.OpenWithDefaultProgram(path);
             return Ok();
         }
     }

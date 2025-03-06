@@ -15,6 +15,5 @@
         public const string DocsDirectoryName = "Docs";
 
         public static readonly string ApplicationDataFolder = Path.Combine($"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\{nameof(PowerCommands)}", ApplicationName);
-        public static readonly string EnvironmentVariableName = $"{nameof(PowerCommands)}_{ApplicationName}";
     }
 }

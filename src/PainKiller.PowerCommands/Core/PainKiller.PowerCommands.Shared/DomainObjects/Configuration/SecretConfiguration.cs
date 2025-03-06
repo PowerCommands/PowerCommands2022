@@ -2,6 +2,6 @@
 {
     public class SecretConfiguration
     {
-        public List<SecretItemConfiguration> Secrets { get; set; } = new();
+        public List<SecretItemConfiguration> Secrets { get; set; } = [];
     }
 }

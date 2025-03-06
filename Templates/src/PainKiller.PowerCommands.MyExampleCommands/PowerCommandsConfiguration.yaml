@@ -1,12 +1,13 @@
-﻿version: 1.0
+version: 1.0
 configuration:
   showDiagnosticInformation: false
+  prompt: "PC>"
   defaultCommand: commands
   codeEditor: C:\Users\%USERNAME%\AppData\Local\Programs\Microsoft VS Code\Code.exe
   repository: https://github.com/PowerCommands/PowerCommands2022
   defaultAIBotUri: https://chatgpt.com/?q=$QUERY$&hints=search
-  backupPath: ..\..\..\..\Core\PainKiller.PowerCommands.Core\  
-  defaultGitRepositoryPath: ..\..\..\..\..\  
+  backupPath: ..\..\..\..\..\
+  defaultGitRepositoryPath: C:\repos\github\PowerCommands2022
   infoPanel:
     use: false
     autoAdjustOnResize: true
@@ -16,23 +17,23 @@ configuration:
   commandDesignOverrides:
   - name: demo
     description: "Demo command just to try out how you could use the input, do not forget the MANDATORY option, will trigger a validation error otherwise! ;-)\n That is because the option name is typed with UPPERCASE letters, useful when you want a mandatory option\n The pause option on the other hand starts with a ! symbol meaning that if you add the --pause option you must also give it a value, an integer in this case."
-    arguments: ""
-    quotes: ""    
+    arguments: "<url>"
+    quotes: "<local file path>"    
     options: "MANDATORY|!pause"
     examples: "//Must provide the MANDATORY option, will trigger a validation error otherwise|demo MANDATORY|//Test the pause service|demo --pause 5 MANDATORY"
     suggestions: ""
     useAsync: false
-    showElapsedTime: true
+    showElapsedTime: false
   startupToolbar:
     hideToolbarOption: OnCommandHighlighted
     toolbarItems:
     - label: "[Type ->]"
       color: "Cyan"
     - label: "demo"
-      color: "DarkGreen"
+      color: "DarkGreen"  
   metadata:
     name: $ext_projectname$
-    description: Description of my project
+    description: Demonstration commands
   log:
     fileName: powercommands.log
     filePath: logs
@@ -44,7 +45,7 @@ configuration:
   components:  
   - component: $ext_projectname$Commands.dll
     checksum: a2df61ea89e4f9ec265d921bfad87193
-    name: $ext_projectname$
+    name: My Example Command  
   - component: PainKiller.PowerCommands.Core.dll
     checksum: 4f04313db8e67b2bc4b059c478a900af
     name: PainKiller Core
@@ -52,9 +53,15 @@ configuration:
     bookmarks:
     - name: Program
       path: C:\Program Files
-      index: 0
+      index: 0    
+    - name: VS
+      path: C:\Users\harri\Documents\Visual Studio 2022
+      index: 1
   secret:
-    secrets:    
+    secrets:
+    - name: _encryptionManager
+      options:
+        target: User
   environment:
     variables:
     - name: OS

@@ -14,7 +14,7 @@
         }
         public void SetEnvironmentVariable(string variableName, string inputValue, bool encrypt = false, EnvironmentVariableTarget target = EnvironmentVariableTarget.User)
         {
-            var val = encrypt ? EncryptionService.Service.DecryptString(inputValue) : inputValue;
+            var val = encrypt ? EncryptionService.Service.EncryptString(inputValue) : inputValue;
             Environment.SetEnvironmentVariable(variableName, val, target);
         }
     }
