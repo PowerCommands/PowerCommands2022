@@ -1,4 +1,6 @@
 ﻿using System.Globalization;
+using System.Security.Cryptography;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace $safeprojectname$.Extensions
@@ -239,5 +241,19 @@ namespace $safeprojectname$.Extensions
 
             return $"{start}{ellipsis}{end}";
         }
+        public static string Truncate(this string input, int maxLength, string ellipse = "...")
+        {
+            if (string.IsNullOrEmpty(input) || input.Length <= maxLength) 
+                return input;
+
+            return input.Substring(0, maxLength - ellipse.Length) + ellipse;
+        }
+        public static Guid GenerateGuidFromString(this string input)
+        {
+            using var md5 = MD5.Create();
+            byte[] hash = md5.ComputeHash(Encoding.UTF8.GetBytes(input));
+            return new Guid(hash);
+        }
+        public static string ToCheck(this bool val, string trueCheck = "✅", string falseCheck = "") => val ? trueCheck : falseCheck;
     }
 }

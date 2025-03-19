@@ -18,6 +18,9 @@ I recommend you to use the option ```Place solution in the same directory``` som
 ![Alt text](../Docs/images/VS_solution_option.png?raw=true "Command Base")
 
 # What is new?
+## Version 1.0.4.402
+**Released 2025-03-19**
+- Fixed a bug regarding encryption
 ## Version 1.0.4.401
 **Released 2025-03-05**
 - OpenFile dialog added

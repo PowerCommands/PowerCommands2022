@@ -1,7 +1,5 @@
 ﻿using System.Drawing;
-
 namespace PainKiller.PowerCommands.Core.BaseClasses;
-
 public abstract class InfoPanelManagerBase(InfoPanelConfiguration configuration, IInfoPanelContent panel1, IInfoPanelContent panel2, IInfoPanelContent panel3) : IDisposable, IInfoPanelManager
 {
     private Task? _infoPanelTask;
@@ -29,6 +27,7 @@ public abstract class InfoPanelManagerBase(InfoPanelConfiguration configuration,
             {
                 Display(_previousWidth);
                 _previousWidth = Console.WindowWidth;
+                if(configuration.UpdateIntervalSeconds > 0) break;
                 await Task.Delay(configuration.UpdateIntervalSeconds * 1000, token);
             }
             catch (OperationCanceledException)

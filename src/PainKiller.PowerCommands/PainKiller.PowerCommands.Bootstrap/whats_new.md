@@ -1,4 +1,7 @@
 ﻿# What is new?
+## Version 1.0.4.402
+**Released 2025-03-19**
+- Fixed a bug regarding encryption
 ## Version 1.0.4.401
 **Released 2025-03-06**
 - OpenFile dialog added

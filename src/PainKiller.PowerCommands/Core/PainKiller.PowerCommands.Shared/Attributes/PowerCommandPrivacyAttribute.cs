@@ -6,6 +6,6 @@
         /// <summary>
         /// If true sensitive input will not be logged.
         /// </summary>
-        public bool Confidential { get; set; }
+        public bool Confidential { get; set; } = true;
     }
 }

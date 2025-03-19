@@ -53,7 +53,7 @@ public static class Startup
 
             Environment.SetEnvironmentVariable("_encryptionManager", sharedSecret, serviceAccountUse ? EnvironmentVariableTarget.Machine : EnvironmentVariableTarget.User);
             var securityConfig = new SecurityConfiguration { Encryption = new EncryptionConfiguration { SharedSecretEnvironmentKey = ConfigurationGlobals.EncryptionEnvironmentVariableName, SharedSecretSalt = salt } };
-            var fileName = Path.Combine(ConfigurationGlobals.ApplicationDataFolder, ConfigurationGlobals.SecurityFileName);
+            var fileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), nameof(PowerCommands), ConfigurationGlobals.SecurityFileName);
             if (serviceAccountUse)
             {
                 var yaml = securityConfig.GetYaml();
@@ -70,5 +70,4 @@ public static class Startup
             Console.WriteLine(ex.ToString());
         }
     }
-
 }
